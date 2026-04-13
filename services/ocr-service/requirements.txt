@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+pydantic>=2.0
+opencv-python
+easyocr
+pix2tex
+Pillow
+numpy
+python-multipart
+python-dotenv
