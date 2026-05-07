@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+lora-adapter/
+app/training/data/
+*.egg-info/
+.venv/
+venv/

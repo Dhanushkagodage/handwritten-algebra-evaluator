@@ -1,12 +1,5 @@
 fastapi
 uvicorn[standard]
 pydantic>=2.0
-torch
-transformers>=4.40.0
-peft>=0.10.0
-trl>=0.8.0
-datasets
-accelerate
-bitsandbytes
-wandb
+huggingface_hub>=0.23.0
 python-dotenv

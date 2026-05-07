@@ -1,132 +1,262 @@
+import asyncio
 import os
-from typing import List
+import re
+from typing import Dict, List, Optional
 
-import torch
-from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from huggingface_hub import AsyncInferenceClient
 
-from app.models.schemas import FeedbackRequest, FeedbackResponse, StepFeedback
+from app.models.schemas import (
+    FeedbackRequest,
+    FeedbackResponse,
+    StepFeedback,
+    StepResult,
+    StepValidity,
+)
+
+# Prompt instruction shared between inference and training — must stay in sync with
+# the format used in training/dataset.py so fine-tuned weights learn the right mapping.
+_FORMAT_INSTRUCTION = (
+    "\nFor each step, respond in this exact format:\n"
+    "=== STEP N [CORRECT/PARTIAL/INCORRECT] ===\n"
+    "CORRECT: <what the student did correctly, or method acknowledgement>\n"
+    "MISSING: <what was wrong or missing — only for INCORRECT or PARTIAL>\n"
+    "DEDUCTION: <why marks were reduced — only for INCORRECT or PARTIAL>\n"
+    "IMPROVE: <specific actionable tip for the student>\n"
+)
 
 
 class FeedbackGenerator:
     """
-    Core agent for Module 03 — Stepwise Feedback Generation.
-    Uses Gemma 3n fine-tuned with LoRA to generate student-friendly feedback.
+    Module 03 — Stepwise Feedback Generation.
+
+    Calls the HuggingFace Inference API (Qwen2.5-3B-Instruct) — no local download needed.
+    Generates four-component per-step feedback:
+      1. What is correct
+      2. What is missing / incorrect
+      3. Why marks were reduced
+      4. How to improve
     """
 
     def __init__(self):
-        self.model = None
-        self.tokenizer = None
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self._load_model()
+        self._client: Optional[AsyncInferenceClient] = None
+        self._model: str = ""
+        self._lock = asyncio.Lock()
+        self._loaded = False
 
-    def _load_model(self):
-        model_name = os.getenv("BASE_MODEL", "google/gemma-3n-E2B-it")
-        lora_path = os.getenv("LORA_ADAPTER_PATH", None)
+    async def load_model(self) -> None:
+        async with self._lock:
+            if self._loaded:
+                return
+            self._model = os.getenv("BASE_MODEL", "Qwen/Qwen2.5-3B-Instruct")
+            hf_token = os.getenv("HF_TOKEN", None)
+            self._client = AsyncInferenceClient(model=self._model, token=hf_token)
+            self._loaded = True
+            print(f"[FeedbackGenerator] Connected to HF Inference API → {self._model}")
 
-        print(f"[FeedbackGenerator] Loading {model_name} on {self.device}...")
-
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model_name,
-            torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
-            device_map="auto",
-        )
-
-        if lora_path and os.path.exists(lora_path):
-            print(f"[FeedbackGenerator] Loading LoRA adapter from {lora_path}")
-            self.model = PeftModel.from_pretrained(self.model, lora_path)
-
-        self.model.eval()
-        print("[FeedbackGenerator] Model ready.")
-
-    def _build_prompt(self, request: FeedbackRequest) -> str:
-        steps_text = "\n".join(
-            [
-                f"Step {s.step_number}: {s.expression} | "
-                f"{'✓ Correct' if s.is_correct else '✗ Incorrect'} | "
-                f"{s.marks_awarded} marks"
-                + (f" | Error: {s.error_description}" if s.error_description else "")
-                for s in request.student_steps
-            ]
-        )
-
-        scheme_text = "\n".join(
-            [
-                f"Step {m.step_number}: {m.expected_expression} [{m.marks} marks]"
-                for m in request.marking_scheme
-            ]
-        )
-
-        return (
-            f"<start_of_turn>user\n"
-            f"You are an algebra teacher giving feedback on a student's exam answer.\n\n"
-            f"Question: {request.question_text}\n"
-            f"Solution Method: {request.detected_method}\n"
-            f"Marks Awarded: {request.assigned_marks} / {request.total_marks}\n\n"
-            f"Student's Steps:\n{steps_text}\n\n"
-            f"Expected Marking Scheme:\n{scheme_text}\n\n"
-            f"Give clear, step-by-step feedback that:\n"
-            f"1. Confirms correct steps\n"
-            f"2. Explains mistakes simply\n"
-            f"3. Suggests improvements\n"
-            f"Keep the language simple and encouraging for a student.\n"
-            f"<end_of_turn>\n"
-            f"<start_of_turn>model\n"
-        )
+    # ------------------------------------------------------------------
+    # Public interface
+    # ------------------------------------------------------------------
 
     async def generate(self, request: FeedbackRequest) -> FeedbackResponse:
-        prompt = self._build_prompt(request)
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
+        if not self._loaded:
+            await self.load_model()
 
-        with torch.no_grad():
-            outputs = self.model.generate(
-                **inputs,
-                max_new_tokens=512,
-                temperature=0.7,
-                do_sample=True,
-                repetition_penalty=1.1,
-                pad_token_id=self.tokenizer.eos_token_id,
-            )
+        messages = self._build_messages(request)
+        raw_text = await self._run_inference(messages)
 
-        generated_ids = outputs[0][inputs["input_ids"].shape[1]:]
-        feedback_text = self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
-
-        step_feedback = self._build_step_feedback(request.student_steps, feedback_text)
-        suggestions = self._extract_suggestions(feedback_text)
+        step_feedback = self._parse_step_feedback(raw_text, request.student_steps)
+        step_feedback = self._validate_feedback(step_feedback)
 
         return FeedbackResponse(
             final_score=request.assigned_marks,
             total_marks=request.total_marks,
             step_feedback=step_feedback,
-            overall_feedback=feedback_text,
-            improvement_suggestions=suggestions,
+            overall_feedback=self._build_overall_feedback(request, step_feedback),
+            improvement_suggestions=self._extract_suggestions(step_feedback),
         )
 
-    def _build_step_feedback(self, steps, full_feedback: str) -> List[StepFeedback]:
-        feedback_lines = [line.strip() for line in full_feedback.split("\n") if line.strip()]
+    # ------------------------------------------------------------------
+    # Prompt construction
+    # ------------------------------------------------------------------
 
-        result = []
-        for i, step in enumerate(steps):
-            step_text = feedback_lines[i] if i < len(feedback_lines) else (
-                "Good work!" if step.is_correct else f"Review Step {step.step_number}."
+    def _build_messages(self, request: FeedbackRequest) -> List[Dict]:
+        scheme_marks = {m.step_number: m.marks for m in request.marking_scheme}
+
+        steps_text = "\n".join(
+            "Step {n}: {expr} [{v}, {awarded}/{possible} marks]{err}".format(
+                n=s.step_number,
+                expr=s.expression,
+                v=s.validity.value.upper(),
+                awarded=s.marks_awarded,
+                possible=scheme_marks.get(s.step_number, "?"),
+                err=f" — Error: {s.error_description}" if s.error_description else "",
             )
+            for s in request.student_steps
+        )
+
+        scheme_text = "\n".join(
+            "Step {n}: {expr} [{m} marks]{desc}".format(
+                n=m.step_number,
+                expr=m.expected_expression,
+                m=m.marks,
+                desc=f" — {m.description}" if m.description else "",
+            )
+            for m in request.marking_scheme
+        )
+
+        user_content = (
+            f"Question: {request.question_text}\n"
+            f"Solution Method: {request.detected_method}\n"
+            f"Score: {request.assigned_marks} / {request.total_marks}\n\n"
+            f"Student's Steps:\n{steps_text}\n\n"
+            f"Marking Scheme:\n{scheme_text}\n"
+            f"{_FORMAT_INSTRUCTION}"
+        )
+
+        return [
+            {
+                "role": "system",
+                "content": "You are an algebra teacher giving feedback on a student's exam answer.",
+            },
+            {"role": "user", "content": user_content},
+        ]
+
+    # ------------------------------------------------------------------
+    # Inference — HuggingFace Inference API (no local GPU needed)
+    # ------------------------------------------------------------------
+
+    async def _run_inference(self, messages: List[Dict]) -> str:
+        response = await self._client.chat.completions.create(
+            messages=messages,
+            max_tokens=600,
+            temperature=0.7,
+        )
+        return response.choices[0].message.content.strip()
+
+    # ------------------------------------------------------------------
+    # Response parsing
+    # ------------------------------------------------------------------
+
+    def _parse_step_feedback(
+        self, raw_text: str, steps: List[StepResult]
+    ) -> List[StepFeedback]:
+        result = []
+        for step in steps:
+            block = self._find_step_block(raw_text, step.step_number)
+
+            correct = (self._extract_field(block, "CORRECT") if block else None) or (
+                "Correct." if step.validity == StepValidity.CORRECT else "Step acknowledged."
+            )
+            missing = self._extract_field(block, "MISSING") if block else None
+            deduction = self._extract_field(block, "DEDUCTION") if block else None
+            improve = (self._extract_field(block, "IMPROVE") if block else None) or (
+                "Well done, continue to the next step."
+                if step.validity == StepValidity.CORRECT
+                else "Review this step and practice similar problems."
+            )
+
+            parts = [f"✓ {correct}"]
+            if missing:
+                parts.append(f"✗ {missing}")
+            if deduction:
+                parts.append(f"⚠ {deduction}")
+            parts.append(f"→ {improve}")
+
             result.append(
                 StepFeedback(
                     step_number=step.step_number,
                     expression=step.expression,
-                    is_correct=step.is_correct,
+                    validity=step.validity,
                     marks_awarded=step.marks_awarded,
-                    feedback=step_text,
+                    what_is_correct=correct,
+                    what_is_missing=missing,
+                    why_marks_reduced=deduction,
+                    how_to_improve=improve,
+                    feedback=" ".join(parts),
                 )
             )
         return result
 
-    def _extract_suggestions(self, text: str) -> List[str]:
+    def _find_step_block(self, text: str, step_num: int) -> Optional[str]:
+        pattern = (
+            rf"===\s*STEP\s+{step_num}\s*\[.*?\]\s*===\s*\n"
+            rf"(.*?)(?=\s*===\s*STEP\s+\d+|\Z)"
+        )
+        match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+        return match.group(1).strip() if match else None
+
+    def _extract_field(self, block: str, field: str) -> Optional[str]:
+        pattern = rf"^{field}:\s*(.+?)(?=\n[A-Z]+:|\Z)"
+        match = re.search(pattern, block, re.DOTALL | re.MULTILINE)
+        return match.group(1).strip() if match else None
+
+    # ------------------------------------------------------------------
+    # Validation (per project spec)
+    # ------------------------------------------------------------------
+
+    def _validate_feedback(self, step_feedback: List[StepFeedback]) -> List[StepFeedback]:
+        """Ensure every mark-lost step has a deduction explanation."""
+        validated = []
+        for sf in step_feedback:
+            if sf.validity != StepValidity.CORRECT and not sf.why_marks_reduced:
+                sf = sf.model_copy(
+                    update={
+                        "why_marks_reduced": (
+                            f"Marks reduced because this step is {sf.validity.value} "
+                            "— see the missing information above."
+                        )
+                    }
+                )
+            validated.append(sf)
+        return validated
+
+    # ------------------------------------------------------------------
+    # Overall feedback and suggestions
+    # ------------------------------------------------------------------
+
+    def _build_overall_feedback(
+        self, request: FeedbackRequest, step_feedback: List[StepFeedback]
+    ) -> str:
+        correct = sum(1 for sf in step_feedback if sf.validity == StepValidity.CORRECT)
+        partial = sum(1 for sf in step_feedback if sf.validity == StepValidity.PARTIAL)
+        incorrect = sum(1 for sf in step_feedback if sf.validity == StepValidity.INCORRECT)
+        total = len(step_feedback)
+
+        pct = (
+            (request.assigned_marks / request.total_marks * 100)
+            if request.total_marks > 0
+            else 0
+        )
+
+        summary = (
+            f"You scored {request.assigned_marks:.1f}/{request.total_marks:.1f} marks "
+            f"({pct:.0f}%) using the {request.detected_method} method. "
+        )
+
+        if total > 0:
+            parts = []
+            if correct:
+                parts.append(f"{correct} step(s) fully correct")
+            if partial:
+                parts.append(f"{partial} partially correct")
+            if incorrect:
+                parts.append(f"{incorrect} incorrect")
+            summary += ", ".join(parts) + "."
+
+        if pct >= 80:
+            summary += " Excellent work — keep it up!"
+        elif pct >= 60:
+            summary += " Good effort — review the highlighted steps to improve further."
+        else:
+            summary += " Focus on the highlighted steps to strengthen your understanding."
+
+        return summary
+
+    def _extract_suggestions(self, step_feedback: List[StepFeedback]) -> List[str]:
         suggestions = []
-        keywords = ["improve", "suggest", "next time", "make sure", "remember", "try"]
-        for line in text.split("\n"):
-            line = line.strip()
-            if any(kw in line.lower() for kw in keywords) and len(line) > 10:
-                suggestions.append(line)
+        for sf in step_feedback:
+            if sf.validity != StepValidity.CORRECT and sf.how_to_improve:
+                tip = sf.how_to_improve.strip()
+                if tip and tip not in suggestions:
+                    suggestions.append(tip)
         return suggestions[:3] or ["Review the incorrect steps and practice similar problems."]
