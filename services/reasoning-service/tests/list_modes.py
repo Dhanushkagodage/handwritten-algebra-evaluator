@@ -1,10 +1,10 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-import google.generativeai as genai
+from openai import OpenAI
 import os
 
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-for m in genai.list_models():
-    print(m.name)
+for m in client.models.list():
+    print(m.id)

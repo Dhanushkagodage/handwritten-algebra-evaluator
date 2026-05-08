@@ -6,8 +6,9 @@ Invokes the LangGraph multi-agent pipeline and returns the structured evaluation
 """
 import logging
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
+from app.core.exceptions import EmptySchemeError, EmptyStepsError, PipelineError
 from app.schemas.input_schema import EvaluationRequest
 from app.schemas.output_schema import EvaluationOutput
 from app.services.langgraph_flow import build_graph
@@ -37,6 +38,13 @@ async def evaluate(request: EvaluationRequest) -> EvaluationOutput:
     Input A (reasoning_input): question + student steps
     Input B (marking_scheme): official marking scheme
     """
+    # ── Domain input guards ────────────────────────────────────────────────────
+    if not request.reasoning_input.student_steps:
+        raise EmptyStepsError()
+
+    if not request.marking_scheme.steps:
+        raise EmptySchemeError()
+
     logger.info(
         "[/evaluate] Received request — steps=%d, scheme_steps=%d",
         len(request.reasoning_input.student_steps),
@@ -55,18 +63,12 @@ async def evaluate(request: EvaluationRequest) -> EvaluationOutput:
         result = _graph.invoke(state)
     except Exception as exc:
         logger.exception("[/evaluate] Graph invocation failed: %s", exc)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Evaluation pipeline failed: {str(exc)}",
-        )
+        raise PipelineError(cause=str(exc))
 
     output = result.get("evaluation_output")
     if output is None:
         logger.error("[/evaluate] evaluation_output missing from graph result")
-        raise HTTPException(
-            status_code=500,
-            detail="No evaluation output produced by the pipeline.",
-        )
+        raise PipelineError(cause="No evaluation_output key in graph result")
 
     logger.info(
         "[/evaluate] Evaluation complete — %.1f/%.1f marks (%.1f%%)",

@@ -4,14 +4,14 @@ FastAPI application entry point.
 Startup order (critical for Windows multiprocessing compatibility):
 1. Load .env FIRST before any langchain/openai imports
 2. Configure logging
-3. Import and mount routers
-4. Register lifespan events
+3. Import settings (validates all env vars at startup)
+4. Create app, register handlers, mount routers
+5. Register lifespan events
 
 Run with:
     uvicorn app.main:app --host 0.0.0.0 --port 8002 --reload
 """
 import logging
-import os
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
@@ -30,15 +30,19 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# ── Load & validate settings (fails fast if config is bad) ────────────────────
+from app.config.settings import settings
+from app.core.handlers import register_exception_handlers
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan: startup logs and teardown."""
     logger.info("=" * 60)
     logger.info("Algebra Evaluation Service starting up")
-    logger.info("LLM provider : %s", os.getenv("LLM_PROVIDER", "openai"))
-    logger.info("LLM model    : %s", os.getenv("LLM_MODEL", "gpt-4o-mini"))
-    logger.info("Port         : %s", os.getenv("PORT", "8002"))
+    logger.info("LLM provider : %s", settings.llm_provider)
+    logger.info("LLM model    : %s", settings.llm_model)
+    logger.info("Port         : %s", settings.port)
     logger.info("=" * 60)
     yield
     logger.info("Algebra Evaluation Service shut down")
@@ -46,20 +50,23 @@ async def lifespan(app: FastAPI):
 
 # ── Create FastAPI app ────────────────────────────────────────────────────────
 app = FastAPI(
-    title="Handwritten Algebra Evaluator — Reasoning Service",
+    title=settings.app_name,
     description=(
         "Multi-agent LangGraph service for evaluating A/L algebra student answers. "
         "Runs Step Validation, Method Detection, and Scheme Matching agents in parallel, "
         "then synthesises results via a Supervisor Agent."
     ),
-    version="2.0.0",
+    version=settings.app_version,
     lifespan=lifespan,
 )
+
+# ── Register global exception handlers ────────────────────────────────────────
+register_exception_handlers(app)
 
 # ── CORS ──────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -74,4 +81,10 @@ app.include_router(evaluation_router)
 @app.get("/health", tags=["Health"])
 async def health_check():
     """Simple liveness probe."""
-    return {"status": "ok", "service": "reasoning-service", "version": "2.0.0"}
+    return {
+        "status": "ok",
+        "service": "reasoning-service",
+        "version": settings.app_version,
+        "llm_provider": settings.llm_provider,
+        "llm_model": settings.llm_model,
+    }
