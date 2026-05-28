@@ -70,6 +70,11 @@ async def evaluate(request: EvaluationRequest) -> EvaluationOutput:
         logger.error("[/evaluate] evaluation_output missing from graph result")
         raise PipelineError(cause="No evaluation_output key in graph result")
 
+    # Inject intermediate agent outputs into the output dictionary for debugging/inspection
+    output["step_validation"] = result.get("step_validation_output")
+    output["method_detection"] = result.get("method_detection_output")
+    output["scheme_matching"] = result.get("scheme_matching_output")
+
     logger.info(
         "[/evaluate] Evaluation complete — %.1f/%.1f marks (%.1f%%)",
         output["total_marks"],
@@ -78,3 +83,4 @@ async def evaluate(request: EvaluationRequest) -> EvaluationOutput:
     )
 
     return EvaluationOutput(**output)
+

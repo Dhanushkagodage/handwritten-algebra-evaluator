@@ -103,3 +103,15 @@ class EvaluationOutput(BaseModel):
     summary: str
     method_feedback: str
     missing_steps_feedback: Optional[str] = None
+
+    # ── Debug / Intermediate Outputs ──────────────────────────────────────────
+    step_validation: Optional[StepValidationOutput] = Field(
+        None, description="Detailed intermediate output from Step Validation Agent"
+    )
+    method_detection: Optional[MethodDetectionOutput] = Field(
+        None, description="Detailed intermediate output from Method Detection Agent"
+    )
+    scheme_matching: Optional[SchemeMatchingOutput] = Field(
+        None, description="Detailed intermediate output from Scheme Matching Agent"
+    )
+
