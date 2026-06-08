@@ -29,12 +29,14 @@ Then compute overall totals and write a summary.
 - Round to nearest 0.5
 - Clamp to [0, scheme_step_marks]
 - If no matching scheme step exists: 0 marks
+- If the student step status is "incorrect", the marks awarded for that step MUST be 0.0.
 - If method is valid alternative: apply scheme marks proportionally based on match_score
 
 ## INCONSISTENCY RESOLUTION RULES
 - If step_validation says "correct" but match_score < 0.4: award partial marks (0.5 × scheme marks)
-- If step_validation says "incorrect" but match_score > 0.8: trust scheme match, award partial marks
+- If step_validation says "incorrect": the step is mathematically wrong; ALWAYS award 0.0 marks for it even if match_score is high.
 - If confidence from any agent is below 0.5: apply conservative (lower) mark
+
 
 ## OUTPUT FORMAT
 Respond ONLY with valid JSON. No explanation outside the JSON block.
