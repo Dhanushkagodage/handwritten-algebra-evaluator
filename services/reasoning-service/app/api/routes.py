@@ -5,9 +5,10 @@ Accepts Input A (reasoning) + Input B (marking scheme) in a single request.
 Invokes the LangGraph multi-agent pipeline and returns the structured evaluation.
 """
 import logging
-
+import json
+from typing import Optional
 from fastapi import APIRouter
-
+from pathlib import Path
 from app.core.exceptions import EmptySchemeError, EmptyStepsError, PipelineError
 from app.schemas.input_schema import EvaluationRequest
 from app.schemas.output_schema import EvaluationOutput
@@ -31,13 +32,30 @@ _graph = build_graph()
         "method feedback, and a summary."
     ),
 )
-async def evaluate(request: EvaluationRequest) -> EvaluationOutput:
+async def evaluate(request: Optional[EvaluationRequest] = None) -> EvaluationOutput:
     """
     POST /api/v1/evaluate
 
     Input A (reasoning_input): question + student steps
     Input B (marking_scheme): official marking scheme
     """
+    #  the req body is not available then execute with the selected json 
+    if request is None:
+        # Resolve path relative to routes.py's directory for robustness
+        test_file = Path(__file__).resolve().parent.parent.parent / "tests" / "test_cases" / "tc09_induction_perfect.json"
+
+        logger.info(
+            "[/evaluate] No request body provided. Loading %s",
+            test_file,
+        )
+
+        with open(test_file, "r", encoding="utf-8") as f:
+            request = EvaluationRequest.model_validate(
+                json.load(f)
+            )
+
+
+
     # ── Domain input guards ────────────────────────────────────────────────────
     if not request.reasoning_input.student_steps:
         raise EmptyStepsError()
