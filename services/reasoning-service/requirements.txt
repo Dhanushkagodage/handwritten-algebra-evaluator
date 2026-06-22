@@ -1,9 +1,10 @@
 fastapi
 uvicorn[standard]
 pydantic>=2.0
+pydantic-settings>=2.0
 langchain
 langchain-openai
+langchain-groq
 langchain-core
 langgraph
-sympy
 python-dotenv

@@ -1,0 +1,19 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve the quadratic equation: x² - 5x + 6 = 0",
+    "student_steps": [
+      {"step_id": 1, "content": "x² - 5x + 6 = 0"},
+      {"step_id": 2, "content": "(x - 2)(x - 3) = 0"},
+      {"step_id": 3, "content": "x = 2 or x = 3"}
+    ],
+    "final_answer": "x = 2 or x = 3"
+  },
+  "marking_scheme": {
+    "total_marks": 5,
+    "steps": [
+      {"step_no": 1, "description": "Correctly write the standard form of the equation", "marks": 1},
+      {"step_no": 2, "description": "Correctly factorise the quadratic into two linear factors", "marks": 2},
+      {"step_no": 3, "description": "State both correct solutions", "marks": 2}
+    ]
+  }
+}
