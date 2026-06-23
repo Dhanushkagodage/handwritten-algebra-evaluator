@@ -8,42 +8,36 @@
       "step_number": 1,
       "expression": "x^2 + x - 6 = 0",
       "validity": "correct",
-      "marks_awarded": 1.0,
-      "error_description": null
+      "marks_awarded": 1.0
     },
     {
       "step_number": 2,
       "expression": "(x + 3)(x - 2) = 0",
       "validity": "correct",
-      "marks_awarded": 2.0,
-      "error_description": null
+      "marks_awarded": 2.0
     },
     {
       "step_number": 3,
       "expression": "x = -3 or x = -2",
       "validity": "incorrect",
-      "marks_awarded": 0.5,
-      "error_description": "Sign error: (x - 2) = 0 gives x = +2, not x = -2"
+      "marks_awarded": 0.5
     }
   ],
   "marking_scheme": [
     {
       "step_number": 1,
       "expected_expression": "x^2 + x - 6 = 0",
-      "marks": 1.0,
-      "description": "State the equation"
+      "marks": 1.0
     },
     {
       "step_number": 2,
       "expected_expression": "(x + 3)(x - 2) = 0",
-      "marks": 2.0,
-      "description": "Correct factorisation"
+      "marks": 2.0
     },
     {
       "step_number": 3,
       "expected_expression": "x = -3 or x = 2",
-      "marks": 1.0,
-      "description": "Both roots correct"
+      "marks": 1.0
     }
   ]
 }
