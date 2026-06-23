@@ -1,5 +1,13 @@
 fastapi
 uvicorn[standard]
 pydantic>=2.0
-huggingface_hub>=0.23.0
 python-dotenv
+huggingface_hub>=0.23.0
+
+# ── LoRA fine-tuning only (training/train.py) — not needed for inference ──
+# transformers
+# torch
+# accelerate
+# peft
+# trl
+# datasets

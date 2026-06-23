@@ -1,4 +1,3 @@
-import asyncio
 import os
 import re
 from typing import Dict, List, Optional
@@ -29,7 +28,9 @@ class FeedbackGenerator:
     """
     Module 03 — Stepwise Feedback Generation.
 
-    Calls the HuggingFace Inference API (Qwen2.5-3B-Instruct) — no local download needed.
+    Calls the HuggingFace Inference API (Qwen2.5-1.5B-Instruct).
+    Requires HF_TOKEN env var. No local model download needed.
+
     Generates four-component per-step feedback:
       1. What is correct
       2. What is missing / incorrect
@@ -39,19 +40,17 @@ class FeedbackGenerator:
 
     def __init__(self):
         self._client: Optional[AsyncInferenceClient] = None
-        self._model: str = ""
-        self._lock = asyncio.Lock()
+        self._model_name: str = ""
         self._loaded = False
 
     async def load_model(self) -> None:
-        async with self._lock:
-            if self._loaded:
-                return
-            self._model = os.getenv("BASE_MODEL", "Qwen/Qwen2.5-3B-Instruct")
-            hf_token = os.getenv("HF_TOKEN", None)
-            self._client = AsyncInferenceClient(model=self._model, token=hf_token)
-            self._loaded = True
-            print(f"[FeedbackGenerator] Connected to HF Inference API → {self._model}")
+        if self._loaded:
+            return
+        self._model_name = os.getenv("BASE_MODEL", "Qwen/Qwen2.5-1.5B-Instruct")
+        hf_token = os.getenv("HF_TOKEN")
+        self._client = AsyncInferenceClient(model=self._model_name, token=hf_token)
+        self._loaded = True
+        print(f"[FeedbackGenerator] Connected to HF Inference API → {self._model_name}")
 
     # ------------------------------------------------------------------
     # Public interface
@@ -122,7 +121,7 @@ class FeedbackGenerator:
         ]
 
     # ------------------------------------------------------------------
-    # Inference — HuggingFace Inference API (no local GPU needed)
+    # Inference — HuggingFace Inference API
     # ------------------------------------------------------------------
 
     async def _run_inference(self, messages: List[Dict]) -> str:

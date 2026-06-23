@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Feedback Service",
     version="1.0.0",
-    description="Stepwise feedback generation using Gemma 3n + LoRA",
+    description="Stepwise feedback generation using a local Qwen2.5 SLM (+ optional LoRA)",
     lifespan=lifespan,
 )
 
