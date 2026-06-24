@@ -4,11 +4,23 @@ import { useDropzone } from 'react-dropzone'
 import { processImage, analyzeReasoning, generateFeedback } from '../lib/api'
 import { useEvaluationStore } from '../store/useEvaluationStore'
 
+const UploadIcon = () => (
+  <svg className="w-8 h-8 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+)
+
+const PIPELINE_STEPS = [
+  { key: 'ocr', label: 'OCR Extraction' },
+  { key: 'reasoning', label: 'Reasoning & Marking' },
+  { key: 'feedback', label: 'Generating Feedback' },
+]
+
 export default function Evaluate() {
   const [answerFile, setAnswerFile] = useState<File | null>(null)
   const [schemeFile, setSchemeFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
-  const [step, setStep] = useState('')
+  const [activeStep, setActiveStep] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const { setOcrResult, setReasoningResult, setFeedbackResult } = useEvaluationStore()
   const navigate = useNavigate()
@@ -39,24 +51,17 @@ export default function Evaluate() {
     setError(null)
 
     try {
-      // OCR both images in parallel
-      setStep('Running OCR on both images...')
+      setActiveStep('ocr')
       const [answerOcr, schemeOcr] = await Promise.all([
         processImage(answerFile),
         processImage(schemeFile),
       ])
       setOcrResult(answerOcr)
 
-      // Map marking scheme OCR steps → marking scheme format for reasoning service.
-      // EasyOCR reads the whole row as one string, e.g. "x^2 + x - 6 = 0  1 mark"
-      // so we parse the mark value out of the end of the expression.
       const parseSchemeStep = (s: any) => {
         const expr: string = s.expression || ''
-        // Match trailing "N mark" or "N marks" (case-insensitive)
         const m = expr.match(/^(.*?)\s+(\d+)\s+marks?$/i)
-        if (m) {
-          return { expression: m[1].trim(), marks: parseInt(m[2]) }
-        }
+        if (m) return { expression: m[1].trim(), marks: parseInt(m[2]) }
         return { expression: expr, marks: 1 }
       }
       const markingScheme = schemeOcr.student_steps.map((s: any) => {
@@ -65,7 +70,7 @@ export default function Evaluate() {
       })
       const totalMarks = markingScheme.reduce((sum: number, m: any) => sum + m.marks, 0) || 5
 
-      setStep('Analyzing reasoning and marking...')
+      setActiveStep('reasoning')
       const reasoning = await analyzeReasoning({
         question_text: answerOcr.question_text,
         student_steps: answerOcr.student_steps,
@@ -74,7 +79,7 @@ export default function Evaluate() {
       })
       setReasoningResult(reasoning)
 
-      setStep('Generating step-by-step feedback...')
+      setActiveStep('feedback')
       const feedback = await generateFeedback({
         question_text: reasoning.question_text,
         student_steps: reasoning.step_analysis,
@@ -90,105 +95,143 @@ export default function Evaluate() {
       setError(err?.response?.data?.detail || err.message || 'Something went wrong.')
     } finally {
       setLoading(false)
-      setStep('')
+      setActiveStep('')
     }
   }
 
+  const activeIdx = PIPELINE_STEPS.findIndex((s) => s.key === activeStep)
+
   return (
-    <div className="max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold text-gray-800 mb-2">Evaluate Answer Sheet</h2>
-      <p className="text-gray-500 text-sm mb-6">
-        Upload both images — the system runs OCR on each and evaluates the student's answer.
-      </p>
-
-      {/* ── Answer sheet ── */}
-      <p className="text-sm font-semibold text-gray-700 mb-2">
-        Student Answer Sheet <span className="text-red-500">*</span>
-      </p>
-      <div
-        {...getAnswerRootProps()}
-        className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition ${
-          isAnswerDragActive
-            ? 'border-blue-500 bg-blue-50'
-            : answerFile
-            ? 'border-blue-400 bg-blue-50'
-            : 'border-gray-300 hover:border-blue-400 bg-white'
-        }`}
-      >
-        <input {...getAnswerInputProps()} />
-        {answerFile ? (
-          <div>
-            <p className="text-blue-600 font-medium">{answerFile.name}</p>
-            <p className="text-gray-400 text-sm mt-1">Click to replace</p>
-          </div>
-        ) : (
-          <div>
-            <p className="text-gray-400">Drag & drop answer sheet image, or click to select</p>
-            <p className="text-gray-300 text-sm mt-1">PNG, JPG supported</p>
-          </div>
-        )}
+    <div className="max-w-3xl mx-auto py-4">
+      <div className="mb-8">
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Evaluate Answer Sheet</h2>
+        <p className="text-gray-400 text-sm">Upload both images to begin the evaluation pipeline.</p>
       </div>
 
-      {answerFile && (
-        <div className="mt-3">
-          <img
-            src={URL.createObjectURL(answerFile)}
-            alt="Answer sheet preview"
-            className="rounded-lg max-h-40 object-contain border border-gray-200"
-          />
+      {/* Upload grid */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        {/* Answer sheet */}
+        <div>
+          <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+            Student Answer Sheet <span className="text-red-400 normal-case font-normal">*</span>
+          </p>
+          <div
+            {...getAnswerRootProps()}
+            className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all min-h-[160px] flex flex-col items-center justify-center ${
+              isAnswerDragActive
+                ? 'border-blue-400 bg-blue-50'
+                : answerFile
+                ? 'border-blue-300 bg-blue-50/40'
+                : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
+            }`}
+          >
+            <input {...getAnswerInputProps()} />
+            {answerFile ? (
+              <>
+                <img
+                  src={URL.createObjectURL(answerFile)}
+                  alt="Answer sheet preview"
+                  className="rounded-lg max-h-28 object-contain mb-2"
+                />
+                <p className="text-xs text-blue-600 font-medium truncate max-w-full px-2">{answerFile.name}</p>
+                <p className="text-xs text-gray-400 mt-0.5">Click to replace</p>
+              </>
+            ) : (
+              <>
+                <UploadIcon />
+                <p className="text-xs text-gray-400 mt-2">Drag & drop or click to select</p>
+                <p className="text-xs text-gray-300 mt-0.5">PNG, JPG</p>
+              </>
+            )}
+          </div>
         </div>
-      )}
 
-      {/* ── Marking scheme ── */}
-      <p className="text-sm font-semibold text-gray-700 mt-6 mb-2">
-        Marking Scheme <span className="text-red-500">*</span>
-      </p>
-      <div
-        {...getSchemeRootProps()}
-        className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition ${
-          isSchemeDragActive
-            ? 'border-green-500 bg-green-50'
-            : schemeFile
-            ? 'border-green-400 bg-green-50'
-            : 'border-gray-300 hover:border-green-400 bg-white'
-        }`}
-      >
-        <input {...getSchemeInputProps()} />
-        {schemeFile ? (
-          <div>
-            <p className="text-green-600 font-medium">{schemeFile.name}</p>
-            <p className="text-gray-400 text-sm mt-1">Click to replace</p>
+        {/* Marking scheme */}
+        <div>
+          <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+            Marking Scheme <span className="text-red-400 normal-case font-normal">*</span>
+          </p>
+          <div
+            {...getSchemeRootProps()}
+            className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all min-h-[160px] flex flex-col items-center justify-center ${
+              isSchemeDragActive
+                ? 'border-emerald-400 bg-emerald-50'
+                : schemeFile
+                ? 'border-emerald-300 bg-emerald-50/40'
+                : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
+            }`}
+          >
+            <input {...getSchemeInputProps()} />
+            {schemeFile ? (
+              <>
+                <img
+                  src={URL.createObjectURL(schemeFile)}
+                  alt="Marking scheme preview"
+                  className="rounded-lg max-h-28 object-contain mb-2"
+                />
+                <p className="text-xs text-emerald-600 font-medium truncate max-w-full px-2">{schemeFile.name}</p>
+                <p className="text-xs text-gray-400 mt-0.5">Click to replace</p>
+              </>
+            ) : (
+              <>
+                <UploadIcon />
+                <p className="text-xs text-gray-400 mt-2">Drag & drop or click to select</p>
+                <p className="text-xs text-gray-300 mt-0.5">PNG, JPG</p>
+              </>
+            )}
           </div>
-        ) : (
-          <div>
-            <p className="text-gray-400">Drag & drop marking scheme image, or click to select</p>
-            <p className="text-gray-300 text-sm mt-1">PNG, JPG supported</p>
-          </div>
-        )}
+        </div>
       </div>
 
-      {schemeFile && (
-        <div className="mt-3">
-          <img
-            src={URL.createObjectURL(schemeFile)}
-            alt="Marking scheme preview"
-            className="rounded-lg max-h-40 object-contain border border-gray-200"
-          />
-        </div>
-      )}
-
+      {/* Pipeline progress */}
       {loading && (
-        <div className="mt-5 text-sm text-blue-600 font-medium animate-pulse">{step}</div>
+        <div className="bg-white rounded-xl border border-gray-100 px-5 py-4 mb-4">
+          <div className="flex items-center gap-2">
+            {PIPELINE_STEPS.map((s, i) => {
+              const done = i < activeIdx
+              const active = s.key === activeStep
+              return (
+                <div key={s.key} className="flex items-center gap-2">
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 font-semibold ${
+                      done
+                        ? 'bg-green-100 text-green-600'
+                        : active
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-100 text-gray-400'
+                    }`}
+                  >
+                    {done ? '✓' : i + 1}
+                  </div>
+                  <span
+                    className={`text-xs font-medium ${
+                      done ? 'text-green-600' : active ? 'text-blue-600' : 'text-gray-400'
+                    }`}
+                  >
+                    {s.label}
+                  </span>
+                  {i < PIPELINE_STEPS.length - 1 && (
+                    <div className="w-5 h-px bg-gray-200 mx-1" />
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
       )}
 
-      {error && <p className="mt-4 text-red-500 text-sm">{error}</p>}
+      {error && (
+        <div className="bg-red-50 border border-red-100 rounded-lg px-4 py-3 mb-4">
+          <p className="text-red-600 text-sm">{error}</p>
+        </div>
+      )}
 
       <button
         onClick={handleSubmit}
         disabled={!answerFile || !schemeFile || loading}
-        className="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+        className="w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
       >
-        {loading ? 'Evaluating...' : 'Evaluate Answer'}
+        {loading ? 'Evaluating…' : 'Evaluate Answer Sheet'}
       </button>
     </div>
   )
