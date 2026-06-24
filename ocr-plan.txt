@@ -1,0 +1,146 @@
+# Module 01 — OCR Service Plan
+
+**Owner:** Wijesinghe W.D.A.C. (214235T)
+**Port:** 8001
+**Project:** IN4911 | Team InnovateX | University of Moratuwa 2026
+
+---
+
+## Purpose
+
+Accept a handwritten exam-paper image, preprocess it with OpenCV, segment into zones,
+run EasyOCR (text) + pix2tex (math) on each zone, and return structured JSON for Module 02.
+
+---
+
+## Pipeline
+
+```
+Image → Grayscale → GaussianBlur → AdaptiveThreshold → Deskew
+     → Segment (top 20% = question, mid 60% = steps, bot 20% = answer)
+     → TextOCR (question, answer zones)
+     → MathOCR (each step row, with EasyOCR fallback)
+     → OCRResponse JSON
+```
+
+---
+
+## Output Shape (consumed by Module 02)
+
+```json
+{
+  "image_path": "answer_sheet.png",
+  "question_text": "Solve x^2 + x - 6 = 0",
+  "answer_text": "",
+  "student_steps": [
+    { "step_number": 1, "expression": "x^2 + x - 6 = 0",    "marks_awarded": 0.0 },
+    { "step_number": 2, "expression": "(x + 3)(x - 2) = 0", "marks_awarded": 0.0 },
+    { "step_number": 3, "expression": "x = -3 or x = -2",   "marks_awarded": 0.0 }
+  ],
+  "linked_question": "Solve x^2 + x - 6 = 0"
+}
+```
+
+---
+
+## Files Implemented
+
+| File | Purpose |
+|---|---|
+| app/config/settings.py | Pydantic BaseSettings — port 8001, CORS, version |
+| app/core/exceptions.py | InvalidImageError (400), ImageProcessingError (500), OCRFailedError (500) |
+| app/core/handlers.py | 4-level exception handler → structured JSON error envelope |
+| app/models/schemas.py | StudentStep, OCRResponse (matches shared/models/common.py) |
+| app/services/preprocessor.py | OpenCV: grayscale, blur, threshold, deskew, fixed-zone segment, row-split |
+| app/services/text_ocr.py | EasyOCR wrapper — lazy load, math normalization (~→-, X→x) |
+| app/services/math_ocr.py | pix2tex wrapper — lazy load, EasyOCR fallback if pix2tex fails |
+| app/routers/ocr.py | POST /api/v1/ocr — full pipeline, verbose terminal output per request |
+| app/main.py | FastAPI app, lifespan singletons, CORS middleware, GET /health |
+| tests/test_ocr.py | Standalone test — generates synthetic image if none exists, asserts output |
+| tests/generate_samples.py | Generates answer_sheet.png and marking_scheme.png for testing |
+| tests/sample_image/answer_sheet.png | Sample student answer (sign error in Step 3) |
+| tests/sample_image/marking_scheme.png | Sample marking scheme with marks per step |
+
+---
+
+## How to Run
+
+```powershell
+cd services\ocr-service
+
+# First time only
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+Copy-Item .env.example .env
+
+# Start service
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --port 8001 --reload
+```
+
+- Health check : http://localhost:8001/health
+- Swagger UI   : http://localhost:8001/docs
+- Standalone test: .\.venv\Scripts\python.exe tests\test_ocr.py
+
+---
+
+## pix2tex Fine-Tuning (Accuracy Improvement)
+
+Base EasyOCR misreads math symbols. Fine-tuning pix2tex on algebra samples fixes this.
+
+### Step 1 — Generate synthetic dataset
+
+```powershell
+.\.venv\Scripts\python.exe training\generate_dataset.py
+```
+
+Produces ~480 images (16 algebra expressions x 30 variants each) with random font,
+size, blur and rotation to simulate handwriting.
+
+Output:
+- training/data/images/sample_NNN_VV.png
+- training/data/dataset.csv  (columns: filename, formula)
+
+### Step 2 — Install training extras
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install "pix2tex[train]"
+```
+
+### Step 3 — Fine-tune
+
+```powershell
+.\.venv\Scripts\python.exe training\train.py
+```
+
+Config (training/train_config.yaml):
+- batchsize : 4  (increase to 16 on GPU)
+- epochs    : 15
+- lr        : 0.0001
+- output    : training/checkpoints/
+
+Training time: CPU ~3-5 hrs | GPU ~20-30 min
+
+### Step 4 — Enable checkpoint
+
+Add to .env:
+  PIX2TEX_CHECKPOINT=training/checkpoints/best_model.pth
+
+Restart the service — checkpoint loads automatically at startup.
+
+---
+
+## Expected OCR Improvement
+
+| Expression            | EasyOCR (current)       | Fine-tuned pix2tex       |
+|-----------------------|-------------------------|--------------------------|
+| x^2 + x - 6 = 0      | x^2 + X 6 =             | x^2 + x - 6 = 0         |
+| (x + 3)(x - 2) = 0   | (* 3) (x 2)             | (x + 3)(x - 2) = 0      |
+| x = -3 or x = -2     | X = -3 or X = ~2        | x = -3 or x = -2        |
+
+---
+
+## Known Limitations
+
+- EasyOCR drops small math symbols (-, =) — install pix2tex to fix
+- Fixed-zone segmentation assumes standard exam paper layout (question at top, steps in middle)
+- pix2tex outputs LaTeX notation (x^{2}) not plain text — normalization may be needed downstream

@@ -1,5 +1,5 @@
 """
-LoRA Fine-tuning Script for Gemma 3n
+LoRA Fine-tuning Script for Qwen2.5-3B-Instruct
 Module 03 — Stepwise Feedback Generation
 
 Usage:
@@ -16,10 +16,12 @@ from trl import SFTTrainer
 
 
 def train():
-    model_name = os.getenv("BASE_MODEL", "google/gemma-3n-E2B-it")
+    model_name = os.getenv("BASE_MODEL", "Qwen/Qwen2.5-3B-Instruct")
     dataset_path = os.getenv("DATASET_PATH", "app/training/data/feedback_dataset.json")
     output_dir = os.getenv("OUTPUT_DIR", "./lora-adapter")
-    run_name = os.getenv("WANDB_RUN_NAME", "gemma3n-feedback-lora")
+    run_name = os.getenv("WANDB_RUN_NAME", "qwen25-3b-feedback-lora")
+
+    use_cuda = torch.cuda.is_available()
 
     # Load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -28,7 +30,7 @@ def train():
     # Load base model
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        torch_dtype=torch.float16,
+        torch_dtype=torch.float16 if use_cuda else torch.float32,
         device_map="auto",
     )
     model.enable_input_require_grads()
@@ -36,8 +38,8 @@ def train():
     # LoRA config — targets attention projection layers
     lora_config = LoraConfig(
         task_type=TaskType.CAUSAL_LM,
-        r=16,                                              # LoRA rank
-        lora_alpha=32,                                     # Scaling factor
+        r=16,
+        lora_alpha=32,
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
         lora_dropout=0.05,
         bias="none",
@@ -56,14 +58,14 @@ def train():
         per_device_train_batch_size=2,
         gradient_accumulation_steps=4,
         learning_rate=2e-4,
-        fp16=True,
+        fp16=use_cuda,
         logging_steps=10,
         save_strategy="epoch",
-        evaluation_strategy="no",
+        eval_strategy="no",
         warmup_ratio=0.03,
         lr_scheduler_type="cosine",
         report_to="wandb",
-        optim="paged_adamw_8bit",
+        optim="paged_adamw_8bit" if use_cuda else "adamw_torch",
     )
 
     trainer = SFTTrainer(
