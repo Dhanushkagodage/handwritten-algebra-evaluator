@@ -9,12 +9,13 @@ Runs AFTER all three parallel agents complete in the LangGraph workflow.
 import json
 import logging
 import re
+from collections import defaultdict
 from pathlib import Path
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from pydantic import ValidationError
 
-from app.schemas.output_schema import EvaluationOutput
+from app.schemas.output_schema import EvaluationOutput, StepAnalysis
 from app.services.llm_factory import get_cached_llm
 
 logger = logging.getLogger(__name__)
@@ -42,6 +43,72 @@ def _extract_json(text: str) -> dict:
                 end = i
                 break
     return json.loads(clean[start : end + 1])
+
+
+def _apply_marking_rules(
+    output: EvaluationOutput,
+    step_validation: dict,
+    scheme_mark_map: dict,
+) -> EvaluationOutput:
+    """
+    Deterministic post-processor applied after BOTH the LLM path and the fallback path.
+
+    Rule 1 — Incorrect steps always get 0 marks.
+    Rule 2 — When multiple student steps map to the same scheme step (sub-steps),
+              only the single best-matching step earns marks for that scheme step;
+              all other sub-steps are zeroed. This prevents total_marks > max_marks.
+    """
+    steps: list[StepAnalysis] = output.steps_analysis
+
+    # Build quick status lookup from step-validation agent output
+    status_map: dict[int, str] = {
+        v["step_id"]: v.get("status", "unclear")
+        for v in step_validation.get("step_validations", [])
+    }
+
+    # Rule 1: force 0 marks for any step the validation agent marked incorrect
+    for step in steps:
+        if status_map.get(step.step_id) == "incorrect" and step.marks_awarded > 0:
+            logger.info(
+                "[SupervisorAgent] Rule1: step %d set to 0 (incorrect)", step.step_id
+            )
+            step.marks_awarded = 0.0
+            step.validity = False
+            step.status = "incorrect"
+
+    # Rule 2: group sub-steps by scheme step; keep marks only on the best one
+    groups: dict[int, list[StepAnalysis]] = defaultdict(list)
+    for step in steps:
+        if step.matched_scheme_step is not None:
+            groups[step.matched_scheme_step].append(step)
+
+    for scheme_no, group in groups.items():
+        if len(group) == 1:
+            continue  # single mapping — no issue
+        cap = float(scheme_mark_map.get(scheme_no, 0.0))
+        total = sum(s.marks_awarded for s in group)
+        if total <= cap:
+            continue  # already within limit — no issue
+
+        # Pick the step with the highest match_score (last step wins ties)
+        best = max(group, key=lambda s: (s.match_score, s.step_id))
+        best_marks = min(round(best.match_score * cap * 2) / 2, cap)
+
+        logger.info(
+            "[SupervisorAgent] Rule2: scheme step %d — %d sub-steps, total=%.1f > cap=%.1f. "
+            "Awarding %.1f to step %d only.",
+            scheme_no, len(group), total, cap, best_marks, best.step_id,
+        )
+        for step in group:
+            step.marks_awarded = best_marks if step is best else 0.0
+
+    # Recompute totals
+    output.total_marks = round(sum(s.marks_awarded for s in steps), 2)
+    output.percentage = (
+        round((output.total_marks / output.max_marks) * 100, 1)
+        if output.max_marks > 0 else 0.0
+    )
+    return output
 
 
 def _build_fallback_output(
@@ -97,10 +164,11 @@ def _build_fallback_output(
             "confidence": 0.3,
         })
 
-    max_marks = marking_scheme.get("total_marks", 0.0)
+    max_marks = float(marking_scheme.get("total_marks", 0.0))
+    total_marks = sum(s["marks_awarded"] for s in steps_analysis)
     percentage = round((total_marks / max_marks) * 100, 1) if max_marks > 0 else 0.0
 
-    return EvaluationOutput(
+    fallback = EvaluationOutput(
         steps_analysis=steps_analysis,
         total_marks=total_marks,
         max_marks=max_marks,
@@ -109,6 +177,7 @@ def _build_fallback_output(
         method_feedback=f"Detected method: {method_detection.get('detected_method', 'undetermined')}.",
         missing_steps_feedback=None,
     )
+    return _apply_marking_rules(fallback, step_validation, scheme_mark_map)
 
 
 def supervisor_agent(state: dict) -> dict:
@@ -120,6 +189,10 @@ def supervisor_agent(state: dict) -> dict:
     method_detection: dict = state["method_detection_output"]
     scheme_matching: dict = state["scheme_matching_output"]
     marking_scheme: dict = state["marking_scheme"]
+
+    scheme_mark_map: dict = {
+        s["step_no"]: s["marks"] for s in marking_scheme["steps"]
+    }
 
     llm = get_cached_llm()
 
@@ -142,6 +215,7 @@ def supervisor_agent(state: dict) -> dict:
             response = llm.invoke(messages)
             raw = _extract_json(response.content)
             validated = EvaluationOutput(**raw)
+            validated = _apply_marking_rules(validated, step_validation, scheme_mark_map)
             logger.info(
                 "[SupervisorAgent] Success — total_marks=%.1f/%.1f (%.1f%%)",
                 validated.total_marks,

@@ -42,7 +42,7 @@ async def evaluate(request: Optional[EvaluationRequest] = None) -> EvaluationOut
     #  the req body is not available then execute with the selected json 
     if request is None:
         # Resolve path relative to routes.py's directory for robustness
-        test_file = Path(__file__).resolve().parent.parent.parent / "tests" / "test_cases" / "tc09_induction_perfect.json"
+        test_file = Path(__file__).resolve().parent.parent.parent / "tests" / "test_cases" / "tc10_induction_missing_hypothesis.json"
 
         logger.info(
             "[/evaluate] No request body provided. Loading %s",
