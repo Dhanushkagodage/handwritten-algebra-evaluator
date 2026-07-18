@@ -16,6 +16,7 @@ from pydantic import ValidationError
 
 from app.schemas.output_schema import MethodDetectionOutput
 from app.services.llm_factory import get_cached_llm
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,11 @@ def method_detection_agent(state: dict) -> dict:
     question_text: str = state["question_text"]
     student_steps: list = state["student_steps"]
 
-    llm = get_cached_llm()
+    llm = get_cached_llm(
+        provider=settings.llm_provider,
+        model=settings.get_method_detect_model(),
+        temperature=settings.llm_temperature,
+    )
 
     human_text = (
         f"Question:\n{question_text}\n\n"

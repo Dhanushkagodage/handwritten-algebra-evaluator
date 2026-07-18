@@ -17,6 +17,7 @@ from pydantic import ValidationError
 
 from app.schemas.output_schema import EvaluationOutput, StepAnalysis
 from app.services.llm_factory import get_cached_llm
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -194,7 +195,11 @@ def supervisor_agent(state: dict) -> dict:
         s["step_no"]: s["marks"] for s in marking_scheme["steps"]
     }
 
-    llm = get_cached_llm()
+    llm = get_cached_llm(
+        provider=settings.llm_provider,
+        model=settings.get_supervisor_model(),
+        temperature=settings.llm_temperature,
+    )
 
     human_text = (
         f"## Step Validation Agent Output\n{json.dumps(step_validation, indent=2)}\n\n"
