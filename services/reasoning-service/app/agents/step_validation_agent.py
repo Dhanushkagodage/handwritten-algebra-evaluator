@@ -16,6 +16,7 @@ from pydantic import ValidationError
 
 from app.schemas.output_schema import StepValidationOutput
 from app.services.llm_factory import get_cached_llm
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -52,11 +53,19 @@ def step_validation_agent(state: dict) -> dict:
     question_text: str = state["question_text"]
     student_steps: list = state["student_steps"]
 
-    llm = get_cached_llm()
+    llm = get_cached_llm(
+        provider=settings.llm_provider,
+        model=settings.get_step_check_model(),
+        temperature=settings.llm_temperature,
+    )
 
     human_text = (
         f"Question:\n{question_text}\n\n"
-        f"Student Steps:\n{json.dumps(student_steps, indent=2)}"
+        f"Student Steps:\n{json.dumps(student_steps, indent=2)}\n\n"
+        "EVALUATION REMINDER: Before marking any step incorrect, mentally compute all "
+        "arithmetic in that step (e.g., evaluate powers like (-2)^3 = -8, products like "
+        "2×(-8) = -16, etc.) and verify mathematical equivalence of LHS and RHS after "
+        "full expansion. An unevaluated but mathematically correct form is NOT an error."
     )
 
     last_error: Exception | None = None

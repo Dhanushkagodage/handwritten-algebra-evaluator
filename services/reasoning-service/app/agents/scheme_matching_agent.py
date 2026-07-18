@@ -16,6 +16,7 @@ from pydantic import ValidationError
 
 from app.schemas.output_schema import SchemeMatchingOutput
 from app.services.llm_factory import get_cached_llm
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,11 @@ def scheme_matching_agent(state: dict) -> dict:
     student_steps: list = state["student_steps"]
     marking_scheme: dict = state["marking_scheme"]
 
-    llm = get_cached_llm()
+    llm = get_cached_llm(
+        provider=settings.llm_provider,
+        model=settings.get_scheme_model(),
+        temperature=settings.llm_temperature,
+    )
 
     human_text = (
         f"Student Steps:\n{json.dumps(student_steps, indent=2)}\n\n"

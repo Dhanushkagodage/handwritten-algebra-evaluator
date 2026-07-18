@@ -36,6 +36,10 @@ Then compute overall totals and write a summary.
 - If step_validation says "correct" but match_score < 0.4: award partial marks (0.5 × scheme marks)
 - If step_validation says "incorrect": the step is mathematically wrong; ALWAYS award 0.0 marks for it even if match_score is high.
 - If confidence from any agent is below 0.5: apply conservative (lower) mark
+- **Coherence Override** *(CRITICAL)*: If the student's final answer is correct AND the overall solution is logically self-consistent (each step following from the previous), but the step_validation agent flagged one or more intermediate steps as "incorrect", you MUST re-examine those steps yourself.
+  - Reason: The step_validation agent may incorrectly flag mathematically equivalent unevaluated forms (e.g., writing `2(-8)` instead of `-16`).
+  - Action: If YOU independently verify the flagged step is actually mathematically correct (just written in an unevaluated form), treat it as "correct" for mark-awarding purposes and set its marks accordingly.
+  - This override applies ONLY when: (a) the final answer is provably correct, AND (b) the step, when fully expanded, is mathematically true.
 
 
 ## OUTPUT FORMAT

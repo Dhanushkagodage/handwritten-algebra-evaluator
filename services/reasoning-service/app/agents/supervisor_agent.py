@@ -17,6 +17,7 @@ from pydantic import ValidationError
 
 from app.schemas.output_schema import EvaluationOutput, StepAnalysis
 from app.services.llm_factory import get_cached_llm
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +54,9 @@ def _apply_marking_rules(
     """
     Deterministic post-processor applied after BOTH the LLM path and the fallback path.
 
-    Rule 1 — Incorrect steps always get 0 marks.
+    Rule 1 — Incorrect steps always get 0 marks, UNLESS the supervisor LLM independently
+              awarded marks > 0 to that step (coherence override: supervisor verified the
+              step is actually correct despite step_validation flagging it).
     Rule 2 — When multiple student steps map to the same scheme step (sub-steps),
               only the single best-matching step earns marks for that scheme step;
               all other sub-steps are zeroed. This prevents total_marks > max_marks.
@@ -66,15 +69,32 @@ def _apply_marking_rules(
         for v in step_validation.get("step_validations", [])
     }
 
-    # Rule 1: force 0 marks for any step the validation agent marked incorrect
+    # Rule 1: force 0 marks for any step the validation agent marked incorrect,
+    # BUT respect coherence override: if the supervisor LLM already awarded marks > 0
+    # for this step, it means the supervisor independently verified the step is correct
+    # (e.g., the student wrote an unevaluated-but-valid intermediate form).
     for step in steps:
-        if status_map.get(step.step_id) == "incorrect" and step.marks_awarded > 0:
-            logger.info(
-                "[SupervisorAgent] Rule1: step %d set to 0 (incorrect)", step.step_id
-            )
-            step.marks_awarded = 0.0
-            step.validity = False
-            step.status = "incorrect"
+        if status_map.get(step.step_id) == "incorrect":
+            if step.marks_awarded > 0:
+                # Supervisor says correct (marks > 0) but step_validation says incorrect.
+                # Trust the supervisor — it has full context and performs its own math check.
+                logger.info(
+                    "[SupervisorAgent] CoherenceOverride: step %d kept %.1f marks "
+                    "(supervisor verified correct; step_validation was wrong).",
+                    step.step_id,
+                    step.marks_awarded,
+                )
+                # Align the validity fields to match supervisor's verdict
+                step.validity = True
+                step.status = "correct"
+            else:
+                # Both supervisor and step_validation agree it's wrong → zero marks
+                logger.info(
+                    "[SupervisorAgent] Rule1: step %d set to 0 (incorrect)", step.step_id
+                )
+                step.marks_awarded = 0.0
+                step.validity = False
+                step.status = "incorrect"
 
     # Rule 2: group sub-steps by scheme step; keep marks only on the best one
     groups: dict[int, list[StepAnalysis]] = defaultdict(list)
@@ -109,6 +129,7 @@ def _apply_marking_rules(
         if output.max_marks > 0 else 0.0
     )
     return output
+
 
 
 def _build_fallback_output(
@@ -194,7 +215,11 @@ def supervisor_agent(state: dict) -> dict:
         s["step_no"]: s["marks"] for s in marking_scheme["steps"]
     }
 
-    llm = get_cached_llm()
+    llm = get_cached_llm(
+        provider=settings.llm_provider,
+        model=settings.get_supervisor_model(),
+        temperature=settings.llm_temperature,
+    )
 
     human_text = (
         f"## Step Validation Agent Output\n{json.dumps(step_validation, indent=2)}\n\n"
