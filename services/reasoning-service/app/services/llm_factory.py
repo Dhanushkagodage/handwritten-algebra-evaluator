@@ -66,10 +66,22 @@ def get_llm(
 
 
 @lru_cache(maxsize=4)
-def get_cached_llm(
-    provider: str = "openai",
-    model: str = "gpt-4o-mini",
-    temperature: float = 0.0,
+def _get_cached_llm_internal(
+    provider: str,
+    model: str,
+    temperature: float,
 ) -> BaseChatModel:
-    """Cached LLM factory — one instance per (provider, model, temperature)."""
+    """Internal cached resolver."""
     return get_llm(provider=provider, model=model, temperature=temperature)
+
+
+def get_cached_llm(
+    provider: str | None = None,
+    model: str | None = None,
+    temperature: float | None = None,
+) -> BaseChatModel:
+    """Cached LLM factory — resolves settings defaults before caching."""
+    p = provider if provider is not None else settings.llm_provider
+    m = model if model is not None else settings.llm_model
+    t = temperature if temperature is not None else settings.llm_temperature
+    return _get_cached_llm_internal(p, m, t)
