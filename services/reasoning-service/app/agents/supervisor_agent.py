@@ -49,6 +49,7 @@ def _apply_marking_rules(
     output: EvaluationOutput,
     step_validation: dict,
     scheme_mark_map: dict,
+    max_marks: float,
 ) -> EvaluationOutput:
     """
     Deterministic post-processor applied after BOTH the LLM path and the fallback path.
@@ -123,6 +124,9 @@ def _apply_marking_rules(
         )
         for step in group:
             step.marks_awarded = best_marks if step is best else 0.0
+
+    # Force max_marks to match the official marking scheme
+    output.max_marks = max_marks
 
     # Recompute totals
     output.total_marks = round(sum(s.marks_awarded for s in steps), 2)
@@ -199,7 +203,7 @@ def _build_fallback_output(
         method_feedback=f"Detected method: {method_detection.get('detected_method', 'undetermined')}.",
         missing_steps_feedback=None,
     )
-    return _apply_marking_rules(fallback, step_validation, scheme_mark_map)
+    return _apply_marking_rules(fallback, step_validation, scheme_mark_map, max_marks)
 
 
 def supervisor_agent(state: dict) -> dict:
@@ -215,6 +219,7 @@ def supervisor_agent(state: dict) -> dict:
     scheme_mark_map: dict = {
         s["step_no"]: s["marks"] for s in marking_scheme["steps"]
     }
+    official_max_marks = float(marking_scheme.get("total_marks", 0.0))
 
     llm = get_cached_llm()
 
@@ -237,7 +242,7 @@ def supervisor_agent(state: dict) -> dict:
             response = llm.invoke(messages)
             raw = _extract_json(response.content)
             validated = EvaluationOutput(**raw)
-            validated = _apply_marking_rules(validated, step_validation, scheme_mark_map)
+            validated = _apply_marking_rules(validated, step_validation, scheme_mark_map, official_max_marks)
             logger.info(
                 "[SupervisorAgent] Success — total_marks=%.1f/%.1f (%.1f%%)",
                 validated.total_marks,
