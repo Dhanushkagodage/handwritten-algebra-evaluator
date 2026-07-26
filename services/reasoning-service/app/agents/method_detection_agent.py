@@ -45,6 +45,11 @@ def _extract_json(text: str) -> dict:
     return json.loads(clean[start : end + 1])
 
 
+def _j(data) -> str:
+    """Compact JSON serialisation — minimal tokens for LLM input."""
+    return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+
+
 def method_detection_agent(state: dict) -> dict:
     """
     LangGraph node: detects the mathematical method used by the student.
@@ -61,7 +66,7 @@ def method_detection_agent(state: dict) -> dict:
 
     human_text = (
         f"Question:\n{question_text}\n\n"
-        f"Student Steps:\n{json.dumps(student_steps, indent=2)}"
+        f"Student Steps:\n{_j(student_steps)}"
     )
 
     last_error: Exception | None = None

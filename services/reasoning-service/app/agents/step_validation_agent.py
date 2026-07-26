@@ -45,6 +45,11 @@ def _extract_json(text: str) -> dict:
     return json.loads(clean[start : end + 1])
 
 
+def _j(data) -> str:
+    """Compact JSON serialisation — minimal tokens for LLM input."""
+    return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+
+
 def step_validation_agent(state: dict) -> dict:
     """
     LangGraph node: validates each student step mathematically.
@@ -61,7 +66,7 @@ def step_validation_agent(state: dict) -> dict:
 
     human_text = (
         f"Question:\n{question_text}\n\n"
-        f"Student Steps:\n{json.dumps(student_steps, indent=2)}\n\n"
+        f"Student Steps:\n{_j(student_steps)}\n\n"
         "EVALUATION REMINDER: Before marking any step incorrect, mentally compute all "
         "arithmetic in that step (e.g., evaluate powers like (-2)^3 = -8, products like "
         "2×(-8) = -16, etc.) and verify mathematical equivalence of LHS and RHS after "

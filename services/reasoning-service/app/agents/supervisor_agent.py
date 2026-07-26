@@ -46,6 +46,11 @@ def _extract_json(text: str) -> dict:
     return json.loads(clean[start : end + 1])
 
 
+def _j(data) -> str:
+    """Compact JSON serialisation — minimal tokens for LLM input."""
+    return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+
+
 def _apply_marking_rules(
     output: EvaluationOutput,
     step_validation: dict,
@@ -222,10 +227,10 @@ def supervisor_agent(state: dict) -> dict:
     )
 
     human_text = (
-        f"## Step Validation Agent Output\n{json.dumps(step_validation, indent=2)}\n\n"
-        f"## Method Detection Agent Output\n{json.dumps(method_detection, indent=2)}\n\n"
-        f"## Scheme Matching Agent Output\n{json.dumps(scheme_matching, indent=2)}\n\n"
-        f"## Official Marking Scheme\n{json.dumps(marking_scheme, indent=2)}"
+        f"## Step Validation Agent Output\n{_j(step_validation)}\n\n"
+        f"## Method Detection Agent Output\n{_j(method_detection)}\n\n"
+        f"## Scheme Matching Agent Output\n{_j(scheme_matching)}\n\n"
+        f"## Official Marking Scheme\n{_j(marking_scheme)}"
     )
 
     last_error: Exception | None = None

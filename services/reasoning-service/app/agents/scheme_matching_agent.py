@@ -45,6 +45,11 @@ def _extract_json(text: str) -> dict:
     return json.loads(clean[start : end + 1])
 
 
+def _j(data) -> str:
+    """Compact JSON serialisation — minimal tokens for LLM input."""
+    return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+
+
 def scheme_matching_agent(state: dict) -> dict:
     """
     LangGraph node: maps student steps to marking scheme steps.
@@ -60,8 +65,8 @@ def scheme_matching_agent(state: dict) -> dict:
     )
 
     human_text = (
-        f"Student Steps:\n{json.dumps(student_steps, indent=2)}\n\n"
-        f"Marking Scheme Steps:\n{json.dumps(marking_scheme['steps'], indent=2)}"
+        f"Student Steps:\n{_j(student_steps)}\n\n"
+        f"Marking Scheme Steps:\n{_j(marking_scheme['steps'])}"
     )
 
     last_error: Exception | None = None

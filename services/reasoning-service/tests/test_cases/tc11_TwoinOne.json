@@ -1,0 +1,28 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve 2x² - 8x + 3 = 0 by completing the square. Give your answers in surd form.",
+    "student_steps": [
+      {"step_id": 1, "content": "2x² - 8x + 3 = 0"},
+      {"step_id": 2, "content": "x² - 4x + 3/2 = 0"},
+      {"step_id": 3, "content": "x² - 4x = -3/2"},
+      {"step_id": 4, "content": "(x - 2)² - 4 = -3/2"},
+      {"step_id": 5, "content": "(x - 2)² = 4 - 3/2 = 5/2"},
+      {"step_id": 6, "content": "x - 2 = ±√(5/2)"},
+      {"step_id": 7, "content": "x = 2 ± √(10)/2"}
+    ],
+    "final_answer": "x = 2 + √10/2 or x = 2 - √10/2"
+    
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Write the equation in standard form", "marks": 1},
+      {"step_no": 2, "description": "Divide through by leading coefficient to make x² coefficient = 1", "marks": 1},
+      {"step_no": 3, "description": "Rearrange so constant is on RHS", "marks": 1},
+      {"step_no": 4, "description": "Complete the square by adding (half of x-coefficient)² to both sides", "marks": 2},
+      {"step_no": 5, "description": "Simplify RHS correctly", "marks": 1},
+      {"step_no": 6, "description": "Take square root of both sides including ±", "marks": 1},
+      {"step_no": 7, "description": "State both solutions in surd/simplified form", "marks": 1}
+    ]
+  }
+}
