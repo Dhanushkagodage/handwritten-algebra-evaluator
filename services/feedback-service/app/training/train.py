@@ -36,6 +36,7 @@ def train():
         device_map="auto",
     )
     model.enable_input_require_grads()
+    model.config.use_cache = False
 
     # LoRA config — targets attention projection layers
     lora_config = LoraConfig(
@@ -61,8 +62,10 @@ def train():
         output_dir=output_dir,
         run_name=run_name,
         num_train_epochs=3,
-        per_device_train_batch_size=2,
-        gradient_accumulation_steps=4,
+        per_device_train_batch_size=1,
+        gradient_accumulation_steps=8,
+        gradient_checkpointing=True,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
         learning_rate=2e-4,
         fp16=use_cuda,
         logging_steps=10,
