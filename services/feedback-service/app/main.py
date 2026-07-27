@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Feedback Service",
     version="1.0.0",
-    description="Stepwise feedback generation using a local Qwen2.5 SLM (+ optional LoRA)",
+    description="Stepwise feedback generation using a LoRA-fine-tuned Qwen2.5-3B-Instruct, served via a Hugging Face Space",
     lifespan=lifespan,
 )
 

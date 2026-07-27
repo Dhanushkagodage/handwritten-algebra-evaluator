@@ -1,7 +1,8 @@
 # requirements-train.txt — install inside Colab/Kaggle for LoRA training
-# (train.py) or to run the trained-model server (colab_server.py). The
-# deployed feedback-service never needs this — it only calls the Colab
-# server over HTTP (TUNNEL_API_URL).
+# (train.py) and to push the trained adapter to Hugging Face Hub. The
+# deployed feedback-service never needs this — it only calls the Hugging
+# Face Space over HTTP (SPACE_API_URL). See app/serving/hf_space/DEPLOY.md
+# for the Space's own (separate) requirements.txt.
 -r requirements.txt
 # Exact-pinned (not ranges) — these versions are tested to work together on
 # Colab's T4 runtime. Newer trl/peft/transformers pull in optional
@@ -13,3 +14,4 @@ accelerate==0.33.0
 peft==0.12.0
 trl==0.9.6
 datasets==2.21.0
+huggingface_hub

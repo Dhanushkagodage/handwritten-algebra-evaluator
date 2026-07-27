@@ -4,5 +4,5 @@ pydantic>=2.0
 python-dotenv
 httpx
 
-# For LoRA training or running colab_server.py inside Colab/Kaggle:
+# For LoRA training inside Colab/Kaggle:
 #   pip install -r requirements-train.txt

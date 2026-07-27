@@ -1,3 +1,4 @@
+import asyncio
 import os
 import re
 from typing import Dict, List, Optional
@@ -18,9 +19,10 @@ class FeedbackGenerator:
 
     Calls your own LoRA-fine-tuned Qwen2.5-3B-Instruct — trained on Colab
     using the algebra dataset in app/training/dataset.py — over HTTP. The
-    model runs inside a free Colab GPU session (app/training/colab_server.py)
-    and is reached via a temporary public URL (TUNNEL_API_URL). See
-    app/training/COLAB.md for how to start it.
+    model is served by a persistent Hugging Face Space
+    (app/serving/hf_space/app.py) that pulls the adapter from Hugging Face
+    Hub, reached via SPACE_API_URL + API_KEY. See
+    app/serving/hf_space/DEPLOY.md for how to set it up.
 
     Generates four-component per-step feedback:
       1. What is correct
@@ -31,17 +33,19 @@ class FeedbackGenerator:
 
     def __init__(self):
         self._loaded = False
-        self._tunnel_url: Optional[str] = None
+        self._space_url: Optional[str] = None
+        self._api_key: Optional[str] = None
 
     async def load_model(self) -> None:
         if self._loaded:
             return
-        self._load_tunnel_client()
+        self._load_space_client()
         self._loaded = True
 
-    def _load_tunnel_client(self) -> None:
-        self._tunnel_url = os.getenv("TUNNEL_API_URL")
-        print(f"[FeedbackGenerator] calling trained model at {self._tunnel_url}")
+    def _load_space_client(self) -> None:
+        self._space_url = os.getenv("SPACE_API_URL")
+        self._api_key = os.getenv("API_KEY")
+        print(f"[FeedbackGenerator] calling trained model at {self._space_url}")
 
     # ------------------------------------------------------------------
     # Public interface
@@ -112,19 +116,41 @@ class FeedbackGenerator:
         ]
 
     # ------------------------------------------------------------------
-    # Inference — your fine-tuned model, called over the Colab tunnel
+    # Inference — your fine-tuned model, called over the HF Space
     # ------------------------------------------------------------------
 
     async def _run_inference(self, messages: List[Dict]) -> str:
-        return await self._run_tunnel_inference(messages)
+        return await self._run_space_inference(messages)
 
-    async def _run_tunnel_inference(self, messages: List[Dict]) -> str:
+    # Free HF Spaces sleep when idle and take ~30-90s to wake on the next
+    # request; a request landing during that window sees a connection
+    # failure or a 5xx before the container is ready, not a slow response
+    # (the 120s per-request timeout already covers slow-but-warm replies).
+    _SPACE_RETRY_DELAYS = (5, 15, 30)
+
+    async def _run_space_inference(self, messages: List[Dict]) -> str:
         import httpx
 
         async with httpx.AsyncClient(timeout=120) as client:
-            resp = await client.post(self._tunnel_url, json={"messages": messages})
-            resp.raise_for_status()
-            return resp.json()["text"].strip()
+            last_error: Optional[Exception] = None
+            for delay in (0,) + self._SPACE_RETRY_DELAYS:
+                if delay:
+                    await asyncio.sleep(delay)
+                try:
+                    resp = await client.post(
+                        self._space_url,
+                        json={"messages": messages},
+                        headers={"X-API-Key": self._api_key},
+                    )
+                    resp.raise_for_status()
+                    return resp.json()["text"].strip()
+                except httpx.HTTPStatusError as exc:
+                    if exc.response.status_code < 500:
+                        raise
+                    last_error = exc
+                except httpx.TransportError as exc:
+                    last_error = exc
+            raise last_error
 
     # ------------------------------------------------------------------
     # Response parsing

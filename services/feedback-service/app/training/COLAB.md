@@ -16,15 +16,16 @@ otherwise plain Python in the same cell/notebook).
 import os
 %cd /content
 if not os.path.exists("handwritten-algebra-evaluator"):
-    !git clone -b feedback-generation-module <repo-url>
+    !git clone -b move-feedback-finetune-modal-to-huggingface https://github.com/Dhanushkagodage/handwritten-algebra-evaluator.git
 %cd handwritten-algebra-evaluator/services/feedback-service
 ```
 ```
 !pip install -r requirements-train.txt
 ```
 Safe to re-run this cell any time — it won't re-clone (avoiding a nested,
-doubled-up directory) and it always pulls the `feedback-generation-module`
-branch, not whatever `main` currently contains.
+doubled-up directory) and it always pulls the
+`move-feedback-finetune-modal-to-huggingface` branch, not whatever `main`
+currently contains.
 
 ### If you need to delete and re-clone from scratch
 
@@ -63,30 +64,31 @@ Watch the logged `loss` (and `eval_loss`, since the eval split exists) —
 both should trend down. When it finishes, `./lora-adapter/` contains
 `adapter_model.safetensors` + `adapter_config.json`.
 
-## 5. Serve the trained adapter and call it from the app
+## 5. Push the trained adapter to Hugging Face Hub
 
-The deployed feedback-service never downloads or runs the model itself — it
-always calls your trained model over HTTP. Serve it straight from this Colab
-session:
+The deployed feedback-service never downloads or trains the model itself —
+it calls a persistent Hugging Face Space instead (see
+`app/serving/hf_space/DEPLOY.md` for the one-time Space setup). This Colab
+session's only job after training is to publish the adapter so the Space
+can pull it:
 
+```python
+from huggingface_hub import login, HfApi
+
+login(token="hf_...")  # write-scoped token — or os.environ["HF_TOKEN"]
+
+api = HfApi()
+REPO_ID = "DhanushkaGodage/qwen25-feedback-lora"
+api.create_repo(REPO_ID, private=True, exist_ok=True)
+api.upload_folder(folder_path="./lora-adapter", repo_id=REPO_ID)
 ```
-!pip install fastapi uvicorn
-!nohup uvicorn colab_server:app --host 0.0.0.0 --port 8000 --app-dir app/training &
-!wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
-!chmod +x cloudflared-linux-amd64
-!./cloudflared-linux-amd64 tunnel --url http://localhost:8000
-```
-The last command prints a temporary public URL like
-`https://random-words.trycloudflare.com`. Append `/generate` and put it in
-`.env` locally as `TUNNEL_API_URL`, restart the service — generation happens
-on Colab's GPU, nothing downloaded onto the machine running the service.
 
-**Limitation:** this URL is temporary. It changes every time the tunnel or
-the Colab session restarts, and stops working entirely once Colab
-disconnects (idle timeout, or the free-tier multi-hour cap). Treat this as
-"start Colab before a demo, copy the fresh URL into `.env`, present, then
-it's fine if it goes offline afterward" — not something to leave configured
-unattended.
+Confirm it worked by checking
+`https://huggingface.co/<REPO_ID>/tree/main` shows `adapter_model.safetensors`
+and `adapter_config.json`. Once pushed, this Colab session can be closed —
+the Space (which stays up independently) always serves the latest adapter
+you push here, and every future re-train just needs this same push step to
+update it live.
 
 ## Kaggle notes
 
