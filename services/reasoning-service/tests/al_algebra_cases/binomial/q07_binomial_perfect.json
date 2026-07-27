@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "topic": "binomial",
+    "solution_type": "perfect",
+    "question_number": 7
+  },
+  "reasoning_input": {
+    "question_text": "(a) Expand (1 + 3x)^(-2) as a series in ascending powers of x up to and including the term in x³, stating the range of values of x for which the expansion is valid. (b) Use your expansion to find an approximation to 1/(1.03)² to 4 decimal places.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "(1+3x)^(-2) = 1 + (-2)(3x) + (-2)(-3)/2! (3x)² + (-2)(-3)(-4)/3! (3x)³ + ..."
+      },
+      {
+        "step_id": 2,
+        "content": "= 1 - 6x + (6)(9x²)/2 - (24)(27x³)/6 + ..."
+      },
+      {
+        "step_id": 3,
+        "content": "= 1 - 6x + 27x² - 108x³ + ..."
+      },
+      {
+        "step_id": 4,
+        "content": "Valid for |3x| < 1, i.e., |x| < 1/3."
+      },
+      {
+        "step_id": 5,
+        "content": "Part (b): 1/(1.03)² = (1 + 3(0.01))^(-2), so x = 0.01."
+      },
+      {
+        "step_id": 6,
+        "content": "≈ 1 - 6(0.01) + 27(0.0001) - 108(0.000001)"
+      },
+      {
+        "step_id": 7,
+        "content": "= 1 - 0.06 + 0.0027 - 0.000108"
+      },
+      {
+        "step_id": 8,
+        "content": "= 0.942592"
+      }
+    ],
+    "final_answer": "(a) 1 - 6x + 27x² - 108x³, |x| < 1/3.  (b) ≈ 0.9426"
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Correct use of binomial series formula for negative index.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Correct coefficients: 1, -6, 27, -108.",
+        "marks": 3
+      },
+      {
+        "step_no": 3,
+        "description": "State validity |x| < 1/3.",
+        "marks": 1
+      },
+      {
+        "step_no": 4,
+        "description": "Identify x = 0.01 correctly for approximation.",
+        "marks": 1
+      },
+      {
+        "step_no": 5,
+        "description": "Substitute and compute each term correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 6,
+        "description": "State final 4 d.p. answer 0.9426.",
+        "marks": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "topic": "matrices",
+    "solution_type": "wrong_determinant",
+    "question_number": 20
+  },
+  "reasoning_input": {
+    "question_text": "Find the inverse of B = [[4, 3], [2, 1]].",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "det(B) = 4(1) - 3(2) = 4 - 6 = -2"
+      },
+      {
+        "step_id": 2,
+        "content": "Student writes: B⁻¹ = (1/(-2)) × [[1, 3], [-2, 4]]"
+      },
+      {
+        "step_id": 3,
+        "content": "ERROR: Student forgot to swap a and d. Should be [[1,-3],[-2,4]] but wrote [[1,3],[-2,4]]."
+      },
+      {
+        "step_id": 4,
+        "content": "B⁻¹ = [[-1/2, -3/2], [1, -2]]  (incorrect)"
+      }
+    ],
+    "final_answer": "[[-1/2, -3/2], [1, -2]] (incorrect — sign error in adjugate)"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Calculate det = -2 correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Form adjugate: swap a,d and negate b,c — student got sign wrong for b. 0 marks.",
+        "marks": 0
+      },
+      {
+        "step_no": 3,
+        "description": "Multiply by 1/det = -1/2 — applied but to wrong matrix.",
+        "marks": 1
+      },
+      {
+        "step_no": 4,
+        "description": "Final correct B⁻¹ not reached.",
+        "marks": 0
+      }
+    ]
+  }
+}

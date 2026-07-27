@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "topic": "induction",
+    "solution_type": "perfect",
+    "question_number": 1
+  },
+  "reasoning_input": {
+    "question_text": "Prove by mathematical induction that for all positive integers n, 1 + 2 + 3 + ... + n = n(n+1)/2.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Base case (n=1): LHS = 1. RHS = 1(1+1)/2 = 1. LHS = RHS. ✓"
+      },
+      {
+        "step_id": 2,
+        "content": "Inductive hypothesis: Assume true for n = k, i.e., 1+2+...+k = k(k+1)/2."
+      },
+      {
+        "step_id": 3,
+        "content": "Inductive step: Show true for n = k+1."
+      },
+      {
+        "step_id": 4,
+        "content": "LHS for n=k+1: 1+2+...+k+(k+1)"
+      },
+      {
+        "step_id": 5,
+        "content": "= k(k+1)/2 + (k+1)   [using hypothesis]"
+      },
+      {
+        "step_id": 6,
+        "content": "= (k+1)[k/2 + 1]"
+      },
+      {
+        "step_id": 7,
+        "content": "= (k+1)(k+2)/2"
+      },
+      {
+        "step_id": 8,
+        "content": "= (k+1)((k+1)+1)/2, which is the formula with n = k+1."
+      },
+      {
+        "step_id": 9,
+        "content": "Conclusion: By the principle of mathematical induction, the formula holds for all positive integers n."
+      }
+    ],
+    "final_answer": "Proved by mathematical induction."
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Verify base case n=1 correctly.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "State inductive hypothesis for n=k clearly.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Set up the sum for n=k+1 using the hypothesis.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Algebraic manipulation to reach (k+1)(k+2)/2.",
+        "marks": 3
+      },
+      {
+        "step_no": 5,
+        "description": "Recognise result matches formula for n=k+1.",
+        "marks": 1
+      },
+      {
+        "step_no": 6,
+        "description": "State conclusion invoking the induction principle.",
+        "marks": 1
+      }
+    ]
+  }
+}

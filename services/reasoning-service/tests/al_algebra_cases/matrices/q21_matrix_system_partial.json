@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "topic": "matrices",
+    "solution_type": "partially_correct_system",
+    "question_number": 21
+  },
+  "reasoning_input": {
+    "question_text": "Using matrices, solve: 2x - y = 3, x + 3y = 10.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Write in matrix form: [[2,-1],[1,3]] × [x,y]ᵀ = [3,10]ᵀ"
+      },
+      {
+        "step_id": 2,
+        "content": "det = 2(3) - (-1)(1) = 6 + 1 = 7"
+      },
+      {
+        "step_id": 3,
+        "content": "Inverse = (1/7)[[3,1],[-1,2]]"
+      },
+      {
+        "step_id": 4,
+        "content": "x = (1/7)(3×3 + 1×10) = (1/7)(19) = 19/7   ← WRONG: should be 3(3)+1(10)=19, x=19/7"
+      },
+      {
+        "step_id": 5,
+        "content": "y = (1/7)(-1×3 + 2×10) = (1/7)(17) = 17/7"
+      },
+      {
+        "step_id": 6,
+        "content": "Student does not verify. Also does not check if 19/7 and 17/7 satisfy original equations."
+      }
+    ],
+    "final_answer": "x = 19/7, y = 17/7 (correct values, no verification)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Set up matrix equation correctly.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Calculate det = 7.",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Write inverse correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Multiply to find x = 19/7.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Find y = 17/7.",
+        "marks": 1
+      },
+      {
+        "step_no": 6,
+        "description": "Verify — not done. 0 marks.",
+        "marks": 0
+      }
+    ]
+  }
+}

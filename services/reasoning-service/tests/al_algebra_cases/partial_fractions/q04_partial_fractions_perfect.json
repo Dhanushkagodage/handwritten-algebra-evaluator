@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "topic": "partial_fractions",
+    "solution_type": "perfect",
+    "question_number": 4
+  },
+  "reasoning_input": {
+    "question_text": "Express (5x + 1) / [(x-1)(x+2)(x-3)] in partial fractions.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "(5x+1)/[(x-1)(x+2)(x-3)] = A/(x-1) + B/(x+2) + C/(x-3)"
+      },
+      {
+        "step_id": 2,
+        "content": "Multiply both sides by (x-1)(x+2)(x-3):"
+      },
+      {
+        "step_id": 3,
+        "content": "5x+1 = A(x+2)(x-3) + B(x-1)(x-3) + C(x-1)(x+2)"
+      },
+      {
+        "step_id": 4,
+        "content": "Let x=1: 6 = A(3)(-2) → A = -1"
+      },
+      {
+        "step_id": 5,
+        "content": "Let x=-2: -9 = B(-3)(-5) = 15B → B = -3/5"
+      },
+      {
+        "step_id": 6,
+        "content": "Let x=3: 16 = C(2)(5) = 10C → C = 8/5"
+      },
+      {
+        "step_id": 7,
+        "content": "Result: -1/(x-1) + (-3/5)/(x+2) + (8/5)/(x-3)"
+      },
+      {
+        "step_id": 8,
+        "content": "Verification: At x=0: LHS = 1/[(-1)(2)(-3)] = 1/6. RHS = -1/(-1) + (-3/5)/2 + (8/5)/(-3) = 1 - 3/10 - 8/15 = 1/6 ✓"
+      }
+    ],
+    "final_answer": "-1/(x-1) - (3/5)/(x+2) + (8/5)/(x-3)"
+  },
+  "marking_scheme": {
+    "total_marks": 9,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Set up correct partial fraction form.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Multiply out and write identity correctly.",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Find A by substituting x=1.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Find B by substituting x=-2.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Find C by substituting x=3.",
+        "marks": 2
+      },
+      {
+        "step_no": 6,
+        "description": "State final answer clearly.",
+        "marks": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "topic": "quadratic",
+    "solution_type": "partially_correct_discriminant_sign_error",
+    "question_number": 14
+  },
+  "reasoning_input": {
+    "question_text": "Find the range of values of k for which the equation x² + kx + (k+3) = 0 has two distinct real roots.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "For two distinct real roots: discriminant > 0"
+      },
+      {
+        "step_id": 2,
+        "content": "b² - 4ac > 0: k² - 4(1)(k+3) > 0"
+      },
+      {
+        "step_id": 3,
+        "content": "k² - 4k - 12 > 0"
+      },
+      {
+        "step_id": 4,
+        "content": "(k-6)(k+2) > 0"
+      },
+      {
+        "step_id": 5,
+        "content": "Student writes: -2 < k < 6  ← WRONG direction for quadratic inequality."
+      }
+    ],
+    "final_answer": "-2 < k < 6 (incorrect — should be k < -2 or k > 6)"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "State discriminant condition b²-4ac > 0.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Substitute correctly: k²-4k-12 > 0.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Factorise correctly: (k-6)(k+2) > 0.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Correct inequality direction: k<-2 or k>6 — student reversed it. 0 marks.",
+        "marks": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "topic": "binomial",
+    "solution_type": "wrong_approximation",
+    "question_number": 9
+  },
+  "reasoning_input": {
+    "question_text": "Expand (1 + 2x)^(1/2) up to the term in x³. Hence find an approximation for √1.2 to 4 d.p.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "(1+2x)^(1/2) = 1 + (1/2)(2x) + (1/2)(-1/2)/2 (2x)² + ..."
+      },
+      {
+        "step_id": 2,
+        "content": "= 1 + x - x²/2 + ..."
+      },
+      {
+        "step_id": 3,
+        "content": "Third term: (1/2)(-1/2)(-3/2)/6 (2x)³ = (3/8)(8x³)/6 = x³/2"
+      },
+      {
+        "step_id": 4,
+        "content": "So (1+2x)^(1/2) ≈ 1 + x - x²/2 + x³/2"
+      },
+      {
+        "step_id": 5,
+        "content": "For √1.2, student sets 2x = 0.2 → x = 0.1"
+      },
+      {
+        "step_id": 6,
+        "content": "But student writes: √1.2 = 1 + 0.2 - (0.2)²/2 + (0.2)³/2   ← uses 0.2 instead of x=0.1"
+      },
+      {
+        "step_id": 7,
+        "content": "= 1 + 0.2 - 0.02 + 0.004 = 1.184 (WRONG — x should be 0.1)"
+      }
+    ],
+    "final_answer": "1.184 (incorrect — substitution error)"
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Correct expansion terms up to x²: 1+x-x²/2.",
+        "marks": 3
+      },
+      {
+        "step_no": 2,
+        "description": "Correct third term -x²/2 (note: correct sign).",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Identify x = 0.1 (1+2(0.1) = 1.2). Student used x=0.2 — 0 marks.",
+        "marks": 0
+      },
+      {
+        "step_no": 4,
+        "description": "Correct substitution and arithmetic — not done.",
+        "marks": 0
+      },
+      {
+        "step_no": 5,
+        "description": "Final 4 d.p. answer 1.0954 — not reached.",
+        "marks": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "topic": "sequences_series",
+    "solution_type": "perfect_arithmetic",
+    "question_number": 22
+  },
+  "reasoning_input": {
+    "question_text": "The 4th term of an arithmetic progression is 17 and the 10th term is 35. Find (a) the common difference, (b) the first term, (c) the sum of the first 20 terms.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "aₙ = a + (n-1)d. a₄ = a + 3d = 17  ... (1)"
+      },
+      {
+        "step_id": 2,
+        "content": "a₁₀ = a + 9d = 35   ... (2)"
+      },
+      {
+        "step_id": 3,
+        "content": "(2)-(1): 6d = 18 → d = 3"
+      },
+      {
+        "step_id": 4,
+        "content": "From (1): a + 9 = 17 → a = 8"
+      },
+      {
+        "step_id": 5,
+        "content": "S₂₀ = (20/2)[2(8) + 19(3)] = 10[16 + 57] = 10(73) = 730"
+      }
+    ],
+    "final_answer": "d = 3, a = 8, S₂₀ = 730"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Form two equations using AP formula.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Solve for d = 3.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Find a = 8.",
+        "marks": 1
+      },
+      {
+        "step_no": 4,
+        "description": "Apply sum formula Sₙ = n/2[2a+(n-1)d].",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Compute S₂₀ = 730.",
+        "marks": 1
+      }
+    ]
+  }
+}

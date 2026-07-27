@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "topic": "partial_fractions",
+    "solution_type": "perfect_repeated_factor",
+    "question_number": 6
+  },
+  "reasoning_input": {
+    "question_text": "Express (4x² - 3x + 5) / [(x-2)²(x+1)] in partial fractions.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Form: A/(x-2) + B/(x-2)² + C/(x+1)"
+      },
+      {
+        "step_id": 2,
+        "content": "4x²-3x+5 = A(x-2)(x+1) + B(x+1) + C(x-2)²"
+      },
+      {
+        "step_id": 3,
+        "content": "Let x=2: 4(4)-6+5=15. B(3)=15 → B=5"
+      },
+      {
+        "step_id": 4,
+        "content": "Let x=-1: 4+3+5=12. C(-3)²=9C=12 → C=4/3"
+      },
+      {
+        "step_id": 5,
+        "content": "Expand: A(x²-x-2)+5(x+1)+(4/3)(x²-4x+4)"
+      },
+      {
+        "step_id": 6,
+        "content": "Compare x² coeff: 4 = A + 4/3 → A = 8/3"
+      },
+      {
+        "step_id": 7,
+        "content": "Verify constant: A(-2(1)) + 5(1) + (4/3)(4) = -16/3 + 5 + 16/3 = 5 ✓"
+      },
+      {
+        "step_id": 8,
+        "content": "Result: (8/3)/(x-2) + 5/(x-2)² + (4/3)/(x+1)"
+      }
+    ],
+    "final_answer": "(8/3)/(x-2) + 5/(x-2)² + (4/3)/(x+1)"
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Identify repeated factor form correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Form identity by multiplying through.",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Find B = 5 using x=2.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Find C = 4/3 using x=-1.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Find A = 8/3 by comparing coefficients.",
+        "marks": 2
+      },
+      {
+        "step_no": 6,
+        "description": "State complete final answer.",
+        "marks": 1
+      }
+    ]
+  }
+}

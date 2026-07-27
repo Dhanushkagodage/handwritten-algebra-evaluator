@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "topic": "sequences_series",
+    "solution_type": "partially_correct_geometric",
+    "question_number": 23
+  },
+  "reasoning_input": {
+    "question_text": "A geometric progression has first term 5 and common ratio 3. Find the least value of n such that the sum of the first n terms exceeds 10000.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Sₙ = 5(3ⁿ - 1)/(3-1) = 5(3ⁿ-1)/2"
+      },
+      {
+        "step_id": 2,
+        "content": "5(3ⁿ-1)/2 > 10000 → 3ⁿ-1 > 4000 → 3ⁿ > 4001"
+      },
+      {
+        "step_id": 3,
+        "content": "n log 3 > log 4001"
+      },
+      {
+        "step_id": 4,
+        "content": "n > log(4001)/log(3) = 3.6021/0.4771 = 7.55"
+      },
+      {
+        "step_id": 5,
+        "content": "Student writes n > 7.55, so n = 7.   ← WRONG: should be n = 8."
+      }
+    ],
+    "final_answer": "n = 7 (wrong — correct is n = 8)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Apply GP sum formula correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Form inequality 3ⁿ > 4001.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Take logarithms and solve n > 7.55.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Round up to n=8 since n must be integer — student rounded down. 0 marks.",
+        "marks": 0
+      }
+    ]
+  }
+}
