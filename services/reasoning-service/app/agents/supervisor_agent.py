@@ -206,7 +206,7 @@ def _build_fallback_output(
     return _apply_marking_rules(fallback, step_validation, scheme_mark_map)
 
 
-def supervisor_agent(state: dict) -> dict:
+async def supervisor_agent(state: dict) -> dict:
     """
     LangGraph node: synthesizes all agent outputs into a final evaluation.
     Falls back to deterministic mark computation if LLM fails MAX_RETRIES times.
@@ -242,7 +242,7 @@ def supervisor_agent(state: dict) -> dict:
                 SystemMessage(content=_SYSTEM_PROMPT),
                 HumanMessage(content=human_text),
             ]
-            response = llm.invoke(messages)
+            response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = EvaluationOutput(**raw)
             validated = _apply_marking_rules(validated, step_validation, scheme_mark_map)

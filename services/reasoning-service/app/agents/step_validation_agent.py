@@ -50,7 +50,7 @@ def _j(data) -> str:
     return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
 
 
-def step_validation_agent(state: dict) -> dict:
+async def step_validation_agent(state: dict) -> dict:
     """
     LangGraph node: validates each student step mathematically.
     Retries up to MAX_RETRIES times on invalid JSON or schema violations.
@@ -82,7 +82,7 @@ def step_validation_agent(state: dict) -> dict:
                 SystemMessage(content=_SYSTEM_PROMPT),
                 HumanMessage(content=human_text),
             ]
-            response = llm.invoke(messages)
+            response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = StepValidationOutput(**raw)
             logger.info(

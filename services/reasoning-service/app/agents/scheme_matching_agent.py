@@ -50,7 +50,7 @@ def _j(data) -> str:
     return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
 
 
-def scheme_matching_agent(state: dict) -> dict:
+async def scheme_matching_agent(state: dict) -> dict:
     """
     LangGraph node: maps student steps to marking scheme steps.
     Retries up to MAX_RETRIES times on invalid JSON or schema violations.
@@ -78,7 +78,7 @@ def scheme_matching_agent(state: dict) -> dict:
                 SystemMessage(content=_SYSTEM_PROMPT),
                 HumanMessage(content=human_text),
             ]
-            response = llm.invoke(messages)
+            response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = SchemeMatchingOutput(**raw)
             logger.info(

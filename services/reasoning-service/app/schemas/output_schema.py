@@ -91,7 +91,7 @@ class StepAnalysis(BaseModel):
     match_score: float
     marks_awarded: float
     max_marks: float
-    reason: str
+    # reason: str
     confidence: float
 
 
@@ -115,3 +115,21 @@ class EvaluationOutput(BaseModel):
         None, description="Detailed intermediate output from Scheme Matching Agent"
     )
 
+
+# ─── Friendly / Compact Summary Output ────────────────────────────────────────
+# A leaner view built from EvaluationOutput — suitable for external consumers
+# who only need the essential result without internal agent details.
+
+class FriendlyStep(BaseModel):
+    step_number: int   = Field(..., description="Student step number (= step_id)")
+    expression: str    = Field(..., description="Raw content of the student step")
+    validity: str      = Field(..., description="correct | incorrect | partially_correct | unclear")
+    marks_awarded: float = Field(..., description="Marks awarded for this step")
+
+
+class FriendlyEvaluation(BaseModel):
+    question_text: str       = Field(..., description="Original question text")
+    detected_method: str     = Field(..., description="Solving method the student used")
+    assigned_marks: float    = Field(..., description="Total marks the student earned")
+    total_marks: float       = Field(..., description="Maximum marks available")
+    student_steps: List[FriendlyStep] = Field(..., description="Per-step compact summary")

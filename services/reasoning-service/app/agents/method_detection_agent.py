@@ -50,7 +50,7 @@ def _j(data) -> str:
     return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
 
 
-def method_detection_agent(state: dict) -> dict:
+async def method_detection_agent(state: dict) -> dict:
     """
     LangGraph node: detects the mathematical method used by the student.
     Retries up to MAX_RETRIES times on invalid JSON or schema violations.
@@ -78,7 +78,7 @@ def method_detection_agent(state: dict) -> dict:
                 SystemMessage(content=_SYSTEM_PROMPT),
                 HumanMessage(content=human_text),
             ]
-            response = llm.invoke(messages)
+            response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = MethodDetectionOutput(**raw)
             logger.info(
