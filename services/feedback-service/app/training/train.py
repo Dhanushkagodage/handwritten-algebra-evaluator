@@ -72,7 +72,7 @@ def train():
         warmup_ratio=0.03,
         lr_scheduler_type="cosine",
         report_to=report_to,
-        optim="paged_adamw_8bit" if use_cuda else "adamw_torch",
+        optim="adamw_torch",
     )
 
     trainer = SFTTrainer(

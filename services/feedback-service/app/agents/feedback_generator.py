@@ -9,17 +9,7 @@ from app.models.schemas import (
     StepResult,
     StepValidity,
 )
-
-# Prompt instruction shared between inference and training — must stay in sync with
-# the format used in training/dataset.py so fine-tuned weights learn the right mapping.
-_FORMAT_INSTRUCTION = (
-    "\nFor each step, respond in this exact format:\n"
-    "=== STEP N [CORRECT/PARTIAL/INCORRECT] ===\n"
-    "CORRECT: <what the student did correctly, or method acknowledgement>\n"
-    "MISSING: <what was wrong or missing — only for INCORRECT or PARTIAL>\n"
-    "DEDUCTION: <why marks were reduced — only for INCORRECT or PARTIAL>\n"
-    "IMPROVE: <specific actionable tip for the student>\n"
-)
+from app.shared_format import FORMAT_INSTRUCTION as _FORMAT_INSTRUCTION
 
 
 class FeedbackGenerator:

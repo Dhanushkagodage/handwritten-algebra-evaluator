@@ -43,15 +43,7 @@ import os
 import random
 from typing import Dict, List, Optional, Tuple
 
-# Must stay in sync with app/agents/feedback_generator.py _FORMAT_INSTRUCTION
-_FORMAT_INSTRUCTION = (
-    "\nFor each step, respond in this exact format:\n"
-    "=== STEP N [CORRECT/PARTIAL/INCORRECT] ===\n"
-    "CORRECT: <what the student did correctly, or method acknowledgement>\n"
-    "MISSING: <what was wrong or missing — only for INCORRECT or PARTIAL>\n"
-    "DEDUCTION: <why marks were reduced — only for INCORRECT or PARTIAL>\n"
-    "IMPROVE: <specific actionable tip for the student>\n"
-)
+from app.shared_format import FORMAT_INSTRUCTION as _FORMAT_INSTRUCTION
 
 # Qwen2.5 ChatML special tokens — must match feedback_generator.py
 _IM_START = "<|im_start|>"

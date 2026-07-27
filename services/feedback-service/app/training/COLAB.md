@@ -12,11 +12,19 @@ otherwise plain Python in the same cell/notebook).
 
 ## 2. Get the code and install dependencies
 
-```
-!git clone <repo-url>
+```python
+import os
+%cd /content
+if not os.path.exists("handwritten-algebra-evaluator"):
+    !git clone -b feedback-generation-module <repo-url>
 %cd handwritten-algebra-evaluator/services/feedback-service
+```
+```
 !pip install -r requirements-train.txt
 ```
+Safe to re-run this cell any time — it won't re-clone (avoiding a nested,
+doubled-up directory) and it always pulls the `feedback-generation-module`
+branch, not whatever `main` currently contains.
 
 ## 3. Regenerate the dataset
 
