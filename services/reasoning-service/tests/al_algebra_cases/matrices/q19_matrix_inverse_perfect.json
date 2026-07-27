@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "matrices",
-    "solution_type": "perfect_inverse",
-    "question_number": 19
-  },
   "reasoning_input": {
     "question_text": "A = [[3, 1], [5, 2]]. Find A⁻¹ and hence solve the system: 3x+y=7, 5x+2y=11.",
     "student_steps": [

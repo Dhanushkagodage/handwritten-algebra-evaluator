@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "polynomials",
-    "solution_type": "partially_correct_factor_theorem",
-    "question_number": 17
-  },
   "reasoning_input": {
     "question_text": "Show that (x-2) is a factor of p(x) = x³ - 6x² + 11x - 6. Hence factorise p(x) completely.",
     "student_steps": [

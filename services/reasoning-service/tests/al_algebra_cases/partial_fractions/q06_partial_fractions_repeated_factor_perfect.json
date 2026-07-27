@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "partial_fractions",
-    "solution_type": "perfect_repeated_factor",
-    "question_number": 6
-  },
   "reasoning_input": {
     "question_text": "Express (4x² - 3x + 5) / [(x-2)²(x+1)] in partial fractions.",
     "student_steps": [

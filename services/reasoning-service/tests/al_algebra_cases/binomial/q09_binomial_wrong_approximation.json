@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "binomial",
-    "solution_type": "wrong_approximation",
-    "question_number": 9
-  },
   "reasoning_input": {
     "question_text": "Expand (1 + 2x)^(1/2) up to the term in x³. Hence find an approximation for √1.2 to 4 d.p.",
     "student_steps": [

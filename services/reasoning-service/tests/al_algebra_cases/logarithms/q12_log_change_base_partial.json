@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "logarithms",
-    "solution_type": "partially_correct_change_base",
-    "question_number": 12
-  },
   "reasoning_input": {
     "question_text": "Solve: log₄(x) = log₂(x) - 3.",
     "student_steps": [

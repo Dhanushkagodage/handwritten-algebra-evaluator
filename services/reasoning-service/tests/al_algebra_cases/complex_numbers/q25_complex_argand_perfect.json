@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "complex_numbers",
-    "solution_type": "perfect_argand",
-    "question_number": 25
-  },
   "reasoning_input": {
     "question_text": "Given z = 3 - 4i, find (a) |z|, (b) arg(z), (c) the complex conjugate z̄, (d) z × z̄.",
     "student_steps": [

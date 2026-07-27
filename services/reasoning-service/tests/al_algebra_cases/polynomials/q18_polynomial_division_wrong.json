@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "polynomials",
-    "solution_type": "wrong_method",
-    "question_number": 18
-  },
   "reasoning_input": {
     "question_text": "Find the quotient and remainder when 2x⁴ - x³ + 3x - 5 is divided by (x² - 2).",
     "student_steps": [

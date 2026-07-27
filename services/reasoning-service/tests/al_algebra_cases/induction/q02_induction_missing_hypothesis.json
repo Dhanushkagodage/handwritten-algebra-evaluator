@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "induction",
-    "solution_type": "partially_correct",
-    "question_number": 2
-  },
   "reasoning_input": {
     "question_text": "Prove by mathematical induction that for all positive integers n, 1² + 2² + 3² + ... + n² = n(n+1)(2n+1)/6.",
     "student_steps": [

@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "logarithms",
-    "solution_type": "perfect",
-    "question_number": 10
-  },
   "reasoning_input": {
     "question_text": "Solve the equation log₂(x) + log₂(x - 6) = 4.",
     "student_steps": [

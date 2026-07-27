@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "misc_algebra",
-    "solution_type": "wrong_method",
-    "question_number": 30
-  },
   "reasoning_input": {
     "question_text": "Solve: 4^x - 6(2^x) + 8 = 0.",
     "student_steps": [

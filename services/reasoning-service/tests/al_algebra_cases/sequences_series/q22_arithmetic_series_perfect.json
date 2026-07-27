@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "sequences_series",
-    "solution_type": "perfect_arithmetic",
-    "question_number": 22
-  },
   "reasoning_input": {
     "question_text": "The 4th term of an arithmetic progression is 17 and the 10th term is 35. Find (a) the common difference, (b) the first term, (c) the sum of the first 20 terms.",
     "student_steps": [

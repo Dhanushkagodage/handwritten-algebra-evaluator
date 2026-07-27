@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "complex_numbers",
-    "solution_type": "perfect_de_moivre",
-    "question_number": 26
-  },
   "reasoning_input": {
     "question_text": "Use De Moivre's theorem to find (1 + i)⁸. Express your answer in the form a + bi.",
     "student_steps": [

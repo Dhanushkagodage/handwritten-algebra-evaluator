@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "misc_algebra",
-    "solution_type": "perfect_algebraic_fractions",
-    "question_number": 28
-  },
   "reasoning_input": {
     "question_text": "Simplify: [x² - 4] / [x² - x - 6] ÷ [x + 2] / [x² - 9].",
     "student_steps": [

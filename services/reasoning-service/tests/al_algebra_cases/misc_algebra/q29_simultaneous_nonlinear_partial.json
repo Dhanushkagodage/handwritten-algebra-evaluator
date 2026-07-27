@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "misc_algebra",
-    "solution_type": "partially_correct_simultaneous",
-    "question_number": 29
-  },
   "reasoning_input": {
     "question_text": "Solve the simultaneous equations: y = x² - 3x + 2 and y = 2x - 4.",
     "student_steps": [

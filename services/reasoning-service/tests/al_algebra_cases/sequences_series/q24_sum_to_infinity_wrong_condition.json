@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "sequences_series",
-    "solution_type": "wrong_convergence_condition",
-    "question_number": 24
-  },
   "reasoning_input": {
     "question_text": "A geometric series has first term 12 and common ratio r. The sum to infinity is 20. Find r. State the condition for the sum to infinity to exist.",
     "student_steps": [

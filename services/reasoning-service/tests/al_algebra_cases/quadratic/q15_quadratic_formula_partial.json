@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "quadratic",
-    "solution_type": "partially_correct_formula",
-    "question_number": 15
-  },
   "reasoning_input": {
     "question_text": "Solve 3x² - 5x - 2 = 0 using the quadratic formula, giving exact answers.",
     "student_steps": [

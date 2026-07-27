@@ -31,7 +31,7 @@ def _load_default_request() -> EvaluationRequest:
     """Load fallback test case when no request body is provided."""
     test_file = (
         Path(__file__).resolve().parent.parent.parent
-        / "tests" / "test_cases" / "tc14_quadratic_alternative_completing_square_instead_of_factorisation.json"
+        / "tests" / "al_algebra_cases" / "induction" / "q01_induction_perfect.json"
     )
     logger.info("[/evaluate] No request body provided. Loading %s", test_file)
     with open(test_file, "r", encoding="utf-8") as f:

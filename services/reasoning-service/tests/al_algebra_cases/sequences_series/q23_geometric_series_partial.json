@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "sequences_series",
-    "solution_type": "partially_correct_geometric",
-    "question_number": 23
-  },
   "reasoning_input": {
     "question_text": "A geometric progression has first term 5 and common ratio 3. Find the least value of n such that the sum of the first n terms exceeds 10000.",
     "student_steps": [

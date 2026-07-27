@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "complex_numbers",
-    "solution_type": "partially_correct_argument",
-    "question_number": 27
-  },
   "reasoning_input": {
     "question_text": "Find the modulus and argument of z = (2 + 2i) / (1 - i).",
     "student_steps": [

@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "polynomials",
-    "solution_type": "perfect_remainder_theorem",
-    "question_number": 16
-  },
   "reasoning_input": {
     "question_text": "The polynomial p(x) = 2x³ + ax² - bx + 3 leaves remainder 15 when divided by (x-2) and remainder -6 when divided by (x+1). Find a and b.",
     "student_steps": [

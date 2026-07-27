@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "matrices",
-    "solution_type": "partially_correct_system",
-    "question_number": 21
-  },
   "reasoning_input": {
     "question_text": "Using matrices, solve: 2x - y = 3, x + 3y = 10.",
     "student_steps": [

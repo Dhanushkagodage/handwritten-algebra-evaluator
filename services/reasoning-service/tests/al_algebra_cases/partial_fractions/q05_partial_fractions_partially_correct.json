@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "partial_fractions",
-    "solution_type": "partially_correct",
-    "question_number": 5
-  },
   "reasoning_input": {
     "question_text": "Express (3x² + 2x - 1) / [(x+1)(x²+4)] in partial fractions.",
     "student_steps": [

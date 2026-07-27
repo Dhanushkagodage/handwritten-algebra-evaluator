@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "logarithms",
-    "solution_type": "partially_correct_domain_error",
-    "question_number": 11
-  },
   "reasoning_input": {
     "question_text": "Solve: log₅(2x+1) - log₅(x-1) = 1.",
     "student_steps": [

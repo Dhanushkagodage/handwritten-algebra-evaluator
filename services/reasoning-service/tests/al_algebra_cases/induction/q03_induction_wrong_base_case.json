@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "induction",
-    "solution_type": "wrong_base_case",
-    "question_number": 3
-  },
   "reasoning_input": {
     "question_text": "Prove by mathematical induction that for all positive integers n, n³ - n is divisible by 6.",
     "student_steps": [

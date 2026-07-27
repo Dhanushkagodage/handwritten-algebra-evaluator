@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "partial_fractions",
-    "solution_type": "perfect",
-    "question_number": 4
-  },
   "reasoning_input": {
     "question_text": "Express (5x + 1) / [(x-1)(x+2)(x-3)] in partial fractions.",
     "student_steps": [

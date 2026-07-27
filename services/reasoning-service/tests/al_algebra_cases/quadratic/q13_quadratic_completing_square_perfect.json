@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "quadratic",
-    "solution_type": "perfect_completing_square",
-    "question_number": 13
-  },
   "reasoning_input": {
     "question_text": "Express f(x) = 2x² - 8x + 11 in the form a(x+b)² + c. Hence state the minimum value of f(x) and the value of x at which it occurs.",
     "student_steps": [

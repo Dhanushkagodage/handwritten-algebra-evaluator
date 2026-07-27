@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "binomial",
-    "solution_type": "partially_correct_missing_validity",
-    "question_number": 8
-  },
   "reasoning_input": {
     "question_text": "Expand (2 - x)^(-3) in ascending powers of x up to the term in x², stating the range of x for which the expansion is valid.",
     "student_steps": [

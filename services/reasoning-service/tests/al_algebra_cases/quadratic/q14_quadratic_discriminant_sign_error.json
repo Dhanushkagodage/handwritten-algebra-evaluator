@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "quadratic",
-    "solution_type": "partially_correct_discriminant_sign_error",
-    "question_number": 14
-  },
   "reasoning_input": {
     "question_text": "Find the range of values of k for which the equation x² + kx + (k+3) = 0 has two distinct real roots.",
     "student_steps": [

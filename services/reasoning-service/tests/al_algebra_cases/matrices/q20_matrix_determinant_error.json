@@ -1,9 +1,4 @@
 {
-  "metadata": {
-    "topic": "matrices",
-    "solution_type": "wrong_determinant",
-    "question_number": 20
-  },
   "reasoning_input": {
     "question_text": "Find the inverse of B = [[4, 3], [2, 1]].",
     "student_steps": [
