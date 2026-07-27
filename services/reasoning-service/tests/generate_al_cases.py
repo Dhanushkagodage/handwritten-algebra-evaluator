@@ -23,7 +23,6 @@ def write(subfolder: str, filename: str, data: dict):
     folder = BASE_DIR / subfolder
     folder.mkdir(parents=True, exist_ok=True)
     path = folder / filename
-    data.pop("metadata", None)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     print(f"  ✔  {subfolder}/{filename}")
