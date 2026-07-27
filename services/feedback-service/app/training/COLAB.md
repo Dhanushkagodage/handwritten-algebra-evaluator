@@ -26,6 +26,19 @@ Safe to re-run this cell any time — it won't re-clone (avoiding a nested,
 doubled-up directory) and it always pulls the `feedback-generation-module`
 branch, not whatever `main` currently contains.
 
+### If you need to delete and re-clone from scratch
+
+Always `%cd /content` **before** deleting the repo folder. Deleting the
+folder you're currently standing in breaks every shell command (`!ls`,
+`!pip`, etc.) until you `%cd` somewhere that still exists:
+
+```python
+%cd /content
+!rm -rf /content/handwritten-algebra-evaluator
+```
+
+Then re-run the clone cell above as normal.
+
 ## 3. Regenerate the dataset
 
 ```
