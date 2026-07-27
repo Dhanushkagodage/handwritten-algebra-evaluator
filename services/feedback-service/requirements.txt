@@ -2,12 +2,7 @@ fastapi
 uvicorn[standard]
 pydantic>=2.0
 python-dotenv
-huggingface_hub>=0.23.0
+httpx
 
-# ── LoRA fine-tuning only (training/train.py) — not needed for inference ──
-# transformers
-# torch
-# accelerate
-# peft
-# trl
-# datasets
+# For LoRA training or running colab_server.py inside Colab/Kaggle:
+#   pip install -r requirements-train.txt

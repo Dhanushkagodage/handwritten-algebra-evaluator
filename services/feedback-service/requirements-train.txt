@@ -1,0 +1,11 @@
+# requirements-train.txt — install inside Colab/Kaggle for LoRA training
+# (train.py) or to run the trained-model server (colab_server.py). The
+# deployed feedback-service never needs this — it only calls the Colab
+# server over HTTP (TUNNEL_API_URL).
+-r requirements.txt
+transformers>=4.44
+torch
+accelerate
+peft
+trl>=0.8,<0.12
+datasets

@@ -2,8 +2,6 @@ import os
 import re
 from typing import Dict, List, Optional
 
-from huggingface_hub import AsyncInferenceClient
-
 from app.models.schemas import (
     FeedbackRequest,
     FeedbackResponse,
@@ -28,8 +26,11 @@ class FeedbackGenerator:
     """
     Module 03 — Stepwise Feedback Generation.
 
-    Calls the HuggingFace Inference API (Qwen2.5-1.5B-Instruct).
-    Requires HF_TOKEN env var. No local model download needed.
+    Calls your own LoRA-fine-tuned Qwen2.5-3B-Instruct — trained on Colab
+    using the algebra dataset in app/training/dataset.py — over HTTP. The
+    model runs inside a free Colab GPU session (app/training/colab_server.py)
+    and is reached via a temporary public URL (TUNNEL_API_URL). See
+    app/training/COLAB.md for how to start it.
 
     Generates four-component per-step feedback:
       1. What is correct
@@ -39,18 +40,18 @@ class FeedbackGenerator:
     """
 
     def __init__(self):
-        self._client: Optional[AsyncInferenceClient] = None
-        self._model_name: str = ""
         self._loaded = False
+        self._tunnel_url: Optional[str] = None
 
     async def load_model(self) -> None:
         if self._loaded:
             return
-        self._model_name = os.getenv("BASE_MODEL", "Qwen/Qwen2.5-1.5B-Instruct")
-        hf_token = os.getenv("HF_TOKEN")
-        self._client = AsyncInferenceClient(model=self._model_name, token=hf_token)
+        self._load_tunnel_client()
         self._loaded = True
-        print(f"[FeedbackGenerator] Connected to HF Inference API → {self._model_name}")
+
+    def _load_tunnel_client(self) -> None:
+        self._tunnel_url = os.getenv("TUNNEL_API_URL")
+        print(f"[FeedbackGenerator] calling trained model at {self._tunnel_url}")
 
     # ------------------------------------------------------------------
     # Public interface
@@ -121,16 +122,19 @@ class FeedbackGenerator:
         ]
 
     # ------------------------------------------------------------------
-    # Inference — HuggingFace Inference API
+    # Inference — your fine-tuned model, called over the Colab tunnel
     # ------------------------------------------------------------------
 
     async def _run_inference(self, messages: List[Dict]) -> str:
-        response = await self._client.chat.completions.create(
-            messages=messages,
-            max_tokens=600,
-            temperature=0.7,
-        )
-        return response.choices[0].message.content.strip()
+        return await self._run_tunnel_inference(messages)
+
+    async def _run_tunnel_inference(self, messages: List[Dict]) -> str:
+        import httpx
+
+        async with httpx.AsyncClient(timeout=120) as client:
+            resp = await client.post(self._tunnel_url, json={"messages": messages})
+            resp.raise_for_status()
+            return resp.json()["text"].strip()
 
     # ------------------------------------------------------------------
     # Response parsing
