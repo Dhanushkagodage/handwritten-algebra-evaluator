@@ -1,0 +1,58 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the modulus and argument of z = (2 + 2i) / (1 - i).",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Multiply numerator and denominator by conjugate of denominator: (1+i)"
+      },
+      {
+        "step_id": 2,
+        "content": "z = (2+2i)(1+i) / (1-i)(1+i) = (2+2i+2i+2i²) / (1+1)"
+      },
+      {
+        "step_id": 3,
+        "content": "= (2 + 4i - 2) / 2 = 4i/2 = 2i"
+      },
+      {
+        "step_id": 4,
+        "content": "|z| = |2i| = 2 ✓"
+      },
+      {
+        "step_id": 5,
+        "content": "arg(z): student writes arg(2i) = 0  ← WRONG. Should be π/2."
+      }
+    ],
+    "final_answer": "|z|=2 (correct), arg(z)=0 (wrong — should be π/2)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Multiply by conjugate (1+i)/(1+i).",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Expand numerator correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Simplify to z = 2i.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Find |z| = 2.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Find arg(z) = π/2 — student wrote 0. 0 marks.",
+        "marks": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "reasoning_input": {
+    "question_text": "Simplify: [x² - 4] / [x² - x - 6] ÷ [x + 2] / [x² - 9].",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Factorise all expressions:"
+      },
+      {
+        "step_id": 2,
+        "content": "x²-4 = (x-2)(x+2)"
+      },
+      {
+        "step_id": 3,
+        "content": "x²-x-6 = (x-3)(x+2)"
+      },
+      {
+        "step_id": 4,
+        "content": "x²-9 = (x-3)(x+3)"
+      },
+      {
+        "step_id": 5,
+        "content": "Division becomes: [(x-2)(x+2)] / [(x-3)(x+2)] × [(x-3)(x+3)] / [(x+2)]"
+      },
+      {
+        "step_id": 6,
+        "content": "Cancel (x+2) from numerator and denominator:"
+      },
+      {
+        "step_id": 7,
+        "content": "= [(x-2)(x-3)(x+3)] / [(x-3)(x+2)]"
+      },
+      {
+        "step_id": 8,
+        "content": "Cancel (x-3): = (x-2)(x+3) / (x+2)"
+      },
+      {
+        "step_id": 9,
+        "content": "= (x²+x-6) / (x+2)"
+      }
+    ],
+    "final_answer": "(x-2)(x+3)/(x+2) or (x²+x-6)/(x+2)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Factorise all four expressions correctly.",
+        "marks": 3
+      },
+      {
+        "step_no": 2,
+        "description": "Invert and multiply (flip second fraction for division).",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Cancel common factors systematically.",
+        "marks": 3
+      },
+      {
+        "step_no": 4,
+        "description": "State final simplified form.",
+        "marks": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve: log₄(x) = log₂(x) - 3.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "log₄(x) = log₂(x) / log₂(4) = log₂(x) / 2"
+      },
+      {
+        "step_id": 2,
+        "content": "Let y = log₂(x). Then y/2 = y - 3"
+      },
+      {
+        "step_id": 3,
+        "content": "y = 2y - 6 → y = 6"
+      },
+      {
+        "step_id": 4,
+        "content": "log₂(x) = 6 → x = 2⁶ = 64"
+      },
+      {
+        "step_id": 5,
+        "content": "Student does not verify the answer."
+      }
+    ],
+    "final_answer": "x = 64 (no verification)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Change base: log₄(x) = log₂(x)/2 correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Substitute y = log₂(x) and form equation.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Solve y = 6 correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Convert to x = 64.",
+        "marks": 1
+      },
+      {
+        "step_no": 5,
+        "description": "Verify: log₄(64)=3, log₂(64)=6, 6-3=3 ✓ — not done. 0 marks.",
+        "marks": 0
+      }
+    ]
+  }
+}

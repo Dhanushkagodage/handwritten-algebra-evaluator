@@ -1,0 +1,66 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve the equation log₂(x) + log₂(x - 6) = 4.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "log₂[x(x-6)] = 4"
+      },
+      {
+        "step_id": 2,
+        "content": "x(x-6) = 2⁴ = 16"
+      },
+      {
+        "step_id": 3,
+        "content": "x² - 6x - 16 = 0"
+      },
+      {
+        "step_id": 4,
+        "content": "(x-8)(x+2) = 0"
+      },
+      {
+        "step_id": 5,
+        "content": "x = 8 or x = -2"
+      },
+      {
+        "step_id": 6,
+        "content": "Check domain: log₂(x) requires x > 0 and log₂(x-6) requires x > 6."
+      },
+      {
+        "step_id": 7,
+        "content": "x = -2 is rejected. x = 8: log₂(8) + log₂(2) = 3 + 1 = 4 ✓"
+      }
+    ],
+    "final_answer": "x = 8"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Use product rule to combine logs.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Convert to exponential form: x(x-6) = 16.",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Form and solve quadratic x²-6x-16=0.",
+        "marks": 3
+      },
+      {
+        "step_no": 4,
+        "description": "Apply domain restriction and reject x=-2.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "State x=8 with verification.",
+        "marks": 1
+      }
+    ]
+  }
+}

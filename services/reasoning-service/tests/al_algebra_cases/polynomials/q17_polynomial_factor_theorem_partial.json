@@ -1,0 +1,65 @@
+{
+  "reasoning_input": {
+    "question_text": "Show that (x-2) is a factor of p(x) = x³ - 6x² + 11x - 6. Hence factorise p(x) completely.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "p(2) = 8 - 24 + 22 - 6 = 0. ✓ So (x-2) is a factor."
+      },
+      {
+        "step_id": 2,
+        "content": "Divide p(x) by (x-2): x³-6x²+11x-6 ÷ (x-2)"
+      },
+      {
+        "step_id": 3,
+        "content": "x³÷x = x². x²(x-2) = x³-2x². Remainder: -4x²+11x-6"
+      },
+      {
+        "step_id": 4,
+        "content": "-4x²÷x = -4x. -4x(x-2) = -4x²+8x. Remainder: 3x-6"
+      },
+      {
+        "step_id": 5,
+        "content": "3x÷x = 3. 3(x-2) = 3x-6. Remainder: 0."
+      },
+      {
+        "step_id": 6,
+        "content": "Quotient: x²-4x+3"
+      },
+      {
+        "step_id": 7,
+        "content": "Student writes: x²-4x+3 = (x-3)(x-1)  [WRONG: should be (x-3)(x-1) — actually correct!]"
+      },
+      {
+        "step_id": 8,
+        "content": "But student does not state the complete factorisation p(x)=(x-2)(x-3)(x-1)."
+      }
+    ],
+    "final_answer": "Student got quotient right but did not write complete factorisation."
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Show p(2)=0 to verify factor.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Polynomial division giving x²-4x+3.",
+        "marks": 3
+      },
+      {
+        "step_no": 3,
+        "description": "Factorise quadratic to (x-1)(x-3).",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "State complete factorisation (x-2)(x-1)(x-3) — not done. 0 marks.",
+        "marks": 0
+      }
+    ]
+  }
+}

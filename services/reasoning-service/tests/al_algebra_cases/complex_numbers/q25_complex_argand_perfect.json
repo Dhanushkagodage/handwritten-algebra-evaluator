@@ -1,0 +1,62 @@
+{
+  "reasoning_input": {
+    "question_text": "Given z = 3 - 4i, find (a) |z|, (b) arg(z), (c) the complex conjugate z̄, (d) z × z̄.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "(a) |z| = √(3² + (-4)²) = √(9+16) = √25 = 5"
+      },
+      {
+        "step_id": 2,
+        "content": "(b) arg(z): reference angle = arctan(4/3) ≈ 53.13°"
+      },
+      {
+        "step_id": 3,
+        "content": "z is in 4th quadrant (Re>0, Im<0), so arg(z) = -53.13° ≈ -0.927 rad"
+      },
+      {
+        "step_id": 4,
+        "content": "(c) z̄ = 3 + 4i"
+      },
+      {
+        "step_id": 5,
+        "content": "(d) z × z̄ = (3-4i)(3+4i) = 9 + 12i - 12i - 16i² = 9 + 16 = 25"
+      },
+      {
+        "step_id": 6,
+        "content": "Alternatively, z × z̄ = |z|² = 5² = 25 ✓"
+      }
+    ],
+    "final_answer": "|z|=5, arg(z)≈-0.927 rad, z̄=3+4i, zz̄=25"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Find modulus |z| = 5.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Find arg(z) in correct quadrant.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "State conjugate z̄ = 3+4i.",
+        "marks": 1
+      },
+      {
+        "step_no": 4,
+        "description": "Compute z×z̄ = 25.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Verify using |z|².",
+        "marks": 1
+      }
+    ]
+  }
+}

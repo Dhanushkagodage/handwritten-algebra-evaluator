@@ -1,0 +1,26 @@
+{
+  "reasoning_input": {
+    "question_text": "Expand (1 + 3x)^(-2) as a series of ascending powers of x up to and including the term in x³, stating the range of x for which the expansion is valid.",
+    "student_steps": [
+      {"step_id": 1, "content": "Using binomial expansion (1 + u)^n = 1 + nu + n(n-1)/2! · u² + n(n-1)(n-2)/3! · u³ + ..."},
+      {"step_id": 2, "content": "n = -2, u = 3x"},
+      {"step_id": 3, "content": "Term 1: 1"},
+      {"step_id": 4, "content": "Term 2: (-2)(3x) = -6x"},
+      {"step_id": 5, "content": "Term 3: (-2)(-3)/2 · (3x)² = 3 · 9x² = 27x²"},
+      {"step_id": 6, "content": "Term 4: (-2)(-3)(-4)/6 · (3x)³ = -4 · 27x³ = -108x³"},
+      {"step_id": 7, "content": "(1 + 3x)^(-2) ≈ 1 - 6x + 27x² - 108x³"}
+    ],
+    "final_answer": "(1 + 3x)^(-2) ≈ 1 - 6x + 27x² - 108x³"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "State or use the general binomial expansion formula for negative/fractional index", "marks": 1},
+      {"step_no": 2, "description": "Correctly identify n = -2 and u = 3x", "marks": 1},
+      {"step_no": 3, "description": "Correctly compute term in x: (-2)(3x) = -6x", "marks": 1},
+      {"step_no": 4, "description": "Correctly compute term in x²: 3·9x² = 27x²", "marks": 2},
+      {"step_no": 5, "description": "Correctly compute term in x³: (-4)·27x³ = -108x³", "marks": 2},
+      {"step_no": 6, "description": "State validity condition: |3x| < 1 i.e. |x| < 1/3", "marks": 1}
+    ]
+  }
+}

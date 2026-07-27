@@ -1,0 +1,70 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the quotient and remainder when 2x⁴ - x³ + 3x - 5 is divided by (x² - 2).",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Student attempts: 2x⁴/x² = 2x². 2x²(x²-2) = 2x⁴-4x²."
+      },
+      {
+        "step_id": 2,
+        "content": "Remainder: -x³ + 4x² + 3x - 5"
+      },
+      {
+        "step_id": 3,
+        "content": "-x³/x² = -x. -x(x²-2) = -x³+2x."
+      },
+      {
+        "step_id": 4,
+        "content": "Remainder: 4x² + x - 5"
+      },
+      {
+        "step_id": 5,
+        "content": "4x²/x² = 4. 4(x²-2) = 4x²-8."
+      },
+      {
+        "step_id": 6,
+        "content": "Remainder: x + 3"
+      },
+      {
+        "step_id": 7,
+        "content": "Student writes quotient = 2x²-x+4, remainder = x+3. [Correct!]"
+      },
+      {
+        "step_id": 8,
+        "content": "But then writes the answer as (2x²-x+4) + (x+3)/(x²-2) without the original polynomial context. Incomplete."
+      }
+    ],
+    "final_answer": "Quotient = 2x²-x+4, remainder = x+3 (correct but final presentation incomplete)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "First division step: 2x⁴÷x²=2x².",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Subtract 2x²(x²-2) and get correct remainder -x³+4x²+3x-5.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Continue division: -x, subtract, remainder 4x²+x-5.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Final step: 4, remainder x+3.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "State quotient and remainder clearly.",
+        "marks": 1
+      }
+    ]
+  }
+}

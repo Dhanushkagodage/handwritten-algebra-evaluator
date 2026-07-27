@@ -1,0 +1,75 @@
+{
+  "reasoning_input": {
+    "question_text": "Prove by mathematical induction that for all positive integers n, n³ - n is divisible by 6.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Base case (n=1): 1³-1 = 0. Student writes: 0/6 = 1, which is wrong."
+      },
+      {
+        "step_id": 2,
+        "content": "Assume 6 | (k³ - k) for some positive integer k."
+      },
+      {
+        "step_id": 3,
+        "content": "(k+1)³ - (k+1) = k³ + 3k² + 3k + 1 - k - 1"
+      },
+      {
+        "step_id": 4,
+        "content": "= k³ - k + 3k² + 3k"
+      },
+      {
+        "step_id": 5,
+        "content": "= (k³ - k) + 3k(k+1)"
+      },
+      {
+        "step_id": 6,
+        "content": "6 | (k³-k) by hypothesis."
+      },
+      {
+        "step_id": 7,
+        "content": "k(k+1) is a product of consecutive integers, so 2 | k(k+1), hence 6 | 3k(k+1)."
+      },
+      {
+        "step_id": 8,
+        "content": "Therefore 6 | [(k³-k) + 3k(k+1)] = (k+1)³-(k+1). Proved."
+      }
+    ],
+    "final_answer": "Divisible by 6 for all positive integers n."
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Correct base case: 1³-1=0, and 6|0 (student error here — loses 1 mark).",
+        "marks": 0
+      },
+      {
+        "step_no": 2,
+        "description": "State inductive hypothesis for n=k clearly.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Expand (k+1)³-(k+1) correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Regroup as (k³-k)+3k(k+1).",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Argue divisibility by 6 of both parts.",
+        "marks": 2
+      },
+      {
+        "step_no": 6,
+        "description": "State final conclusion.",
+        "marks": 2
+      }
+    ]
+  }
+}

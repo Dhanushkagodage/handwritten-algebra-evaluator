@@ -1,0 +1,84 @@
+{
+  "reasoning_input": {
+    "question_text": "Prove by mathematical induction that for all positive integers n, 1² + 2² + 3² + ... + n² = n(n+1)(2n+1)/6.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Base case (n=1): LHS = 1. RHS = 1(2)(3)/6 = 1. True."
+      },
+      {
+        "step_id": 2,
+        "content": "Assume the result is true for some value of n."
+      },
+      {
+        "step_id": 3,
+        "content": "For n = k+1: LHS = 1²+2²+...+k²+(k+1)²"
+      },
+      {
+        "step_id": 4,
+        "content": "= k(k+1)(2k+1)/6 + (k+1)²"
+      },
+      {
+        "step_id": 5,
+        "content": "= (k+1)[k(2k+1)/6 + (k+1)]"
+      },
+      {
+        "step_id": 6,
+        "content": "= (k+1)[2k²+k+6k+6]/6"
+      },
+      {
+        "step_id": 7,
+        "content": "= (k+1)(2k²+7k+6)/6"
+      },
+      {
+        "step_id": 8,
+        "content": "= (k+1)(k+2)(2k+3)/6"
+      },
+      {
+        "step_id": 9,
+        "content": "This is the formula for n = k+1. Proved."
+      }
+    ],
+    "final_answer": "Proved by induction."
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Verify base case n=1.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "State hypothesis explicitly for n=k (student vague — loses 1 mark).",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Set up LHS for n=k+1.",
+        "marks": 1
+      },
+      {
+        "step_no": 4,
+        "description": "Substitute k(k+1)(2k+1)/6 correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Factor and simplify to (k+1)(k+2)(2k+3)/6.",
+        "marks": 3
+      },
+      {
+        "step_no": 6,
+        "description": "Recognise form matches formula for n=k+1.",
+        "marks": 1
+      },
+      {
+        "step_no": 7,
+        "description": "State induction conclusion (student did state it).",
+        "marks": 1
+      }
+    ]
+  }
+}
