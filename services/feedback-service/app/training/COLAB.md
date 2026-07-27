@@ -31,7 +31,6 @@ This writes `app/training/data/raw_annotations.json`,
 
 ```python
 import os
-os.environ["LOCAL_BASE_MODEL"] = "Qwen/Qwen2.5-3B-Instruct"
 os.environ["OUTPUT_DIR"] = "./lora-adapter"
 os.environ["WANDB_REPORT_TO"] = "none"   # or call wandb.login() first to keep W&B logging
 ```

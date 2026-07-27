@@ -16,7 +16,7 @@ from trl import SFTTrainer
 
 
 def train():
-    model_name = os.getenv("LOCAL_BASE_MODEL", "Qwen/Qwen2.5-3B-Instruct")
+    model_name = "Qwen/Qwen2.5-3B-Instruct"
     dataset_path = os.getenv("DATASET_PATH", "app/training/data/feedback_dataset_train.json")
     eval_dataset_path = os.getenv("EVAL_DATASET_PATH", "app/training/data/feedback_dataset_eval.json")
     output_dir = os.getenv("OUTPUT_DIR", "./lora-adapter")
