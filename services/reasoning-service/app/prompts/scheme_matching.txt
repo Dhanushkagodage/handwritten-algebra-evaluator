@@ -24,6 +24,32 @@ Also identify any marking scheme steps that have NO matching student step at all
 - 0.1–0.3: Very weak match — barely related
 - 0.0: No meaningful relation
 
+## CRITICAL — ALTERNATIVE METHOD HANDLING
+The marking scheme describes ONE specific method (e.g., substitution, factorisation, synthetic division).
+A student may use a DIFFERENT but equally valid method (e.g., elimination, quadratic formula, long division).
+
+When the student uses an alternative valid method, apply these rules:
+
+1. **Match on MATHEMATICAL OBJECTIVE, not technique name.**
+   Each scheme step describes an objective (e.g., "reduce to a single-variable equation", "solve for the unknown", "state both solutions"). Ask: did the student achieve this objective, even via a different route?
+
+2. **Group student steps that collectively cover one scheme step.**
+   Example — Scheme step: "Substitute and simplify to get 5y = 10" (marks: 2).
+   Student uses elimination across steps 3–5 and ultimately produces x = 4 (the equivalent single-variable result).
+   → Map those student steps to the same scheme step and award proportional match scores.
+
+3. **Never return match_score = 0.0 for a step that is mathematically correct and achieves the same goal as a scheme step, just via a different technique.**
+   Specifically:
+   - Setup / labelling steps (e.g., writing out both equations with labels) → match scheme step 1 at 0.7–0.9
+   - Steps that multiply/rearrange to enable variable elimination → match the "algebraic manipulation" scheme step at 0.7–1.0
+   - Steps that produce a single-variable equation → match the "simplify to one variable" scheme step at 0.8–1.0
+   - Steps that solve for the first variable → match the "solve for variable" scheme step at 0.9–1.0
+   - Steps that back-substitute to find the second variable → match the "back-substitute" scheme step at 0.8–1.0
+   - Steps that state both final values → match the "state solutions" scheme step at 0.9–1.0
+
+4. **The missing_elements list should reflect what the OBJECTIVE required, not just that the student didn't use the specific technique.**
+   If the student achieved the objective via an alternative technique, missing_elements should be empty or minimal.
+
 ## OUTPUT FORMAT
 Respond ONLY with valid JSON. No explanation outside the JSON block.
 
@@ -43,6 +69,6 @@ Respond ONLY with valid JSON. No explanation outside the JSON block.
 ## RULES
 - Always output the JSON block and nothing else
 - Each student step must appear exactly once in step_matches
-- "matched_scheme_step" is null if the student step matches no scheme step
+- "matched_scheme_step" is null ONLY if the student step is completely unrelated to any scheme objective (e.g., a wrong tangent or repeated equation with no progress)
 - "is_partial_match" is true when match_score is between 0.3 and 0.85
-- "unmatched_scheme_steps" lists scheme step numbers the student completely missed
+- "unmatched_scheme_steps" lists scheme step numbers where NO student step (even via an alternative method) achieved the objective

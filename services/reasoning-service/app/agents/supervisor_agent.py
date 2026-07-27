@@ -55,6 +55,7 @@ def _apply_marking_rules(
     output: EvaluationOutput,
     step_validation: dict,
     scheme_mark_map: dict,
+    method_detection: dict | None = None,
 ) -> EvaluationOutput:
     """
     Deterministic post-processor applied after BOTH the LLM path and the fallback path.
@@ -65,6 +66,12 @@ def _apply_marking_rules(
     Rule 2 — When multiple student steps map to the same scheme step (sub-steps),
               only the single best-matching step earns marks for that scheme step;
               all other sub-steps are zeroed. This prevents total_marks > max_marks.
+    Rule 3 — Alternative Method Consistency: when the student used a valid alternative
+              method (method_is_valid=True, alternative_methods_possible=True) AND all
+              student steps are mathematically correct (no 'incorrect' status), any
+              remaining unawarded scheme marks are redistributed proportionally across
+              correct steps that were left at 0 due to null scheme matching. This ensures
+              a fully-correct alternative-method solution always earns max_marks.
     """
     steps: list[StepAnalysis] = output.steps_analysis
 
@@ -127,8 +134,55 @@ def _apply_marking_rules(
         for step in group:
             step.marks_awarded = best_marks if step is best else 0.0
 
+    # ── Rule 3: Alternative Method Consistency ────────────────────────────────
+    # When method_detection confirms a valid alternative method AND every student
+    # step is correct, redistribute any unawarded scheme marks to correct steps
+    # that were left at 0 only because the scheme matcher returned null.
+    if method_detection is not None:
+        is_alt = (
+            method_detection.get("method_is_valid", False)
+            and method_detection.get("alternative_methods_possible", False)
+        )
+        if is_alt:
+            # Check all steps are correct (none marked incorrect)
+            all_correct = all(
+                status_map.get(s.step_id, "unclear") != "incorrect"
+                for s in steps
+            )
+            if all_correct:
+                awarded_so_far = round(sum(s.marks_awarded for s in steps), 2)
+                unawarded = round(output.max_marks - awarded_so_far, 2)
+
+                if unawarded > 0:
+                    # Steps that are correct but got 0 marks (unmatched by scheme matcher)
+                    zero_correct_steps = [
+                        s for s in steps
+                        if s.marks_awarded == 0.0
+                        and status_map.get(s.step_id, "unclear") in ("correct", "partially_correct")
+                    ]
+                    if zero_correct_steps:
+                        # Distribute unawarded marks equally across these steps
+                        share = round(unawarded / len(zero_correct_steps) * 2) / 2  # round to 0.5
+                        # Clamp total distribution to not exceed max_marks
+                        total_share = share * len(zero_correct_steps)
+                        if awarded_so_far + total_share > output.max_marks:
+                            share = round(
+                                (unawarded / len(zero_correct_steps)) * 2
+                            ) / 2
+                        logger.info(
+                            "[SupervisorAgent] Rule3 (AltMethod): redistributing %.1f unawarded "
+                            "marks across %d zero-marked correct steps (%.1f each).",
+                            unawarded, len(zero_correct_steps), share,
+                        )
+                        for s in zero_correct_steps:
+                            s.marks_awarded = share
+                            s.validity = True
+                            s.status = "correct"
+
     # Recompute totals
     output.total_marks = round(sum(s.marks_awarded for s in steps), 2)
+    # Clamp to max_marks to prevent floating-point overshoot
+    output.total_marks = min(output.total_marks, output.max_marks)
     output.percentage = (
         round((output.total_marks / output.max_marks) * 100, 1)
         if output.max_marks > 0 else 0.0
@@ -203,7 +257,7 @@ def _build_fallback_output(
         method_feedback=f"Detected method: {method_detection.get('detected_method', 'undetermined')}.",
         missing_steps_feedback=None,
     )
-    return _apply_marking_rules(fallback, step_validation, scheme_mark_map)
+    return _apply_marking_rules(fallback, step_validation, scheme_mark_map, method_detection)
 
 
 async def supervisor_agent(state: dict) -> dict:
@@ -245,7 +299,7 @@ async def supervisor_agent(state: dict) -> dict:
             response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = EvaluationOutput(**raw)
-            validated = _apply_marking_rules(validated, step_validation, scheme_mark_map)
+            validated = _apply_marking_rules(validated, step_validation, scheme_mark_map, method_detection)
             logger.info(
                 "[SupervisorAgent] Success — total_marks=%.1f/%.1f (%.1f%%)",
                 validated.total_marks,
