@@ -3,8 +3,10 @@ Persistent inference server for feedback-service, deployed as a Hugging
 Face Space (Gradio SDK, ZeroGPU) — see DEPLOY.md for the one-time setup.
 
 Loads the public base model plus the private LoRA adapter (pulled from the
-Hub with HF_TOKEN) once at startup, then serves it over a single "generate"
-API endpoint matching what feedback_generator.py's _run_space_inference()
+Hub with HF_TOKEN) once on the first request — must happen inside the
+@spaces.GPU call, not at import time, since ZeroGPU only attaches a real
+GPU during that window — then serves it over a single "generate" API
+endpoint matching what feedback_generator.py's _run_space_inference()
 expects. gradio_client doesn't forward custom HTTP headers, so the same
 shared-secret check the old FastAPI version did via X-API-Key is now a
 second function argument instead — still keeps the endpoint from being
@@ -28,11 +30,26 @@ _hf_token = os.environ["HF_TOKEN"]
 _api_key = os.environ["API_KEY"]
 
 tokenizer = AutoTokenizer.from_pretrained(_base_model)
-model = AutoModelForCausalLM.from_pretrained(_base_model, torch_dtype=torch.bfloat16)
-model = PeftModel.from_pretrained(model, _adapter_repo_id, token=_hf_token)
-model = model.to("cuda")
-model.eval()
-print(f"[hf_space] Loaded {_base_model} + adapter {_adapter_repo_id} on ZeroGPU (bfloat16)")
+
+_model = None
+
+
+def _get_model():
+    # ZeroGPU only attaches a real GPU inside a @spaces.GPU call, so the
+    # adapter merge and .to("cuda") must happen here (on first request),
+    # not at module import time — doing it at import time makes torch
+    # think a GPU exists (spaces patches torch.cuda.is_available()) with
+    # no physical device actually attached yet, which crashes with
+    # "No CUDA GPUs are available".
+    global _model
+    if _model is None:
+        model = AutoModelForCausalLM.from_pretrained(_base_model, torch_dtype=torch.bfloat16)
+        model = PeftModel.from_pretrained(model, _adapter_repo_id, token=_hf_token)
+        model = model.to("cuda")
+        model.eval()
+        _model = model
+        print(f"[hf_space] Loaded {_base_model} + adapter {_adapter_repo_id} on ZeroGPU (bfloat16)")
+    return _model
 
 
 @spaces.GPU(duration=120)
@@ -40,6 +57,7 @@ def generate(messages_json: str, api_key: str) -> str:
     if api_key != _api_key:
         raise gr.Error("invalid or missing api_key", print_exception=False)
 
+    model = _get_model()
     messages = json.loads(messages_json)
     prompt = tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True
