@@ -57,11 +57,11 @@ class FeedbackGenerator:
     def _get_client(self) -> Client:
         # Client(...) does a handshake to fetch the Space's API schema, so
         # build it once and reuse it — not on every request. Passing
-        # hf_token authenticates the call as you, drawing from your
+        # token authenticates the call as you, drawing from your
         # account's ZeroGPU quota instead of the tiny shared quota given
         # to anonymous callers (which runs out almost immediately).
         if self._client is None:
-            self._client = Client(self._space_id, hf_token=self._hf_token)
+            self._client = Client(self._space_id, token=self._hf_token)
         return self._client
 
     # ------------------------------------------------------------------
