@@ -95,7 +95,6 @@ Open `.env` in this folder and set:
 ```
 SPACE_ID=DhanushkaGodage/feedback-service-inference
 API_KEY=<the shared secret you set as the Space's API_KEY secret>
-HF_SPACE_TOKEN=<an HF read token — the Space is private, so gradio_client needs this to reach it>
 ```
 
 See `app/serving/hf_space/DEPLOY.md` for how to create the Space (one-time
@@ -193,11 +192,6 @@ py -c "from dotenv import load_dotenv; import os; load_dotenv(); print(os.getenv
 - **`invalid or missing api_key` calling the Space** — `API_KEY` in `.env`
   doesn't match the Space's `API_KEY` secret. Check both for stray
   whitespace.
-- **Space appears unreachable / 401 before generation even runs** — the
-  Space is private, so `HF_SPACE_TOKEN` in `.env` must be a valid HF
-  **read** token for an account with access to it (your own account by
-  default). Missing or expired tokens fail here, before the `API_KEY`
-  check inside `generate()` even runs.
 - **`ModuleNotFoundError: No module named 'app'`** — the Colab cell ran from
   the wrong directory. Re-run the `%cd /content/handwritten-algebra-evaluator/services/feedback-service`
   line before the failing command.

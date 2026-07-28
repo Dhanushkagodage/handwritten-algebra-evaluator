@@ -16,9 +16,9 @@ server itself behaves — model swaps only need the Colab push step in
 2. **Owner**: `DhanushkaGodage` (personal account) — so it's
    `huggingface.co/spaces/DhanushkaGodage/feedback-service-inference`.
 3. **SDK**: **Gradio** → **Blank**.
-4. **Visibility**: **Private** — the app also enforces its own `api_key`
-   check on every call, so this is belt-and-suspenders, but it means
-   callers need an HF read token in addition to the key (see step 4).
+4. **Visibility**: Public is fine — the app enforces its own `api_key`
+   check on every call, so the model isn't usable by anyone who doesn't
+   have the key, even though the Space URL itself is reachable.
 5. Click **Create Space**.
 6. Once created, go to **Settings → Hardware** and select **ZeroGPU**. If
    your account doesn't offer it (some accounts need HF PRO), fall back to
@@ -63,22 +63,17 @@ you see
 `Loaded Qwen/Qwen2.5-3B-Instruct + adapter DhanushkaGodage/... on ZeroGPU (bfloat16)`
 in the logs and the Space shows **Running**, test it from your laptop
 (needs `pip install gradio_client` — it's already in this service's
-`requirements.txt`). Because the Space is private, you also need an HF
-**read** token for your own account (Settings → Access Tokens on
-huggingface.co) to pass as `hf_token` — separate from the `API_KEY`
-secret above:
+`requirements.txt`):
 
 ```powershell
-py -c "from gradio_client import Client; c = Client('DhanushkaGodage/feedback-service-inference', hf_token='<your HF read token>'); print(c.predict('[{\"role\": \"user\", \"content\": \"Say hello in one word.\"}]', '<your API_KEY secret>', api_name='/generate'))"
+py -c "from gradio_client import Client; c = Client('DhanushkaGodage/feedback-service-inference'); print(c.predict('[{\"role\": \"user\", \"content\": \"Say hello in one word.\"}]', '<your API_KEY secret>', api_name='/generate'))"
 ```
 
 You should get back a short generated string. A wrong `api_key` raises a
-`gradio_client` error instead, and a missing/wrong `hf_token` fails before
-that (the Space itself won't be reachable).
+`gradio_client` error instead.
 
-Then set `SPACE_ID`, `API_KEY`, and `HF_SPACE_TOKEN` (the same HF read
-token) in `services/feedback-service/.env` to point the deployed service
-at it.
+Then set `SPACE_ID` and `API_KEY` in `services/feedback-service/.env` to
+point the deployed service at it.
 
 ## Notes
 
