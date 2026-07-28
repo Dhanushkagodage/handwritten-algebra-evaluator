@@ -9,8 +9,8 @@ Run from the feedback-service directory:
     python tests\\test_feedback.py
 
 Requires the Hugging Face Space (app/serving/hf_space/app.py) to be
-deployed and running, with its URL (+ "/generate") and API key set as
-SPACE_API_URL / API_KEY in .env — see app/serving/hf_space/DEPLOY.md.
+deployed and running, with its Space id and API key set as
+SPACE_ID / API_KEY in .env — see app/serving/hf_space/DEPLOY.md.
 """
 import asyncio
 import json
@@ -37,7 +37,7 @@ async def run() -> None:
     print(f"Question: {request.question_text}")
     print(f"Method  : {request.detected_method}")
     print(f"Score   : {request.assigned_marks} / {request.total_marks}")
-    print("Calling trained model via SPACE_API_URL...\n")
+    print("Calling trained model via SPACE_ID...\n")
 
     generator = FeedbackGenerator()
     await generator.load_model()

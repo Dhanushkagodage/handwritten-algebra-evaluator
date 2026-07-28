@@ -1,8 +1,6 @@
---extra-index-url https://download.pytorch.org/whl/cpu
-fastapi
-uvicorn[standard]
-pydantic>=2.0
-torch==2.4.1+cpu
+gradio
+spaces
+torch
 transformers
 peft
 huggingface_hub

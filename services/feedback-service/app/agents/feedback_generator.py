@@ -1,7 +1,11 @@
 import asyncio
+import json
 import os
 import re
 from typing import Dict, List, Optional
+
+from gradio_client import Client
+from gradio_client.exceptions import AppError
 
 from app.models.schemas import (
     FeedbackRequest,
@@ -18,10 +22,10 @@ class FeedbackGenerator:
     Module 03 — Stepwise Feedback Generation.
 
     Calls your own LoRA-fine-tuned Qwen2.5-3B-Instruct — trained on Colab
-    using the algebra dataset in app/training/dataset.py — over HTTP. The
-    model is served by a persistent Hugging Face Space
-    (app/serving/hf_space/app.py) that pulls the adapter from Hugging Face
-    Hub, reached via SPACE_API_URL + API_KEY. See
+    using the algebra dataset in app/training/dataset.py — over Gradio's
+    API client. The model is served by a persistent Hugging Face Space
+    (app/serving/hf_space/app.py, Gradio SDK + ZeroGPU) that pulls the
+    adapter from Hugging Face Hub, reached via SPACE_ID + API_KEY. See
     app/serving/hf_space/DEPLOY.md for how to set it up.
 
     Generates four-component per-step feedback:
@@ -33,8 +37,10 @@ class FeedbackGenerator:
 
     def __init__(self):
         self._loaded = False
-        self._space_url: Optional[str] = None
+        self._space_id: Optional[str] = None
         self._api_key: Optional[str] = None
+        self._hf_space_token: Optional[str] = None
+        self._client: Optional[Client] = None
 
     async def load_model(self) -> None:
         if self._loaded:
@@ -43,9 +49,20 @@ class FeedbackGenerator:
         self._loaded = True
 
     def _load_space_client(self) -> None:
-        self._space_url = os.getenv("SPACE_API_URL")
+        self._space_id = os.getenv("SPACE_ID")
         self._api_key = os.getenv("API_KEY")
-        print(f"[FeedbackGenerator] calling trained model at {self._space_url}")
+        # The Space is private, so gradio_client needs its own HF read
+        # token to even see it — separate from the app-level API_KEY,
+        # which the generate() function checks itself.
+        self._hf_space_token = os.getenv("HF_SPACE_TOKEN")
+        print(f"[FeedbackGenerator] calling trained model at {self._space_id}")
+
+    def _get_client(self) -> Client:
+        # Client(...) does a handshake to fetch the Space's API schema, so
+        # build it once and reuse it — not on every request.
+        if self._client is None:
+            self._client = Client(self._space_id, hf_token=self._hf_space_token)
+        return self._client
 
     # ------------------------------------------------------------------
     # Public interface
@@ -122,35 +139,34 @@ class FeedbackGenerator:
     async def _run_inference(self, messages: List[Dict]) -> str:
         return await self._run_space_inference(messages)
 
-    # Free HF Spaces sleep when idle and take ~30-90s to wake on the next
-    # request; a request landing during that window sees a connection
-    # failure or a 5xx before the container is ready, not a slow response
-    # (the 120s per-request timeout already covers slow-but-warm replies).
+    # Free HF Spaces sleep when idle and take a while to wake on the next
+    # request (plus ZeroGPU's own GPU-allocation wait on a cold Space); a
+    # request landing during that window sees a connection failure before
+    # the container/GPU is ready, not a slow response.
     _SPACE_RETRY_DELAYS = (5, 15, 30)
 
     async def _run_space_inference(self, messages: List[Dict]) -> str:
-        import httpx
+        messages_json = json.dumps(messages)
 
-        async with httpx.AsyncClient(timeout=120) as client:
-            last_error: Optional[Exception] = None
-            for delay in (0,) + self._SPACE_RETRY_DELAYS:
-                if delay:
-                    await asyncio.sleep(delay)
-                try:
-                    resp = await client.post(
-                        self._space_url,
-                        json={"messages": messages},
-                        headers={"X-API-Key": self._api_key},
-                    )
-                    resp.raise_for_status()
-                    return resp.json()["text"].strip()
-                except httpx.HTTPStatusError as exc:
-                    if exc.response.status_code < 500:
-                        raise
-                    last_error = exc
-                except httpx.TransportError as exc:
-                    last_error = exc
-            raise last_error
+        last_error: Optional[Exception] = None
+        for delay in (0,) + self._SPACE_RETRY_DELAYS:
+            if delay:
+                await asyncio.sleep(delay)
+            try:
+                client = await asyncio.to_thread(self._get_client)
+                text = await asyncio.to_thread(
+                    client.predict,
+                    messages_json,
+                    self._api_key,
+                    api_name="/generate",
+                )
+                return text.strip()
+            except AppError:
+                # Server-side gr.Error (e.g. bad api_key) — retrying won't help.
+                raise
+            except Exception as exc:
+                last_error = exc
+        raise last_error
 
     # ------------------------------------------------------------------
     # Response parsing

@@ -1,7 +1,7 @@
 # requirements-train.txt — install inside Colab/Kaggle for LoRA training
 # (train.py) and to push the trained adapter to Hugging Face Hub. The
 # deployed feedback-service never needs this — it only calls the Hugging
-# Face Space over HTTP (SPACE_API_URL). See app/serving/hf_space/DEPLOY.md
+# Face Space via gradio_client (SPACE_ID). See app/serving/hf_space/DEPLOY.md
 # for the Space's own (separate) requirements.txt.
 -r requirements.txt
 # Exact-pinned (not ranges) — these versions are tested to work together on

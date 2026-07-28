@@ -6,11 +6,11 @@ LoRA-fine-tuned `Qwen2.5-3B-Instruct` model.
 
 The dev machine has no local GPU, so training runs on a free **Google Colab /
 Kaggle T4 GPU**. The trained LoRA adapter is pushed to a private repo on
-**Hugging Face Hub**, and served from a free, always-on **Hugging Face
-Space** — the deployed service just calls that Space's URL over HTTP, it
-never downloads or runs the model itself. Unlike a live Colab session, the
-Space stays up permanently, so there's no tunnel URL to re-copy every time
-you want to use it.
+**Hugging Face Hub**, and served from an always-on **Hugging Face Space**
+(Gradio SDK + ZeroGPU) — the deployed service just calls that Space
+through `gradio_client`, it never downloads or runs the model itself.
+Unlike a live Colab session, the Space stays up permanently, so there's no
+tunnel URL to re-copy every time you want to use it.
 
 ---
 
@@ -93,8 +93,9 @@ stays running independently of Colab.
 Open `.env` in this folder and set:
 
 ```
-SPACE_API_URL=https://dhanushkagodage-feedback-service-inference.hf.space/generate
+SPACE_ID=DhanushkaGodage/feedback-service-inference
 API_KEY=<the shared secret you set as the Space's API_KEY secret>
+HF_SPACE_TOKEN=<an HF read token — the Space is private, so gradio_client needs this to reach it>
 ```
 
 See `app/serving/hf_space/DEPLOY.md` for how to create the Space (one-time
@@ -182,16 +183,21 @@ py -u tests\test_feedback.py
 
 **Quickly check your `.env` is picked up correctly:**
 ```powershell
-py -c "from dotenv import load_dotenv; import os; load_dotenv(); print(os.getenv('SPACE_API_URL'))"
+py -c "from dotenv import load_dotenv; import os; load_dotenv(); print(os.getenv('SPACE_ID'))"
 ```
 
 ---
 
 ## Troubleshooting
 
-- **`401 Unauthorized` calling the Space** — `API_KEY` in `.env` doesn't
-  match the Space's `API_KEY` secret. Check both, and make sure you didn't
-  leave a trailing `/generate` or whitespace in the Space secret itself.
+- **`invalid or missing api_key` calling the Space** — `API_KEY` in `.env`
+  doesn't match the Space's `API_KEY` secret. Check both for stray
+  whitespace.
+- **Space appears unreachable / 401 before generation even runs** — the
+  Space is private, so `HF_SPACE_TOKEN` in `.env` must be a valid HF
+  **read** token for an account with access to it (your own account by
+  default). Missing or expired tokens fail here, before the `API_KEY`
+  check inside `generate()` even runs.
 - **`ModuleNotFoundError: No module named 'app'`** — the Colab cell ran from
   the wrong directory. Re-run the `%cd /content/handwritten-algebra-evaluator/services/feedback-service`
   line before the failing command.
@@ -200,8 +206,11 @@ py -c "from dotenv import load_dotenv; import os; load_dotenv(); print(os.getenv
   1–3 from scratch; training only takes ~2 minutes.
 - **`ModuleNotFoundError: No module named 'dotenv'` locally** — run
   `py -m pip install -r requirements.txt` from this folder.
-- **Space request is very slow (30-90s+)** — expected; the free Space runs
-  on CPU only. See `app/serving/hf_space/DEPLOY.md` for tuning notes.
+- **Space request is very slow** — the first request after the Space (or
+  ZeroGPU allocation) has been idle takes longer; see
+  `app/serving/hf_space/DEPLOY.md` for tuning notes. Consistently slow
+  warm requests usually mean ZeroGPU wasn't selected under Settings →
+  Hardware and it's falling back to CPU.
 - **Space returns a stale-looking adapter after retraining** — Spaces load
   the model once at container startup, so a fresh `upload_folder()` push
   from Colab won't be picked up until the Space restarts (use "Restart
