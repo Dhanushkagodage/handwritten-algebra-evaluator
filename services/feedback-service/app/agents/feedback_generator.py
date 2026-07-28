@@ -39,6 +39,7 @@ class FeedbackGenerator:
         self._loaded = False
         self._space_id: Optional[str] = None
         self._api_key: Optional[str] = None
+        self._hf_token: Optional[str] = None
         self._client: Optional[Client] = None
 
     async def load_model(self) -> None:
@@ -50,13 +51,17 @@ class FeedbackGenerator:
     def _load_space_client(self) -> None:
         self._space_id = os.getenv("SPACE_ID")
         self._api_key = os.getenv("API_KEY")
+        self._hf_token = os.getenv("HF_TOKEN")
         print(f"[FeedbackGenerator] calling trained model at {self._space_id}")
 
     def _get_client(self) -> Client:
         # Client(...) does a handshake to fetch the Space's API schema, so
-        # build it once and reuse it — not on every request.
+        # build it once and reuse it — not on every request. Passing
+        # hf_token authenticates the call as you, drawing from your
+        # account's ZeroGPU quota instead of the tiny shared quota given
+        # to anonymous callers (which runs out almost immediately).
         if self._client is None:
-            self._client = Client(self._space_id)
+            self._client = Client(self._space_id, hf_token=self._hf_token)
         return self._client
 
     # ------------------------------------------------------------------
