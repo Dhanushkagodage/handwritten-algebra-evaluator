@@ -258,6 +258,12 @@ def report_distribution(raw: List[Dict], strict: bool) -> List[str]:
 
 
 def main():
+    # Windows consoles often default to a non-UTF-8 codepage (e.g. cp1252),
+    # which can't encode math symbols (√, etc.) that show up in generated
+    # question text — reconfigure so validation output never crashes on them.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--expected-count", type=int, default=None)
     parser.add_argument("--strict-balance", action="store_true")

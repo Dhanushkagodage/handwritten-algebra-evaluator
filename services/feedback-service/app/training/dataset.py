@@ -2805,7 +2805,7 @@ def _exponent_equations_examples() -> List[Dict]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Batch 2 top-ups: thin topics (equations_with_brackets, equations_with_fractions,
+# Top-ups: thin topics (equations_with_brackets, equations_with_fractions,
 # simultaneous_substitution, negative_fractional_indices, rationalising_denominators
 # each previously had only 1 example) plus a few partial/difficult additions to
 # existing topics to correct the correct/partial/incorrect balance.
@@ -3154,11 +3154,11 @@ def _difference_of_squares_topup_examples() -> List[Dict]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Batch 3: deepen still-thin topics, skewed toward partial/incorrect and
+# Deepen still-thin topics, skewed toward partial/incorrect and
 # difficult to correct the corpus-wide validity/difficulty balance.
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _sum_diff_cubes_batch3_examples() -> List[Dict]:
+def _sum_diff_cubes_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Factorise x^3 - 64", "difference of cubes", 2.0, 2.0,
@@ -3201,7 +3201,7 @@ def _sum_diff_cubes_batch3_examples() -> List[Dict]:
     ]
 
 
-def _quadratic_formula_batch3_examples() -> List[Dict]:
+def _quadratic_formula_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Solve 2x^2 - 4x - 6 = 0 using the quadratic formula", "quadratic formula", 2.0, 2.0,
@@ -3264,7 +3264,7 @@ def _quadratic_formula_batch3_examples() -> List[Dict]:
     ]
 
 
-def _completing_square_batch3_examples() -> List[Dict]:
+def _completing_square_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Solve x^2 - 2x - 8 = 0 by completing the square", "completing the square", 3.0, 3.0,
@@ -3326,7 +3326,7 @@ def _completing_square_batch3_examples() -> List[Dict]:
     ]
 
 
-def _surds_batch3_examples() -> List[Dict]:
+def _surds_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Simplify √72", "surds", 1.0, 1.0,
@@ -3360,7 +3360,7 @@ def _surds_batch3_examples() -> List[Dict]:
     ]
 
 
-def _linear_inequalities_batch3_examples() -> List[Dict]:
+def _linear_inequalities_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Solve 3x - 4 ≤ 11", "linear inequality", 1.0, 1.0,
@@ -3412,7 +3412,7 @@ def _linear_inequalities_batch3_examples() -> List[Dict]:
     ]
 
 
-def _quadratic_inequalities_batch3_examples() -> List[Dict]:
+def _quadratic_inequalities_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Solve x^2 - x - 6 ≤ 0", "quadratic inequality", 2.0, 2.0,
@@ -3468,7 +3468,7 @@ def _quadratic_inequalities_batch3_examples() -> List[Dict]:
     ]
 
 
-def _simultaneous_elimination_batch3_examples() -> List[Dict]:
+def _simultaneous_elimination_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Solve: 3x + 2y = 16, x - 2y = 0", "elimination", 2.0, 2.0,
@@ -3524,7 +3524,7 @@ def _simultaneous_elimination_batch3_examples() -> List[Dict]:
     ]
 
 
-def _function_composition_batch3_examples() -> List[Dict]:
+def _function_composition_deepen_examples() -> List[Dict]:
     return [
         _example(
             "If f(x) = x + 5 and g(x) = x^2, find (f∘g)(-2)", "function composition", 2.0, 2.0,
@@ -3564,7 +3564,7 @@ def _function_composition_batch3_examples() -> List[Dict]:
     ]
 
 
-def _inverse_functions_batch3_examples() -> List[Dict]:
+def _inverse_functions_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Find the inverse of f(x) = 4x - 8", "inverse function", 2.0, 2.0,
@@ -3604,7 +3604,7 @@ def _inverse_functions_batch3_examples() -> List[Dict]:
     ]
 
 
-def _gradient_intercept_batch3_examples() -> List[Dict]:
+def _gradient_intercept_deepen_examples() -> List[Dict]:
     return [
         _example(
             "A line has y-intercept -3 and passes through (2, 5). Find its equation.",
@@ -3642,7 +3642,7 @@ def _gradient_intercept_batch3_examples() -> List[Dict]:
     ]
 
 
-def _sequences_nth_term_batch3_examples() -> List[Dict]:
+def _sequences_nth_term_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Find the nth term of the sequence 20, 17, 14, 11, ...", "sequences (nth term, decreasing)", 1.0, 1.0,
@@ -3670,7 +3670,7 @@ def _sequences_nth_term_batch3_examples() -> List[Dict]:
     ]
 
 
-def _ratio_proportion_batch3_examples() -> List[Dict]:
+def _ratio_proportion_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Divide 45 in the ratio 4:5", "ratio and proportion (three-step)", 2.0, 2.0,
@@ -3699,7 +3699,7 @@ def _ratio_proportion_batch3_examples() -> List[Dict]:
     ]
 
 
-def _absolute_value_batch3_examples() -> List[Dict]:
+def _absolute_value_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Solve |3x| = 12", "absolute value equation", 2.0, 2.0,
@@ -3728,7 +3728,7 @@ def _absolute_value_batch3_examples() -> List[Dict]:
     ]
 
 
-def _exponent_equations_batch3_examples() -> List[Dict]:
+def _exponent_equations_deepen_examples() -> List[Dict]:
     return [
         _example(
             "Solve 5^(2x) = 125", "exponent equation", 2.0, 2.0,
@@ -3765,11 +3765,11 @@ def _exponent_equations_batch3_examples() -> List[Dict]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Batch 4: heavily skewed toward partial validity to correct the
+# Heavily skewed toward partial validity to correct the
 # corpus-wide correct/partial/incorrect balance.
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _batch4_examples() -> List[Dict]:
+def _validity_rebalance_examples() -> List[Dict]:
     return [
         _example(
             "Add (2x^2 - 3x + 1) and (x^2 + 3x - 4)", "polynomial addition", 2.5, 3.0,
@@ -4049,12 +4049,12 @@ def _batch4_examples() -> List[Dict]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Batch 5: one partial-heavy example per remaining under-represented topic,
-# to keep pushing the corpus-wide validity balance toward target while
+# Partial credit: one partial-heavy example per remaining under-represented
+# topic, to keep pushing the corpus-wide validity balance toward target while
 # broadening depth across all 39 topics.
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _batch5_examples() -> List[Dict]:
+def _partial_credit_examples() -> List[Dict]:
     return [
         _example(
             "Simplify 8y - 3(y + 4)", "simplifying expressions", 1.5, 2.0,
@@ -4668,11 +4668,11 @@ def _batch5_examples() -> List[Dict]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Batch 6: broad pass across 25 topics, 2 examples each, maintaining the
+# Broad pass across 25 topics, 2 examples each, maintaining the
 # converged 30/35/35 validity and 30/45/25 difficulty target ratios.
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _batch6_examples() -> List[Dict]:
+def _broad_topic_pass_examples() -> List[Dict]:
     return [
         _example(
             "Expand (x + 6)(x - 1)", "expansion", 2.0, 2.0,
@@ -5475,9 +5475,9 @@ def _batch6_examples() -> List[Dict]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Batch 7: 221 additional unique examples.
+# 221 additional unique examples.
 #
-# This batch is additive only: it preserves every existing example and uses the
+# This set is additive only: it preserves every existing example and uses the
 # same _example / _step / _scheme / _fb schema.  Together with the existing
 # 279 records it produces exactly 500 raw annotations.
 #
@@ -5486,8 +5486,8 @@ def _batch6_examples() -> List[Dict]:
 #   difficulty 55 easy / 87 medium / 79 difficult
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _batch7_examples() -> List[Dict]:
-    """Additional 221 explicit annotations using the same _example format as earlier batches."""
+def _bulk_generated_examples() -> List[Dict]:
+    """Additional 221 explicit annotations using the same _example format as earlier sets."""
     return [
         _example(
             'Simplify 5x + 3 - 2x + 4', 'simplifying expressions', 2.0, 2.0,
@@ -8990,24 +8990,24 @@ def create_sample_annotations(output_file: str):
         + _rationalising_denominators_topup_examples()
         + _expanding_brackets_topup_examples()
         + _difference_of_squares_topup_examples()
-        + _sum_diff_cubes_batch3_examples()
-        + _quadratic_formula_batch3_examples()
-        + _completing_square_batch3_examples()
-        + _surds_batch3_examples()
-        + _linear_inequalities_batch3_examples()
-        + _quadratic_inequalities_batch3_examples()
-        + _simultaneous_elimination_batch3_examples()
-        + _function_composition_batch3_examples()
-        + _inverse_functions_batch3_examples()
-        + _gradient_intercept_batch3_examples()
-        + _sequences_nth_term_batch3_examples()
-        + _ratio_proportion_batch3_examples()
-        + _absolute_value_batch3_examples()
-        + _exponent_equations_batch3_examples()
-        + _batch4_examples()
-        + _batch5_examples()
-        + _batch6_examples()
-        + _batch7_examples()
+        + _sum_diff_cubes_deepen_examples()
+        + _quadratic_formula_deepen_examples()
+        + _completing_square_deepen_examples()
+        + _surds_deepen_examples()
+        + _linear_inequalities_deepen_examples()
+        + _quadratic_inequalities_deepen_examples()
+        + _simultaneous_elimination_deepen_examples()
+        + _function_composition_deepen_examples()
+        + _inverse_functions_deepen_examples()
+        + _gradient_intercept_deepen_examples()
+        + _sequences_nth_term_deepen_examples()
+        + _ratio_proportion_deepen_examples()
+        + _absolute_value_deepen_examples()
+        + _exponent_equations_deepen_examples()
+        + _validity_rebalance_examples()
+        + _partial_credit_examples()
+        + _broad_topic_pass_examples()
+        + _bulk_generated_examples()
     )
 
     # Assign ids centrally (topic-scoped running counter) so uniqueness is
