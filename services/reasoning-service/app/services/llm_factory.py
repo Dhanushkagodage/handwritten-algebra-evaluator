@@ -43,7 +43,7 @@ def get_llm(
 
         if resolved_provider == "openai":
             from langchain_openai import ChatOpenAI
-            resolved_model = model or settings.llm_model or "gpt-4o-mini"
+            resolved_model = model or settings.llm_model or "gpt-4o"
             logger.info("Using OpenAI model: %s", resolved_model)
             return ChatOpenAI(
                 model=resolved_model,

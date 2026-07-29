@@ -1,0 +1,62 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve: 4^x - 6(2^x) + 8 = 0.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Student does NOT substitute u = 2^x."
+      },
+      {
+        "step_id": 2,
+        "content": "Student tries: 4^x - 6(2^x) + 8 = 0 → 2^(2x) = 6(2^x) - 8"
+      },
+      {
+        "step_id": 3,
+        "content": "Takes log: 2x log 2 = log(6·2^x - 8)  ← Cannot simplify RHS."
+      },
+      {
+        "step_id": 4,
+        "content": "Student is stuck and cannot proceed."
+      },
+      {
+        "step_id": 5,
+        "content": "Correct approach: let u = 2^x → u² - 6u + 8 = 0 → (u-2)(u-4)=0"
+      },
+      {
+        "step_id": 6,
+        "content": "u=2 → 2^x=2 → x=1. u=4 → 2^x=4 → x=2."
+      }
+    ],
+    "final_answer": "Student could not solve — wrong approach taken. Correct: x=1 or x=2."
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Recognise substitution u=2^x to convert to quadratic — not done. 0 marks.",
+        "marks": 0
+      },
+      {
+        "step_no": 2,
+        "description": "Form u²-6u+8=0 — not reached.",
+        "marks": 0
+      },
+      {
+        "step_no": 3,
+        "description": "Factorise (u-2)(u-4)=0 — not reached.",
+        "marks": 0
+      },
+      {
+        "step_no": 4,
+        "description": "Find u=2 and u=4 — not reached.",
+        "marks": 0
+      },
+      {
+        "step_no": 5,
+        "description": "Convert back: x=1 and x=2 — not reached.",
+        "marks": 0
+      }
+    ]
+  }
+}

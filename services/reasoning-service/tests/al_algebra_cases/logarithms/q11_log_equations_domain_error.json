@@ -1,0 +1,58 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve: log₅(2x+1) - log₅(x-1) = 1.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "log₅[(2x+1)/(x-1)] = 1"
+      },
+      {
+        "step_id": 2,
+        "content": "(2x+1)/(x-1) = 5"
+      },
+      {
+        "step_id": 3,
+        "content": "2x+1 = 5(x-1) = 5x-5"
+      },
+      {
+        "step_id": 4,
+        "content": "6 = 3x → x = 2"
+      },
+      {
+        "step_id": 5,
+        "content": "Student states x = 2 without checking domain."
+      }
+    ],
+    "final_answer": "x = 2 (domain check omitted)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Use quotient rule correctly.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Convert to 5^1 = 5.",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Solve linear equation → x = 2.",
+        "marks": 3
+      },
+      {
+        "step_no": 4,
+        "description": "Verify x=2 satisfies domain (x>1, 2x+1>0) — not done. 0 marks.",
+        "marks": 0
+      },
+      {
+        "step_no": 5,
+        "description": "State final answer.",
+        "marks": 1
+      }
+    ]
+  }
+}

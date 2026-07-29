@@ -1,0 +1,62 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve 3x² - 5x - 2 = 0 using the quadratic formula, giving exact answers.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "a=3, b=-5, c=-2"
+      },
+      {
+        "step_id": 2,
+        "content": "x = [5 ± √(25 + 24)] / 6"
+      },
+      {
+        "step_id": 3,
+        "content": "x = [5 ± √49] / 6"
+      },
+      {
+        "step_id": 4,
+        "content": "x = [5 ± 7] / 6"
+      },
+      {
+        "step_id": 5,
+        "content": "x = 12/6 = 2 or x = -2/6"
+      },
+      {
+        "step_id": 6,
+        "content": "Student writes x = -2/6 without simplifying to -1/3."
+      }
+    ],
+    "final_answer": "x = 2 or x = -2/6 (should simplify to -1/3)"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Identify a, b, c correctly.",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Apply formula correctly.",
+        "marks": 2
+      },
+      {
+        "step_no": 3,
+        "description": "Evaluate discriminant √49 = 7.",
+        "marks": 1
+      },
+      {
+        "step_no": 4,
+        "description": "Find x = 2 correctly.",
+        "marks": 1
+      },
+      {
+        "step_no": 5,
+        "description": "Simplify -2/6 to -1/3 — not done. 0 marks.",
+        "marks": 0
+      }
+    ]
+  }
+}

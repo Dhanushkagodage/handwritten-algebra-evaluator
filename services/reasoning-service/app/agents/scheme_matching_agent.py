@@ -16,6 +16,7 @@ from pydantic import ValidationError
 
 from app.schemas.output_schema import SchemeMatchingOutput
 from app.services.llm_factory import get_cached_llm
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,12 @@ def _extract_json(text: str) -> dict:
     return json.loads(clean[start : end + 1])
 
 
-def scheme_matching_agent(state: dict) -> dict:
+def _j(data) -> str:
+    """Compact JSON serialisation — minimal tokens for LLM input."""
+    return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+
+
+async def scheme_matching_agent(state: dict) -> dict:
     """
     LangGraph node: maps student steps to marking scheme steps.
     Retries up to MAX_RETRIES times on invalid JSON or schema violations.
@@ -52,11 +58,15 @@ def scheme_matching_agent(state: dict) -> dict:
     student_steps: list = state["student_steps"]
     marking_scheme: dict = state["marking_scheme"]
 
-    llm = get_cached_llm()
+    llm = get_cached_llm(
+        provider=settings.llm_provider,
+        model=settings.get_scheme_model(),
+        temperature=settings.llm_temperature,
+    )
 
     human_text = (
-        f"Student Steps:\n{json.dumps(student_steps, indent=2)}\n\n"
-        f"Marking Scheme Steps:\n{json.dumps(marking_scheme['steps'], indent=2)}"
+        f"Student Steps:\n{_j(student_steps)}\n\n"
+        f"Marking Scheme Steps:\n{_j(marking_scheme['steps'])}"
     )
 
     last_error: Exception | None = None
@@ -68,7 +78,7 @@ def scheme_matching_agent(state: dict) -> dict:
                 SystemMessage(content=_SYSTEM_PROMPT),
                 HumanMessage(content=human_text),
             ]
-            response = llm.invoke(messages)
+            response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = SchemeMatchingOutput(**raw)
             logger.info(

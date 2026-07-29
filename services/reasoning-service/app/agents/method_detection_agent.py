@@ -16,6 +16,7 @@ from pydantic import ValidationError
 
 from app.schemas.output_schema import MethodDetectionOutput
 from app.services.llm_factory import get_cached_llm
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,12 @@ def _extract_json(text: str) -> dict:
     return json.loads(clean[start : end + 1])
 
 
-def method_detection_agent(state: dict) -> dict:
+def _j(data) -> str:
+    """Compact JSON serialisation — minimal tokens for LLM input."""
+    return json.dumps(data, separators=(",", ":"), ensure_ascii=False)
+
+
+async def method_detection_agent(state: dict) -> dict:
     """
     LangGraph node: detects the mathematical method used by the student.
     Retries up to MAX_RETRIES times on invalid JSON or schema violations.
@@ -52,11 +58,15 @@ def method_detection_agent(state: dict) -> dict:
     question_text: str = state["question_text"]
     student_steps: list = state["student_steps"]
 
-    llm = get_cached_llm()
+    llm = get_cached_llm(
+        provider=settings.llm_provider,
+        model=settings.get_method_detect_model(),
+        temperature=settings.llm_temperature,
+    )
 
     human_text = (
         f"Question:\n{question_text}\n\n"
-        f"Student Steps:\n{json.dumps(student_steps, indent=2)}"
+        f"Student Steps:\n{_j(student_steps)}"
     )
 
     last_error: Exception | None = None
@@ -68,7 +78,7 @@ def method_detection_agent(state: dict) -> dict:
                 SystemMessage(content=_SYSTEM_PROMPT),
                 HumanMessage(content=human_text),
             ]
-            response = llm.invoke(messages)
+            response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = MethodDetectionOutput(**raw)
             logger.info(

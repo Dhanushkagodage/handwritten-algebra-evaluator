@@ -1,0 +1,22 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve x² - 5x + 6 = 0.",
+    "student_steps": [
+      {"step_id": 1, "content": "x² - 5x + 6 = 0"},
+      {"step_id": 2, "content": "Using the quadratic formula: x = (5 ± √(25 - 24)) / 2"},
+      {"step_id": 3, "content": "x = (5 ± √1) / 2 = (5 ± 1) / 2"},
+      {"step_id": 4, "content": "x = (5 + 1)/2 = 3  or  x = (5 - 1)/2 = 2"},
+      {"step_id": 5, "content": "x = 3 or x = 2"}
+    ],
+    "final_answer": "x = 3 or x = 2"
+  },
+  "marking_scheme": {
+    "total_marks": 5,
+    "steps": [
+      {"step_no": 1, "description": "Write the equation in standard form", "marks": 1},
+      {"step_no": 2, "description": "Factorise correctly: (x - 2)(x - 3) = 0", "marks": 2},
+      {"step_no": 3, "description": "Apply zero-product property", "marks": 1},
+      {"step_no": 4, "description": "State both solutions: x = 2 or x = 3", "marks": 1}
+    ]
+  }
+}

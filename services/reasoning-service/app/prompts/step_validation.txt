@@ -18,6 +18,13 @@ You must detect even the smallest mathematical discrepancies, algebraic errors, 
    - "incorrect": The step contains a mathematical error (e.g., incorrect derivative rule, wrong exponent, arithmetic error like 2+3=6, wrong sign, incorrect factoring).
    - "partially_correct": The step is correct in principle but contains a minor slip (e.g., a simple copying typo that doesn't change the method's structure, or a step that is mathematically correct but incomplete). *Note: An incorrect exponent in differentiation is a major concept error, NOT a minor slip. Mark it "incorrect".*
    - "unclear": The expression is too ambiguous or unreadable.
+6. **Mathematical Equivalence over Syntactic Form** *(CRITICAL — read carefully)*:
+   A step is "correct" if the equation it states is **mathematically true**, regardless of whether the student has fully simplified every sub-expression. You MUST mentally evaluate all arithmetic before judging.
+   - `2(-8)` is mathematically identical to `-16`. A step containing `2(-8)` is NOT an error.
+   - `(-2)^3` is mathematically identical to `-8`. Writing `(-2)^3` in a substitution step is NOT an error.
+   - `a(-2)^2` is mathematically identical to `4a`. Leaving it as `a(-2)^2` or `a(4)` is NOT an error.
+   - **Process**: Before marking any step incorrect, fully expand and evaluate BOTH sides of the equation in the step. If LHS == RHS after expansion, the step is correct — even if the student did not fully simplify.
+   - **Example**: For P(x) = 2x³ + ax² - 5x + 6, the step `P(-2) = 2(-8) + 4a + 10 + 6` is CORRECT because substituting x = -2 gives exactly those terms. The student chose not to evaluate `2×(-8) = -16` yet — that is a valid stylistic choice, not a mathematical error.
 
 ## CONFIDENCE SCORING
 Rate your confidence in each assessment from 0.0 to 1.0:
@@ -68,8 +75,17 @@ Respond ONLY with valid JSON. No explanation outside the JSON block.
 - Step 1: correct. The factorization is accurate.
 - Step 2: incorrect. The root from (x-3)=0 is x=3, not x=-3. This is a clear arithmetic/algebraic error.
 
+### Example 3: Remainder Theorem with Unevaluated Intermediate Form *(CRITICAL pattern)*
+**Question**: P(x) = 2x³ + ax² - 5x + 6. Find P(-2).
+**Student Steps**:
+1. P(-2) = 2(-8) + 4a + 10 + 6
+2. P(-2) = 4a
+**Validation Analysis**:
+- Step 1: correct. Substituting x = -2: 2×(-2)³ = 2×(-8) [valid unevaluated form], a×(-2)² = 4a, -5×(-2) = 10, constant = 6. Every term is correct. The student wrote `2(-8)` instead of `-16` — this is an unevaluated but mathematically equivalent form. NOT an error.
+- Step 2: correct. Summing: 2(-8) + 10 + 6 = -16 + 16 = 0, so 4a + 0 = 4a. The simplification is correct.
+
 ## RULES
 - Always output the JSON block and nothing else
 - "is_valid" must be true only if status is "correct" or "partially_correct"
 - Analyze every step — never skip any
-
+- ALWAYS expand arithmetic mentally before judging. Unevaluated intermediate forms are valid.

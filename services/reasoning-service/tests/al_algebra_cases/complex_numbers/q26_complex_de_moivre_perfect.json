@@ -1,0 +1,71 @@
+{
+  "reasoning_input": {
+    "question_text": "Use De Moivre's theorem to find (1 + i)⁸. Express your answer in the form a + bi.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Write 1+i in polar form. |1+i| = √2, arg(1+i) = π/4"
+      },
+      {
+        "step_id": 2,
+        "content": "1+i = √2 (cos(π/4) + i sin(π/4))"
+      },
+      {
+        "step_id": 3,
+        "content": "(1+i)⁸ = (√2)⁸ (cos(8π/4) + i sin(8π/4))"
+      },
+      {
+        "step_id": 4,
+        "content": "= 2⁴ (cos(2π) + i sin(2π))"
+      },
+      {
+        "step_id": 5,
+        "content": "= 16 (1 + 0i)"
+      },
+      {
+        "step_id": 6,
+        "content": "= 16"
+      },
+      {
+        "step_id": 7,
+        "content": "Verification: (1+i)² = 2i. (2i)² = -4. (-4)² = 16 ✓"
+      }
+    ],
+    "final_answer": "16"
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Find modulus √2 and argument π/4.",
+        "marks": 2
+      },
+      {
+        "step_no": 2,
+        "description": "Write in polar form correctly.",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Apply De Moivre's theorem.",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Compute (√2)⁸ = 16.",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Evaluate cos(2π)+i sin(2π) = 1.",
+        "marks": 2
+      },
+      {
+        "step_no": 6,
+        "description": "State answer 16 with verification.",
+        "marks": 1
+      }
+    ]
+  }
+}

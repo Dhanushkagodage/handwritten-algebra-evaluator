@@ -1,17 +1,20 @@
 """
-FastAPI router — /evaluate endpoint
-────────────────────────────────────
-Accepts Input A (reasoning) + Input B (marking scheme) in a single request.
-Invokes the LangGraph multi-agent pipeline and returns the structured evaluation.
+FastAPI router — /evaluate endpoints
+─────────────────────────────────────
+POST /api/v1/evaluate         → full EvaluationOutput  (detailed, with agent internals)
+POST /api/v1/evaluate/summary → FriendlyEvaluation     (compact, human-readable)
+
+Both endpoints run the same LangGraph pipeline.
+The only difference is the response format returned to the caller.
 """
 import logging
 import json
-from typing import Optional
+from typing import Optional, Tuple
 from fastapi import APIRouter
 from pathlib import Path
 from app.core.exceptions import EmptySchemeError, EmptyStepsError, PipelineError
 from app.schemas.input_schema import EvaluationRequest
-from app.schemas.output_schema import EvaluationOutput
+from app.schemas.output_schema import EvaluationOutput, FriendlyEvaluation, FriendlyStep
 from app.services.langgraph_flow import build_graph
 
 logger = logging.getLogger(__name__)
@@ -22,54 +25,35 @@ router = APIRouter(prefix="/api/v1", tags=["Evaluation"])
 _graph = build_graph()
 
 
-@router.post(
-    "/evaluate",
-    response_model=EvaluationOutput,
-    summary="Evaluate student algebra answer",
-    description=(
-        "Runs a 3-agent parallel LangGraph pipeline to evaluate a handwritten "
-        "A/L algebra answer against a marking scheme. Returns per-step marks, "
-        "method feedback, and a summary."
-    ),
-)
-async def evaluate(request: Optional[EvaluationRequest] = None) -> EvaluationOutput:
+# ── Shared helpers ─────────────────────────────────────────────────────────────
+
+def _load_default_request() -> EvaluationRequest:
+    """Load fallback test case when no request body is provided."""
+    test_file = (
+        Path(__file__).resolve().parent.parent.parent
+        / "tests" / "al_algebra_cases" / "induction" / "q01_induction_perfect.json"
+    )
+    logger.info("[/evaluate] No request body provided. Loading %s", test_file)
+    with open(test_file, "r", encoding="utf-8") as f:
+        return EvaluationRequest.model_validate(json.load(f))
+
+
+async def _run_pipeline(request: EvaluationRequest) -> Tuple[dict, dict, dict]:
     """
-    POST /api/v1/evaluate
-
-    Input A (reasoning_input): question + student steps
-    Input B (marking_scheme): official marking scheme
+    Validate the request, invoke the LangGraph pipeline, and return
+    (output_dict, state_dict, result_dict) for the caller to format as needed.
     """
-    #  the req body is not available then execute with the selected json 
-    if request is None:
-        # Resolve path relative to routes.py's directory for robustness
-        test_file = Path(__file__).resolve().parent.parent.parent / "tests" / "test_cases" / "tc09_induction_perfect.json"
-
-        logger.info(
-            "[/evaluate] No request body provided. Loading %s",
-            test_file,
-        )
-
-        with open(test_file, "r", encoding="utf-8") as f:
-            request = EvaluationRequest.model_validate(
-                json.load(f)
-            )
-
-
-
-    # ── Domain input guards ────────────────────────────────────────────────────
     if not request.reasoning_input.student_steps:
         raise EmptyStepsError()
-
     if not request.marking_scheme.steps:
         raise EmptySchemeError()
 
     logger.info(
-        "[/evaluate] Received request — steps=%d, scheme_steps=%d",
+        "[pipeline] Received request — steps=%d, scheme_steps=%d",
         len(request.reasoning_input.student_steps),
         len(request.marking_scheme.steps),
     )
 
-    # Build LangGraph initial state
     state = {
         "question_text": request.reasoning_input.question_text,
         "student_steps": [s.model_dump() for s in request.reasoning_input.student_steps],
@@ -78,27 +62,94 @@ async def evaluate(request: Optional[EvaluationRequest] = None) -> EvaluationOut
     }
 
     try:
-        result = _graph.invoke(state)
+        result = await _graph.ainvoke(state)
     except Exception as exc:
-        logger.exception("[/evaluate] Graph invocation failed: %s", exc)
+        logger.exception("[pipeline] Graph invocation failed: %s", exc)
         raise PipelineError(cause=str(exc))
 
     output = result.get("evaluation_output")
     if output is None:
-        logger.error("[/evaluate] evaluation_output missing from graph result")
+        logger.error("[pipeline] evaluation_output missing from graph result")
         raise PipelineError(cause="No evaluation_output key in graph result")
 
-    # Inject intermediate agent outputs into the output dictionary for debugging/inspection
+    # Inject intermediate agent outputs for callers that need them
     output["step_validation"] = result.get("step_validation_output")
     output["method_detection"] = result.get("method_detection_output")
     output["scheme_matching"] = result.get("scheme_matching_output")
 
     logger.info(
-        "[/evaluate] Evaluation complete — %.1f/%.1f marks (%.1f%%)",
+        "[pipeline] Evaluation complete — %.1f/%.1f marks (%.1f%%)",
         output["total_marks"],
         output["max_marks"],
         output["percentage"],
     )
 
+    return output, state, result
+
+
+def _build_friendly(output: dict, state: dict, result: dict) -> FriendlyEvaluation:
+    """Convert a pipeline output dict into a FriendlyEvaluation response."""
+    step_content_map: dict = {
+        s["step_id"]: s.get("content", "") for s in state["student_steps"]
+    }
+    method_detected: str = (
+        result.get("method_detection_output", {}).get("detected_method", "undetermined")
+    )
+    friendly_steps = [
+        FriendlyStep(
+            step_number=step["step_id"],
+            expression=step_content_map.get(step["step_id"], ""),
+            validity=step["status"],
+            marks_awarded=step["marks_awarded"],
+        )
+        for step in output["steps_analysis"]
+    ]
+    return FriendlyEvaluation(
+        question_text=state["question_text"],
+        detected_method=method_detected,
+        assigned_marks=output["total_marks"],
+        total_marks=output["max_marks"],
+        student_steps=friendly_steps,
+    )
+
+
+# ── Endpoint 1: Full detailed output ──────────────────────────────────────────
+
+@router.post(
+    "/evaluate",
+    response_model=EvaluationOutput,
+    summary="Evaluate student algebra answer (full output)",
+    description=(
+        "Runs a 3-agent parallel LangGraph pipeline to evaluate a handwritten "
+        "A/L algebra answer against a marking scheme. Returns the full per-step "
+        "marks, agent internals, method feedback, and a summary."
+    ),
+)
+async def evaluate(request: Optional[EvaluationRequest] = None) -> EvaluationOutput:
+    """POST /api/v1/evaluate — returns full EvaluationOutput."""
+    if request is None:
+        request = _load_default_request()
+
+    output, state, result = await _run_pipeline(request)
     return EvaluationOutput(**output)
 
+
+# ── Endpoint 2: Compact friendly output ───────────────────────────────────────
+
+@router.post(
+    "/evaluate/summary",
+    response_model=FriendlyEvaluation,
+    summary="Evaluate student algebra answer (compact summary)",
+    description=(
+        "Runs the same LangGraph pipeline as /evaluate but returns a compact, "
+        "human-readable summary: question, method, total marks, and per-step "
+        "validity + marks only. No internal agent details."
+    ),
+)
+async def evaluate_summary(request: Optional[EvaluationRequest] = None) -> FriendlyEvaluation:
+    """POST /api/v1/evaluate/summary — returns compact FriendlyEvaluation only."""
+    if request is None:
+        request = _load_default_request()
+
+    output, state, result = await _run_pipeline(request)
+    return _build_friendly(output, state, result)

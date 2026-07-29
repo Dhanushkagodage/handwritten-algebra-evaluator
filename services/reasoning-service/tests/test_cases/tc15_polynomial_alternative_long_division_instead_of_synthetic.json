@@ -1,0 +1,23 @@
+{
+  "reasoning_input": {
+    "question_text": "A polynomial is defined as P(x) = x³ - 6x² + 11x - 6. Show that (x - 1) is a factor and hence fully factorise P(x).",
+    "student_steps": [
+      {"step_id": 1, "content": "Using the factor theorem: P(1) = 1 - 6 + 11 - 6 = 0, so (x - 1) is a factor."},
+      {"step_id": 2, "content": "Perform polynomial long division: x³ - 6x² + 11x - 6 ÷ (x - 1)"},
+      {"step_id": 3, "content": "x³ - 6x² + 11x - 6 = (x - 1)(x² - 5x + 6)"},
+      {"step_id": 4, "content": "Factorise the quadratic: x² - 5x + 6 = (x - 2)(x - 3)"},
+      {"step_id": 5, "content": "Therefore P(x) = (x - 1)(x - 2)(x - 3)"}
+    ],
+    "final_answer": "P(x) = (x - 1)(x - 2)(x - 3)"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {"step_no": 1, "description": "Apply factor theorem: evaluate P(1) = 0 to confirm (x - 1) is a factor", "marks": 2},
+      {"step_no": 2, "description": "Use synthetic division (not long division) to divide P(x) by (x - 1) and obtain x² - 5x + 6", "marks": 2},
+      {"step_no": 3, "description": "Verify quotient: x² - 5x + 6 is correctly obtained", "marks": 1},
+      {"step_no": 4, "description": "Factorise the quotient quadratic into (x - 2)(x - 3)", "marks": 1},
+      {"step_no": 5, "description": "Write the complete factorisation P(x) = (x - 1)(x - 2)(x - 3)", "marks": 1}
+    ]
+  }
+}

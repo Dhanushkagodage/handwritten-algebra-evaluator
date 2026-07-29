@@ -1,0 +1,62 @@
+{
+  "reasoning_input": {
+    "question_text": "Express (3x² + 2x - 1) / [(x+1)(x²+4)] in partial fractions.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Student writes: A/(x+1) + B/(x²+4)   ← Wrong form for irreducible quadratic."
+      },
+      {
+        "step_id": 2,
+        "content": "3x²+2x-1 = A(x²+4) + B(x+1)"
+      },
+      {
+        "step_id": 3,
+        "content": "Let x=-1: 3-2-1 = A(1+4) → 0 = 5A → A = 0"
+      },
+      {
+        "step_id": 4,
+        "content": "Compare x² coefficients: 3 = A + 0 → A = 3  [contradiction]"
+      },
+      {
+        "step_id": 5,
+        "content": "Student is confused and cannot resolve."
+      },
+      {
+        "step_id": 6,
+        "content": "Correct form should be: A/(x+1) + (Bx+C)/(x²+4)"
+      }
+    ],
+    "final_answer": "Student could not complete — wrong partial fraction form used."
+  },
+  "marking_scheme": {
+    "total_marks": 9,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Correct form: A/(x+1) + (Bx+C)/(x²+4) — student failed here (0 marks).",
+        "marks": 0
+      },
+      {
+        "step_no": 2,
+        "description": "Multiply and form identity.",
+        "marks": 1
+      },
+      {
+        "step_no": 3,
+        "description": "Use x=-1 to find A = 0/5 — correct substitution attempted.",
+        "marks": 1
+      },
+      {
+        "step_no": 4,
+        "description": "Compare coefficients to find B and C — not done.",
+        "marks": 0
+      },
+      {
+        "step_no": 5,
+        "description": "State final answer.",
+        "marks": 0
+      }
+    ]
+  }
+}
