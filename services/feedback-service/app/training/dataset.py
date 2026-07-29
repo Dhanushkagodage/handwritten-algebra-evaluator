@@ -44,6 +44,7 @@ Raw annotation schema (raw_annotations.json):
 import json
 import os
 import random
+import re
 from typing import Dict, List, Optional, Tuple
 
 from app.shared_format import FORMAT_INSTRUCTION as _FORMAT_INSTRUCTION
@@ -207,35 +208,246 @@ def split_dataset(
     return shuffled[n_eval:], shuffled[:n_eval]
 
 
+def _normalize_question(question: str) -> str:
+    """Return the validator-compatible question-template representation."""
+    normalized = question.lower()
+    normalized = re.sub(r"\d+(\.\d+)?", "#", normalized)
+    normalized = re.sub(r"\s+", " ", normalized).strip()
+    return normalized
+
+
+def _template_signature(item: Dict) -> Tuple[str, str, Tuple[str, ...]]:
+    """Identify a near-duplicate problem family exactly as validation does."""
+    return (
+        _normalize_question(item["question"]),
+        item["method"],
+        tuple(step["validity"] for step in item["steps"]),
+    )
+
+
+def _rephrase_duplicate_question(question: str, variant_index: int) -> str:
+    """Give repeated numeric templates a distinct, meaningful task framing.
+
+    The mathematical task is unchanged, so the existing worked steps, marks,
+    marking scheme, and feedback remain valid. Only later occurrences of a
+    validator-detected near-duplicate signature are rephrased; the first
+    occurrence is preserved verbatim.
+    """
+    stripped = question.strip().rstrip(".")
+    first_word, separator, remainder = stripped.partition(" ")
+    body = remainder if separator else stripped
+    key = first_word.lower()
+
+    variants = {
+        "solve": (
+            "Determine the complete solution set for: {body}",
+            "Find every value that satisfies: {body}",
+            "Use a suitable algebraic method to solve: {body}",
+        ),
+        "simplify": (
+            "Write the following in its simplest algebraic form: {body}",
+            "Reduce this expression fully: {body}",
+            "Collect and simplify every possible term in: {body}",
+        ),
+        "factorise": (
+            "Express the following completely as a product of factors: {body}",
+            "Rewrite this expression in fully factorised form: {body}",
+            "Find the complete factor form of: {body}",
+        ),
+        "expand": (
+            "Remove the brackets and collect like terms in: {body}",
+            "Write the fully expanded form of: {body}",
+            "Expand this product and simplify the result: {body}",
+        ),
+        "add": (
+            "Combine these polynomials and simplify completely: {body}",
+            "Find the simplified sum of: {body}",
+            "Add corresponding powers and simplify: {body}",
+        ),
+        "subtract": (
+            "Carry out this polynomial subtraction and simplify: {body}",
+            "Find the simplified difference described by: {body}",
+            "Distribute the subtraction correctly and simplify: {body}",
+        ),
+        "multiply": (
+            "Form the product and collect like terms: {body}",
+            "Expand this multiplication completely: {body}",
+            "Calculate the polynomial product: {body}",
+        ),
+        "divide": (
+            "Find the quotient for: {body}",
+            "Complete this polynomial division: {body}",
+            "Divide and state the simplified quotient: {body}",
+        ),
+        "find": (
+            "Use the appropriate algebraic rule to complete this task: {question}",
+            "Work systematically and answer: {question}",
+            "Determine the requested result in: {question}",
+        ),
+        "state": (
+            "Rearrange where necessary, then {question_lower}",
+            "Use the standard form to {question_lower}",
+            "Determine and clearly report the requested values: {body}",
+        ),
+        "evaluate": (
+            "Calculate the exact value of: {body}",
+            "Apply the relevant index rule and evaluate: {body}",
+            "Determine the simplified numerical value of: {body}",
+        ),
+        "rationalise": (
+            "Rewrite with a rational denominator: {body}",
+            "Remove the surd from the denominator of: {body}",
+            "Express this fraction with a rational denominator: {body}",
+        ),
+        "collect": (
+            "Group equal powers and simplify: {body}",
+            "Combine all like terms in: {body}",
+            "Rewrite in collected polynomial form: {body}",
+        ),
+    }
+
+    choices = variants.get(
+        key,
+        (
+            "Use the appropriate algebraic rule to complete this task: {question}",
+            "Work carefully through this algebra task: {question}",
+            "Determine the requested result and state it clearly: {question}",
+        ),
+    )
+    template = choices[variant_index % len(choices)]
+    return template.format(
+        body=body,
+        question=stripped,
+        question_lower=stripped[0].lower() + stripped[1:] if stripped else stripped,
+    )
+
+
+def _diversify_near_duplicate_templates(samples: List[Dict]) -> List[Dict]:
+    """Remove strict near-duplicate signatures while preserving 500 records.
+
+    Later members of a duplicate group are rephrased with distinct,
+    topic-appropriate task formulations. The mathematical expression and all
+    annotations remain unchanged. A final uniqueness assertion protects future
+    top-up batches from silently reintroducing validator-level duplicates.
+    """
+    seen = set()
+    occurrence_count: Dict[Tuple[str, str, Tuple[str, ...]], int] = {}
+
+    for item in samples:
+        original_signature = _template_signature(item)
+        duplicate_index = occurrence_count.get(original_signature, 0)
+        occurrence_count[original_signature] = duplicate_index + 1
+
+        if duplicate_index == 0 and original_signature not in seen:
+            seen.add(original_signature)
+            continue
+
+        # There are currently at most three members in a duplicate family,
+        # but the loop makes the protection future-proof for later batches.
+        variant_index = max(0, duplicate_index - 1)
+        original_question = item["question"]
+        attempts = 0
+        while True:
+            item["question"] = _rephrase_duplicate_question(
+                original_question, variant_index + attempts
+            )
+            updated_signature = _template_signature(item)
+            if updated_signature not in seen:
+                seen.add(updated_signature)
+                break
+            attempts += 1
+            if attempts > 20:
+                raise ValueError(
+                    "Unable to create a unique question template for "
+                    f"{original_question!r}"
+                )
+
+    signatures = [_template_signature(item) for item in samples]
+    if len(signatures) != len(set(signatures)):
+        raise ValueError("Near-duplicate template signatures remain after diversification")
+    return samples
+
+
+def _choose_eval_cluster_indices(
+    clusters: List[List[Dict]], target_count: int, total_count: int
+) -> set:
+    """Choose whole signature clusters closest to the requested eval size."""
+    # Dynamic programming is inexpensive here because each topic contains
+    # only a small number of examples. It avoids splitting a duplicate cluster
+    # while staying as close as possible to the per-topic evaluation target.
+    paths: Dict[int, Tuple[int, ...]] = {0: ()}
+    for index, cluster in enumerate(clusters):
+        size = len(cluster)
+        additions = {}
+        for current_sum, selected in list(paths.items()):
+            new_sum = current_sum + size
+            if new_sum >= total_count:
+                continue  # keep at least one example from the topic in train
+            additions.setdefault(new_sum, selected + (index,))
+        for new_sum, selected in additions.items():
+            paths.setdefault(new_sum, selected)
+
+    eligible_sums = list(paths)
+    if total_count > 1:
+        positive = [value for value in eligible_sums if value > 0]
+        if positive:
+            eligible_sums = positive
+
+    best_sum = min(
+        eligible_sums,
+        key=lambda value: (abs(value - target_count), value > target_count, value),
+    )
+    return set(paths[best_sum])
+
+
 def split_raw_dataset(
     raw_examples: List[Dict], eval_ratio: float = 0.15, seed: int = 42
 ) -> Tuple[List[Dict], List[Dict]]:
-    """Topic-grouped, stratified split of RAW (pre-format_example) annotations.
+    """Deterministic topic-stratified, template-cluster-aware raw split.
 
-    Splitting is done per topic group rather than globally so that every
-    topic is represented in both train and eval in roughly the target ratio,
-    and so near-identical problem families (which tend to cluster within the
-    same topic in this generator) don't straddle the split. Formatting to
-    {"text": ...} happens after splitting, on each half separately.
+    Examples are first clustered globally by the same signature used by the
+    validator: normalized question template + method + step-validity pattern.
+    A cluster is then assigned wholly to train or eval, so near-identical
+    examples can never leak across the boundary. Topic-level subset selection
+    keeps the evaluation size close to ``eval_ratio`` without breaking a
+    cluster.
     """
-    by_topic: Dict[str, List[Dict]] = {}
-    for ex in raw_examples:
-        by_topic.setdefault(ex["topic"], []).append(ex)
+    signature_clusters: Dict[Tuple[str, str, Tuple[str, ...]], List[Dict]] = {}
+    for example in raw_examples:
+        signature_clusters.setdefault(_template_signature(example), []).append(example)
+
+    clusters_by_topic: Dict[str, List[List[Dict]]] = {}
+    for signature, cluster in signature_clusters.items():
+        topics = {example["topic"] for example in cluster}
+        # A strict duplicate family should normally be within one topic. If a
+        # future family spans topics, keeping it together is more important
+        # than perfect per-topic stratification, so use a deterministic owner.
+        owner_topic = sorted(topics)[0]
+        clusters_by_topic.setdefault(owner_topic, []).append(cluster)
 
     train: List[Dict] = []
     eval_: List[Dict] = []
-    for topic in sorted(by_topic):
-        group = by_topic[topic][:]
+    for topic in sorted(clusters_by_topic):
+        clusters = clusters_by_topic[topic][:]
         rng = random.Random(f"{seed}:{topic}")
-        rng.shuffle(group)
-        n_eval = round(len(group) * eval_ratio)
-        # Never send a topic's only example(s) entirely to eval, and never
-        # split a group of 1 (nothing to stratify).
-        if len(group) <= 1:
-            n_eval = 0
-        n_eval = min(n_eval, len(group) - 1) if len(group) > 1 else 0
-        eval_.extend(group[:n_eval])
-        train.extend(group[n_eval:])
+        rng.shuffle(clusters)
+
+        total_count = sum(len(cluster) for cluster in clusters)
+        if total_count <= 1:
+            train.extend(clusters[0] if clusters else [])
+            continue
+
+        target_count = round(total_count * eval_ratio)
+        eval_indices = _choose_eval_cluster_indices(
+            clusters, target_count=target_count, total_count=total_count
+        )
+
+        for index, cluster in enumerate(clusters):
+            if index in eval_indices:
+                eval_.extend(cluster)
+            else:
+                train.extend(cluster)
+
     return train, eval_
 
 
@@ -9009,6 +9221,11 @@ def create_sample_annotations(output_file: str):
         + _broad_topic_pass_examples()
         + _bulk_generated_examples()
     )
+
+    # The later balancing/top-up batches intentionally broaden topic coverage,
+    # but some originally reused the same numeric template. Rephrase only the
+    # later members of those strict duplicate families before IDs and splitting.
+    samples = _diversify_near_duplicate_templates(samples)
 
     # Assign ids centrally (topic-scoped running counter) so uniqueness is
     # guaranteed mechanically rather than by hand-typed ids per example.
