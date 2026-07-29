@@ -1,0 +1,72 @@
+{
+  "test_case_id": "tc_028",
+  "question_text": "Solve the equation cosh(x) + 2 sinh(x) = 3 for x in terms of natural logarithms.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 8.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated exponential definitions."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Substituted definitions."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Combined fractions."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Cleared denominator to get 3eˣ - e⁻ˣ = 6."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Formed quadratic 3(eˣ)² - 6eˣ - 1 = 0."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Solved quadratic for eˣ."
+    },
+    {
+      "step_id": 7,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Rejected negative root."
+    },
+    {
+      "step_id": 8,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated final answer x = ln(1 + 2√3/3)."
+    }
+  ]
+}

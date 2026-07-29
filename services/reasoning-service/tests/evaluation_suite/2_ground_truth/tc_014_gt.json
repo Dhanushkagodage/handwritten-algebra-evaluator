@@ -1,0 +1,56 @@
+{
+  "test_case_id": "tc_014",
+  "question_text": "Find the eigenvalues and corresponding eigenvectors of matrix A = [[4, 1], [2, 3]].",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 8.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Set det(A - λI) = 0."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Expanded 2x2 determinant."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Formed characteristic equation λ² - 7λ + 10 = 0."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Solved eigenvalues λ = 5, 2."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Found eigenvector for λ=5 correctly."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Found eigenvector for λ=2 correctly."
+    }
+  ]
+}

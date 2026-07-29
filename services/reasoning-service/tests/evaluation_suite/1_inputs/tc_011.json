@@ -1,0 +1,27 @@
+{
+  "reasoning_input": {
+    "question_text": "Prove by mathematical induction that for all positive integers n, 5ⁿ - 1 is divisible by 4.",
+    "student_steps": [
+      {"step_id": 1, "content": "Base case (n = 1): 5¹ - 1 = 4, which is divisible by 4 (4 = 4 × 1). True for n = 1."},
+      {"step_id": 2, "content": "Inductive hypothesis: Assume true for n = k, i.e., 5ᵏ - 1 = 4m for some integer m."},
+      {"step_id": 3, "content": "Target: Need to prove true for n = k + 1, i.e., 5ᵏ⁺¹ - 1 is divisible by 4."},
+      {"step_id": 4, "content": "5ᵏ⁺¹ - 1 = 5 · 5ᵏ - 1"},
+      {"step_id": 5, "content": "= 5 · (4m + 1) - 1   [using 5ᵏ = 4m + 1 from hypothesis]"},
+      {"step_id": 6, "content": "= 20m + 5 - 1 = 20m + 4 = 4(5m + 1)"},
+      {"step_id": 7, "content": "Since m is an integer, 5m + 1 is an integer, so 5ᵏ⁺¹ - 1 is divisible by 4."},
+      {"step_id": 8, "content": "Conclusion: Since it holds for n = 1 and true for n = k implies true for n = k + 1, by mathematical induction 5ⁿ - 1 is divisible by 4 for all n ∈ ℤ⁺."}
+    ],
+    "final_answer": "Proven by mathematical induction for all n ∈ ℤ⁺"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "Verify base case n=1 correctly", "marks": 1},
+      {"step_no": 2, "description": "State inductive hypothesis for n=k (5ᵏ - 1 = 4m)", "marks": 1},
+      {"step_no": 3, "description": "State target expression for n=k+1", "marks": 1},
+      {"step_no": 4, "description": "Express 5ᵏ⁺¹ in terms of 5ᵏ and substitute hypothesis", "marks": 1},
+      {"step_no": 5, "description": "Simplify algebra to show 4(5m+1) or 4 × integer", "marks": 1},
+      {"step_no": 6, "description": "State complete inductive conclusion invoking principle of induction", "marks": 1}
+    ]
+  }
+}

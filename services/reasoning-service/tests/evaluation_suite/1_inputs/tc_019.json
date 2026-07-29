@@ -1,0 +1,22 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the Cartesian equation for the locus of z = x + iy given by |z - 3 - 4i| = 5.",
+    "student_steps": [
+      {"step_id": 1, "content": "Substitute z = x + iy: |(x - 3) + i(y - 4)| = 5"},
+      {"step_id": 2, "content": "Modulus definition: √((x - 3)² + (y - 4)²) = 5"},
+      {"step_id": 3, "content": "Square both sides: (x - 3)² + (y - 4)² = 25"},
+      {"step_id": 4, "content": "Expand: x² - 6x + 9 + y² - 8y + 16 = 25"},
+      {"step_id": 5, "content": "x² + y² - 6x - 8y = 0"}
+    ],
+    "final_answer": "Circle centered at (3, 4) with radius 5: (x - 3)² + (y - 4)² = 25 or x² + y² - 6x - 8y = 0"
+  },
+  "marking_scheme": {
+    "total_marks": 5,
+    "steps": [
+      {"step_no": 1, "description": "Substitute z = x + iy and group real and imaginary parts", "marks": 1},
+      {"step_no": 2, "description": "Apply modulus formula to set up square root expression", "marks": 1},
+      {"step_no": 3, "description": "Square both sides to form circle equation (x-3)² + (y-4)² = 25", "marks": 2},
+      {"step_no": 4, "description": "Identify center (3,4) and radius 5 / expanded Cartesian equation", "marks": 1}
+    ]
+  }
+}

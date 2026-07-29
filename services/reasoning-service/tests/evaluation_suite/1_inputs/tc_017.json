@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Evaluate (1 + i√3)⁶ using De Moivre's theorem.",
+    "student_steps": [
+      {"step_id": 1, "content": "Let z = 1 + i√3. Modulus r = √(1² + (√3)²) = √(1 + 3) = 2."},
+      {"step_id": 2, "content": "Argument θ = arctan(√3/1) = π/3."},
+      {"step_id": 3, "content": "In polar form: z = 2(cos(π/3) + i sin(π/3)) = 2 e^(i π/3)."},
+      {"step_id": 4, "content": "By De Moivre's theorem: z⁶ = (2 e^(i π/3))⁶ = 2⁶ · e^(i · 6 · π/3) = 64 e^(i · 2π)."},
+      {"step_id": 5, "content": "e^(i 2π) = cos(2π) + i sin(2π) = 1 + 0i = 1."},
+      {"step_id": 6, "content": "z⁶ = 64 · 1 = 64."}
+    ],
+    "final_answer": "64"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "Calculate modulus r = 2 correctly", "marks": 1},
+      {"step_no": 2, "description": "Calculate argument θ = π/3 correctly", "marks": 1},
+      {"step_no": 3, "description": "Write z in polar / exponential form", "marks": 1},
+      {"step_no": 4, "description": "Apply De Moivre's Theorem correctly: z⁶ = 2⁶ (cos 2π + i sin 2π)", "marks": 2},
+      {"step_no": 5, "description": "Evaluate exact final result to 64", "marks": 1}
+    ]
+  }
+}

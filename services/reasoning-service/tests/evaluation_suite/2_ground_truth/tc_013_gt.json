@@ -1,0 +1,48 @@
+{
+  "test_case_id": "tc_013",
+  "question_text": "Find the determinant and inverse of matrix A = [[1, 2, 0], [0, 1, 1], [2, 0, 1]].",
+  "total_available_marks": 10.0,
+  "gt_total_marks": 10.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Calculated det(A) = 5 correctly."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.5,
+      "max_marks": 1.5,
+      "evaluator_notes": "Computed minors matrix."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.5,
+      "max_marks": 1.5,
+      "evaluator_notes": "Applied checkerboard signs to get cofactor matrix."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Transposed cofactors to form adjugate matrix."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 3.0,
+      "max_marks": 3.0,
+      "evaluator_notes": "Divided adjugate by det(A)=5 to state final A⁻¹."
+    }
+  ]
+}

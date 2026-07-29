@@ -1,0 +1,26 @@
+{
+  "reasoning_input": {
+    "question_text": "Prove by contradiction that √2 is an irrational number.",
+    "student_steps": [
+      {"step_id": 1, "content": "Assumption for contradiction: Assume √2 is rational. Then √2 = a/b where a, b ∈ ℤ, b ≠ 0, and gcd(a, b) = 1 (in simplest form)."},
+      {"step_id": 2, "content": "Square both sides: 2 = a²/b² → a² = 2b²."},
+      {"step_id": 3, "content": "Since a² is an even number (2 × integer), a must also be an even number. Let a = 2k for some integer k."},
+      {"step_id": 4, "content": "Substitute a = 2k into a² = 2b²: (2k)² = 2b² → 4k² = 2b² → b² = 2k²."},
+      {"step_id": 5, "content": "Since b² is an even number, b must also be an even number."},
+      {"step_id": 6, "content": "Since both a and b are even, they share a common factor of 2, which contradicts the initial assumption that gcd(a, b) = 1."},
+      {"step_id": 7, "content": "Conclusion: The initial assumption that √2 is rational is false. Therefore, √2 is irrational."}
+    ],
+    "final_answer": "Proven by contradiction that √2 is irrational"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {"step_no": 1, "description": "State premise of proof by contradiction: assume √2 = a/b in lowest terms (gcd(a,b)=1)", "marks": 2},
+      {"step_no": 2, "description": "Square and rearrange to a² = 2b²", "marks": 1},
+      {"step_no": 3, "description": "Deduce a is even and substitute a = 2k", "marks": 1},
+      {"step_no": 4, "description": "Simplify to b² = 2k² and deduce b is even", "marks": 1},
+      {"step_no": 5, "description": "Identify contradiction (both a and b even implies common factor 2)", "marks": 1},
+      {"step_no": 6, "description": "State final conclusion that √2 is irrational", "marks": 1}
+    ]
+  }
+}
