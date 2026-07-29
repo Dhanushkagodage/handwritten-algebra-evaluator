@@ -105,23 +105,25 @@ Output (step validity, method, marks)
 
 | Component | Technology |
 |---|---|
-| Base Model | Gemma 3n (3.8B parameters, lightweight, efficient) |
-| Fine-tuning Method | LoRA (Low-Rank Adaptation via PEFT) |
-| Training Framework | Hugging Face Transformers + TRL (SFTTrainer) |
-| Inference | Transformers pipeline (direct model loading + LoRA adapter) |
+| Base Model | Qwen2.5-3B-Instruct (lightweight, efficient) |
+| Fine-tuning Method | LoRA (Low-Rank Adaptation via PEFT), adapter only — base model stays untouched |
+| Training Framework | Hugging Face Transformers + TRL (SFTTrainer), run on free Colab/Kaggle T4 |
+| Inference | HTTP call to a persistent Hugging Face Space that loads the base model + adapter from the Hub |
 | Experiment Tracking | Weights & Biases (wandb) |
 
-**Training Pipeline:**
+**Training + Serving Pipeline:**
 ```
 Raw Annotations (teacher feedback + student errors)
     ↓
 dataset.py (format to prompt-completion pairs)
     ↓
-train.py (LoRA fine-tuning)
+train.py (LoRA fine-tuning, on Colab)
     ↓
-Saved Adapter (./lora-adapter/)
+LoRA adapter pushed to a private Hugging Face Hub repo
     ↓
-feedback_generator.py (inference)
+Hugging Face Space (app/serving/hf_space/) loads base model + adapter
+    ↓
+feedback_generator.py (calls the Space over HTTP)
 ```
 
 **Entry Point:** `services/feedback-service/app/main.py`  
@@ -135,7 +137,7 @@ feedback_generator.py (inference)
 |---|---|
 | **Frontend** | React 18 + TypeScript, Vite, Tailwind CSS, shadcn/ui |
 | **Backend** | FastAPI (Python 3.9+) × 3 services |
-| **LLM/AI** | OpenAI GPT-4o, Gemma 3n, LangGraph, LoRA/PEFT |
+| **LLM/AI** | OpenAI GPT-4o, Qwen2.5-3B-Instruct, LangGraph, LoRA/PEFT |
 | **Database** | PostgreSQL (optional), Redis (optional) |
 | **Storage** | Local filesystem |
 | **Version Control** | Git + GitHub |
@@ -189,7 +191,8 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-# Edit .env if needed
+# Set SPACE_API_URL and API_KEY to point at the deployed Hugging Face
+# Space — see services/feedback-service/app/serving/hf_space/DEPLOY.md
 uvicorn app.main:app --reload --port 8003
 ```
 
@@ -203,15 +206,9 @@ npm run dev  # Runs on http://localhost:5173
 
 ### 4️⃣ Fine-tune Feedback Service (Optional)
 
-```bash
-cd services/feedback-service
-
-# Generate sample training data
-python -m app.training.dataset
-
-# Start fine-tuning
-python -m app.training.train
-```
+LoRA training runs on free Google Colab/Kaggle (a T4 GPU), not locally — see
+`services/feedback-service/app/training/COLAB.md` for the copy-paste cells
+(dataset generation, training, and pushing the adapter to Hugging Face Hub).
 
 ---
 
@@ -326,11 +323,14 @@ handwritten-algebra-evaluator/
 │       │   ├── routers/feedback.py    # POST /api/v1/feedback
 │       │   ├── models/schemas.py      # Pydantic schemas
 │       │   ├── agents/
-│       │   │   └── feedback_generator.py   # Gemma 3n + LoRA inference
-│       │   └── training/
-│       │       ├── train.py           # LoRA fine-tuning script
-│       │       ├── dataset.py         # Dataset preparation
-│       │       └── data/              # Training data folder
+│       │   │   └── feedback_generator.py   # Calls the HF Space (base model + LoRA adapter)
+│       │   ├── training/
+│       │   │   ├── train.py           # LoRA fine-tuning script
+│       │   │   ├── dataset.py         # Dataset preparation
+│       │   │   └── data/              # Training data folder
+│       │   └── serving/hf_space/      # Hugging Face Space (Docker) — serves base model + adapter
+│       │       ├── app.py, Dockerfile, requirements.txt
+│       │       └── DEPLOY.md          # One-time Space setup instructions
 │       ├── requirements.txt
 │       └── .env.example
 │
@@ -360,10 +360,17 @@ LLM_MODEL=gpt-4o
 # --- Feedback Service (Module 03) ---
 FEEDBACK_SERVICE_URL=http://localhost:8003
 FEEDBACK_PORT=8003
-BASE_MODEL=google/gemma-3n-E2B-it
-LORA_ADAPTER_PATH=./lora-adapter
+# URL of the persistent Hugging Face Space serving the fine-tuned model,
+# and the shared secret it expects as X-API-Key — see
+# services/feedback-service/app/serving/hf_space/DEPLOY.md.
+SPACE_API_URL=https://dhanushkagodage-feedback-service-inference.hf.space/generate
+API_KEY=your_shared_space_api_key_here
+
+# Training-only (used by app/training/train.py inside Colab/Kaggle, not by
+# the deployed service)
+LORA_ADAPTER_DIR=./lora-adapter
 WANDB_PROJECT=handwritten-algebra-evaluator
-WANDB_RUN_NAME=gemma3n-feedback-lora
+WANDB_RUN_NAME=qwen25-3b-feedback-lora
 ```
 
 ---
@@ -384,7 +391,7 @@ WANDB_RUN_NAME=gemma3n-feedback-lora
 ✅ **Alternative Solution Methods** — Recognizes multiple valid approaches  
 ✅ **Marking Scheme Alignment** — Compares against teacher-defined rubrics  
 ✅ **Explainable Feedback** — Clear, student-friendly explanations  
-✅ **Lightweight SLM** — Gemma 3n (3.8B) fine-tuned with LoRA  
+✅ **Lightweight SLM** — Qwen2.5-3B-Instruct fine-tuned with LoRA  
 ✅ **Microservices Architecture** — Independent, scalable modules  
 
 ---
@@ -425,7 +432,8 @@ curl http://localhost:8003/health
 - **Project Proposal:** See `Team InnovateX (1).pdf` in project root
 - **LangGraph Docs:** https://langchain-ai.github.io/langgraph/
 - **PEFT (LoRA):** https://github.com/huggingface/peft
-- **Gemma Models:** https://huggingface.co/google/gemma-3n-E2B-it
+- **Qwen2.5 Models:** https://huggingface.co/Qwen/Qwen2.5-3B-Instruct
+- **Hugging Face Spaces (Docker SDK):** https://huggingface.co/docs/hub/spaces-sdks-docker
 
 ---
 
@@ -433,7 +441,7 @@ curl http://localhost:8003/health
 
 - **CPU:** 4+ cores
 - **RAM:** 16GB+ (for running all 3 services + frontend simultaneously)
-- **GPU:** Optional but recommended for feedback-service inference (NVIDIA CUDA)
+- **GPU:** Not required locally — feedback-service inference runs on a free Hugging Face Space; a GPU (or free Colab/Kaggle T4) is only needed transiently for LoRA training
 
 ---
 
@@ -453,7 +461,7 @@ For questions or issues, contact supervisor: **Dr. C.R.J. Amalraj**
 
 1. **Module 01 (OCR):** Implement text + math OCR pipeline in `ocr-service/`
 2. **Module 02 (Reasoning):** Wire up LangGraph agents in `reasoning-service/`
-3. **Module 03 (Feedback):** Collect training data → Fine-tune Gemma 3n → Deploy
+3. **Module 03 (Feedback):** Collect training data → Fine-tune Qwen2.5-3B-Instruct (LoRA) on Colab → push adapter to Hugging Face Hub → deploy the HF Space (see `services/feedback-service/app/serving/hf_space/DEPLOY.md`)
 
 All service scaffolding is in place. Start coding!
 

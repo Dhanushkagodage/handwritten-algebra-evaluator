@@ -1,8 +1,11 @@
+import asyncio
+import json
 import os
 import re
 from typing import Dict, List, Optional
 
-from huggingface_hub import AsyncInferenceClient
+from gradio_client import Client
+from gradio_client.exceptions import AppError
 
 from app.models.schemas import (
     FeedbackRequest,
@@ -11,25 +14,19 @@ from app.models.schemas import (
     StepResult,
     StepValidity,
 )
-
-# Prompt instruction shared between inference and training — must stay in sync with
-# the format used in training/dataset.py so fine-tuned weights learn the right mapping.
-_FORMAT_INSTRUCTION = (
-    "\nFor each step, respond in this exact format:\n"
-    "=== STEP N [CORRECT/PARTIAL/INCORRECT] ===\n"
-    "CORRECT: <what the student did correctly, or method acknowledgement>\n"
-    "MISSING: <what was wrong or missing — only for INCORRECT or PARTIAL>\n"
-    "DEDUCTION: <why marks were reduced — only for INCORRECT or PARTIAL>\n"
-    "IMPROVE: <specific actionable tip for the student>\n"
-)
+from app.shared_format import FORMAT_INSTRUCTION as _FORMAT_INSTRUCTION
 
 
 class FeedbackGenerator:
     """
     Module 03 — Stepwise Feedback Generation.
 
-    Calls the HuggingFace Inference API (Qwen2.5-1.5B-Instruct).
-    Requires HF_TOKEN env var. No local model download needed.
+    Calls your own LoRA-fine-tuned Qwen2.5-3B-Instruct — trained on Colab
+    using the algebra dataset in app/training/dataset.py — over Gradio's
+    API client. The model is served by a persistent Hugging Face Space
+    (app/serving/hf_space/app.py, Gradio SDK + ZeroGPU) that pulls the
+    adapter from Hugging Face Hub, reached via SPACE_ID + API_KEY. See
+    app/serving/hf_space/DEPLOY.md for how to set it up.
 
     Generates four-component per-step feedback:
       1. What is correct
@@ -39,18 +36,33 @@ class FeedbackGenerator:
     """
 
     def __init__(self):
-        self._client: Optional[AsyncInferenceClient] = None
-        self._model_name: str = ""
         self._loaded = False
+        self._space_id: Optional[str] = None
+        self._api_key: Optional[str] = None
+        self._hf_token: Optional[str] = None
+        self._client: Optional[Client] = None
 
     async def load_model(self) -> None:
         if self._loaded:
             return
-        self._model_name = os.getenv("BASE_MODEL", "Qwen/Qwen2.5-1.5B-Instruct")
-        hf_token = os.getenv("HF_TOKEN")
-        self._client = AsyncInferenceClient(model=self._model_name, token=hf_token)
+        self._load_space_client()
         self._loaded = True
-        print(f"[FeedbackGenerator] Connected to HF Inference API → {self._model_name}")
+
+    def _load_space_client(self) -> None:
+        self._space_id = os.getenv("SPACE_ID")
+        self._api_key = os.getenv("API_KEY")
+        self._hf_token = os.getenv("HF_TOKEN")
+        print(f"[FeedbackGenerator] calling trained model at {self._space_id}")
+
+    def _get_client(self) -> Client:
+        # Client(...) does a handshake to fetch the Space's API schema, so
+        # build it once and reuse it — not on every request. Passing
+        # token authenticates the call as you, drawing from your
+        # account's ZeroGPU quota instead of the tiny shared quota given
+        # to anonymous callers (which runs out almost immediately).
+        if self._client is None:
+            self._client = Client(self._space_id, token=self._hf_token)
+        return self._client
 
     # ------------------------------------------------------------------
     # Public interface
@@ -121,16 +133,40 @@ class FeedbackGenerator:
         ]
 
     # ------------------------------------------------------------------
-    # Inference — HuggingFace Inference API
+    # Inference — your fine-tuned model, called over the HF Space
     # ------------------------------------------------------------------
 
     async def _run_inference(self, messages: List[Dict]) -> str:
-        response = await self._client.chat.completions.create(
-            messages=messages,
-            max_tokens=600,
-            temperature=0.7,
-        )
-        return response.choices[0].message.content.strip()
+        return await self._run_space_inference(messages)
+
+    # Free HF Spaces sleep when idle and take a while to wake on the next
+    # request (plus ZeroGPU's own GPU-allocation wait on a cold Space); a
+    # request landing during that window sees a connection failure before
+    # the container/GPU is ready, not a slow response.
+    _SPACE_RETRY_DELAYS = (5, 15, 30)
+
+    async def _run_space_inference(self, messages: List[Dict]) -> str:
+        messages_json = json.dumps(messages)
+
+        last_error: Optional[Exception] = None
+        for delay in (0,) + self._SPACE_RETRY_DELAYS:
+            if delay:
+                await asyncio.sleep(delay)
+            try:
+                client = await asyncio.to_thread(self._get_client)
+                text = await asyncio.to_thread(
+                    client.predict,
+                    messages_json,
+                    self._api_key,
+                    api_name="/generate",
+                )
+                return text.strip()
+            except AppError:
+                # Server-side gr.Error (e.g. bad api_key) — retrying won't help.
+                raise
+            except Exception as exc:
+                last_error = exc
+        raise last_error
 
     # ------------------------------------------------------------------
     # Response parsing

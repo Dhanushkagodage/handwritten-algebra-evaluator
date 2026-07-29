@@ -2,14 +2,15 @@
 Standalone test for Module 03 — Stepwise Feedback Generation.
 
 Loads a sample FeedbackRequest (the kind of payload Module 02 ultimately feeds in),
-runs the local Qwen2.5 SLM generator directly (no FastAPI server needed), and prints +
+calls the FeedbackGenerator directly (no FastAPI server needed), and prints +
 validates the generated stepwise feedback.
 
 Run from the feedback-service directory:
     python tests\\test_feedback.py
 
-The first run downloads the base model (Qwen/Qwen2.5-1.5B-Instruct by default); later
-runs are offline. Override the model via the BASE_MODEL env var / .env.
+Requires the Hugging Face Space (app/serving/hf_space/app.py) to be
+deployed and running, with its Space id and API key set as
+SPACE_ID / API_KEY in .env — see app/serving/hf_space/DEPLOY.md.
 """
 import asyncio
 import json
@@ -36,7 +37,7 @@ async def run() -> None:
     print(f"Question: {request.question_text}")
     print(f"Method  : {request.detected_method}")
     print(f"Score   : {request.assigned_marks} / {request.total_marks}")
-    print("Loading model (first run downloads weights)...\n")
+    print("Calling trained model via SPACE_ID...\n")
 
     generator = FeedbackGenerator()
     await generator.load_model()
