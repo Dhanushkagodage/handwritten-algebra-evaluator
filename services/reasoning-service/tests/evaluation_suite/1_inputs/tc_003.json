@@ -1,0 +1,28 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve simultaneously: y = 2x + 1 and x² + y² = 25",
+    "student_steps": [
+      {"step_id": 1, "content": "Substituting y = 2x + 1 into x² + y² = 25"},
+      {"step_id": 2, "content": "x² + (2x + 1)² = 25"},
+      {"step_id": 3, "content": "x² + 4x² + 4x + 1 = 25"},
+      {"step_id": 4, "content": "5x² + 4x - 24 = 0"},
+      {"step_id": 5, "content": "(5x - 12)(x + 2) = 0 → Wait, checking: (5x-12)(x+2) = 5x²-2x-24 ≠ 5x²+4x-24"},
+      {"step_id": 6, "content": "Using quadratic formula: x = (-4 ± √(16 + 480)) / 10 = (-4 ± √496) / 10"},
+      {"step_id": 7, "content": "x = (-4 ± 4√31) / 10 = (-2 ± 2√31) / 5"},
+      {"step_id": 8, "content": "When x = (-2 + 2√31)/5, y = 2·(-2 + 2√31)/5 + 1 = (1 + 4√31)/5"},
+      {"step_id": 9, "content": "When x = (-2 - 2√31)/5, y = (1 - 4√31)/5"}
+    ],
+    "final_answer": "x = (-2 + 2√31)/5, y = (1 + 4√31)/5 OR x = (-2 - 2√31)/5, y = (1 - 4√31)/5"
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {"step_no": 1, "description": "Identify and perform the substitution of the linear equation into the quadratic", "marks": 1},
+      {"step_no": 2, "description": "Expand (2x+1)² correctly to form a single-variable equation", "marks": 2},
+      {"step_no": 3, "description": "Simplify and rearrange to standard quadratic form 5x²+4x-24=0", "marks": 1},
+      {"step_no": 4, "description": "Correctly apply factorisation or quadratic formula", "marks": 2},
+      {"step_no": 5, "description": "Obtain correct x values in exact (surd) form", "marks": 2},
+      {"step_no": 6, "description": "Back-substitute to obtain both corresponding y values", "marks": 2}
+    ]
+  }
+}

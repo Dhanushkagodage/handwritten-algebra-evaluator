@@ -1,0 +1,6 @@
+test_case_id,step_id,gt_matched_scheme,sys_matched_scheme,scheme_match_agree,gt_validity,sys_validity,validity_agree,gt_marks,sys_marks,mark_diff
+tc_008,1,1,1,True,correct,correct,True,1.0,1.0,0.0
+tc_008,2,2,2,True,correct,correct,True,1.0,1.0,0.0
+tc_008,3,3,3,True,correct,correct,True,2.0,2.0,0.0
+tc_008,4,4,4,True,correct,correct,True,2.0,2.0,0.0
+tc_008,5,5,5,True,correct,correct,True,1.0,1.0,0.0

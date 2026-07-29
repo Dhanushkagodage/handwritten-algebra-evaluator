@@ -70,7 +70,9 @@ async def step_validation_agent(state: dict) -> dict:
         "EVALUATION REMINDER: Before marking any step incorrect, mentally compute all "
         "arithmetic in that step (e.g., evaluate powers like (-2)^3 = -8, products like "
         "2×(-8) = -16, etc.) and verify mathematical equivalence of LHS and RHS after "
-        "full expansion. An unevaluated but mathematically correct form is NOT an error."
+        "full expansion. An unevaluated but mathematically correct form is NOT an error. "
+        "For completing the square on ax²+bx+c=0 (when a ≠ 1), remember to divide by a first, "
+        "so the term is (x + b/(2a))². Always test equivalence by expanding (x-h)² = k."
     )
 
     last_error: Exception | None = None

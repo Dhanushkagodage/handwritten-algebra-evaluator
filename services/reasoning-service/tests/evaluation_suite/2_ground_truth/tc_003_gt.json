@@ -1,0 +1,80 @@
+{
+  "test_case_id": "tc_003",
+  "question_text": "Solve simultaneously: y = 2x + 1 and x² + y² = 25",
+  "total_available_marks": 10.0,
+  "gt_total_marks": 10.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated substitution intent."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 0.0,
+      "evaluator_notes": "Performed substitution into x² + y² = 25."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Expanded (2x+1)² correctly."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Simplified to standard form 5x² + 4x - 24 = 0."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": null,
+      "validity": "correct",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 0.0,
+      "evaluator_notes": "Scratch check verifying factorisation fails; self-corrected."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Applied quadratic formula correctly."
+    },
+    {
+      "step_id": 7,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Obtained exact surd values for x."
+    },
+    {
+      "step_id": 8,
+      "matched_scheme_step": 6,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Back-substituted to find first y value."
+    },
+    {
+      "step_id": 9,
+      "matched_scheme_step": 6,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Back-substituted to find second y value."
+    }
+  ]
+}
