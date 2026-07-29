@@ -1,0 +1,64 @@
+{
+  "test_case_id": "tc_006",
+  "question_text": "Expand (1 + 3x)^(-2) as a series of ascending powers of x up to and including the term in x³, stating the range of x for which the expansion is valid.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 7.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated general binomial expansion formula correctly."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Identified n=-2 and u=3x."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 0.0,
+      "evaluator_notes": "First term 1."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Calculated term in x (-6x) correctly."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Calculated term in x² (27x²) correctly."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Calculated term in x³ (-108x³) correctly."
+    },
+    {
+      "step_id": 7,
+      "matched_scheme_step": 5,
+      "validity": "partially_correct",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated series expansion, but omitted required range of validity |x| < 1/3 (scheme step 6)."
+    }
+  ]
+}

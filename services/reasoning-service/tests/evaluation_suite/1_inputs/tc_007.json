@@ -1,0 +1,22 @@
+{
+  "reasoning_input": {
+    "question_text": "Given A = [[3, 1], [5, 2]] and B = [[7], [11]], solve AX = B for X.",
+    "student_steps": [
+      {"step_id": 1, "content": "AX = B"},
+      {"step_id": 2, "content": "X = B / A"},
+      {"step_id": 3, "content": "X = [[7/3], [11/5]]"},
+      {"step_id": 4, "content": "X = [[2.33...], [2.2]]"}
+    ],
+    "final_answer": "X = [[7/3], [11/5]]"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Recognize that X = A⁻¹B and set up the inverse process", "marks": 1},
+      {"step_no": 2, "description": "Calculate det(A) = 3·2 - 1·5 = 1", "marks": 2},
+      {"step_no": 3, "description": "Find A⁻¹ = (1/det(A))·[[2, -1], [-5, 3]] = [[2, -1], [-5, 3]]", "marks": 2},
+      {"step_no": 4, "description": "Multiply X = A⁻¹B = [[2·7 + (-1)·11], [(-5)·7 + 3·11]] = [[3], [-2]]", "marks": 2},
+      {"step_no": 5, "description": "State the solution X = [[3], [-2]] and verify AX = B", "marks": 1}
+    ]
+  }
+}

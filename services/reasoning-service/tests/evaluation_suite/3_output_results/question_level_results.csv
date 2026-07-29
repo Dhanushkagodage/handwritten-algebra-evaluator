@@ -1,0 +1,2 @@
+test_case_id,question_text,max_marks,gt_total_marks,sys_total_marks,absolute_error,squared_error,exact_match,detected_method,summary_feedback
+tc_008,Express (5x + 3) / ((x + 1)(x - 3)) in partial fractions.,7.0,7.0,7.0,0.0,0.0,True,partial fractions,"All steps are correct and align with the marking scheme. Final partial-fractions form is equivalent to the scheme’s expression, so full marks are awarded."

@@ -1,0 +1,40 @@
+{
+  "test_case_id": "tc_010",
+  "question_text": "Prove by mathematical induction that, for all positive integers n: Σ(r=1 to n) r(r+1) = n(n+1)(n+2)/3",
+  "total_available_marks": 10.0,
+  "gt_total_marks": 7.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Verified base case n=1."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 4,
+      "validity": "partially_correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 5.0,
+      "evaluator_notes": "Applied inductive hypothesis implicitly to split terms, but completely omitted explicit statement of inductive hypothesis for n=k (scheme step 2) and target statement (scheme step 3)."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 3.0,
+      "max_marks": 3.0,
+      "evaluator_notes": "Correct algebraic simplification to target form."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 6,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated conclusion."
+    }
+  ]
+}

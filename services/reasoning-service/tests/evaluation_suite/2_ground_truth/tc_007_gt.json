@@ -1,0 +1,40 @@
+{
+  "test_case_id": "tc_007",
+  "question_text": "Given A = [[3, 1], [5, 2]] and B = [[7], [11]], solve AX = B for X.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 0.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": null,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Premise restated."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": null,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Attempted matrix division X = B/A, which is mathematically undefined in linear algebra."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": null,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 4.0,
+      "evaluator_notes": "Calculated elementwise division."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": null,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Decimal evaluation of incorrect matrix result."
+    }
+  ]
+}

@@ -25,6 +25,15 @@ You must detect even the smallest mathematical discrepancies, algebraic errors, 
    - `a(-2)^2` is mathematically identical to `4a`. Leaving it as `a(-2)^2` or `a(4)` is NOT an error.
    - **Process**: Before marking any step incorrect, fully expand and evaluate BOTH sides of the equation in the step. If LHS == RHS after expansion, the step is correct — even if the student did not fully simplify.
    - **Example**: For P(x) = 2x³ + ax² - 5x + 6, the step `P(-2) = 2(-8) + 4a + 10 + 6` is CORRECT because substituting x = -2 gives exactly those terms. The student chose not to evaluate `2×(-8) = -16` yet — that is a valid stylistic choice, not a mathematical error.
+7. **Completing the Square with Non-Unity Leading Coefficient (a ≠ 1)**:
+   When completing the square for a quadratic equation ax² + bx + c = 0 where a ≠ 1 (e.g., 2x² - 8x + 3 = 0):
+   - You MUST first divide the entire equation by a: x² + (b/a)x + (c/a) = 0.
+   - The squared binomial term is (x + b/(2a))², NOT (x + b/2)².
+   - NEVER take b directly without dividing by a!
+   - To double check if a completed square form (x - h)² = k is valid for ax² + bx + c = 0:
+     Expand (x - h)² - k = 0 => x² - 2hx + (h² - k) = 0.
+     Multiply by a: ax² - 2ahx + a(h² - k) = 0.
+     Verify if -2ah == b and a(h² - k) == c. If yes, the step is 100% CORRECT!
 
 ## CONFIDENCE SCORING
 Rate your confidence in each assessment from 0.0 to 1.0:
@@ -83,6 +92,17 @@ Respond ONLY with valid JSON. No explanation outside the JSON block.
 **Validation Analysis**:
 - Step 1: correct. Substituting x = -2: 2×(-2)³ = 2×(-8) [valid unevaluated form], a×(-2)² = 4a, -5×(-2) = 10, constant = 6. Every term is correct. The student wrote `2(-8)` instead of `-16` — this is an unevaluated but mathematically equivalent form. NOT an error.
 - Step 2: correct. Summing: 2(-8) + 10 + 6 = -16 + 16 = 0, so 4a + 0 = 4a. The simplification is correct.
+
+### Example 4: Completing the Square with Leading Coefficient a ≠ 1
+**Question**: Solve 2x² - 8x + 3 = 0 by completing the square. Give your answers in surd form.
+**Student Steps**:
+1. 2x² - 8x + 3 = 0
+2. (x - 2)² = 5/2
+3. x = 2 ± √(5/2)
+**Validation Analysis**:
+- Step 1: correct. Copying the equation.
+- Step 2: correct. Dividing 2x² - 8x + 3 = 0 by 2 yields x² - 4x + 3/2 = 0. Completing the square gives (x - 2)² - 4 + 3/2 = 0 => (x - 2)² = 5/2. Expanding (x - 2)² = 5/2 gives x² - 4x + 4 = 2.5 => x² - 4x + 1.5 = 0, which multiplied by 2 gives 2x² - 8x + 3 = 0. Step 2 is 100% correct.
+- Step 3: correct. Taking square root: x - 2 = ±√(5/2) => x = 2 ± √(5/2). Logically follows and is mathematically accurate.
 
 ## RULES
 - Always output the JSON block and nothing else
