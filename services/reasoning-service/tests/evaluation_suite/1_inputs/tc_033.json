@@ -1,0 +1,23 @@
+{
+  "reasoning_input": {
+    "question_text": "The polynomial f(x) = x⁴ + ax² + b is divisible by x² - 1. Find the values of a and b given that f(2) = 15.",
+    "student_steps": [
+      {"step_id": 1, "content": "x² - 1 = (x - 1)(x + 1), so f(1) = 0 and f(-1) = 0."},
+      {"step_id": 2, "content": "f(1) = 1⁴ + a(1)² + b = 1 + a + b = 0 → a + b = -1"},
+      {"step_id": 3, "content": "f(2) = 2⁴ + a(2)² + b = 16 + 4a + b = 15 → 4a + b = -1"},
+      {"step_id": 4, "content": "Subtract equation (2) from (3): (4a + b) - (a + b) = -1 - (-1) → 3a = 0 → a = 0"},
+      {"step_id": 5, "content": "Substitute a = 0 into a + b = -1: b = -1"},
+      {"step_id": 6, "content": "Check: f(x) = x⁴ - 1 = (x² - 1)(x² + 1) ✓; f(2) = 16 - 1 = 15 ✓"}
+    ],
+    "final_answer": "a = 0, b = -1"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {"step_no": 1, "description": "Identify factors (x-1) and (x+1) and set up f(1) = 0", "marks": 2},
+      {"step_no": 2, "description": "Substitute x = 1 to get equation a + b = -1", "marks": 1},
+      {"step_no": 3, "description": "Substitute x = 2 to get equation 4a + b = -1", "marks": 2},
+      {"step_no": 4, "description": "Solve simultaneous system to find a = 0 and b = -1", "marks": 2}
+    ]
+  }
+}

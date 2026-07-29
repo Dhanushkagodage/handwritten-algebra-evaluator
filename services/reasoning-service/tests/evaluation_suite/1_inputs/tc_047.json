@@ -1,0 +1,25 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve the first-order differential equation dy/dx + 2y = e⁻ˣ given that y = 2 when x = 0.",
+    "student_steps": [
+      {"step_id": 1, "content": "Standard linear form: dy/dx + P(x)y = Q(x) with P(x) = 2 and Q(x) = e⁻ˣ"},
+      {"step_id": 2, "content": "Integrating factor I(x) = e^(∫ 2 dx) = e^(2x)"},
+      {"step_id": 3, "content": "Multiply equation by I(x): e^(2x) dy/dx + 2 e^(2x) y = e^(2x) e⁻ˣ = eˣ"},
+      {"step_id": 4, "content": "LHS is d/dx [y e^(2x)] = eˣ"},
+      {"step_id": 5, "content": "Integrate both sides: y e^(2x) = ∫ eˣ dx = eˣ + C"},
+      {"step_id": 6, "content": "Substitute x = 0, y = 2: 2 e⁰ = e⁰ + C → 2 = 1 + C → C = 1"},
+      {"step_id": 7, "content": "y e^(2x) = eˣ + 1 → y = e⁻ˣ + e⁻²ˣ"}
+    ],
+    "final_answer": "y = e⁻ˣ + e⁻²ˣ"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Identify P(x) = 2 and calculate integrating factor I(x) = e^(2x)", "marks": 2},
+      {"step_no": 2, "description": "Multiply ODE by e^(2x) and rewrite LHS as d/dx [y e^(2x)]", "marks": 2},
+      {"step_no": 3, "description": "Integrate RHS to obtain y e^(2x) = eˣ + C", "marks": 2},
+      {"step_no": 4, "description": "Substitute initial condition (0, 2) to solve C = 1", "marks": 1},
+      {"step_no": 5, "description": "State explicit general solution y = e⁻ˣ + e⁻²ˣ", "marks": 1}
+    ]
+  }
+}

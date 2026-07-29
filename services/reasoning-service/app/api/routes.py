@@ -10,12 +10,13 @@ The only difference is the response format returned to the caller.
 import logging
 import json
 from typing import Optional, Tuple
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Query
 from pathlib import Path
 from app.core.exceptions import EmptySchemeError, EmptyStepsError, PipelineError
 from app.schemas.input_schema import EvaluationRequest
 from app.schemas.output_schema import EvaluationOutput, FriendlyEvaluation, FriendlyStep
 from app.services.langgraph_flow import build_graph
+from app.services.csv_recorder import record_evaluation
 
 logger = logging.getLogger(__name__)
 
@@ -122,15 +123,58 @@ def _build_friendly(output: dict, state: dict, result: dict) -> FriendlyEvaluati
     description=(
         "Runs a 3-agent parallel LangGraph pipeline to evaluate a handwritten "
         "A/L algebra answer against a marking scheme. Returns the full per-step "
-        "marks, agent internals, method feedback, and a summary."
+        "marks, agent internals, method feedback, and a summary. "
+        "Pass ?test_case_id=tc_001 to also append results + ground truth to the "
+        "evaluation CSVs in tests/evaluation_suite/3_output_results/."
     ),
 )
-async def evaluate(request: Optional[EvaluationRequest] = Body(None)) -> EvaluationOutput:
-    """POST /api/v1/evaluate — returns full EvaluationOutput."""
+async def evaluate(
+    request: Optional[EvaluationRequest] = Body(None),
+    test_case_id: Optional[str] = Query(
+        None,
+        description="e.g. tc_001 — when provided, appends results to evaluation CSVs",
+    ),
+) -> EvaluationOutput:
+    """POST /api/v1/evaluate — returns full EvaluationOutput.
+
+    Optional query param ?test_case_id=tc_NNN: after a successful evaluation
+    the endpoint automatically appends one question-level row and N step-level
+    rows to the CSV files in tests/evaluation_suite/3_output_results/.
+    """
     if request is None:
-        request = _load_default_request()
+        if test_case_id:
+            # Load the specific test case input file matching the query param
+            tc_file = (
+                Path(__file__).resolve().parent.parent.parent
+                / "tests" / "evaluation_suite" / "1_inputs" / f"{test_case_id}.json"
+            )
+            logger.info("[/evaluate] No request body. Loading %s", tc_file)
+            with open(tc_file, "r", encoding="utf-8") as f:
+                request = EvaluationRequest.model_validate(json.load(f))
+        else:
+            request = _load_default_request()
 
     output, state, result = await _run_pipeline(request)
+
+    # ── CSV recording (only when test_case_id is supplied) ────────────────────
+    if test_case_id:
+        try:
+            summary = record_evaluation(
+                test_case_id=test_case_id,
+                question_text=state["question_text"],
+                max_marks=request.marking_scheme.total_marks,
+                api_output=output,
+            )
+            logger.info(
+                "[/evaluate] CSV record — %s | gt_loaded=%s rows=%d",
+                test_case_id,
+                summary.get("gt_loaded"),
+                summary.get("step_rows_written", 0),
+            )
+        except Exception as exc:
+            # Never let CSV writing break the evaluation response
+            logger.warning("[/evaluate] CSV record failed: %s", exc)
+
     return EvaluationOutput(**output)
 
 

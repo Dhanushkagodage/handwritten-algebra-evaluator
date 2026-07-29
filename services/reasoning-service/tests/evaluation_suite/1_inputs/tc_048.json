@@ -1,0 +1,21 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the general solution of the second-order linear differential equation d²y/dx² - 5 dy/dx + 6y = 0.",
+    "student_steps": [
+      {"step_id": 1, "content": "Auxiliary (characteristic) equation: r² - 5r + 6 = 0"},
+      {"step_id": 2, "content": "Factorise: (r - 2)(r - 3) = 0"},
+      {"step_id": 3, "content": "Roots: r₁ = 2, r₂ = 3"},
+      {"step_id": 4, "content": "Since roots are real and distinct, general solution is y = A e^(r₁x) + B e^(r₂x)"},
+      {"step_id": 5, "content": "y = A e^(2x) + B e^(3x)"}
+    ],
+    "final_answer": "y = A e^(2x) + B e^(3x)"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {"step_no": 1, "description": "Form correct auxiliary equation r² - 5r + 6 = 0", "marks": 2},
+      {"step_no": 2, "description": "Solve auxiliary equation to find roots r₁ = 2 and r₂ = 3", "marks": 2},
+      {"step_no": 3, "description": "State complementary function / general solution form y = A e^(2x) + B e^(3x)", "marks": 3}
+    ]
+  }
+}

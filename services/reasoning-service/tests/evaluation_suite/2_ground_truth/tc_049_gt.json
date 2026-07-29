@@ -1,0 +1,64 @@
+{
+  "test_case_id": "tc_049",
+  "question_text": "Use the Newton-Raphson method with initial approximation x₀ = 2 to find a root of f(x) = x³ - 2x - 5 = 0 correct to 3 decimal places.",
+  "total_available_marks": 6.0,
+  "gt_total_marks": 6.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated Newton-Raphson formula."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Differentiated f(x) to f'(x) = 3x² - 2."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Calculated first iteration x₁ = 2.1."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 0.25,
+      "max_marks": 0.25,
+      "evaluator_notes": "Evaluated f(2.1) = 0.061."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 0.25,
+      "max_marks": 0.25,
+      "evaluator_notes": "Evaluated f'(2.1) = 11.23."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Calculated second iteration x₂ ≈ 2.095."
+    },
+    {
+      "step_id": 7,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Checked convergence and stated 3 d.p. final answer."
+    }
+  ]
+}

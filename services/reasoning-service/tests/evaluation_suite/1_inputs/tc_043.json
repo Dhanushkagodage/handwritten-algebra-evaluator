@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the acute angle between the planes 2x - y + 2z = 5 and x + 2y + 2z = 3.",
+    "student_steps": [
+      {"step_id": 1, "content": "Normal vector of plane 1: n₁ = (2, -1, 2)"},
+      {"step_id": 2, "content": "Normal vector of plane 2: n₂ = (1, 2, 2)"},
+      {"step_id": 3, "content": "Dot product n₁ · n₂ = 2(1) + (-1)(2) + 2(2) = 2 - 2 + 4 = 4"},
+      {"step_id": 4, "content": "Magnitudes: |n₁| = √(4 + 1 + 4) = √9 = 3; |n₂| = √(1 + 4 + 4) = √9 = 3"},
+      {"step_id": 5, "content": "cos θ = |n₁ · n₂| / (|n₁||n₂|) = 4 / (3 · 3) = 4/9"},
+      {"step_id": 6, "content": "θ = arccos(4/9) ≈ 63.61° or 1.11 rad"}
+    ],
+    "final_answer": "θ = 63.6° (or 1.11 rad)"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "Identify normal vectors n₁ = (2, -1, 2) and n₂ = (1, 2, 2)", "marks": 1},
+      {"step_no": 2, "description": "Calculate dot product n₁ · n₂ = 4", "marks": 1},
+      {"step_no": 3, "description": "Calculate magnitudes |n₁| = 3 and |n₂| = 3", "marks": 2},
+      {"step_no": 4, "description": "Apply cos θ formula to get cos θ = 4/9", "marks": 1},
+      {"step_no": 5, "description": "Calculate acute angle θ = 63.6°", "marks": 1}
+    ]
+  }
+}

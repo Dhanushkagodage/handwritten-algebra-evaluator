@@ -1,0 +1,64 @@
+{
+  "test_case_id": "tc_047",
+  "question_text": "Solve the first-order differential equation dy/dx + 2y = e⁻ˣ given that y = 2 when x = 0.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 8.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Identified P(x) = 2."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Calculated integrating factor e^(2x)."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Multiplied ODE by I(x)."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Wrote product rule LHS d/dx[y e^(2x)]."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Integrated RHS to get eˣ + C."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Substituted (0,2) to find C = 1."
+    },
+    {
+      "step_id": 7,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated explicit solution y = e⁻ˣ + e⁻²ˣ."
+    }
+  ]
+}

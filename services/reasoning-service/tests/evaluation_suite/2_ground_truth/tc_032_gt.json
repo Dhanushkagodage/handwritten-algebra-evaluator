@@ -1,0 +1,40 @@
+{
+  "test_case_id": "tc_032",
+  "question_text": "Solve the inequality |3x - 2| < 4.",
+  "total_available_marks": 5.0,
+  "gt_total_marks": 5.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Wrote double inequality -4 < 3x - 2 < 4."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Added 2 to all parts."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Divided by 3 to find range -2/3 < x < 2."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 0.0,
+      "evaluator_notes": "Interval notation."
+    }
+  ]
+}

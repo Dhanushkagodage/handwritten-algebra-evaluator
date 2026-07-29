@@ -1,0 +1,25 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the Cartesian equation of the locus given by arg((z - 2)/(z + 2)) = π/4.",
+    "student_steps": [
+      {"step_id": 1, "content": "arg((z - 2)/(z + 2)) = arg(z - 2) - arg(z + 2) = π/4"},
+      {"step_id": 2, "content": "Let z = x + iy: arg((x - 2) + iy) - arg((x + 2) + iy) = π/4"},
+      {"step_id": 3, "content": "tan(arg(A) - arg(B)) = (y/(x-2) - y/(x+2)) / (1 + (y/(x-2))(y/(x+2))) = tan(π/4) = 1"},
+      {"step_id": 4, "content": "Numerator: y(x + 2) - y(x - 2) = 4y"},
+      {"step_id": 5, "content": "Denominator: (x - 2)(x + 2) + y² = x² - 4 + y²"},
+      {"step_id": 6, "content": "4y / (x² + y² - 4) = 1 → x² + y² - 4y - 4 = 0"},
+      {"step_id": 7, "content": "Complete the square: x² + (y - 2)² = 8 (for y > 0)"}
+    ],
+    "final_answer": "Arc of circle x² + (y - 2)² = 8 above the real axis (y > 0)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Apply argument subtraction property arg(A/B) = arg(A) - arg(B)", "marks": 1},
+      {"step_no": 2, "description": "Substitute z = x + iy and express arguments as arctan", "marks": 1},
+      {"step_no": 3, "description": "Apply tangent addition formula tan(A-B) = (tan A - tan B)/(1 + tan A tan B) = 1", "marks": 2},
+      {"step_no": 4, "description": "Simplify algebraic fraction to 4y / (x² + y² - 4) = 1", "marks": 2},
+      {"step_no": 5, "description": "Form complete circle equation x² + (y - 2)² = 8 and state arc domain restriction y > 0", "marks": 2}
+    ]
+  }
+}

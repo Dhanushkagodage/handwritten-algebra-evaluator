@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the single matrix representing a reflection in the line y = x followed by a rotation through 90° anticlockwise about the origin.",
+    "student_steps": [
+      {"step_id": 1, "content": "Reflection in y = x: M_reflection = [[0, 1], [1, 0]]"},
+      {"step_id": 2, "content": "Rotation through 90° anticlockwise: M_rotation = [[cos 90°, -sin 90°], [sin 90°, cos 90°]] = [[0, -1], [1, 0]]"},
+      {"step_id": 3, "content": "Combined transformation (reflection followed by rotation) = M_rotation · M_reflection"},
+      {"step_id": 4, "content": "T = [[0, -1], [1, 0]] · [[0, 1], [1, 0]]"},
+      {"step_id": 5, "content": "Row 1: [0·0 + (-1)·1, 0·1 + (-1)·0] = [-1, 0]"},
+      {"step_id": 6, "content": "Row 2: [1·0 + 0·1, 1·1 + 0·0] = [0, 1]"},
+      {"step_id": 7, "content": "T = [[-1, 0], [0, 1]]"}
+    ],
+    "final_answer": "T = [[-1, 0], [0, 1]] (Reflection in the y-axis)"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "State correct matrix for reflection in y = x", "marks": 1},
+      {"step_no": 2, "description": "State correct matrix for 90° anticlockwise rotation", "marks": 1},
+      {"step_no": 3, "description": "Apply correct order of matrix multiplication: M_rotation · M_reflection", "marks": 2},
+      {"step_no": 4, "description": "Perform matrix multiplication to obtain T = [[-1, 0], [0, 1]]", "marks": 2}
+    ]
+  }
+}

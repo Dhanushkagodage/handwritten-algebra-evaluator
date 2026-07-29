@@ -1,0 +1,23 @@
+{
+  "reasoning_input": {
+    "question_text": "Prove the trigonometric identity: (sin 3θ / sin θ) - (cos 3θ / cos θ) = 2 for θ ≠ kπ/2.",
+    "student_steps": [
+      {"step_id": 1, "content": "LHS = (sin 3θ / sin θ) - (cos 3θ / cos θ)"},
+      {"step_id": 2, "content": "Combine into single fraction: (sin 3θ cos θ - cos 3θ sin θ) / (sin θ cos θ)"},
+      {"step_id": 3, "content": "Use compound angle formula: sin(A - B) = sin A cos B - cos A sin B"},
+      {"step_id": 4, "content": "Numerator = sin(3θ - θ) = sin(2θ)"},
+      {"step_id": 5, "content": "LHS = sin(2θ) / (sin θ cos θ)"},
+      {"step_id": 6, "content": "Use double angle formula: sin(2θ) = 2 sin θ cos θ"},
+      {"step_id": 7, "content": "LHS = (2 sin θ cos θ) / (sin θ cos θ) = 2 = RHS ✓"}
+    ],
+    "final_answer": "Proven (LHS = RHS = 2)"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "Combine fractions over common denominator sin θ cos θ", "marks": 2},
+      {"step_no": 2, "description": "Apply sine compound angle identity to simplify numerator to sin(2θ)", "marks": 2},
+      {"step_no": 3, "description": "Substitute double angle identity sin(2θ) = 2 sin θ cos θ and cancel to prove RHS = 2", "marks": 2}
+    ]
+  }
+}

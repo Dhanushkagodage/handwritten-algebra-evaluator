@@ -1,0 +1,20 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve the inequality |3x - 2| < 4.",
+    "student_steps": [
+      {"step_id": 1, "content": "Rewrite as double inequality: -4 < 3x - 2 < 4"},
+      {"step_id": 2, "content": "Add 2 to all parts: -4 + 2 < 3x < 4 + 2 → -2 < 3x < 6"},
+      {"step_id": 3, "content": "Divide by 3: -2/3 < x < 2"},
+      {"step_id": 4, "content": "Interval notation: x ∈ (-2/3, 2)"}
+    ],
+    "final_answer": "-2/3 < x < 2"
+  },
+  "marking_scheme": {
+    "total_marks": 5,
+    "steps": [
+      {"step_no": 1, "description": "Form double inequality -4 < 3x - 2 < 4 or split into two linear inequalities", "marks": 2},
+      {"step_no": 2, "description": "Add 2 throughout to obtain -2 < 3x < 6", "marks": 1},
+      {"step_no": 3, "description": "Divide by 3 to state correct range -2/3 < x < 2", "marks": 2}
+    ]
+  }
+}
