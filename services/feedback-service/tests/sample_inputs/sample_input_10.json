@@ -1,0 +1,54 @@
+{
+  "question_text": "Find the remainder when f(x) = x^3 - 4x^2 + 5x - 2 is divided by (x - 3)",
+  "detected_method": "remainder theorem",
+  "assigned_marks": 3.0,
+  "total_marks": 4.0,
+  "student_steps": [
+    {
+      "step_number": 1,
+      "expression": "remainder = f(3)",
+      "is_correct": true,
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 2,
+      "expression": "f(3) = 3^3 - 4(3)^2 + 5(3) - 2",
+      "is_correct": true,
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 3,
+      "expression": "= 27 - 36 + 15 - 2",
+      "is_correct": true,
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 4,
+      "expression": "= 6",
+      "is_correct": false,
+      "marks_awarded": 0.0
+    }
+  ],
+  "marking_scheme": [
+    {
+      "step_number": 1,
+      "expected_expression": "remainder = f(3)",
+      "marks": 1.0
+    },
+    {
+      "step_number": 2,
+      "expected_expression": "f(3) = 3^3 - 4(3)^2 + 5(3) - 2",
+      "marks": 1.0
+    },
+    {
+      "step_number": 3,
+      "expected_expression": "= 27 - 36 + 15 - 2",
+      "marks": 1.0
+    },
+    {
+      "step_number": 4,
+      "expected_expression": "= 4",
+      "marks": 1.0
+    }
+  ]
+}
