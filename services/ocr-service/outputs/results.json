@@ -1596,5 +1596,32 @@
         "final_answer": "(5x + 3)/((x + 1)(x - 3)) = 1/(2(x + 1)) + 9/(2(x - 3))"
       }
     }
+  },
+  {
+    "image_id": "marking_scheme",
+    "created_at": "2026-07-30T16:33:31.512260+00:00",
+    "result": {
+      "marking_scheme": {
+        "total_marks": 3.0,
+        "steps": [
+          {
+            "step_no": 1,
+            "description": "Complete the square for x^2 + 6x: (x + 3)^2 - 9 + 2 = 0.",
+            "marks": 1.0
+          },
+          {
+            "step_no": 2,
+            "description": "Take both the positive and negative square roots: x + 3 = +/-sqrt(7).",
+            "marks": 1.0
+          },
+          {
+            "step_no": 3,
+            "description": "Solve both cases and state the two solutions: x = -3 + sqrt(7) or x = -3 - sqrt(7).",
+            "marks": 1.0
+          }
+        ],
+        "final_answer": "x = -3 + sqrt(7) or x = -3 - sqrt(7)"
+      }
+    }
   }
 ]

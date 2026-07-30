@@ -17,7 +17,11 @@ sys.path.insert(0, str(SRC_DIR))
 from preprocess import preprocess_image
 from segment import segment_steps
 from ocr_engine import OCREngine
-from openai_vision_ocr import extract_reasoning_input_from_images_with_openai, extract_reasoning_input_with_openai
+from openai_vision_ocr import (
+    extract_marking_scheme_with_openai,
+    extract_reasoning_input_from_images_with_openai,
+    extract_reasoning_input_with_openai,
+)
 from result_store import save_api_result
 from structure_output import build_reasoning_input
 
@@ -229,6 +233,33 @@ def extract_answer_pages(
 
         result = build_reasoning_input(extracted_steps, question_text=question_text)
         save_api_result(safe_image_set_id, result)
+        return result
+
+    except FileNotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+    except RuntimeError as error:
+        raise HTTPException(status_code=503, detail=str(error)) from error
+    except Exception as error:
+        raise HTTPException(status_code=500, detail=str(error)) from error
+
+
+@app.post("/extract-marking-scheme")
+def extract_marking_scheme(
+    image: UploadFile = File(..., description="Marking scheme image."),
+    question_text: str = Form("", description="Optional typed question text."),
+) -> dict:
+    """
+    Extract a structured marking scheme from an uploaded marking-scheme image.
+
+    This endpoint is separate from student-answer extraction because Module 02
+    needs expected marking steps and marks, not student working steps.
+    """
+    safe_scheme_id = sanitize_id(f"{Path(image.filename or 'marking_scheme').stem}_scheme")
+
+    try:
+        raw_image_path = save_uploaded_image(image, safe_scheme_id)
+        result = extract_marking_scheme_with_openai(str(raw_image_path), question_text=question_text)
+        save_api_result(safe_scheme_id, result)
         return result
 
     except FileNotFoundError as error:
