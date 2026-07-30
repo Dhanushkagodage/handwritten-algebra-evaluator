@@ -74,8 +74,10 @@ app.add_middleware(
 
 # ── Mount routers ─────────────────────────────────────────────────────────────
 from app.api.routes import router as evaluation_router  # noqa: E402
+from app.single_llm.routes import router as single_llm_router  # noqa: E402
 
 app.include_router(evaluation_router)
+app.include_router(single_llm_router)
 
 
 @app.get("/health", tags=["Health"])
