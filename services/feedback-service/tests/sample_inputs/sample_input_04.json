@@ -1,0 +1,54 @@
+{
+  "question_text": "Solve x^2 + 6x + 2 = 0 by completing the square",
+  "detected_method": "completing the square",
+  "assigned_marks": 2.0,
+  "total_marks": 4.0,
+  "student_steps": [
+    {
+      "step_number": 1,
+      "expression": "(x + 3)^2 - 9 + 2 = 0",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 2,
+      "expression": "(x + 3)^2 = 7",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 3,
+      "expression": "x + 3 = sqrt(7)",
+      "validity": "partial",
+      "marks_awarded": 0.0
+    },
+    {
+      "step_number": 4,
+      "expression": "x = sqrt(7) - 3",
+      "validity": "partial",
+      "marks_awarded": 0.0
+    }
+  ],
+  "marking_scheme": [
+    {
+      "step_number": 1,
+      "expected_expression": "(x + 3)^2 - 9 + 2 = 0",
+      "marks": 1.0
+    },
+    {
+      "step_number": 2,
+      "expected_expression": "(x + 3)^2 = 7",
+      "marks": 1.0
+    },
+    {
+      "step_number": 3,
+      "expected_expression": "x + 3 = +-sqrt(7)",
+      "marks": 1.0
+    },
+    {
+      "step_number": 4,
+      "expected_expression": "x = -3 + sqrt(7) or x = -3 - sqrt(7)",
+      "marks": 1.0
+    }
+  ]
+}

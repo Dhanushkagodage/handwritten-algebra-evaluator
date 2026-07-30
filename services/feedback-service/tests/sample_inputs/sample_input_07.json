@@ -1,0 +1,32 @@
+{
+  "question_text": "Factorise 25x^2 - 49",
+  "detected_method": "difference of squares",
+  "assigned_marks": 1.5,
+  "total_marks": 2.0,
+  "student_steps": [
+    {
+      "step_number": 1,
+      "expression": "25x^2 - 49 = (5x)^2 - 7^2",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 2,
+      "expression": "= (5x - 7)(5x - 7)",
+      "validity": "partial",
+      "marks_awarded": 0.5
+    }
+  ],
+  "marking_scheme": [
+    {
+      "step_number": 1,
+      "expected_expression": "(5x)^2 - 7^2",
+      "marks": 1.0
+    },
+    {
+      "step_number": 2,
+      "expected_expression": "(5x - 7)(5x + 7)",
+      "marks": 1.0
+    }
+  ]
+}

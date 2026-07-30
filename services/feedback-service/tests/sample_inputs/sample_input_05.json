@@ -1,0 +1,43 @@
+{
+  "question_text": "Solve the inequality 4 - 3x < 13",
+  "detected_method": "linear inequality",
+  "assigned_marks": 2.0,
+  "total_marks": 3.0,
+  "student_steps": [
+    {
+      "step_number": 1,
+      "expression": "-3x < 9",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 2,
+      "expression": "x < -3",
+      "validity": "incorrect",
+      "marks_awarded": 0.0
+    },
+    {
+      "step_number": 3,
+      "expression": "solution set: x < -3",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    }
+  ],
+  "marking_scheme": [
+    {
+      "step_number": 1,
+      "expected_expression": "-3x < 9",
+      "marks": 1.0
+    },
+    {
+      "step_number": 2,
+      "expected_expression": "x > -3",
+      "marks": 1.0
+    },
+    {
+      "step_number": 3,
+      "expected_expression": "solution set: x > -3",
+      "marks": 1.0
+    }
+  ]
+}

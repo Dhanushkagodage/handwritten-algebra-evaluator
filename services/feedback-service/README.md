@@ -132,6 +132,100 @@ py tests\test_feedback.py
 
 ---
 
+## Part C — Run the 10 sample cases (Colab)
+
+`tests/test_feedback.py` above exercises a single question. For broader
+coverage there are ten more sample payloads in `tests/sample_inputs/`, each
+with its own runner script, so you can step through them one at a time:
+
+| Script | Method | Steps | Marks | What it covers |
+|---|---|---|---|---|
+| `test_case_01.py` | linear equation with brackets | 3 | 3.0/3.0 | full marks — no deduction text expected |
+| `test_case_02.py` | quadratic formula | 4 | 2.5/4.0 | the standard mixed case |
+| `test_case_03.py` | elimination | 4 | 3.0/4.0 | sign error only at the last step |
+| `test_case_04.py` | completing the square | 4 | 2.0/4.0 | `partial` validity (dropped the ± root) |
+| `test_case_05.py` | linear inequality | 3 | 2.0/3.0 | not reversing `<` on ÷ by a negative |
+| `test_case_06.py` | simplifying algebraic fractions | 3 | 0.0/3.0 | zero-marks edge case |
+| `test_case_07.py` | difference of squares | 2 | 1.5/2.0 | shortest answer |
+| `test_case_08.py` | index laws | 5 | 3.0/5.0 | longest chain |
+| `test_case_09.py` | substitution | 4 | 2.0/4.0 | optional `error_description` / scheme `description` |
+| `test_case_10.py` | remainder theorem | 4 | 3.0/4.0 | Module 02's legacy `is_correct` bool |
+
+### Two backends
+
+| `--backend` | How the model runs | Needs |
+|---|---|---|
+| `space` (default) | through the Hugging Face Space over `gradio_client` — the same path the deployed service uses | `SPACE_ID`, `API_KEY`, `HF_TOKEN`; costs ZeroGPU quota; no GPU needed locally |
+| `local` | base model + LoRA adapter loaded straight onto the Colab/Kaggle **T4** | a GPU runtime, `ADAPTER_PATH`, `HF_TOKEN`; costs no ZeroGPU quota |
+
+Both share the same prompt builder, parser and validation, so the printed
+`FeedbackResponse` has the same structure either way — only the wording
+differs between runs (the model samples at `temperature=0.7`).
+
+### Cell 1 — get the code and the GPU dependencies
+
+Runtime → Change runtime type → **T4 GPU** → Save.
+
+```python
+import os
+%cd /content
+if not os.path.exists("handwritten-algebra-evaluator"):
+    !git clone -b feedback-service-evalution-metices https://github.com/Dhanushkagodage/handwritten-algebra-evaluator.git
+%cd /content/handwritten-algebra-evaluator/services/feedback-service
+!pip install -r requirements-train.txt
+!pip install gradio_client python-dotenv
+```
+
+### Cell 2 — pick the backend once for the whole session
+
+```python
+# (a) Colab T4 + your LoRA adapter from the Hub — free, no ZeroGPU quota
+os.environ["BACKEND"]      = "local"
+os.environ["ADAPTER_PATH"] = "DhanushkaGodage/qwen25-feedback-lora"
+os.environ["HF_TOKEN"]     = "hf_..."
+
+# (b) or the ZeroGPU Space API instead — comment out (a) and use this
+# os.environ["BACKEND"]  = "space"
+# os.environ["SPACE_ID"] = "DhanushkaGodage/feedback-service-inference"
+# os.environ["API_KEY"]  = "<the Space's API_KEY secret>"
+# os.environ["HF_TOKEN"] = "hf_..."
+```
+
+If you just trained in this same session, the adapter is already on disk —
+use `os.environ["ADAPTER_PATH"] = "./lora-adapter"` instead of the Hub id.
+
+### Cells 3-12 — one case per cell
+
+```python
+!python tests/test_case_01.py
+```
+```python
+!python tests/test_case_02.py
+```
+…through `test_case_10.py`. Each prints the question, the full generated
+`FeedbackResponse` as JSON, and a pass/fail line.
+
+To override the backend for a single run without changing Cell 2:
+
+```python
+!python tests/test_case_03.py --backend space
+```
+
+### Optional — all ten in one go
+
+On the `local` backend each separate script reloads Qwen2.5-3B from scratch
+(several minutes each). This loads it once and runs all ten:
+
+```python
+!python tests/run_all_cases.py
+!python tests/run_all_cases.py --cases 2,5,9   # or just a subset
+```
+
+Avoid `run_all_cases.py --backend space` — ten Space calls back-to-back will
+eat a noticeable chunk of your ZeroGPU quota.
+
+---
+
 ## Useful commands (Colab)
 
 Handy one-liners for checking on things while training in Colab.

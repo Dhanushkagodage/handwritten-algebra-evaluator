@@ -1,0 +1,65 @@
+{
+  "question_text": "Simplify (2x^3 * y^2)^2 / (4x^4 * y)",
+  "detected_method": "index laws",
+  "assigned_marks": 3.0,
+  "total_marks": 5.0,
+  "student_steps": [
+    {
+      "step_number": 1,
+      "expression": "(2x^3 * y^2)^2 = 4x^6 * y^4",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 2,
+      "expression": "= 4x^6 * y^4 / (4x^4 * y)",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 3,
+      "expression": "= x^6 * y^4 / (x^4 * y)",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 4,
+      "expression": "= x^(6/4) * y^(4/1)",
+      "validity": "incorrect",
+      "marks_awarded": 0.0
+    },
+    {
+      "step_number": 5,
+      "expression": "= x^1.5 * y^4",
+      "validity": "incorrect",
+      "marks_awarded": 0.0
+    }
+  ],
+  "marking_scheme": [
+    {
+      "step_number": 1,
+      "expected_expression": "4x^6 * y^4",
+      "marks": 1.0
+    },
+    {
+      "step_number": 2,
+      "expected_expression": "4x^6 * y^4 / (4x^4 * y)",
+      "marks": 1.0
+    },
+    {
+      "step_number": 3,
+      "expected_expression": "x^6 * y^4 / (x^4 * y)",
+      "marks": 1.0
+    },
+    {
+      "step_number": 4,
+      "expected_expression": "x^(6-4) * y^(4-1)",
+      "marks": 1.0
+    },
+    {
+      "step_number": 5,
+      "expected_expression": "x^2 * y^3",
+      "marks": 1.0
+    }
+  ]
+}

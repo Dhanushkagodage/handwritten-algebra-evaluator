@@ -1,0 +1,43 @@
+{
+  "question_text": "Solve 2(x + 3) = 14",
+  "detected_method": "linear equation with brackets",
+  "assigned_marks": 3.0,
+  "total_marks": 3.0,
+  "student_steps": [
+    {
+      "step_number": 1,
+      "expression": "2x + 6 = 14",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 2,
+      "expression": "2x = 8",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 3,
+      "expression": "x = 4",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    }
+  ],
+  "marking_scheme": [
+    {
+      "step_number": 1,
+      "expected_expression": "2x + 6 = 14",
+      "marks": 1.0
+    },
+    {
+      "step_number": 2,
+      "expected_expression": "2x = 8",
+      "marks": 1.0
+    },
+    {
+      "step_number": 3,
+      "expected_expression": "x = 4",
+      "marks": 1.0
+    }
+  ]
+}

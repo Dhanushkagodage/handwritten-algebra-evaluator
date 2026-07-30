@@ -1,0 +1,54 @@
+{
+  "question_text": "Solve 2x^2 - 5x - 3 = 0 using the quadratic formula",
+  "detected_method": "quadratic formula",
+  "assigned_marks": 2.5,
+  "total_marks": 4.0,
+  "student_steps": [
+    {
+      "step_number": 1,
+      "expression": "a = 2, b = -5, c = -3",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 2,
+      "expression": "x = (5 +- sqrt(25 - 24)) / 4",
+      "validity": "partial",
+      "marks_awarded": 0.5
+    },
+    {
+      "step_number": 3,
+      "expression": "x = (5 +- 1) / 4",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 4,
+      "expression": "x = 1.5 or x = 1",
+      "validity": "incorrect",
+      "marks_awarded": 0.0
+    }
+  ],
+  "marking_scheme": [
+    {
+      "step_number": 1,
+      "expected_expression": "a = 2, b = -5, c = -3",
+      "marks": 1.0
+    },
+    {
+      "step_number": 2,
+      "expected_expression": "x = (5 +- sqrt(25 + 24)) / 4",
+      "marks": 1.0
+    },
+    {
+      "step_number": 3,
+      "expected_expression": "x = (5 +- 7) / 4",
+      "marks": 1.0
+    },
+    {
+      "step_number": 4,
+      "expected_expression": "x = 3 or x = -0.5",
+      "marks": 1.0
+    }
+  ]
+}
