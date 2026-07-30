@@ -1,0 +1,54 @@
+{
+  "reasoning_inputs": [
+    {
+      "question_id": "Q1",
+      "question_text": "Solve x^2 - 5x + 6 = 0",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "x^2 - 5x + 6 = 0"
+        },
+        {
+          "step_id": 2,
+          "content": "(x + 2)(x + 3) = 0"
+        },
+        {
+          "step_id": 3,
+          "content": "x = -2 or x = -3"
+        }
+      ],
+      "final_answer": "x = -2 or x = -3"
+    },
+    {
+      "question_id": "Q2",
+      "question_text": "Solve 2x^2 + 3x - 2 = 0",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "Using quadratic formula"
+        },
+        {
+          "step_id": 2,
+          "content": "a = 2, b = 3, c = -2"
+        },
+        {
+          "step_id": 3,
+          "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+        },
+        {
+          "step_id": 4,
+          "content": "x = (-3 ± sqrt(9 + 16))/4"
+        },
+        {
+          "step_id": 5,
+          "content": "x = (-3 ± 5)/4"
+        },
+        {
+          "step_id": 6,
+          "content": "x = 1/2 or x = 2"
+        }
+      ],
+      "final_answer": "x = 1/2 or x = 2"
+    }
+  ]
+}

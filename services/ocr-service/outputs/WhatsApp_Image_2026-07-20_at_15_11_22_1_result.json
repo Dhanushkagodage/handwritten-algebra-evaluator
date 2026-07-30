@@ -1,0 +1,36 @@
+{
+  "reasoning_input": {
+    "question_text": "The roots of 3x^2 - 5x - 2 = 0 are alpha and beta. Find the quadratic equation whose roots are 1/alpha, 1/beta.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "3x^2 - 5x - 2 = 0, roots alpha and beta"
+      },
+      {
+        "step_id": 2,
+        "content": "alpha + beta = 5/3"
+      },
+      {
+        "step_id": 3,
+        "content": "alpha beta = -2/3"
+      },
+      {
+        "step_id": 4,
+        "content": "Sum of new roots = 1/alpha + 1/beta = 1/(alpha + beta) = 3/5"
+      },
+      {
+        "step_id": 5,
+        "content": "1/(alpha beta) = 3/-2"
+      },
+      {
+        "step_id": 6,
+        "content": "x^2 - (3/5)x - 3/2 = 0"
+      },
+      {
+        "step_id": 7,
+        "content": "10x^2 - 6x - 15 = 0"
+      }
+    ],
+    "final_answer": "10x^2 - 6x - 15 = 0"
+  }
+}

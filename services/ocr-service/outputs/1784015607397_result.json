@@ -1,0 +1,66 @@
+{
+  "reasoning_inputs": [
+    {
+      "question_id": "Q1",
+      "question_text": "Solve log_2(x) + log_2(x - 2) = 3",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "log_2(x) + log_2(x - 2) = 3"
+        },
+        {
+          "step_id": 2,
+          "content": "log_2[x(x - 2)] = 3"
+        },
+        {
+          "step_id": 3,
+          "content": "x^2 - 2x = 2^3"
+        },
+        {
+          "step_id": 4,
+          "content": "x^2 - 2x - 8 = 0"
+        },
+        {
+          "step_id": 5,
+          "content": "(x - 4)(x + 2) = 0"
+        },
+        {
+          "step_id": 6,
+          "content": "x = 4 or x = -2"
+        },
+        {
+          "step_id": 7,
+          "content": "Since x > 2, x = 4"
+        }
+      ],
+      "final_answer": "x = 4"
+    },
+    {
+      "question_id": "Q2",
+      "question_text": "Solve log_2(x) + log_2(x - 2) = 3",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "log_2(x) + log_2(x - 2) = 3"
+        },
+        {
+          "step_id": 2,
+          "content": "log_2[x + x - 2] = 3"
+        },
+        {
+          "step_id": 3,
+          "content": "2x - 2 = 8"
+        },
+        {
+          "step_id": 4,
+          "content": "2x = 10"
+        },
+        {
+          "step_id": 5,
+          "content": "x = 5"
+        }
+      ],
+      "final_answer": "x = 5"
+    }
+  ]
+}

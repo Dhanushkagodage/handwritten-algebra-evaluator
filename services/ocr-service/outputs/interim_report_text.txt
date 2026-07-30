@@ -1,0 +1,1374 @@
+--- PAGE 1 ---
+Interim Report
+Level 4
+AI-Based Automated Evaluation of Handwritten Algebra Answers
+InnovateX
+IndexNo Name
+214235T WijesingheW.D.A.C.
+214069L GodageS.S.D.
+214213B UdayangaM.S.K.
+FacultyofInformationTechnology
+UniversityofMoratuwa
+2026
+
+--- PAGE 2 ---
+Interim Report
+Level 4
+AI-Based Automated Evaluation of Handwritten Algebra Answers
+InnovateX
+IndexNo Name
+214235T WijesingheW.D.A.C.
+214069L GodageS.S.D.
+214213B UdayangaM.S.K.
+Supervisedby: Dr. Amalraj. C.R.J
+FacultyofInformationTechnology
+UniversityofMoratuwa
+2026
+
+--- PAGE 3 ---
+Abstract
+Manual evaluation of handwritten Algebra answers is a labour-intensive, inconsistent,
+and difficult-to-scale process thatplaces asignificant burdenon teachersand examiners,
+particularlyinlarge-scalenationalexaminationenvironments. Althoughdigitalassess-
+mentplatformssuchasGradescopeandCrowdmarkhaveimprovedsubmissionhandling
+and marking workflows, they remain fundamentally dependent on human judgement for
+thecoreevaluationtask. MoretechnicallysophisticatedtoolssuchasSTACKsupport
+symbolicequivalencecheckingformathematicalresponses,butaredesignedexclusively
+fortypedinputandcannotprocessrawhandwrittenscripts. Critically,noexistingsys-
+tem provides a complete end-to-end pipeline that reads handwritten stepwise algebra
+solutions, understands the student’s reasoning process, compares the work against a
+markingschemeatthestep level,supportsalternative validsolutionmethods,andgen-
+erates clear and explainable feedback for students. This gap in the current landscape
+ofautomatedassessmenttechnologyformsthecentralmotivationforthisproject. This
+projectproposesanAI-basedautomatedevaluationsystemforhandwrittenA/LAlgebra
+answers that processes the question paper, the student’s handwritten answer image,
+andthemarkingschemethroughthreesequentialmodulestoproduceafinalscoreand
+stepwise explainable feedback. The first module extracts and structures handwritten
+contentfromexam-paperimages,thesecondvalidatesthestudent’sreasoningstepby
+step and allocatesmarks against the marking schemewhile supporting alternative valid
+solutionmethods,andthethirdgeneratesclearstudent-friendlyexplanationsofmistakes,
+deductions,and improvements. Atthecurrent interimstage,thethree-modulearchitec-
+ture, module interfaces, high-level diagrams, andpseudocode havebeen finalised, and a
+starterfeedbackdatasethasbeenprepared. Theproposedsystemaimstoimprovethe
+fairness,transparency,consistency,andeducationalvalueofhandwrittenmathematics
+assessment.
+i
+
+--- PAGE 4 ---
+Contents
+Abstract i
+TableofContents iv
+ListofFigures v
+ListofTables vi
+1 Introduction 1
+1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+1.2 BackgroundandMotivation . . . . . . . . . . . . . . . . . . . . . . . 1
+1.3 AimandObjectives . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+1.4 OverviewoftheProposedSolution . . . . . . . . . . . . . . . . . . . . 2
+1.4.1 Module1: OCR+InputUnderstanding . . . . . . . . . . . . . 3
+1.4.2 Module 2: Multi-Agent Mathematical Reasoning & Stepwise
+Marking . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+1.4.3 Module3: SLMFeedbackGeneration . . . . . . . . . . . . . . 3
+1.5 StructureoftheReport . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+1.6 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+2 LiteratureReview 5
+2.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.2 ExistingResearchesandExistingSolutions . . . . . . . . . . . . . . . 5
+2.3 LiteratureReviewbyModule . . . . . . . . . . . . . . . . . . . . . . . 7
+2.3.1 Module1: OCR+InputUnderstanding . . . . . . . . . . . . . 7
+2.3.2 Module 2: Multi-Agent Mathematical Reasoning & Stepwise
+Marking . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.3.3 Module3: StepwiseFeedbackGeneration(usingSLM) . . . . . 11
+2.4 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3 TechnologyAdapted 14
+3.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+3.2 CoreTechnologies . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+3.2.1 Technology1: ImageProcessingandOCR . . . . . . . . . . . 14
+3.2.2 Technology2: SymbolicMathematicsName . . . . . . . . . . . 14
+3.2.3 Technology3: Multi-AgentLLMReasoning . . . . . . . . . . 15
+ii
+
+--- PAGE 5 ---
+3.2.4 Technology4: LightweightSLMforFeedbackGeneration . . . 15
+3.2.5 Technology5: DataHandlingandIntegration . . . . . . . . . . 15
+3.3 SystemImplementationTechnologies . . . . . . . . . . . . . . . . . . 15
+3.3.1 ProgrammingLanguage . . . . . . . . . . . . . . . . . . . . . 16
+3.4 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+4 ProposedApproach 17
+4.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+4.2 Module1: OCR+InputUnderstanding . . . . . . . . . . . . . . . . . 17
+4.3 Module2: Multi-AgentMathematicalReasoning&StepwiseMarking . 18
+4.4 Module3: StepwiseFeedbackGeneration . . . . . . . . . . . . . . . . 18
+4.5 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+5 AnalysisandDesign 20
+5.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+5.2 High-LevelArchitectureoftheSystem . . . . . . . . . . . . . . . . . . 20
+5.3 ModulesoftheSystem . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+5.3.1 InputLayer . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+5.3.2 ExtractionLayer . . . . . . . . . . . . . . . . . . . . . . . . . 21
+5.3.3 Reasoning&MarkingLayer . . . . . . . . . . . . . . . . . . . 21
+5.3.4 Feedback&PresentationLayer . . . . . . . . . . . . . . . . . 21
+5.4 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+6 Implementation 23
+6.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+6.2 DevelopmentEnvironment . . . . . . . . . . . . . . . . . . . . . . . . 23
+6.3 Module1: OCR+InputUnderstanding . . . . . . . . . . . . . . . . . 24
+6.3.1 DatasetOverview . . . . . . . . . . . . . . . . . . . . . . . . . 24
+6.3.2 FlowchartoftheModule . . . . . . . . . . . . . . . . . . . . . 25
+6.3.3 PseudocodeforModule1 . . . . . . . . . . . . . . . . . . . . 26
+6.3.4 DataPreprocessing . . . . . . . . . . . . . . . . . . . . . . . . 26
+6.4 Module2: Multi-AgentMathematicalReasoning&StepwiseMarking . 27
+6.4.1 DatasetOverview . . . . . . . . . . . . . . . . . . . . . . . . . 28
+6.4.2 FlowchartoftheModule . . . . . . . . . . . . . . . . . . . . . 28
+6.4.3 PseudocodeforModule2 . . . . . . . . . . . . . . . . . . . . 29
+6.4.4 StructuredReasoningPreprocessing . . . . . . . . . . . . . . . 30
+6.5 Module3: StepwiseFeedbackGeneration(usingSLM) . . . . . . . . . 30
+6.5.1 DatasetOverview . . . . . . . . . . . . . . . . . . . . . . . . . 30
+6.5.2 FlowchartoftheModule . . . . . . . . . . . . . . . . . . . . . 31
+6.5.3 PseudocodeforModule3 . . . . . . . . . . . . . . . . . . . . 32
+iii
+
+--- PAGE 6 ---
+6.5.4 DataPreprocessing . . . . . . . . . . . . . . . . . . . . . . . . 32
+6.6 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+7 Discussion 35
+7.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+7.2 CurrentProgress . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+7.3 AssumptionsandLimitationsoftheSystem . . . . . . . . . . . . . . . 36
+7.3.1 Assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+7.3.2 Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+7.4 FutureWork . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+7.5 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+A IndividualContributiontotheProject 40
+iv
+
+--- PAGE 7 ---
+List of Figures
+5.1 High-LevelArchitectureoftheProposedSystem . . . . . . . . . . . . 20
+6.1 FolderStructureoftheProjectImplementation . . . . . . . . . . . . . 24
+6.2 FlowchartofModule1 . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+6.3 Module1DataPreprocessingCode . . . . . . . . . . . . . . . . . . . 27
+6.4 Module1DataPreprocessingResult . . . . . . . . . . . . . . . . . . . 27
+6.5 FlowchartofModule2 . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+6.6 Module2CodeImplementation . . . . . . . . . . . . . . . . . . . . . 29
+6.7 Module2CodeImplementationusingLLMFactory . . . . . . . . . . . 30
+6.8 FlowchartofModule3 . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+6.9 Module3QwenModelArchitecture/Workflow . . . . . . . . . . . . . 33
+6.10 FastAPIApplicationEntryPointforModule3 . . . . . . . . . . . . . . 33
+6.11 ImplementationSummaryDiagram . . . . . . . . . . . . . . . . . . . 34
+v
+
+--- PAGE 8 ---
+List of Tables
+2.1 Summary of Research Papers Relevant to Module 01: OCR + Input
+Understanding . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.2 Summary of Research Papers Relevant to Module 02: Multi-Agent
+MathematicalReasoning&StepwiseMarking . . . . . . . . . . . . . . 10
+2.3 SummaryofResearchPapersRelevanttoModule03: StepwiseFeedback
+Generation(usingSLM) . . . . . . . . . . . . . . . . . . . . . . . . . 12
+6.1 StructuredOutputFieldsfromOCR+InputUnderstandingModule . . 25
+6.2 InputStructureforMulti-AgentReasoningandMarkingModule . . . . 28
+6.3 OutputStructureforFeedbackGenerationModule . . . . . . . . . . . 31
+vi
+
+--- PAGE 9 ---
+CHAPTER 1
+Introduction
+1.1 Introduction
+Manualevaluationofhandwrittenmathematicalexaminationpapersisalabour-intensive
+and time-consuming task that is prone to subjectivity and inconsistency, particularly
+in large-scale academic environments [1]. Mathematics assessment requires not only
+verificationofthefinalanswerbutalsocarefulevaluationofintermediateworkingsteps
+inordertoawardpartialmarksfairly[1][2]. However,existingautomatedassessment
+systems primarily focus on multiple-choice questions or typed responses, and fail to
+support handwritten mathematical solutions [1][2]. Recent advances in image process-
+ing, optical character recognition (OCR), artificial intelligence, and natural language
+processinghavecreatedmeaningfulopportunitiestoautomatecomplexassessmenttasks
+[3][4][2]. Despitetheseadvances,automatedsystemsstillstruggletoaccuratelyinter-
+prethandwrittenmathematicalexpressions,understandstepwisereasoning,andprovide
+meaningfuleducationalfeedbacktostudents[5][6]. Thisprojectproposesanintelligent
+automated system capable of reading handwritten Algebraanswers, understanding the
+step-by-stepsolutionprocess,allocatingpartialmarksagainstamarkingscheme,and
+generatingclearandstudent-friendlyexplainablefeedback[1][5].
+1.2 BackgroundandMotivation
+In school and national examination environments, handwritten mathematics remains
+the dominant response format for Algebra assessments. Although digital assessment
+toolshaveadvancedconsiderablyinrecentyears,theevaluationofhandwrittenAlgebra
+answersstilldependsheavilyonmanualmarking. Manualevaluationistime-consuming,
+subjecttohumaninconsistency,andextremelydifficulttoscalewhenlargecohortsof
+studentsareinvolved[1]. Morecritically,manyexistingautomatedtoolsfocusonlyon
+thefinalanswer,therebyoverlookingthestudent’sintermediateworkingsteps,alternative
+validsolutionmethods,andtheneedforpartialmarkingbasedonanexplicitmarking
+scheme[5].
+Theproblemisfurthercompoundedbythemixed-contentnatureofhandwrittenanswer
+scripts. AtypicalAlgebraanswersheetcontainsnatural-languagephrases,mathematical
+symbols,intermediateworking,cancellations,andcorrections,allofwhichmakedirect
+OCR,reasoning,andgradingconsiderablymorechallengingthantyped-answerassess-
+1
+
+--- PAGE 10 ---
+ment [7][8]. Commercial platforms such as Gradescope [9] and Crowdmark/Mobius
+[10][11] assist with grading workflows, yet they do not provide acomplete end-to-end
+solutionforhandwrittenstepwiseAlgebraevaluation. STACK[12]supportsstrongsym-
+bolic equivalence checking but is designed exclusively for typed mathematical input and
+cannotprocessrawhandwrittenscripts. Noexistingsystemfullyintegrateshandwritten
+OCR,stepwisereasoning,markingscheme-basedevaluation,andexplainablestudent
+feedbackintoasingleautomatedpipeline. Thisgapmotivatestheproposedsystem.
+1.3 AimandObjectives
+Aim
+To design and implement an AI-based automated evaluation system for handwritten
+Algebra answers by combining OCR, multi-agent mathematical reasoning, stepwise
+marking,andexplainablefeedbackgeneration.
+Objectives
+Thespecificobjectivesofthisprojectare:
+1. To extract handwritten question and answer content from exam-paper images
+andconverttheresultintostructuredmathematicalstepssuitablefordownstream
+reasoning.
+2. Tovalidatethealgebrasolutionstepbystepusingamulti-agentreasoningframe-
+work,supportingalternativecorrectsolutionmethodsandpartialcorrectness.
+3. Tocomparethestructuredreasoningresultswithanexplicitmarkingschemein
+ordertoassignmarksfairlyandtransparentlyatthesteplevel.
+4. Togenerateclear,student-friendlyfeedbackthatidentifiesmistakes,explainsmark
+deductions,andprovidesspecificsuggestionsforimprovement.
+1.4 OverviewoftheProposedSolution
+Theproposedsolutionisathree-moduleAIsystemthatacceptsthreemaininputs: the
+questionpaper,thestudent’shandwrittenanswerimage,andthemarkingscheme. The
+primaryusersofthesystemareteachersandexaminerswhouploadtheseinputsthrough
+anAPI-basedinterface. Thesystemprocessesthemthroughthreesequentialmodulesand
+producesafinalscoretogetherwithstepwiseexplainablefeedbackasitsoutput. Thecore
+technologystackcomprisesOpenCVforimagepreprocessing,TrOCRandPaddleOCR
+for mixed-content recognition, SymPy for symbolic mathematics, LangGraph with
+LLM-basedagentsfororchestratedreasoning,afine-tunedlightweightsmalllanguage
+2
+
+--- PAGE 11 ---
+model(SLM)suchasQwen2.5,Gemma3forfeedbackgeneration,andFastAPIforthe
+backendAPIlayer. Allinter-modulecommunicationusesstructuredJSONschemas.
+1.4.1 Module1: OCR+InputUnderstanding
+Module 01 accepts the handwritten answer image and the question paper as inputs. It
+preprocesses the image using noise removal and skew correction, segments the page
+intoquestion,answer,andworking-stepregions,andappliesseparateOCRpipelinesto
+textualandmathematicalregions. Aquestion–answerlinkingsteptagseachextracted
+answertoitscorrespondingquestionidentifier. Themoduleoutputsa structuredrepre-
+sentationcontainingquestion_text,answer_text,student_steps[],andlinked_question,
+whichispasseddirectlytoModule02.
+1.4.2 Module2: Multi-AgentMathematicalReasoning&StepwiseMarking
+Module 02 receives the structured steps from Module 01 together with the marking
+scheme. Three parallel worker agents validate step correctness, detect the solution
+method, and compare the work against the marking scheme respectively. A supervi-
+sor agent reconciles their outputs and produces a final structured analysis containing
+step_validity,detected_method, assigned_marks, and total_score. The design supports
+partialmarking,alternativevalidmethods,andmoretransparentmarkallocationthan
+final-answer-onlysystems.
+1.4.3 Module3: SLMFeedbackGeneration
+Module03receivesthestructuredanalysisfromModule02togetherwiththemarking
+scheme. AlightweightSLM,fine-tunedusingLoRAonacurateddatasetofcommon
+algebra error cases and teacher-style feedback examples, transforms the step validity
+labels,assignedmarks,andmarking-schemecontextintoclearstudent-facingexplana-
+tions. Theoutputidentifieswhichstepsarecorrect,explainswheremarkswerelost,and
+suggestsspecificimprovements.
+1.5 StructureoftheReport
+The remainder of this report is organised as follows. Chapter 2 provides a review of
+related work and existing research on handwritten mathematical expression recognition,
+automatedmathematicsgrading,andexplainableeducationalfeedback,identifyingthe
+research gapsthat thisproject addresses. Chapter3 describes thetechnologies selected
+fortheprojectandexplainswhyeachisappropriateforthestatedproblem. Chapter4
+presentstheproposedapproachindetail,describingthemethodologyappliedwithineach
+module. Chapter5coverstheanalysisanddesignofthesystem,includingthehigh-level
+3
+
+--- PAGE 12 ---
+four-layer architecture and the breakdown of system modules. Chapter 6 details the
+implementationplan,coveringthedevelopmentenvironment,datasets,pseudocode,and
+datapreprocessingstepsforeachmodule. Chapter7providesadiscussionofthecurrent
+projectprogress,assumptions,limitations,andfuturework.
+1.6 Summary
+This chapter introduced the project by presenting its background and motivation, high-
+lighting the gap in existing automated assessment tools with respect to handwritten
+stepwiseAlgebraevaluation. Theaimandfourspecificobjectiveswerestated,followed
+by an overview of the proposed three-module system and its technology stack. The
+chapter concluded with an outline of the report structure. Chapter 2 reviews existing
+literaturerelatedtohandwrittenmathematicalexpressionrecognition,automatedgrading,
+andeducational feedbackgeneration, providing thecontextthat motivatesthe proposed
+approach.
+4
+
+--- PAGE 13 ---
+CHAPTER 2
+Literature Review
+2.1 Introduction
+As established in Chapter 1, the manual evaluation of handwritten algebra answers
+is a time-consuming, inconsistent, and difficult-to-scale process. Existing automated
+assessmenttoolspredominantlyfocusonfinal-answerverificationandthereforefailto
+capture the student’sstep-by-step reasoningprocess, alternativevalid solutionmethods,
+partialmarkingrequirements,andtheneedforcleareducationalfeedback. Thischapter
+reviews themost relevantexisting researchand commercialsystems relatedto handwrit-
+ten mathematical expressionrecognition, automatedmathematics grading, multi-agent
+reasoning,andeducationalfeedbackgeneration. Thepurposeofthisreviewistoidentify
+wherecurrentworkaddressespartsoftheproblem,wherecriticalgapsremain,andhow
+thethree-modulesystemproposedbythisprojectaimstofillthosegaps.
+2.2 ExistingResearchesandExistingSolutions
+Existing work in this domain can be broadly grouped into three thematic categories:
+OCR-oriented handwritingand mathematical expression recognition, automated grading
+andassessmentsystems,andeducationalfeedbackgeneration. Whileeachcategoryhas
+mademeaningfulprogressindividually,noneprovidesacompleteend-to-endpipeline
+forhandwrittenstepwisealgebraevaluationwithexplainablefeedback.
+Intheareaofhandwrittenmathematicalexpressionrecognition(HMER),Wang,Zhang,
+and Jin [3] proposed an attention guidance mechanism that directs the model’s focus
+toward structurally critical regions of handwritten expressions, achieving notable im-
+provements in recognition accuracy on standard benchmarks. Building on sequential
+modellingapproaches,NguyenandVu[8]developedanofflineHMERsystembasedon
+a square loss sequence-to-sequence network, demonstrating competitive performance
+onisolatedhandwrittenmathematicalexpressiondatasets. Whilebothstudiesrepresent
+meaningful advances in symbol-level and expression-level recognition, they operate
+exclusivelyonwell-segmented,isolatedmathematicalexpressionsanddonotaccount
+forthemixed-contentstructuretypicalofreal examinationanswer sheets. Sreeetal. [2]
+applied convolutional and recurrent neural network architectures to general handwriting
+recognition, confirming the utility of deep learning for character-level transcription,
+but their system is not tailored to algebraic symbols, multi-region exam layouts, or
+5
+
+--- PAGE 14 ---
+the structural ambiguity that arises when mathematical content is embedded within
+natural-languageworkingsteps.
+In a related direction, Chauhan et al. [4] explored vision-language model approaches
+in the context of handwriting verification, demonstrating the potential of multimodal
+architectures for handwriting-related problems. However, their work targets identity
+verificationratherthanmathematicalcontentextraction,structuredsteprecognition,or
+examination-contextunderstanding.
+Ontheautomatedgradingside,the2021arXivstudyonAI-assistedautomatedshortan-
+swergradingofhandwrittenuniversity-levelmathematicsexaminations[1]demonstrated
+thatautomatedsystemscouldmeaningfullysupporthumanmarkingworkflowsformath-
+ematical content. This work is particularly relevant as it directly targets handwritten
+mathematics,yetitdoesnotintegratemulti-agentreasoning,explicitsolutionmethod
+detection,ormarking-scheme-basedstepwisemarkallocation. Chuetal. [5]proposed
+amorerecentLLM-poweredautomaticgradingframeworkincorporatinghuman-level
+guideline optimisation, improving scoring consistency at a high level of abstraction.
+However,theframeworkoperatesontypedortranscribedinputsanddoesnotaddressraw
+handwrittenscriptpreprocessing,exam-papersegmentation,orthegranularstep-by-step
+evaluationrequiredforschool-levelalgebramarkingschemes.
+Among commercial platforms, Gradescope [9] provides AI-assisted answer grouping
+and supports handwritten submissions, but it primarily targetsfinal-answer correctness
+ratherthanstepwiseevaluation. Crowdmark[10]improvestheworkflowfordistributing
+andcollectinghandwrittenpapersbutstillreliesheavilyonhumanannotatorsformark
+allocation. Möbius(DigitalEd)[11]supportsassessmentworkflowmanagementbutdoes
+not provide automated reasoning or mark allocation for handwritten scripts. STACK
+[12] offers symbolic equivalence checking for typed mathematical answers, making
+it effective for online assessments, but it is entirely unsuitable for raw handwritten
+examinationscripts.
+Examiningtheseworksasawhole,aconsistentpatternemerges. OCR-orientedresearch
+excelsatsymbolandsequencerecognitionbutdoesnotconsiderexam-paperstructure,
+mixedcontent,orquestion-answerlinking. Grading-orientedworkimprovescorrectness
+checkingbutremainsanchoredtotypedinputorfinal-answerevaluation. Commercial
+platforms streamline workflow management but do not replace human reasoning. No
+single existing work integrates handwritten mixed-content understanding, stepwise
+algebraic reasoning, marking-scheme-aware partial mark allocation, and explainable
+studentfeedbackwithinoneunifiedpipeline.
+6
+
+--- PAGE 15 ---
+2.3 LiteratureReviewbyModule
+2.3.1 Module1: OCR+InputUnderstanding
+Module 01 is responsible for converting raw handwritten answer images into structured,
+machine-readablealgebrastepsbyperformingimagepreprocessing,regionsegmentation,
+mixed-contentOCR,question-answerlinking,andstructuredoutputgeneration.
+Wangetal. [3]showedthatattentionguidancemechanismssignificantlyimproverecog-
+nition accuracy for handwritten mathematical expressions by directing spatial focus
+to structurally important regions. Their model performs well on HMER benchmarks;
+however, it assumes clean, pre-segmented expression images as input and does not
+considerthe mixed-content structure ofreal exam scripts wherealgebraic expressions
+co-existwithnatural-languagephrases,cancellations,andintermediateworkingacross
+multiplepageregions. NguyenandVu[8]addressedthesequentialnatureofmathemat-
+ical notation using a Seq2Seq architecture, achieving strong results on offline HMER
+datasets. LikeWangetal.,theirsystemisrecognition-orientedanddoesnotincorporate
+exam-paper preprocessing, region segmentation, or context-aware correction for the
+symbolambiguitiesthatariseinhandwrittenalgebra. Sreeetal. [2]demonstratedthe
+effectiveness of CNN and RNN architectures for general character-level handwriting
+recognition,buttheirapproachisnotspecialisedformathematicalsymbols,multi-region
+answer sheets,or the structural tagging neededto link extractedanswers totheir corre-
+spondingquestions. Chauhanetal. [4]appliedvision-languagemodelstohandwriting
+verification, confirming the relevance of multimodal approaches, but their pipeline is
+not designed to extract, segment, or structure handwritten mathematical content from
+examinationscripts.
+7
+
+--- PAGE 16 ---
+Table2.1: SummaryofResearchPapersRelevanttoModule01: OCR+Input
+Understanding
+ResearchPaper Methodology Limitations
+Liu,Ke&Wei(2024) Attention-guidedencoder-decoder Assumesclean
+[1] thatdirectsspatialfocusto pre-segmented
+structurallyimportantregionsof expressionsasinput;
+handwrittenmathematical nomixed-content
+expressions;evaluatedon handling,
+CROHMEbenchmarks exam-paper
+preprocessing,or
+question–answer
+linking
+Wangetal. (2022)[3] Square-losssequence-to-sequence Recognition-
+network(SLSSN)foroffline orientedonly;does
+HMER;incorporatespre-training notaddress
+andastatisticallanguagemodel exam-paperlayout,
+forimprovedsequencedecoding noise,skew
+correction,or
+structuredstep
+extraction
+Sreeetal. (2021)[2] CNNandRNNhybridpipelinefor GeneralOCR
+generalcharacter-level pipeline;nottailored
+handwritingrecognition; toalgebraicsymbols,
+demonstrateseffectivenessofdeep symbolambiguity,
+learningforofflinehandwritten ormulti-regionpage
+text segmentationin
+examsettings
+Chauhanetal. (2024) Vision-languagemodels(GPT-4o Designedfor
+[4] andPaliGemma)appliedto forensicverification
+handwritingverification;produces only;nota
+interpretablevisualexplanations mathematical
+forhandwriting-relateddecisions contentextraction,
+structuring,or
+exam-answeroutput
+pipeline
+8
+
+--- PAGE 17 ---
+Takentogether,thesestudiesconfirmthatquestion-answerlinking,mixed-contentseg-
+mentation, and structured step extraction remain substantially under-addressed in ex-
+amination settings. Existing recognition models handle either text or mathematics but
+not both simultaneously within real exam-paper conditions that include noise, skew,
+photocopyingdegradation,andsymbolambiguity. Module01ofthisprojectaddresses
+theselimitationsbycombiningexam-paper-specificpreprocessingusingnoiseremoval,
+skewcorrection,andgrayscaleconversionwithseparatetextandmathOCRpipelines
+that are subsequently merged and enriched through a question-answer tagging step
+and context-aware error correction, producing a structured output directly usable by
+downstreammodules.
+2.3.2 Module2: Multi-AgentMathematicalReasoning&StepwiseMarking
+Module02isresponsibleforvalidatingalgebrasolutionsstepbystep,detectingthesolu-
+tionmethodused,comparingstudentworkagainstthemarkingscheme,andallocating
+partialmarksthroughamulti-agentreasoningpipeline.
+The2021arXivstudyonAI-assistedautomatedgradingofhandwrittenuniversity-level
+mathematics[1]istheclosestexistingworktothegoalsofModule02,demonstrating
+that automated systems can meaningfully reduce the burden of human marking for
+mathematicalshortanswers. However,theapproachdoesnotincorporatemulti-agent
+orchestration,doesnotexplicitlydetectthesolutionmethodemployedbythestudent,
+anddoes notperformmarking-scheme-based stepwisepartialmark allocation. Chu et
+al. [5] advanced the state of the art in LLM-based grading by incorporating human-
+level guideline optimisation into the scoring process, improving consistency for high-
+level assessment tasks. Yet their framework operates at a coarse level of granularity,
+does not integrate handwritten OCR, and does not address the step-level validation
+or alternative-method handling that school-level algebra marking requires. On the
+platform side, STACK [12] offers reliable symbolic equivalence checking for typed
+mathematicalanswers,makingiteffectiveforonlineassessments. However,itisdesigned
+exclusively for typed input and cannot process the raw handwritten solution steps
+produced by Module 01. Gradescope [9], Crowdmark [10], and Möbius [11] each
+supportmarkingworkflowsindifferentwaysbutdonotprovideautomatedstep-level
+reasoningorstructuredpartialmarkallocation.
+9
+
+--- PAGE 18 ---
+Table2.2: SummaryofResearchPapersRelevanttoModule02: Multi-Agent
+MathematicalReasoning&StepwiseMarking
+ResearchPaper Methodology Limitations
+Liuetal. (2024)[1] GPT-4multimodalgrading Nomulti-agent
+pipelinethatacceptsscanned orchestration,
+handwrittenmathematicsscripts explicitsolution
+andproducesmarkswith methoddetection,or
+human-levelalignment;testedon marking-scheme-
+university-levelexams basedstepwise
+partialmark
+allocation
+Chuetal. (2024)[5] Multi-agentASAGframework Operatesontyped
+(GradeOpt)usingareflectorand textinputonly;no
+refineragenttoauto-optimise handwrittenOCR
+gradingguidelines;achievesstrong integrationor
+short-answergradingaccuracy step-level
+school-levelalgebra
+evaluation
+STACK[12] Computeralgebrasystem(CAS) Designed
+basedsymbolicequivalence exclusivelyfortyped
+checkingfortypedmathematical input;cannot
+answers;widelydeployedin processraw
+onlinemathematicsassessment handwrittenscripts
+ordetectthesolution
+methodusedbythe
+student
+Gradescope[9] AI-assistedanswergroupingthat Final-answerfocus
+clusterssimilarhandwritten only;providesno
+responsestoallowinstructorsto stepwisereasoning,
+applyasinglemarktoagroup alternativemethod
+detection,or
+automatedpartial
+markallocation
+The review highlights acritical gap betweensymbolic or typed-answer gradingsystems
+and the considerably more demanding task of understanding handwritten stepwise
+10
+
+--- PAGE 19 ---
+algebrasolutions,particularlywhenstudentsmayemployalternativevalidmethodsand
+partialmarksmustbeassignedatthelevelofindividualsteps. Single-modelapproaches
+arealsoknowntoproduceinconsistentoutputsfor complexalgebraicreasoning,asno
+singleinferencepathreliablycoversstepcorrectness,methodclassification,andscheme
+matchingsimultaneously. Module02addressestheselimitationsthroughaparallelmulti-
+agent framework in which dedicated agents handle step correctness validation, solution
+method detection, and marking-scheme comparison independently, with a supervisor
+agentresolvingconflictsandproducingaconsistentstructuredoutputcontainingstep
+validity,detectedmethod,assignedmarks,andtotalscore.
+2.3.3 Module3: StepwiseFeedbackGeneration(usingSLM)
+Module03isresponsiblefortransformingthestructuredreasoningresultsandassigned
+marksfromModule02intoclear,student-friendlyexplanationsofwhatiscorrect,where
+markswerelost,whydeductionsweremade,andhowthestudentcanimprove.
+Chuetal. [5]demonstratedthatLLM-basedgradingsystemscansupportsomedegreeof
+explanationgenerationalongsidescoring,andtheirguideline-awareapproachsuggests
+thatstructuredinputsimproveoutputconsistency. However,theirworkisnotspecifically
+focusedonlightweight,deployablemodelsforstepwisefeedback,anditdoesnottarget
+theparticularneedsofhandwrittenalgebraassessmentattheschoollevel,wherefeedback
+mustbeconcise,accessible,anddirectlytiedtoindividualsolutionstepsandmarking-
+schemedeductions. The2021gradingstudy[13]providesasupportinggradingworkflow
+for handwritten mathematics but offers limited feedback granularity; the system does
+not generate step-level explanations of why marks were reduced or provide targeted
+improvement suggestions. More broadly, commercial grading platforms including
+Gradescope [9] and Crowdmark [10] allow annotators to attach general comments
+to student work, but this feedback is teacher-driven and not automatically generated
+from structured reasoning outputs. No publicly available dataset directly combines
+handwritten algebra solution steps, assigned marks, and corresponding teacher-style
+feedback, which makes the development of a deployable feedback model particularly
+challenging.
+11
+
+--- PAGE 20 ---
+Table2.3: SummaryofResearchPapersRelevanttoModule03: StepwiseFeedback
+Generation(usingSLM)
+ResearchPaper Methodology Limitations
+Chuetal. (2024)[5] LLM-basedgradingframework Notfocusedon
+withself-reflectionagentsthat lightweight
+iterativelyrefinegrading deployableSLMs;
+guidelinesandgeneratescoring doesnotgenerate
+rationalealongsideassignedmarks step-leveldeduction
+explanationsfor
+handwrittenalgebra
+answers
+Liuetal. (2024)[1] GPT-4multimodalpipelinethat Feedbackgranularity
+gradeshandwrittenmathematics andexplainability
+andprovidessometextual forindividual
+feedbackalongsidetheassigned stepwisemark
+score deductionsare
+limited;largemodel
+notsuitablefor
+lightweight
+deployment
+Gradescope[9] Instructor-drivenannotation Allfeedbackis
+systemthatallowsreusable teacher-drivenand
+commentstobeattachedto manuallywritten;no
+groupedstudentsubmissions automated
+generationof
+explanationsfrom
+structuredreasoning
+outputs
+Crowdmark[10] Inlinemarkingandcomment Noautomated
+insertiononscannedhandwritten feedbackgeneration
+scriptsbyhumanannotators capability;all
+step-level
+explanationsand
+improvement
+suggestionsrequire
+manualhumaninput
+persubmission
+12
+
+--- PAGE 21 ---
+These limitations collectively confirm that no existing system provides lightweight,
+deployable,structured-input-drivenfeedbackgenerationtailoredtohandwrittenalgebraic
+evaluation. Module03addressesthisgapbyfine-tuningalightweightsmalllanguage
+model(SLM)onahybriddatasetcombiningmanuallycuratedalgebraerrorfamiliesand
+teacher-stylefeedbackexamplesderivedfromstructuredModule02outputs. TheSLM
+takes the step validity labels, assigned marks, detected method, and marking-scheme
+context as input and generates step-specific explanations constrained by simple quality
+checks,keepingfeedbackconcise,accurate,andsuitableforlearners.
+2.4 Summary
+Theliteraturereviewedinthischapterdemonstratesthatwhilemeaningfulprogresshas
+beenmadeinhandwrittenmathematicalexpressionrecognition,automatedgrading,and
+language-model-basedassessment,noexistingsystemintegratesallthreecapabilities
+intoasinglecoherentpipelineforhandwrittenstepwisealgebraevaluation. Fourmajor
+gapsemergefromthisreview.
+First, existing OCRsystems handleeither natural-languagetextor mathematicalexpres-
+sionsbutnotbothsimultaneouslywithinrealexam-paperconditions,andnoneprovides
+the question-answer linking and structured step extraction that downstream reasoning
+requires. Second, automated grading systems predominantly evaluate final answers
+and lack the step-level validation, alternative-method support, and marking-scheme-
+awarepartialmarkallocationneededforfairandtransparentalgebraassessment. Third,
+single-model reasoning architectures produceinconsistent outputs for complex algebra,
+and no existing work applies a multi-agent supervisory framework to resolve these
+inconsistenciesinthe context ofhandwrittenstep-by-stepmarking. Fourth,explainable,
+step-leveleducationalfeedbackthatexplainsdeductionreasonsandimprovementsugges-
+tions in student-friendly language is absent from both research systems and commercial
+platforms,particularlyforhandwritteninputs.
+This project addresses these four gaps through its three-module architecture. Module
+01bridgestheOCRgapbycombiningexam-paperpreprocessingwithmixed-content
+recognitionandstructuredquestion-answerlinking. Module02bridgesthereasoning
+andmarkinggapthroughamulti-agentframeworkwithparallelspecialistagentsanda
+supervisor-level decision mechanism. Module 03 bridges the feedback gap through a
+fine-tunedlightweightSLMthatconvertsstructuredreasoningoutputsintoclear,targeted,
+learner-facing explanations. Chapter 3 describes the specific technologies selected to
+implementthisarchitecture.
+13
+
+--- PAGE 22 ---
+CHAPTER 3
+Technology Adapted
+3.1 Introduction
+Chapter2reviewedtherelevantliteratureandidentifiedthekeyresearchgapsthatthis
+project addresses. This chapterpresents thetechnologies selectedfor implementing the
+proposed system andprovides arationale foreach choice. Theproject requires tools for
+imagepreprocessing,OCR,symbolicmathematics,multi-agentLLMorchestration,and
+lightweightfeedbackgeneration. Becausetheprojectisstructuredintothreeindependent
+butintegratedmodules,theselectedtechnologiesmustalsosupportmodulardevelopment
+andcleanintermodulecommunication.
+3.2 CoreTechnologies
+3.2.1 Technology1: ImageProcessingandOCR
+OpenCV is selected for preprocessing answer-paper images. It provides efficient im-
+plementationsofnoiseremoval,grayscaleconversion,adaptivethresholding,andskew
+correction,allofwhicharenecessaryforimprovingthequalityofnoisyorphotocopied
+exam papers before OCR is applied [4]. For text recognition, TrOCR (a transformer-
+based OCR model from Microsoft) is considered for its strong performance on hand-
+written document understanding. PaddleOCR is considered as an alternative owing
+to its support for mixed layout documents. For mathematical expression recognition,
+image-to-LaTeXmodelssuchasNougatandLaTeX-OCRareevaluated,asthesemodels
+are specifically trained to convert handwritten or scanned mathematical notation into
+structuredLaTeXrepresentations[1][3]. TheOCRpipelineappliestextandmathematics
+recognition in parallel and merges the results before passing them to the downstream
+modules.
+3.2.2 Technology2: SymbolicMathematicsName
+SymPy is selected as the symbolic mathematics layer for the system. It provides a
+pure Python computer algebra system capable of normalising algebraic expressions,
+expanding or factorising polynomials, and checking symbolic equivalence between
+two algebraic forms [4]. This is particularly useful in Module 02, where a student’s
+intermediate step may be algebraically equivalent to the expected step but written in
+14
+
+--- PAGE 23 ---
+a different form. SymPy enables the system to treat these as equivalent rather than
+penalisingthestudentforavalidnotationalvariation.
+3.2.3 Technology3: Multi-AgentLLMReasoning
+Thereasoningandstepwisemarkingmoduleisdesignedaroundamulti-agentarchitec-
+ture. LangGraphisselectedastheorchestrationlayerforcoordinatingparallelreasoning
+agents. LangGraph provides a graph-based state machine that allows multiple LLM-
+powered agents to run concurrently and pass their outputs to a supervisor node. The
+worker agents use GPT-4o-mini or Llama 3 as the underlying language model, while
+thesupervisoragentselectsthemostconsistentinterpretationandallocatesmarks. This
+architectureimprovesreliabilitybyusingmultipleindependentreasoningpathsrather
+thanrelyingonasinglemodeloutput.
+3.2.4 Technology4: LightweightSLMforFeedbackGeneration
+The feedback module uses a lightweight small language model (SLM), specifically
+Qwen2.5 , Gemma 3, as the generative core. Unlike large general purpose models,
+theselightweightmodels aredesignedfor efficientinferenceandare practicalforfine-
+tuning on custom datasets. Parameter-efficient fine-tuning using LoRA (Low Rank
+Adaptation)isadoptedsothatthemodelcanbeadaptedtothealgebrafeedbackdomain
+without requiringfull retraining. The goalof the SLM isnot to solvemathematics butto
+transformstructuredreasoningoutputsintoshort,clear,teacher-styleexplanationsthat
+studentscaneasilyunderstand.
+3.2.5 Technology5: DataHandlingandIntegration
+StructuredJSONschemasareusedasthedatacontractsbetweenmodules,ensuringthat
+theOCRoutputcanbedirectlyconsumedbythereasoningmodule,andthereasoning
+outputcanbeconsumedbythefeedbackgeneratorwithoutformatconversion. Pandas
+and NumPysupport tabular dataprocessing during dataset preparation andevaluation.
+SQLiteisplannedforlightweightpersistenceofmarking-schemerecordsandevaluation
+logsduringtheprototypestage.
+3.3 SystemImplementationTechnologies
+Thischapterdescribedthecoreandimplementationtechnologiesselectedforthepro-
+posed handwritten algebra evaluation system. OpenCV and OCR models support the
+extraction stage, SymPy and LangGraph support the reasoning and marking stage, and
+alightweightSLMsupportsexplainablefeedbackgeneration. ThePython-basedstack
+reducesintegrationoverheadwhilesupportingresearchexperimentationandsoftware
+15
+
+--- PAGE 24 ---
+prototyping within a single unified environment. Chapter 4 will present the proposed
+approachindetail,describinghowthesetechnologiesarecombinedandappliedwithin
+eachmodule.
+3.3.1 ProgrammingLanguage
+Python3.10istheprimaryprogramminglanguageforthisproject. Pythonisselected
+becauseitprovidesamatureandunifiedecosystemcoveringeveryrequirementofthe
+systemimageprocessing,OCR,symbolicmathematics,largelanguagemodelinference,
+agent orchestration, and REST API development within a single language environment.
+This eliminates cross-language integration overhead and allows all three team members
+tocollaboratewithinaconsistentdevelopmentsetup.
+3.4 Summary
+Thischapterdescribedthecoreandimplementationtechnologiesselectedforthepro-
+posed handwritten algebra evaluation system. OpenCV and OCR models support the
+extraction stage, SymPy and LangGraph support the reasoning and marking stage, and
+alightweightSLMsupportsexplainablefeedbackgeneration. ThePython-basedstack
+reducesintegrationoverheadwhilesupportingresearchexperimentationandsoftware
+prototyping within a single unified environment. Chapter 4 will present the proposed
+approachindetail,describinghowthesetechnologiesarecombinedandappliedwithin
+eachmodule.
+16
+
+--- PAGE 25 ---
+CHAPTER 4
+Proposed Approach
+4.1 Introduction
+Brieflyrecallwhatthepreviouschaptercovered. Thenexplainthatthischapterpresents
+your proposed approach: how the technologies described in Chapter 3 are combined and
+appliedtosolvetheproblemidentifiedinChapter2.
+4.2 Module1: OCR+InputUnderstanding
+Module01 beginsbyreceivingthehandwrittenanswerimage alongwiththequestion
+paperandmarkingcontext. TheanswerimageisfirstpreprocessedusingOpenCV:noise
+removalisapplied viaGaussian ormedian filtering,the imageisconvertedto grayscale,
+adaptivethresholdingisusedtobinarisethecontent,andskewcorrectionisappliedto
+straightenmisalignedpages. Thispreprocessingstepiscriticalbecauserealexampapers
+arefrequentlynoisy,photocopied,orcapturedunderimperfectconditions[4].
+Thepreprocessedimageisthensegmentedintodistinctregionscorrespondingtoquestion
+text,answertext,andworkingsteps. SeparateOCRpipelinesareappliedinparallel: a
+textOCRmodelhandlesnatural-languagephrases,whileamathematicalOCRmodel
+suchasLaTeX-OCRorNougatrecogniseshandwrittenmathematicalexpressionsand
+converts them to structured LaTeX [1][3]. The two streams are merged and aligned
+spatiallysothateachexpressioniscorrectlyassociatedwithitssurroundingtext.
+Aquestion-answerlinkingstepthentagseachextractedanswerregionwiththeidentifier
+of the correspondingquestion from the question paper. This ensures thatdownstream
+modulesalwaysknowwhichquestionagivenanswerattemptstoaddress. Context-aware
+correctionrules areappliedtoresolvecommonsymbol ambiguities suchasconfusion
+betweenthevariablexandthemultiplicationsign. ThefinaloutputisastructuredJSON
+object containing question_text, answer_text, student_steps[], and linked_question,
+whichispassedtoModule02.
+• Input: Whatdata/informationthismodulereceives.
+• Output: Whatthismoduleproduces.
+• Process: Step-by-stepdescriptionofhowthemoduleworks.
+17
+
+--- PAGE 26 ---
+• Technology: Whichspecificalgorithmsortoolsareusedandwhy.
+Usesubsectionsforsub-modelsorphaseswithinthemoduleifneeded.
+4.3 Module2: Multi-AgentMathematicalReasoning&StepwiseMarking
+Module 02 receives the structured output from Module 01 together with the marking
+scheme. Before reasoning begins, the extracted steps are normalised into a consistent
+symbolicformusingSymPy: powers,operators,fractions,andequivalentalgebraicnota-
+tions are standardised so that symbolically equivalent expressions are treated identically
+regardlessofthestudent’schosennotation[5].
+The module uses a multi-agent framework orchestrated through LangGraph. Three
+workeragentsoperateinparallel. Agent1validatesstepcorrectnessbycheckingwhether
+eachstudentstepfollowslogicallyfromthepreviousstepusingLLM-basedreasoning
+andSymPyequivalencechecks. Agent2detectsthesolution method employedbythe
+student, for example whether they factorised directly, used the quadratic formula, or
+appliedcompletingthe-square,allowingalternativevalidmethodstoberecognisedand
+credited. Agent3comparesthestudent’sworkagainstthemarkingscheme,matching
+expectedstepsandidentifyingwhichmarkingschemepointshavebeenearned.
+All three agent outputs are sent to a supervisor agent, which resolves any conflicts
+between the agents’ assessments and selects the most consistent interpretation. The
+supervisorthenallocatesmarksstepbystepaccordingtothemarkingschemeandreturns
+a final structuredanalysis containing step_validity, detected_method, assigned_marks,
+and total_score[5]. This designsupports partialmarking, alternative validmethods, and
+moretransparentmarkallocationthanfinal-answer-onlysystems.
+4.4 Module3: StepwiseFeedbackGeneration
+Module03receivesthestructuredanalysisfromModule02togetherwiththemarking
+scheme. Thegoal ofthis module isnot tore-solve the questionbut toexplain the result
+inaclearandeducationallyusefulway. AlightweightSLM,fine-tunedusingLoRAon
+acurateddatasetofcommonalgebraerrorcasesandteacher-stylefeedbackexamples,is
+usedtotransformthestepvaliditylabels,assignedmarks,andmarking-schemecontext
+intostudent-facingfeedback. Thefeedbackisgeneratedstepbystep: foreachstep,the
+modelidentifieswhatiscorrect,whatismissingorincomplete,whymarkswerereduced,
+andwhatthestudentcandotoimprove. Thecuratedtrainingdatasetfocusesoncommon
+algebra error families including sign errors, missing intermediate steps, incomplete
+simplification,incorrectfactorisation,andcorrectmethodwithanerroneousfinalresult.
+Atthe prototypestage, prompting canbe usedfirst; oncethe datasetreaches sufficient
+18
+
+--- PAGE 27 ---
+sizeandconsistency,fullLoRAfine-tuningisapplied. Simplevalidationchecksensure
+thatthegeneratedfeedbackisinternallyconsistentwiththeassignedmarksandcontains
+adeductionexplanationforeverystepwheremarkswerelost.
+4.5 Summary
+This chapter outlined the proposed approach for automated handwritten algebra eval-
+uation. Module 01 extracts and structures handwritten content using OpenCV and
+OCRpipelines. Module02validatesandmarkstheextractedstepsusingaLangGraph
+multi-agentframeworkwithSymPynormalisation. Module03generatesclearstepwise
+feedbackusingafine-tunedlightweightSLM.Together,thesethreemodulesformacom-
+plete pipeline fromhandwritten image to final scoreand explainable feedback. Chapter
+5 presentsthe analysis anddesign of thesystem, including the high-level architecture
+andtheinteractionsbetweenmodules.
+19
+
+--- PAGE 28 ---
+CHAPTER 5
+Analysis and Design
+5.1 Introduction
+Chapter4describedtheproposedapproachforeachofthethreemodules. Thischapter
+presentsthe analysisand designof theoverallsystem, includingthe high-levelarchitec-
+tureandthe breakdown ofsystemlayers. Thedesignemphasisesmodularity,structured
+intermoduleinterfaces,andexplainabilityateverystage.
+5.2 High-LevelArchitectureoftheSystem
+Thehigh-levelarchitecturecontainsaninputstage,anextractionstage,areasoningand
+markingstage, andafeedbackstage. Inputsenterthe OCRandsegmentation module,
+are converted into structured steps, pass through worker agents and a supervisor for
+reasoningandmarkallocation,and finally reachthefine-tunedSLMforlearner-facing
+feedbackgeneration.
+Figure5.1: High-LevelArchitectureoftheProposedSystem
+20
+
+--- PAGE 29 ---
+5.3 ModulesoftheSystem
+5.3.1 InputLayer
+TheInput Layeracceptsthree mainsources of information: the questionpaper, which
+defineswhatthestudentisexpectedtosolve;thehandwrittenanswerimage,whichcap-
+tureswhatthestudenthaswritten;andthemarkingscheme,whichspecifieshowmarks
+should be allocated across steps and across alternative valid solution methods. These
+threeinputsareingestedtogetherandpassedtotheExtractionLayerforprocessing.
+5.3.2 ExtractionLayer
+TheExtractionLayercontainsModule01(OCR+InputUnderstanding). Itpreprocesses
+theanswerimageusingOpenCV,segmentsthepageintoquestion,answer,andworking-
+step regions, applies text and mathematical OCR in parallel, and merges the results into
+astructuredrepresentation. Aquestion-answerlinkingstepensuresthateachextracted
+answerremainsassociatedwiththecorrectquestionidentifier. Theoutputofthislayeris
+astructuredJSONobjectthatisforwardedtotheReasoningandMarkingLayer.
+5.3.3 Reasoning&MarkingLayer
+The Reasoning and Marking Layer contains Module 02 (Multi-Agent Mathematical
+ReasoningandStepwiseMarking). Itreceivesthestructuredsteprepresentationfromthe
+ExtractionLayeralongwiththemarkingscheme. Threeparallelworkeragentsevaluate
+step correctness, detect the solution method, and compare the work against the marking
+schemerespectively. Asupervisoragentreconcilestheagentoutputsandproducesafinal
+structuredanalysiscontainingstepvaliditylabels,thedetectedsolutionmethod,assigned
+marks per step, and the total score. This layer also applies SymPy-based symbolic
+normalisationbeforereasoningtoensurethatalgebraicallyequivalentexpressionsare
+treatedidentically.
+5.3.4 Feedback&PresentationLayer
+TheFeedbackandPresentationLayercontainsModule03(StepwiseFeedbackGener-
+ation). It receives the structured analysis from the Reasoning and Marking Layer and
+usesafinetunedlightweightSLMtogeneratestepwiseexplainablefeedback. Thefinal
+outputpresentedto the teacherorstudentincludesthe total score,step-leveldeduction
+explanations, identification of correct and incorrect steps, and specific improvement
+suggestions. ThislayerisdesignedtobedeployableasaFastAPIendpointsothatresults
+canbeaccessedthroughanAPI-basedinterface.
+21
+
+--- PAGE 30 ---
+5.4 Summary
+This chapter presented the high-level four-layer architecture of the proposed system
+and described the role of each layer. The Input Layer ingests the question paper,
+answerimage, and marking scheme. TheExtraction Layer converts handwritten content
+into structured algebra steps. The Reasoning and Marking Layer validates steps and
+assigns marks using a multi-agent framework. The Feedback and Presentation Layer
+generates stepwise explainablefeedback using a fine-tuned SLM.The clean interfaces
+between layersenable independent moduledevelopment whilepreserving full-pipeline
+compatibility. Chapter6willdetailtheimplementationplanforeachmodule,including
+datasets,flowcharts,pseudocode,anddatapreprocessingsteps.
+22
+
+--- PAGE 31 ---
+CHAPTER 6
+Implementation
+6.1 Introduction
+This chapter outlines the planned implementation of the proposed system, including
+the development environment, module-specific datasets, flowcharts, pseudocode, and
+preprocessingstrategies. Theimplementationplanisintendedtobridgethegapbetween
+thereport’sdesignstageandthepracticalsoftwareprototype.
+6.2 DevelopmentEnvironment
+The implementation is planned within a Python-based research environment. Python
+is selected because it provides mature libraries for image processing, OCR, symbolic
+mathematics, modeltraining,agent orchestration,and datahandling. Jupyternotebooks
+are suitable forexperimentation and ablation studies, whileGit and GitHub are used for
+versioncontrol. Foradeployableprototype,FastAPIisapracticaloptionforexposing
+OCR,reasoning,andfeedbackmodulesthroughAPIs. Amoderndevelopmentmachine
+withamulti-coreCPUandatleast8-16GBRAMissufficientforearlyexperiments,
+whileanNVIDIAGPUisdesirableforfastermodelfine-tuning.
+23
+
+--- PAGE 32 ---
+Figure6.1: FolderStructureoftheProjectImplementation
+6.3 Module1: OCR+InputUnderstanding
+This module is responsible for converting raw handwritten answer images into struc-
+turedalgebrasteps. Itcombinesexam-paperpreprocessing,mixed-contentOCR,ques-
+tion–answertagging,andstructuredoutputgeneration.
+6.3.1 DatasetOverview
+Attheinterimstage,Module01isexpectedtouseacombinationofpublichandwritten
+mathematical expression resources and internally curated exam-style samples. The
+internaldatasetisimportantbecausethetargettaskrequiresmixed-contentanswersheets
+ratherthanisolatedmathematicalexpressions. Eachrecordinthecurateddatasetshould
+ideallyincludetheanswerimage,questionregion,answerregion,working-stepregions,
+linkedquestionidentifier,andthefinalstructuredstepsequence.
+24
+
+--- PAGE 33 ---
+Table6.1: StructuredOutputFieldsfromOCR+InputUnderstandingModule
+Field Description
+image_path Pathtothehandwrittenanswerimage
+question_text Theextractedquestiontextorlinkedquestionidentifier
+answer_text RawOCRtextextractedfromanswerregions
+student_steps[] Structuredstep-by-stepalgebrarepresentation
+linked_question Mappingbetweenextractedanswerandcorresponding
+question
+6.3.2 FlowchartoftheModule
+Figure6.2presentstheflowchartforModule1,illustratingthestep-by-stepprocessing
+pipelinefromdatainputthroughtoclassificationoutput.
+Figure6.2: FlowchartofModule1
+Describe each step shown in the flowchart. Explain key decision points, loops, and how
+outputsateachstagefeedintosubsequentsteps.
+25
+
+--- PAGE 34 ---
+6.3.3 PseudocodeforModule1
+Algorithm1OCR+InputUnderstanding
+1: Input: Handwrittenanswerimage,questionpaper/linkedquestioncontext
+2: Output: Structured output with question_text, answer_text, student_steps[],
+linked_question
+—ProcessingPhase—
+3: Loadhandwrittenanswerimage
+4: Applypreprocessing:
+5: Converttograyscale
+6: Removenoise
+7: Correctskew
+8: Segmentpageinto:
+9: Questionregion
+10: Answerregion
+11: Working-stepregions
+12: ApplytextOCRtotextualregions
+13: ApplymathOCRtomathematicalregions
+14: MergetextOCRandmathOCRoutputs
+15: Tageachextractedanswerwithitscorrespondingquestion
+16: CorrectOCRerrorsusingcontext-awarerules
+17: Convertmergedcontentintostructuredstudent_steps[]
+18: returnStructuredoutput
+6.3.4 DataPreprocessing
+Image preprocessing includes grayscale conversion, denoising, thresholding, and skew
+correction. These stepsimproveOCR quality,especially fornoisy orphotocopiedexam
+papers. Regionsegmentationseparatesquestion,answer,andworking-stepareasbefore
+OCR is applied. This reduces confusion between natural-language text and algebraic
+expressions. Aquestion–answer linkingstage tagsextracted OCRtextto identifywhich
+answer belongs to which question. This prevents ambiguity when multiple questions
+appearon thesame script. Finally,context-awarecorrection isused toresolve common
+symbolconfusionsandtoconverttheOCRresultintostructuredalgebrastepssuitable
+fordownstreamreasoning.
+26
+
+--- PAGE 35 ---
+Figure6.3: Module1DataPreprocessingCode
+Figure6.4: Module1DataPreprocessingResult
+6.4 Module2: Multi-AgentMathematicalReasoning&StepwiseMarking
+ThismoduleconsumesthestructuredoutputproducedbyModule01andthemarking
+scheme. Itvalidatesthealgebrasolutionstepbystep,detectsthemethodused,matches
+thesolutionwiththemarkingscheme,andassignsmarksthroughamulti-agentreasoning
+pipeline.
+27
+
+--- PAGE 36 ---
+6.4.1 DatasetOverview
+Module02doesnotrelyonasinglepublicdatasetinthesamewayasapureclassifier.
+Instead, it is driven by a structured example bank containing question types, ideal
+worked solutions, alternative valid methods, common wrong methods, and explicit
+markingschemes. Attheinterimstage,thisexamplebankcanbecreatedfromselected
+Algebraquestionsandtheirmarkingschemes,togetherwithmanuallywrittenstudent-
+stepvariants.
+Table6.2: InputStructureforMulti-AgentReasoningandMarkingModule
+Field Description
+question_text Algebraquestiontobesolved
+student_steps[] Extractedstudentsolutionsteps
+expected_steps[] Referencesolutionpath(s)fromthemarkingscheme
+alternative_methods[] Othervalidmethodsacceptedbythescheme
+marks_per_step Markallocationforeachexpectedstep
+final_marks Maximumscoreforthequestion
+6.4.2 FlowchartoftheModule
+Figure6.5showstheprocessingpipelineforModule2.
+Figure6.5: FlowchartofModule2
+28
+
+--- PAGE 37 ---
+6.4.3 PseudocodeforModule2
+Algorithm2Multi-AgentMathematicalReasoning&StepwiseMarking
+1: Input: question_text,student_steps[],marking_scheme
+2: Output: step_validity,detected_method,assigned_marks,total_score
+—ProcessingPhase—
+3: Buildstructuredinputbundlefromquestion_text,student_steps[],marking_scheme
+4: RunAgent1tovalidatestepcorrectness
+5: RunAgent2todetectstudent’ssolutionmethod
+6: RunAgent3tocomparesolutionwithmarkingscheme
+7: SendallagentoutputstoSupervisorAgent
+8: Supervisorresolvesconflictsandselectsthemostconsistentinterpretation
+9: Allocatemarksstep-by-stepusingthemarkingscheme
+10: returnstructuredanalysis:
+11: step_validity
+12: detected_method
+13: assigned_marks
+14: total_score
+Figure6.6: Module2CodeImplementation
+29
+
+--- PAGE 38 ---
+Figure6.7: Module2CodeImplementationusingLLMFactory
+6.4.4 StructuredReasoningPreprocessing
+Beforereasoning,extractedstepsarenormalizedintoaconsistentsymbolicform. This
+may include standardizing powers, operators, fractions, and equivalent notation. The
+reasoning input is organized as an ordered list of student steps so that the system can
+evaluate the progression of the solution, not only the final answer. 19 The marking
+schemeisalsoconvertedintoastructuredformsothatthemodulecancompareexpected
+steps,marksperstep,andacceptedalternativemethods.
+6.5 Module3: StepwiseFeedbackGeneration(usingSLM)
+Thismoduletransformsthestructuredreasoningresultintocleareducationalfeedback.
+Itspurposeisnottosolvethemathematicsagain,buttoexplainwhatiscorrect,where
+markswerelost,andhowthestudentcanimprove.
+6.5.1 DatasetOverview
+Unlike OCR or symbolic mathematics modules, the feedback module requires a spe-
+cialized dataset thatmaps structured reasoning outcomes to teacher-stylefeedback. No
+singlepublicdatasetfullycombineshandwrittenalgebrasteps,assignedmarks,andedu-
+cationalfeedback. Therefore,ahybriddatasetcreationstrategyisproposed. Thedataset
+startswithmanuallycuratedexamplesbuiltaroundcommonalgebraerrorfamilies,then
+expandsusingmarkedexamplesandstructuredoutputsfromModule02.
+30
+
+--- PAGE 39 ---
+Table6.3: OutputStructureforFeedbackGenerationModule
+Field Description
+question_text Originalalgebraquestion
+student_steps[] Structuredstudentanswersteps
+step_validity Correct/partial/incorrectlabelperstep
+assigned_marks Marksassignedtoeachstep
+total_score Overallscorefortheanswer
+feedback Teacher-stylefeedbackforthestudent
+6.5.2 FlowchartoftheModule
+Figure6.8showstheprocessingpipelineforModule3.
+Figure6.8: FlowchartofModule3
+31
+
+--- PAGE 40 ---
+6.5.3 PseudocodeforModule3
+Algorithm3StepwiseFeedbackGenerationusingaLightweightSLM
+1: Input: step_validity, detected_method, assigned_marks, total_score, mark-
+ing_scheme
+2: Output: generatedstepwisefeedback
+—ProcessingPhase—
+3: ReceivestructuredreasoningresultsfromModule02
+4: Combinereasoningresultswithmarking_scheme
+5: Formatinputforthefeedbackgenerationmodel
+6: Fine-tuneorpromptlightweightSLMusingteacher-stylefeedbackpatterns
+7: Generatestep-specificfeedback:
+8: Whatiscorrect
+9: Whatismissingorincomplete
+10: Whymarkswerereduced
+11: Howtoimprove
+12: Applyvalidationchecks:
+13: Feedbackmustalignwithtotal_score
+14: Deductionexplanationmustbeincluded
+15: returnfinalgeneratedfeedback
+6.5.4 DataPreprocessing
+DescribethepreprocessingpipelineforModule3. Cover:
+• Data Cleaning and Organisation: How raw dialogue data is structured and
+cleaned.
+• Text Normalisation: Lowercasing, removing special characters, expanding con-
+tractions,standardisingwhitespace.
+• Feature Engineering: Scam-specific keyword detection, urgency indicators,
+sentimentsignals.
+• TokenisationandPadding: PreparingsequencesforMLmodels(LSTM/BERT).
+For implementation, the preprocessing and inference workflow of Module 3 is coor-
+dinated through the FastAPI Application Entry Point, which exposes the feedback-
+generation pipeline as an API endpoint and connects the loading of the Qwen model,
+inputpreprocessing,andresponse-generationstages.
+32
+
+--- PAGE 41 ---
+Figure6.9: Module3QwenModelArchitecture/Workflow
+Figure6.10: FastAPIApplicationEntryPointforModule3
+6.6 Summary
+This chapter translated the report’s design into an implementation plan. The three
+modules now have defined datasets or example banks, flowcharts, pseudocode, and
+preprocessing logic. Together these details form a practical roadmap for software
+developmentandexperimentalevaluation.
+33
+
+--- PAGE 42 ---
+Figure6.11: ImplementationSummaryDiagram
+34
+
+--- PAGE 43 ---
+CHAPTER 7
+Discussion
+7.1 Introduction
+This chapter discusses the current project status, assumptions, limitations, and future
+work. Theprojectisattheinterimstage,wherethearchitecture,moduleboundaries,and
+keyimplementationdecisionshavebeenclarified,whilefullintegrationandlarge-scale
+evaluationremainongoing.
+7.2 CurrentProgress
+Summarisetheworkcompletedtodateacrossallmodules. Foreachmodule,describe:
+• Problem definition, research objectives, andthree-module architecture havebeen
+finalized.
+• High-levelarchitectureandmodule-specificflowchartshavebeenpreparedforthe
+OCR,reasoning,andfeedbackmodules.
+• Structuredinput/outputschemasbetweenmoduleshavebeendefined,including
+question–answerlinkingforOCRandstructuredreasoningoutputforthefeedback
+stage.
+• A multi-agent reasoning and stepwise marking design has been specified using
+workeragentsandasupervisoragent.
+• AstarterdatasettemplatefortheStepwiseFeedbackGenerationmodulehasbeen
+preparedtosupportfeedbackmodelexperimentation.
+• Coretechnologychoiceshavebeenidentified,includingOpenCV,OCRmodels,
+SymPy,LangGraph,andalightweightSLM.
+Atthisstage, theprojectis strongestinitsproblem formulation,architecturedefinition,
+andmodule-leveldesign. FullOCRtraining,fullreasoningorchestration,andintegrated
+modelevaluationarethemainnextimplementationmilestones.
+35
+
+--- PAGE 44 ---
+7.3 AssumptionsandLimitationsoftheSystem
+7.3.1 Assumptions
+Statetheassumptionsmadeduringthedesignandimplementationofthesystem:
+1. Problem definition, research objectives, andthree-module architecture havebeen
+finalized.
+2. Themarkingschemeisassumedtobeavailableinausablestructuredform.
+3. StudentsareassumedtouseanswerlayoutsthataresufficientlylegibleforOCR
+afterpreprocessing.
+4. Thereasoning moduleisassumed toproducereliablestructured outputsthatcan
+beconsumedbythefeedbackmodule.
+7.3.2 Limitations
+Identifythecurrentlimitationsofthesystem:
+1. OCR accuracy is strongly affected by handwriting style, image quality, skew, and
+mixed-contentcomplexity.
+2. There is no single public end-to-end dataset that directly combines handwritten
+answerimages,structuredstepwisemarks,andteacher-stylefeedback.
+3. Alternativevalidalgebramethodsincreasethecomplexityofreasoningandmark
+allocation.
+4. The feedback module depends on the quality of the curated dataset and the cor-
+rectnessofthestructuredreasoningresult.
+5. Alightweight SLMimproves deployability,butmay have lower expressivepower
+thanlargermodelsandmayrequirecarefulpromptingorfine-tuning.
+7.4 FutureWork
+The followingareas areplanned for futuredevelopment toaddress theidentified limita-
+tionsandcompletethesystem:
+1. Extendthe OCRpipeline withmore exam-style samplesand strongerhandwritten
+mathrecognitionmodels.
+2. Expandthereasoningmodulewithrichersymbolicnormalization,morealternative
+methods,andstrongersupervisorlogic.
+36
+
+--- PAGE 45 ---
+3. Increasethesizeandqualityofthefeedbackdatasetthroughteacherreviewand
+markedexamples.
+4. Integratethecompletesystemintoanend-to-endprototypewithAPI-basedmodule
+communication.
+5. EvaluatethesystemonalargersetofAlgebraquestionsandmarkingschemes.
+6. ExploreLMSintegration,multi-subjectextension,andreal-timeassessmentwork-
+flows.
+7.5 Summary
+Theinterimstageconfirmsthattheprojectisfeasibleandstructurallywelldefined. The
+proposedsystemnowhasacoherentarchitecture,clearmodulescopes,andapractical
+implementationroadmap. Thenextphasewillfocusonprototypedevelopment,dataset
+expansion,moduleintegration,andevaluation.
+37
+
+--- PAGE 46 ---
+Reference
+[1] T.Liuetal. Ai-assistedautomatedshortanswergradingofhandwrittenuniversity
+levelmathematicsexams. arXivpreprintarXiv:2408.11728,2024.
+[2] A.Sree,V.Chennamsetti,D.Maliakal,J.Kaliappan,andK.Sundararajan. Hand-
+writingrecognitionusingcnnandrnn.JournalofChengduUniversityofTechnology
+(Science&TechnologyEdition),26,2021.
+[3] Y. Wang, X. Zhang, and L. Jin. Attention guidance mechanism for handwritten
+mathematicalexpressionrecognition. arXivpreprintarXiv:2403.01756,2024.
+[4] M.Chauhanetal. Vision-languagemodelbasedhandwritingverification. arXiv
+preprintarXiv:2407.21788,2024.
+[5] Y. Chu et al. A llm-powered automatic grading framework with human-level
+guidelinesoptimization. arXivpreprintarXiv:2410.02165,2024.
+[6] H.Khosravietal. Explainableartificialintelligenceineducation. Computersand
+Education: ArtificialIntelligence,3,2022.
+[7] S. Peng et al. Image to latex: Mathematical formula recognition using vision
+transformer. arXivpreprint,2021.
+[8] T. Nguyen and T. Vu. Offline handwritten mathematical expression recognition
+basedonsquarelosssequence-to-sequencenetwork. arXivpreprint,2022.
+[9] Gradescope. Ai-assistedgradingandanswergroups,2024. URLhttps://www.
+gradescope.com. Accessed: 2026.
+[10] Crowdmark. Product information page, 2024. URL https://crowdmark.
+com. Accessed: 2026.
+[11] DigitalEd. Möbius grading - product information, 2024. URL https://www.
+digitaled.com. Accessed: 2026.
+[12] STACK Assessment. System overview and assessment approach, 2024. URL
+https://stack-assessment.org. Accessed: 2026.
+[13] S. Yao et al. Tree of thoughts: Deliberate problem solving with large language
+models. arXivpreprintarXiv:2305.10601,2023.
+38
+
+--- PAGE 47 ---
+[14] M.Bestaetal. Graphofthoughts: Solvingelaborateproblemswithlargelanguage
+models. arXivpreprintarXiv:2308.09687,2024.
+[15] L.Blecheretal. Nougat: Neuralopticalunderstandingforacademicdocuments.
+arXivpreprintarXiv:2308.13418,2023.
+[16] E.J.Huetal. Lora: Low-rankadaptationoflargelanguagemodels. arXivpreprint
+arXiv:2106.09685,2022.
+[17] LangChain Inc. Langgraph: Build stateful multi-agent applications, 2024. URL
+https://langchain-ai.github.io/langgraph. Accessed: 2026.
+[18] M.Lietal. Trocr: Transformer-basedopticalcharacterrecognitionwithpre-trained
+models. arXivpreprintarXiv:2109.10282,2021.
+[19] PaddlePaddle Team. Paddleocr: A practical ultra lightweight ocr system, 2022.
+URL https://github.com/PaddlePaddle/PaddleOCR. Accessed:
+2026.
+[20] QwenTeam. Qwen2.5technicalreport. arXivpreprintarXiv:2412.15115,2025.
+[21] SymPyDevelopmentTeam. Sympy: Symboliccomputinginpython,2023. URL
+https://www.sympy.org. Accessed: 2026.
+[22] P.Zhangetal. Tinyllama: Anopen-sourcesmalllanguagemodel. arXivpreprint
+arXiv:2401.02385,2024.
+[23] S.Yaoetal. React: Synergizingreasoningandactinginlanguagemodels. arXiv
+preprintarXiv:2210.03629,2023.
+39
+
+--- PAGE 48 ---
+CHAPTER A
+Individual Contribution to the Project
+NameofStudent: [WijesingheW.D.A.C.] IndexNo: [214235T]
+1. Contribution:
+My primary responsibility within Team InnovateX is the design and implementa-
+tion of Module 01: OCR and Input Understanding. This module forms the first
+stageofthe pipelineandiscriticalto theoverallsystem because alldownstream
+reasoningandfeedbackdependonthequalityofthestructuredoutputitproduces.
+Specifically, Iled the literaturereview forhandwritten mathematicalexpression
+recognition,coveringtheworkofWangetal. [3],NguyenandVu[8],Sreeetal.
+[2], and Chauhan et al. [4]. I designed the image preprocessing pipeline using
+OpenCV, specifying the denoising, thresholding, and skew correction steps. I
+researched and evaluated OCR model candidates including TrOCR, PaddleOCR,
+LaTeXOCR,andNougat,anddefinedthedual-pipelinearchitectureforparallel
+textandmathematicalexpressionrecognition. Ialsospecifiedthequestion-answer
+linking mechanism and the structured JSON output schema. I contributed to the
+high-level architecture design, module interface definitions, and the preparation of
+thisinterimreport,includingChapter1,Chapter3,andtheModule01sectionsof
+Chapters4and6.
+2. WhatYouLearned:
+Through thisproject I gained significantknowledge in thedomain of handwritten
+document understanding. I learned about the state of the art in handwritten
+mathematical expression recognition, including transformer-based approaches
+and image-to-LaTeX conversion. I also developed a deeper understanding of
+OpenCVimagepreprocessingtechniques,thechallengesofmixed-contentOCR
+inrealexam-paperconditions,andtheimportanceofstructuredinter-moduledata
+contractsinmulti-componentAIsystems. Onthenon-technicalside,Iimproved
+my ability to communicate design decisions within a team and to review and
+synthesiseacademicliteratureefficiently.
+3. ProblemsEncountered:
+40
+
+--- PAGE 49 ---
+The main challenge I encountered was the lack of a publicly available dataset
+thatdirectlycombineshandwrittenalgebraanswerimageswithquestion-answer
+linking annotations and structured step sequences. Most public datasets focus
+on isolated mathematical expression recognition rather than exam-style mixed-
+content answer sheets. I also found that OCR model benchmarks are typically
+reportedoncleanprintedorwell-isolatedhandwriting,makingitdifficulttopredict
+performanceonrealnoisyexampaperswithoutempiricaltesting. Coordinating
+the module interface definition with my team members to ensure compatibility
+betweenModule01outputsandModule02inputswasalsoanimportantorganisa-
+tionalchallengeduringtheinterimperiod.
+4. HowYouAddressedThoseProblems:
+To address the dataset limitation, I proposed a hybrid data collection strategy
+thatcombinesavailablepublichandwrittenexpressionresourceswithinternally
+curated exam-style samples, and I designed the curated dataset schema described
+in Section 6.3.1. To manage OCR model uncertainty, I designed the module
+to support multiple OCR backends as pluggable components so that the best-
+performingmodelcanbeselectedempiricallyoncepreliminaryexperimentsare
+completed. The interfacecoordination challengewas resolvedthrough aseries of
+team meetings where we jointly defined the JSON schemas for all inter-module
+communication, ensuring that Module 01 outputs precisely match the inputs
+expectedbyModule02.
+41
+
+--- PAGE 50 ---
+NameofStudent: [UdayangaM.S.K.] IndexNo: [214213B]
+1. Contribution:
+My primary responsibility within Team InnovateX is the design and implementa-
+tionofModule02: Multi-AgentMathematicalReasoningandStepwiseMarking.
+Thismoduleistheanalyticalcoreofthesystem,responsiblefortransformingstruc-
+turedstudentstepsintoafairandtransparentmarkallocation. Iledtheliterature
+reviewfor automatedmathematics gradingand multi-agentreasoning, covering
+the work of Chu et al. [5] and the AI-assisted grading study [1], and I analysed
+thelimitationsofGradescope[9],Crowdmark/Mobius[10][11],andSTACK[12]
+relativetoourproblem. Idesignedthethree-agentarchitectureusingLangGraph,
+specifyingtherolesoftheStepCorrectnessAgent,theMethodDetectionAgent,
+andtheSchemeMatchingAgent. Idefinedthesupervisoragentlogicforconflict
+resolutionandmarkallocation. IalsospecifiedtheSymPy-basedsymbolicnormal-
+isationpreprocessingstep. Icontributedtothearchitecturediscussions,module
+interfacedefinitions,theliteraturereviewchapter,andtheModule02sectionsof
+Chapters4and6ofthisinterimreport.
+2. WhatYouLearned:
+ThroughthisprojectIdevelopedastrongunderstandingofmulti-agentAIsystem
+design, LLM orchestration frameworks including LangGraph, and the challenges
+of applying language models to structured mathematical reasoning tasks. I also
+gained practical knowledge of symbolic mathematics using SymPy, including
+expressionnormalisation,equivalencechecking,andthehandlingofalgebraically
+equivalentbutnotationallydistinctexpressions. Ontheresearchside,Ideveloped
+a clearer picture of the current state of automated mathematics grading systems
+andofthespecificgapsthatourproposedapproachaddresses,particularlyinthe
+areas of alternative method handling, partial marking, and step-level reasoning
+reliability.
+3. ProblemsEncountered:
+The principal challenge I encountered was determining how to handle the wide
+variety of valid alternative solution methods for a given algebra question. A
+single question can often be solved through direct factorisation, the quadratic
+formula,completingthe square,orasubstitutionapproach, andanyofthesemay
+becorrect. Designinganagentthatcanreliablydetectthestudent’schosenmethod
+and credit it appropriately, rather than penalising a valid approach that differs
+42
+
+--- PAGE 51 ---
+fromtheexpectedsolution,requiredcarefuldesignandisstillanopenchallenge
+fortheimplementationphase. Asecondarychallengewasselectingappropriate
+LLM backbone models for the worker agents that offer sufficient mathematical
+reasoningabilitywhileremaining cost-effective and suitableforastudentproject
+context.
+4. HowYouAddressedThoseProblems:
+To address the alternative method challenge, I designed the Method Detection
+AgentasadedicatedcomponentseparatefromtheStepCorrectnessAgent,ensur-
+ingthatmethodidentificationisanexplicitstepratherthananimplicitassumption.
+Ialsospecifiedthattheexamplebankshouldincluderepresentativeexamplesof
+eachcommonalternativemethodsothattheagentcanusefew-shotpromptingto
+recognisethem. Forthe model selectionproblem,I proposedusingGPT-4o-mini
+orLlama3astheinitialbackbonefortheworkeragents,bothofwhichofferstrong
+mathematical reasoning ability at reasonable cost, while retaining the option to
+switchbackbonemodelsaspartoftheexperimentalevaluationphase.
+43
+
+--- PAGE 52 ---
+NameofStudent: [GodageS.S.D.] IndexNo: [214069L]
+1. Contribution:
+My primary responsibility within Team InnovateX is the design and implemen-
+tation of Module 03: Stepwise Feedback Generation using a lightweight Small
+LanguageModel. This moduletransformsthe structuredreasoning resultsfrom
+Module 02 into clear, student-friendly educational feedback. I led the literature
+reviewforeducationalfeedbackgenerationandexplainableAIinassessmentsys-
+tems,reviewingthefeedback-relatedaspectsofChuetal. [5]andtheAI-assisted
+grading study [1], and identifying the gap in lightweight deployable feedback
+systems. I designed the SLM-based feedback generation approach, specifying
+themodelcandidates(Qwen2.5,Gemma3),theLoRAfine-tuningstrategy,and
+thepromptengineeringapproachfortheinitialpromptingphase. Idesignedthe
+feedback dataset schema and the hybrid dataset creation strategy described in
+Section 6.5.1, including the definition of common algebra error families. I also
+specified the validation checks that ensure feedback consistency with assigned
+marks. Icontributedtothearchitecturediscussions,moduleinterfacedefinitions,
+andtheModule03sectionsofChapters4and6ofthisinterimreport.
+2. WhatYouLearned:
+ThroughthisprojectIdevelopedsubstantialknowledgeofsmalllanguagemodel
+fine-tuning, including parameter-efficientmethodssuch asLoRAand theirprac-
+tical application using Hugging Face Transformers. I gained an understanding
+of the difference between large general-purpose LLMs and task-specific SLMs,
+and of the trade-offs between model size, inference cost, and expressive capa-
+bility in educational feedback generation tasks. I also learned how to design
+a domain-specific training dataset from first principles when no suitable public
+datasetexists,includinghowtoidentifythemostpedagogicallyimportanterror
+categories andhow towriteeffectiveteacher-style feedbacktemplates. Working
+onthismodulealsoimprovedmyunderstandingofhowstructureddatacontracts
+enableindependentmoduledevelopmentwithinamulti-componentsystem.
+3. ProblemsEncountered:
+TheprimarychallengeIencounteredwasthecompleteabsenceofapublicdataset
+that maps structured algebra reasoning results to teacher-style educational feed-
+back. This means that the training data for Module 03 must be created entirely
+fromscratch,whichisbothtimeconsuminganddependentonexpertknowledge
+toensurequality. Asecondarychallengewasdefiningtheoptimalgranularityof
+44
+
+--- PAGE 53 ---
+feedback: feedbackthat istoo brief isnot usefulto students,while feedbackthat
+istooverboseortoodetailedmay beconfusingorimpracticaltogeneratereliably
+with a lightweight model. Balancing these competing requirements required care-
+ful thought about what constitutes effective and actionable educational feedback
+inthecontextofAlgebra.
+4. HowYouAddressedThoseProblems:
+To address the dataset problem, I designed a structured hybrid creation strategy
+thatbeginswith amanuallycuratedstarter setof50 to100high-qualityexamples
+coveringthemostcommonalgebraerrorfamilies,thenexpandsusingsynthetic
+examplesgeneratedfromtheoutputsofModule02asthepipelinematures. Ialso
+designed the dataset around a clear and consistent feedback template structure
+identifying what is correct,what is missing, why markswere reduced, andhow to
+improvewhich constrainsthe feedbackto amanageable andteachableformat. To
+addressthefeedbackgranularityproblem,Ispecifiedstep-levelfeedbackasthe
+primarygranularity,sothateachstudentstepreceivesabrieftargetedcomment
+rather than a single global paragraph, which is both more actionable and more
+tractableforalightweightSLMtogeneratereliably.
+45

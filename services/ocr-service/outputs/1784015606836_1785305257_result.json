@@ -1,0 +1,12 @@
+{
+  "reasoning_input": {
+    "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0.",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "P(2) = 8 - 16 + k + 6"
+      }
+    ],
+    "final_answer": ""
+  }
+}

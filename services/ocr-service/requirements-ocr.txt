@@ -1,0 +1,2 @@
+easyocr
+pix2tex
