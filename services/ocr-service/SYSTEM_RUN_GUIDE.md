@@ -93,6 +93,81 @@ If both images belong to one question, the response is one combined
 `reasoning_input`. If the uploaded images clearly contain separate independent
 questions, the response can contain `reasoning_inputs` as an array.
 
+## Marking Scheme Extraction
+
+Use:
+
+```text
+POST /extract-marking-scheme
+```
+
+Use this when the user uploads a marking-scheme image instead of a student
+answer image. This endpoint returns the expected marking steps and marks for
+Module 02.
+
+Response:
+
+```json
+{
+  "marking_scheme": {
+    "total_marks": 14,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Use the remainder theorem to find the remainders for x - 1 and x + 2",
+        "marks": 4
+      }
+    ],
+    "final_answer": ""
+  }
+}
+```
+
+Example marking scheme input:
+
+```json
+{
+  "marking_scheme": {
+    "total_marks": 14,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Use the remainder theorem to find the remainders for x - 1 and x + 2",
+        "marks": 4
+      },
+      {
+        "step_no": 2,
+        "description": "Correctly calculate P(1) and P(-2) expressions",
+        "marks": 3
+      },
+      {
+        "step_no": 3,
+        "description": "Use the condition of equal remainders to form an equation",
+        "marks": 2
+      },
+      {
+        "step_no": 4,
+        "description": "Solve the equation to find the value of a",
+        "marks": 2
+      },
+      {
+        "step_no": 5,
+        "description": "Substitute a value and calculate the common remainder",
+        "marks": 2
+      },
+      {
+        "step_no": 6,
+        "description": "State the final answer with a and common remainder",
+        "marks": 1
+      }
+    ]
+  }
+}
+```
+
+Use `/extract` or `/extract-pages` for student answers. Use
+`/extract-marking-scheme` for marking schemes.
+
 ## Health Check
 
 ```text
