@@ -1,0 +1,25 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the sum to infinity of the series S = 1/2 + 2/4 + 3/8 + 4/16 + ... + n/2ⁿ + ...",
+    "student_steps": [
+      {"step_id": 1, "content": "S = 1/2 + 2/4 + 3/8 + 4/16 + ..."},
+      {"step_id": 2, "content": "Multiply by common ratio (1/2): (1/2)S = 1/4 + 2/8 + 3/16 + 4/32 + ..."},
+      {"step_id": 3, "content": "Subtract (1/2)S from S: S - (1/2)S = 1/2 + (2/4 - 1/4) + (3/8 - 2/8) + (4/16 - 3/16) + ..."},
+      {"step_id": 4, "content": "(1/2)S = 1/2 + 1/4 + 1/8 + 1/16 + ..."},
+      {"step_id": 5, "content": "RHS is an infinite geometric series with a = 1/2 and r = 1/2"},
+      {"step_id": 6, "content": "(1/2)S = (1/2) / (1 - 1/2) = (1/2) / (1/2) = 1"},
+      {"step_id": 7, "content": "Multiply by 2: S = 2"}
+    ],
+    "final_answer": "S = 2"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Write series expression S", "marks": 1},
+      {"step_no": 2, "description": "Multiply S by ratio 1/2 and align indices", "marks": 2},
+      {"step_no": 3, "description": "Subtract (1/2)S from S to form standard geometric series on RHS", "marks": 2},
+      {"step_no": 4, "description": "Apply infinite GP sum formula S_∞ = a / (1 - r) to get (1/2)S = 1", "marks": 2},
+      {"step_no": 5, "description": "Solve for S = 2", "marks": 1}
+    ]
+  }
+}

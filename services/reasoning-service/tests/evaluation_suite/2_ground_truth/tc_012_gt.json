@@ -1,0 +1,88 @@
+{
+  "test_case_id": "tc_012",
+  "question_text": "Given A = [[3, 0], [2, 1]], prove by induction that Aⁿ = [[3ⁿ, 0], [3ⁿ - 1, 1]] for all n ∈ ℤ⁺.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 8.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Verified base case n=1."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated inductive hypothesis."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Wrote Aᵏ⁺¹ = Aᵏ · A."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Substituted matrix form into multiplication."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Multiplied Row 1 Col 1 to get 3ᵏ⁺¹."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Multiplied Row 1 Col 2 to get 0."
+    },
+    {
+      "step_id": 7,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Multiplied Row 2 Col 1 and expanded algebra."
+    },
+    {
+      "step_id": 8,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Multiplied Row 2 Col 2 to get 1."
+    },
+    {
+      "step_id": 9,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Simplified matrix to required form."
+    },
+    {
+      "step_id": 10,
+      "matched_scheme_step": 6,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated valid conclusion."
+    }
+  ]
+}

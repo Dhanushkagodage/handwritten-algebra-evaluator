@@ -1,0 +1,56 @@
+{
+  "test_case_id": "tc_034",
+  "question_text": "Express (3x² + 5x + 2) / ((x - 1)²(x + 2)) in partial fractions.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 8.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Set up form correctly."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Wrote linear identity."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Substituted x=1 to find B = 10/3."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Substituted x=-2 to find C = 4/9."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Equated x² coefficients to find A = 23/9."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 0.0,
+      "evaluator_notes": "Stated final answer."
+    }
+  ]
+}

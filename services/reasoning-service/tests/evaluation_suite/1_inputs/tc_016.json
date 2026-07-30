@@ -1,0 +1,22 @@
+{
+  "reasoning_input": {
+    "question_text": "Given f(x) = x³ - 6x² + 11x - 6, use the factor theorem to find one linear factor, then completely solve f(x) = 0.",
+    "student_steps": [
+      {"step_id": 1, "content": "Test f(1) = 1³ - 6(1)² + 11(1) - 6 = 1 - 6 + 11 - 6 = 0. Therefore (x - 1) is a factor by Factor Theorem."},
+      {"step_id": 2, "content": "Synthetic division of (x³ - 6x² + 11x - 6) by (x - 1): Coefficients [1, -6, 11, -6] with root 1 → Quotient [1, -5, 6]."},
+      {"step_id": 3, "content": "f(x) = (x - 1)(x² - 5x + 6)"},
+      {"step_id": 4, "content": "Factorise quadratic: x² - 5x + 6 = (x - 2)(x - 3)"},
+      {"step_id": 5, "content": "f(x) = (x - 1)(x - 2)(x - 3) = 0 → Roots: x = 1, x = 2, x = 3"}
+    ],
+    "final_answer": "x = 1, x = 2, x = 3"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {"step_no": 1, "description": "Apply Factor Theorem: test value and state (x - 1) is a factor", "marks": 2},
+      {"step_no": 2, "description": "Perform polynomial division/synthetic division to obtain quotient x² - 5x + 6", "marks": 2},
+      {"step_no": 3, "description": "Factorise the quotient quadratic into (x - 2)(x - 3)", "marks": 2},
+      {"step_no": 4, "description": "State all three solutions x = 1, 2, 3", "marks": 1}
+    ]
+  }
+}

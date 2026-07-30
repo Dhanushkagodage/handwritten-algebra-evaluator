@@ -1,0 +1,27 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve the complex quadratic equation z² - (3 + 2i)z + (5 + i) = 0.",
+    "student_steps": [
+      {"step_id": 1, "content": "Using quadratic formula: z = [(3 + 2i) ± √((3 + 2i)² - 4(1)(5 + i))] / 2"},
+      {"step_id": 2, "content": "(3 + 2i)² = 9 + 12i - 4 = 5 + 12i"},
+      {"step_id": 3, "content": "Discriminant Δ = (5 + 12i) - (20 + 4i) = -15 + 8i"},
+      {"step_id": 4, "content": "To find √( -15 + 8i ), let (x + iy)² = -15 + 8i → x² - y² = -15 and 2xy = 8 → xy = 4 → y = 4/x"},
+      {"step_id": 5, "content": "x² - 16/x² = -15 → x⁴ + 15x² - 16 = 0 → (x² + 16)(x² - 1) = 0 → x² = 1 (since x ∈ ℝ) → x = 1, y = 4"},
+      {"step_id": 6, "content": "So √Δ = ±(1 + 4i)"},
+      {"step_id": 7, "content": "z₁ = [(3 + 2i) + (1 + 4i)] / 2 = (4 + 6i) / 2 = 2 + 3i"},
+      {"step_id": 8, "content": "z₂ = [(3 + 2i) - (1 + 4i)] / 2 = (2 - 2i) / 2 = 1 - i"}
+    ],
+    "final_answer": "z = 2 + 3i or z = 1 - i"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Apply quadratic formula to form expression for z", "marks": 1},
+      {"step_no": 2, "description": "Expand (3 + 2i)² to 5 + 12i", "marks": 1},
+      {"step_no": 3, "description": "Compute discriminant Δ = -15 + 8i", "marks": 1},
+      {"step_no": 4, "description": "Set up equations x² - y² = -15 and 2xy = 8 to find √Δ", "marks": 2},
+      {"step_no": 5, "description": "Solve for x and y to find √Δ = ±(1 + 4i)", "marks": 1},
+      {"step_no": 6, "description": "Evaluate roots z₁ = 2 + 3i and z₂ = 1 - i correctly", "marks": 2}
+    ]
+  }
+}

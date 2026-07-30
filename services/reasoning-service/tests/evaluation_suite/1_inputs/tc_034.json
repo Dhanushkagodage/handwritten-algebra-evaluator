@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Express (3x² + 5x + 2) / ((x - 1)²(x + 2)) in partial fractions.",
+    "student_steps": [
+      {"step_id": 1, "content": "Set up form: A/(x - 1) + B/(x - 1)² + C/(x + 2)"},
+      {"step_id": 2, "content": "3x² + 5x + 2 = A(x - 1)(x + 2) + B(x + 2) + C(x - 1)²"},
+      {"step_id": 3, "content": "Let x = 1: 3(1) + 5(1) + 2 = B(3) → 10 = 3B → B = 10/3"},
+      {"step_id": 4, "content": "Let x = -2: 3(4) - 10 + 2 = C(-3)² → 4 = 9C → C = 4/9"},
+      {"step_id": 5, "content": "Equate x² terms: 3 = A + C → 3 = A + 4/9 → A = 23/9"},
+      {"step_id": 6, "content": "Result: (23/9)/(x - 1) + (10/3)/(x - 1)² + (4/9)/(x + 2)"}
+    ],
+    "final_answer": "23/(9(x-1)) + 10/(3(x-1)²) + 4/(9(x+2))"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Set up correct repeated linear factor form A/(x-1) + B/(x-1)² + C/(x+2)", "marks": 2},
+      {"step_no": 2, "description": "Form correct identity 3x² + 5x + 2 = A(x-1)(x+2) + B(x+2) + C(x-1)²", "marks": 1},
+      {"step_no": 3, "description": "Substitute x = 1 to solve B = 10/3", "marks": 2},
+      {"step_no": 4, "description": "Substitute x = -2 to solve C = 4/9", "marks": 2},
+      {"step_no": 5, "description": "Equate x² coefficients to solve A = 23/9", "marks": 1}
+    ]
+  }
+}

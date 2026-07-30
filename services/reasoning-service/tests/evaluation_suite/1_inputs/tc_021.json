@@ -1,0 +1,25 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve for x: log₂(x) + logₓ(16) = 5.",
+    "student_steps": [
+      {"step_id": 1, "content": "Use change of base formula: logₓ(16) = log₂(16) / log₂(x) = 4 / log₂(x)"},
+      {"step_id": 2, "content": "Substitute: log₂(x) + 4 / log₂(x) = 5"},
+      {"step_id": 3, "content": "Let y = log₂(x): y + 4/y = 5"},
+      {"step_id": 4, "content": "Multiply by y: y² - 5y + 4 = 0"},
+      {"step_id": 5, "content": "Factorise: (y - 1)(y - 4) = 0 → y = 1 or y = 4"},
+      {"step_id": 6, "content": "If y = 1: log₂(x) = 1 → x = 2¹ = 2"},
+      {"step_id": 7, "content": "If y = 4: log₂(x) = 4 → x = 2⁴ = 16"}
+    ],
+    "final_answer": "x = 2 or x = 16"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {"step_no": 1, "description": "Apply change of base formula logₓ(16) = 4 / log₂(x)", "marks": 2},
+      {"step_no": 2, "description": "Substitute y = log₂(x) to obtain y + 4/y = 5", "marks": 1},
+      {"step_no": 3, "description": "Rearrange to quadratic y² - 5y + 4 = 0", "marks": 1},
+      {"step_no": 4, "description": "Solve quadratic for y = 1 and y = 4", "marks": 1},
+      {"step_no": 5, "description": "Solve for x = 2 and x = 16", "marks": 2}
+    ]
+  }
+}

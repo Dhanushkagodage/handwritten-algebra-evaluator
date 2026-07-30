@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Use the Newton-Raphson method with initial approximation x₀ = 2 to find a root of f(x) = x³ - 2x - 5 = 0 correct to 3 decimal places.",
+    "student_steps": [
+      {"step_id": 1, "content": "Newton-Raphson formula: x_{n+1} = x_n - f(x_n) / f'(x_n)"},
+      {"step_id": 2, "content": "f(x) = x³ - 2x - 5 → f'(x) = 3x² - 2"},
+      {"step_id": 3, "content": "x₁ = x₀ - f(2)/f'(2) = 2 - (8 - 4 - 5)/(12 - 2) = 2 - (-1)/10 = 2.1"},
+      {"step_id": 4, "content": "f(2.1) = 2.1³ - 2(2.1) - 5 = 9.261 - 4.2 - 5 = 0.061"},
+      {"step_id": 5, "content": "f'(2.1) = 3(2.1)² - 2 = 3(4.41) - 2 = 11.23"},
+      {"step_id": 6, "content": "x₂ = 2.1 - 0.061 / 11.23 ≈ 2.094568 ≈ 2.095"},
+      {"step_id": 7, "content": "Check x₃ = 2.094551 → converges to 2.095"}
+    ],
+    "final_answer": "x ≈ 2.095 (3 d.p.)"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "State Newton-Raphson formula and differentiate f(x) to get f'(x) = 3x² - 2", "marks": 2},
+      {"step_no": 2, "description": "Compute first iteration x₁ = 2.1", "marks": 2},
+      {"step_no": 3, "description": "Compute second iteration x₂ ≈ 2.095", "marks": 1},
+      {"step_no": 4, "description": "Verify convergence to state root x = 2.095 correct to 3 decimal places", "marks": 1}
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "reasoning_input": {
+    "question_text": "Express 3 cos(x) + 4 sin(x) in the form R cos(x - α) where R > 0 and 0 < α < π/2. Hence solve 3 cos(x) + 4 sin(x) = 2.5 for 0 ≤ x ≤ 2π.",
+    "student_steps": [
+      {"step_id": 1, "content": "R cos(x - α) = R cos(x) cos(α) + R sin(x) sin(α)"},
+      {"step_id": 2, "content": "R cos(α) = 3 and R sin(α) = 4"},
+      {"step_id": 3, "content": "R = √(3² + 4²) = √(9 + 16) = 5"},
+      {"step_id": 4, "content": "tan(α) = 4/3 → α = arctan(4/3) ≈ 0.9273 rad"},
+      {"step_id": 5, "content": "5 cos(x - 0.9273) = 2.5 → cos(x - 0.9273) = 0.5"},
+      {"step_id": 6, "content": "x - 0.9273 = π/3 ≈ 1.0472 → x₁ = 1.0472 + 0.9273 = 1.9745 rad"},
+      {"step_id": 7, "content": "x - 0.9273 = -π/3 → x₂ = -1.0472 + 0.9273 = -0.1199 (not in range) → 2π - 1.0472 + 0.9273 = 6.1633 rad"}
+    ],
+    "final_answer": "R = 5, α = 0.9273 rad. Solutions: x = 1.97 rad, x = 6.16 rad"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Equate coefficients: R cos α = 3 and R sin α = 4", "marks": 1},
+      {"step_no": 2, "description": "Calculate R = 5", "marks": 1},
+      {"step_no": 3, "description": "Calculate α = arctan(4/3) ≈ 0.927 rad", "marks": 1},
+      {"step_no": 4, "description": "Set up equation 5 cos(x - 0.927) = 2.5 → cos(x - 0.927) = 0.5", "marks": 1},
+      {"step_no": 5, "description": "Find first principal angle x - α = π/3 and solve x₁ = 1.97 rad", "marks": 2},
+      {"step_no": 6, "description": "Find second angle x - α = 2π - π/3 and solve x₂ = 6.16 rad", "marks": 2}
+    ]
+  }
+}

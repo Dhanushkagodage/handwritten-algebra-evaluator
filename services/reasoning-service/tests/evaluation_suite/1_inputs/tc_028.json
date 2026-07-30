@@ -1,0 +1,26 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve the equation cosh(x) + 2 sinh(x) = 3 for x in terms of natural logarithms.",
+    "student_steps": [
+      {"step_id": 1, "content": "Use exponential definitions: cosh(x) = (eˣ + e⁻ˣ)/2 and sinh(x) = (eˣ - e⁻ˣ)/2"},
+      {"step_id": 2, "content": "(eˣ + e⁻ˣ)/2 + 2 · ((eˣ - e⁻ˣ)/2) = 3"},
+      {"step_id": 3, "content": "(eˣ + e⁻ˣ)/2 + (2eˣ - 2e⁻ˣ)/2 = 3 → (3eˣ - e⁻ˣ)/2 = 3"},
+      {"step_id": 4, "content": "3eˣ - e⁻ˣ = 6"},
+      {"step_id": 5, "content": "Multiply by eˣ: 3(eˣ)² - 6eˣ - 1 = 0"},
+      {"step_id": 6, "content": "Let u = eˣ: 3u² - 6u - 1 = 0 → u = (6 ± √(36 + 12)) / 6 = (6 ± √48) / 6 = (6 ± 4√3) / 6 = 1 ± (2√3)/3"},
+      {"step_id": 7, "content": "Since u = eˣ > 0, reject 1 - (2√3)/3 (since 2√3/3 ≈ 1.15 > 1). Thus u = 1 + (2√3)/3."},
+      {"step_id": 8, "content": "x = ln(1 + (2√3)/3)"}
+    ],
+    "final_answer": "x = ln(1 + 2√3/3) or ln((3 + 2√3)/3)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Substitute exponential definitions of cosh(x) and sinh(x)", "marks": 2},
+      {"step_no": 2, "description": "Simplify equation to form 3eˣ - e⁻ˣ = 6", "marks": 1},
+      {"step_no": 3, "description": "Multiply by eˣ to form quadratic 3(eˣ)² - 6eˣ - 1 = 0", "marks": 1},
+      {"step_no": 4, "description": "Solve quadratic to get eˣ = 1 ± (2√3)/3", "marks": 2},
+      {"step_no": 5, "description": "Reject negative value for eˣ and state valid solution x = ln(1 + 2√3/3)", "marks": 2}
+    ]
+  }
+}

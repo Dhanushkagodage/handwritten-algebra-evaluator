@@ -15,6 +15,7 @@ itself can't be private and still take plain gradio_client calls without
 each caller needing its own HF token.
 """
 
+import hmac
 import json
 import os
 
@@ -54,7 +55,7 @@ def _get_model():
 
 @spaces.GPU(duration=120)
 def generate(messages_json: str, api_key: str) -> str:
-    if api_key != _api_key:
+    if not hmac.compare_digest(api_key, _api_key):
         raise gr.Error("invalid or missing api_key", print_exception=False)
 
     model = _get_model()

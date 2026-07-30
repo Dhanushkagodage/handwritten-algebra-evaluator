@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve 2 sec²(x) - tan(x) - 3 = 0 for 0 ≤ x ≤ π.",
+    "student_steps": [
+      {"step_id": 1, "content": "Use identity sec²(x) = 1 + tan²(x)"},
+      {"step_id": 2, "content": "2(1 + tan²(x)) - tan(x) - 3 = 0"},
+      {"step_id": 3, "content": "2 + 2 tan²(x) - tan(x) - 3 = 0 → 2 tan²(x) - tan(x) - 1 = 0"},
+      {"step_id": 4, "content": "Factorise: (2 tan(x) + 1)(tan(x) - 1) = 0"},
+      {"step_id": 5, "content": "Case 1: tan(x) = 1 → x = π/4"},
+      {"step_id": 6, "content": "Case 2: tan(x) = -1/2 → x = π - arctan(0.5) ≈ 3.1416 - 0.4636 = 2.678 rad"}
+    ],
+    "final_answer": "x = π/4 rad (0.785 rad) or x = 2.68 rad"
+  },
+  "marking_scheme": {
+    "total_marks": 7,
+    "steps": [
+      {"step_no": 1, "description": "Substitute sec²(x) = 1 + tan²(x) to form quadratic in tan(x)", "marks": 2},
+      {"step_no": 2, "description": "Simplify to standard form 2 tan²(x) - tan(x) - 1 = 0", "marks": 1},
+      {"step_no": 3, "description": "Factorise to find tan(x) = 1 and tan(x) = -1/2", "marks": 2},
+      {"step_no": 4, "description": "Solve tan(x) = 1 to get x = π/4", "marks": 1},
+      {"step_no": 5, "description": "Solve tan(x) = -1/2 in range [0, π] to get x ≈ 2.68 rad", "marks": 1}
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "test_case_id": "tc_011",
+  "question_text": "Prove by mathematical induction that for all positive integers n, 5ⁿ - 1 is divisible by 4.",
+  "total_available_marks": 6.0,
+  "gt_total_marks": 6.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Verified base case n=1 correctly."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated inductive hypothesis 5ᵏ - 1 = 4m."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated target expression for n=k+1."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Wrote 5ᵏ⁺¹ - 1 = 5·5ᵏ - 1."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Substituted 5ᵏ = 4m + 1."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Expanded and factored 4(5m + 1)."
+    },
+    {
+      "step_id": 7,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Noted 5m+1 is integer."
+    },
+    {
+      "step_id": 8,
+      "matched_scheme_step": 6,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "State complete mathematical induction conclusion."
+    }
+  ]
+}

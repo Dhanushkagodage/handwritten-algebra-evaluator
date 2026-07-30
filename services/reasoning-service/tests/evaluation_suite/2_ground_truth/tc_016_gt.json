@@ -1,0 +1,48 @@
+{
+  "test_case_id": "tc_016",
+  "question_text": "Given f(x) = x³ - 6x² + 11x - 6, use the factor theorem to find one linear factor, then completely solve f(x) = 0.",
+  "total_available_marks": 7.0,
+  "gt_total_marks": 7.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Tested f(1)=0 and stated (x-1) is a factor."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Performed synthetic division."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Obtained quotient quadratic x² - 5x + 6."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Factorised quadratic into (x-2)(x-3)."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated all three roots x = 1, 2, 3."
+    }
+  ]
+}

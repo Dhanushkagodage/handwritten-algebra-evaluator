@@ -1,0 +1,48 @@
+{
+  "test_case_id": "tc_015",
+  "question_text": "Express (x² + 2x + 3) / ((x - 1)(x² + 1)) in partial fractions.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 2.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Incorrect setup form used B/(x²+1) instead of (Bx+C)/(x²+1)."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 2,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Identity written based on incorrect setup."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Substituted x=1 and fortuitously found correct value A=3."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 4,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Failed to determine correct Bx+C numerator."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 5,
+      "validity": "incorrect",
+      "gt_marks_awarded": 0.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Final expression incorrect."
+    }
+  ]
+}
