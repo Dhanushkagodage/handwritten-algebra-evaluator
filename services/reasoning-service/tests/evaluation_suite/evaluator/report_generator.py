@@ -120,25 +120,29 @@ class ReportGenerator:
 
 ## 4. Visualizations
 
-### 4.1 Question & Step Marking Visualizations
+### 4.1 System-Assigned Marks vs Human-Assigned Marks (Full Dataset Breakdown)
+![System-Assigned Marks vs Human-Assigned Marks](figures/system_vs_human_marks.png)  
+*Figure 1: Complete dataset visualization comparing System-Assigned Marks against Human-Assigned Marks (Scatter plot with jitter & test case labels + side-by-side question comparison).*
+
+### 4.2 Error Distributions & Agreement
 ![Histogram of Absolute Errors](figures/error_histogram.png)  
-*Figure 1: Histogram of Question Absolute Errors.*
+*Figure 2: Histogram of Question Absolute Errors.*
 
 ![Bland-Altman Plot](figures/bland_altman.png)  
-*Figure 2: Bland-Altman Plot of System Agreement.*
+*Figure 3: Bland-Altman Plot of System Agreement.*
 
 ![Box Plot of Mark Differences](figures/box_plot_errors.png)  
-*Figure 3: Box Plot of Mark Differences (Question & Step Level).*
+*Figure 4: Box Plot of Mark Differences (Question & Step Level).*
 
-### 4.2 Confusion Matrices & Correlation
+### 4.3 Confusion Matrices & Correlation
 ![Validity Confusion Matrix](figures/validity_confusion.png)  
-*Figure 4: Step Validity Confusion Matrix Heatmap.*
+*Figure 5: Step Validity Confusion Matrix Heatmap.*
 
 ![Scheme Matching Confusion Matrix](figures/scheme_confusion.png)  
-*Figure 5: Scheme Matching Confusion Matrix Heatmap.*
+*Figure 6: Scheme Matching Confusion Matrix Heatmap.*
 
 ![Correlation Heatmap](figures/correlation_heatmap.png)  
-*Figure 6: Correlation Heatmap of Evaluation Metrics.*
+*Figure 7: Correlation Heatmap of Evaluation Metrics.*
 """
         self.report_md_path.write_text(md_content, encoding="utf-8")
         logger.info(f"Generated Markdown report at {self.report_md_path}")
@@ -256,6 +260,7 @@ class ReportGenerator:
         # Visualizations
         elements.append(Paragraph("4. Visualizations", h1_style))
         figures_dir = self.report_md_path.parent / "figures"
+        img0 = figures_dir / "system_vs_human_marks.png"
         img1 = figures_dir / "error_histogram.png"
         img2 = figures_dir / "bland_altman.png"
         img3 = figures_dir / "box_plot_errors.png"
@@ -263,9 +268,9 @@ class ReportGenerator:
         img5 = figures_dir / "scheme_confusion.png"
         img6 = figures_dir / "correlation_heatmap.png"
 
-        for img_path in [img1, img2, img3, img4, img5, img6]:
+        for img_path in [img0, img1, img2, img3, img4, img5, img6]:
             if img_path.exists():
-                elements.append(Image(str(img_path), width=440, height=260))
+                elements.append(Image(str(img_path), width=440, height=240 if img_path == img0 else 260))
                 elements.append(Spacer(1, 10))
 
         try:

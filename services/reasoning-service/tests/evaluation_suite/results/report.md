@@ -48,22 +48,26 @@
 
 ## 4. Visualizations
 
-### 4.1 Question & Step Marking Visualizations
+### 4.1 System-Assigned Marks vs Human-Assigned Marks (Full Dataset Breakdown)
+![System-Assigned Marks vs Human-Assigned Marks](figures/system_vs_human_marks.png)  
+*Figure 1: Complete dataset visualization comparing System-Assigned Marks against Human-Assigned Marks (Scatter plot with jitter & test case labels + side-by-side question comparison).*
+
+### 4.2 Error Distributions & Agreement
 ![Histogram of Absolute Errors](figures/error_histogram.png)  
-*Figure 1: Histogram of Question Absolute Errors.*
+*Figure 2: Histogram of Question Absolute Errors.*
 
 ![Bland-Altman Plot](figures/bland_altman.png)  
-*Figure 2: Bland-Altman Plot of System Agreement.*
+*Figure 3: Bland-Altman Plot of System Agreement.*
 
 ![Box Plot of Mark Differences](figures/box_plot_errors.png)  
-*Figure 3: Box Plot of Mark Differences (Question & Step Level).*
+*Figure 4: Box Plot of Mark Differences (Question & Step Level).*
 
-### 4.2 Confusion Matrices & Correlation
+### 4.3 Confusion Matrices & Correlation
 ![Validity Confusion Matrix](figures/validity_confusion.png)  
-*Figure 4: Step Validity Confusion Matrix Heatmap.*
+*Figure 5: Step Validity Confusion Matrix Heatmap.*
 
 ![Scheme Matching Confusion Matrix](figures/scheme_confusion.png)  
-*Figure 5: Scheme Matching Confusion Matrix Heatmap.*
+*Figure 6: Scheme Matching Confusion Matrix Heatmap.*
 
 ![Correlation Heatmap](figures/correlation_heatmap.png)  
-*Figure 6: Correlation Heatmap of Evaluation Metrics.*
+*Figure 7: Correlation Heatmap of Evaluation Metrics.*
