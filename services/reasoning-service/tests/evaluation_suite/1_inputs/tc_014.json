@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the eigenvalues and corresponding eigenvectors of matrix A = [[4, 1], [2, 3]].",
+    "student_steps": [
+      {"step_id": 1, "content": "Characteristic equation: det(A - λI) = 0"},
+      {"step_id": 2, "content": "det([[4 - λ, 1], [2, 3 - λ]]) = (4 - λ)(3 - λ) - 2 = 0"},
+      {"step_id": 3, "content": "λ² - 7λ + 12 - 2 = λ² - 7λ + 10 = 0"},
+      {"step_id": 4, "content": "(λ - 5)(λ - 2) = 0 → λ₁ = 5, λ₂ = 2"},
+      {"step_id": 5, "content": "For λ₁ = 5: [[-1, 1], [2, -2]] [[x], [y]] = [[0], [0]] → -x + y = 0 → y = x. Eigenvector v₁ = [[1], [1]]."},
+      {"step_id": 6, "content": "For λ₂ = 2: [[2, 1], [2, 1]] [[x], [y]] = [[0], [0]] → 2x + y = 0 → y = -2x. Eigenvector v₂ = [[1], [-2]]."}
+    ],
+    "final_answer": "Eigenvalues λ₁ = 5 (v₁ = [[1], [1]]), λ₂ = 2 (v₂ = [[1], [-2]])"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Form characteristic equation det(A - λI) = 0", "marks": 1},
+      {"step_no": 2, "description": "Expand determinant to form quadratic λ² - 7λ + 10 = 0", "marks": 2},
+      {"step_no": 3, "description": "Solve quadratic to find eigenvalues λ₁ = 5 and λ₂ = 2", "marks": 1},
+      {"step_no": 4, "description": "Find eigenvector corresponding to λ = 5", "marks": 2},
+      {"step_no": 5, "description": "Find eigenvector corresponding to λ = 2", "marks": 2}
+    ]
+  }
+}

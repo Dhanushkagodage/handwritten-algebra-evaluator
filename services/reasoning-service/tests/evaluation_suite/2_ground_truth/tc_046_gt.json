@@ -1,0 +1,56 @@
+{
+  "test_case_id": "tc_046",
+  "question_text": "Find the Taylor series expansion of f(x) = cos(x) in powers of (x - π/3) up to and including the term in (x - π/3)³.",
+  "total_available_marks": 8.0,
+  "gt_total_marks": 8.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Stated Taylor formula."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Evaluated f(π/3) = 1/2."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Derivative f'(π/3) = -√3/2."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Derivative f''(π/3) = -1/2."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 1.5,
+      "max_marks": 1.5,
+      "evaluator_notes": "Derivative f'''(π/3) = √3/2."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 3.0,
+      "max_marks": 3.0,
+      "evaluator_notes": "Substituted into Taylor series and simplified factorial coefficients."
+    }
+  ]
+}

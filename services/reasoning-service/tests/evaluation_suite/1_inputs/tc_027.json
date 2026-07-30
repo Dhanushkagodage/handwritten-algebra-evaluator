@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the Maclaurin series expansion of f(x) = e^(2x) up to and including the term in x³.",
+    "student_steps": [
+      {"step_id": 1, "content": "Maclaurin formula: f(x) = f(0) + f'(0)x + f''(0)x²/2! + f'''(0)x³/3! + ..."},
+      {"step_id": 2, "content": "f(x) = e^(2x) → f(0) = e⁰ = 1"},
+      {"step_id": 3, "content": "f'(x) = 2 e^(2x) → f'(0) = 2(1) = 2"},
+      {"step_id": 4, "content": "f''(x) = 4 e^(2x) → f''(0) = 4(1) = 4"},
+      {"step_id": 5, "content": "f'''(x) = 8 e^(2x) → f'''(0) = 8(1) = 8"},
+      {"step_id": 6, "content": "Substitute: e^(2x) ≈ 1 + 2x + (4/2)x² + (8/6)x³ = 1 + 2x + 2x² + (4/3)x³"}
+    ],
+    "final_answer": "e^(2x) ≈ 1 + 2x + 2x² + (4/3)x³"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "State Maclaurin series expansion formula", "marks": 1},
+      {"step_no": 2, "description": "Calculate derivatives f'(x), f''(x), f'''(x)", "marks": 2},
+      {"step_no": 3, "description": "Evaluate derivatives at x = 0: f(0)=1, f'(0)=2, f''(0)=4, f'''(0)=8", "marks": 1},
+      {"step_no": 4, "description": "Substitute values into Maclaurin formula and divide by factorials", "marks": 1},
+      {"step_no": 5, "description": "Simplify coefficients to obtain 1 + 2x + 2x² + (4/3)x³", "marks": 1}
+    ]
+  }
+}

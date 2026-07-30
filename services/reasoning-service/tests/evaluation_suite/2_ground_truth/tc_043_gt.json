@@ -1,0 +1,56 @@
+{
+  "test_case_id": "tc_043",
+  "question_text": "Find the acute angle between the planes 2x - y + 2z = 5 and x + 2y + 2z = 3.",
+  "total_available_marks": 6.0,
+  "gt_total_marks": 6.0,
+  "gt_steps_analysis": [
+    {
+      "step_id": 1,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Stated n₁."
+    },
+    {
+      "step_id": 2,
+      "matched_scheme_step": 1,
+      "validity": "correct",
+      "gt_marks_awarded": 0.5,
+      "max_marks": 0.5,
+      "evaluator_notes": "Stated n₂."
+    },
+    {
+      "step_id": 3,
+      "matched_scheme_step": 2,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Calculated dot product 4."
+    },
+    {
+      "step_id": 4,
+      "matched_scheme_step": 3,
+      "validity": "correct",
+      "gt_marks_awarded": 2.0,
+      "max_marks": 2.0,
+      "evaluator_notes": "Calculated magnitudes |n₁|=3 and |n₂|=3."
+    },
+    {
+      "step_id": 5,
+      "matched_scheme_step": 4,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Evaluated cos θ = 4/9."
+    },
+    {
+      "step_id": 6,
+      "matched_scheme_step": 5,
+      "validity": "correct",
+      "gt_marks_awarded": 1.0,
+      "max_marks": 1.0,
+      "evaluator_notes": "Calculated θ = 63.6°."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve for x: 3²ˣ - 4(3ˣ) + 3 = 0.",
+    "student_steps": [
+      {"step_id": 1, "content": "Let u = 3ˣ. Then 3²ˣ = (3ˣ)² = u²."},
+      {"step_id": 2, "content": "Substitute into equation: u² - 4u + 3 = 0"},
+      {"step_id": 3, "content": "Factorise: (u - 1)(u - 3) = 0"},
+      {"step_id": 4, "content": "u = 1 or u = 3"},
+      {"step_id": 5, "content": "When u = 1: 3ˣ = 1 → x = 0"},
+      {"step_id": 6, "content": "When u = 3: 3ˣ = 3 → x = 1"}
+    ],
+    "final_answer": "x = 0 or x = 1"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "Recognize quadratic structure and introduce substitution u = 3ˣ", "marks": 1},
+      {"step_no": 2, "description": "Form quadratic equation u² - 4u + 3 = 0", "marks": 1},
+      {"step_no": 3, "description": "Factorise or solve quadratic to find u = 1 and u = 3", "marks": 2},
+      {"step_no": 4, "description": "Back-substitute 3ˣ = 1 to get x = 0", "marks": 1},
+      {"step_no": 5, "description": "Back-substitute 3ˣ = 3 to get x = 1", "marks": 1}
+    ]
+  }
+}

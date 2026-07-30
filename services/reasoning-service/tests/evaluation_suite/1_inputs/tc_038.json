@@ -1,0 +1,23 @@
+{
+  "reasoning_input": {
+    "question_text": "Find all complex roots of the equation z³ = 8i, expressing your answers in polar form r e^(iθ) with -π < θ ≤ π.",
+    "student_steps": [
+      {"step_id": 1, "content": "Write 8i in exponential form: 8i = 8 e^(i (π/2 + 2kπ)) for k = 0, 1, 2"},
+      {"step_id": 2, "content": "Apply De Moivre's theorem: z_k = (8 e^(i (π/2 + 2kπ)))^(1/3) = 2 e^(i (π/6 + 2kπ/3))"},
+      {"step_id": 3, "content": "For k = 0: z₀ = 2 e^(i π/6)"},
+      {"step_id": 4, "content": "For k = 1: z₁ = 2 e^(i (π/6 + 2π/3)) = 2 e^(i 5π/6)"},
+      {"step_id": 5, "content": "For k = -1: z₂ = 2 e^(i (π/6 - 2π/3)) = 2 e^(i (-3π/6)) = 2 e^(-i π/2)"}
+    ],
+    "final_answer": "z₀ = 2 e^(i π/6), z₁ = 2 e^(i 5π/6), z₂ = 2 e^(-i π/2)"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Express 8i in general exponential form 8 e^(i(π/2 + 2kπ))", "marks": 2},
+      {"step_no": 2, "description": "Apply fractional power rule z_k = 2 e^(i(π/6 + 2kπ/3))", "marks": 2},
+      {"step_no": 3, "description": "Find first root z₀ = 2 e^(i π/6)", "marks": 1},
+      {"step_no": 4, "description": "Find second root z₁ = 2 e^(i 5π/6)", "marks": 1},
+      {"step_no": 5, "description": "Find third root in valid principal range z₂ = 2 e^(-i π/2)", "marks": 2}
+    ]
+  }
+}

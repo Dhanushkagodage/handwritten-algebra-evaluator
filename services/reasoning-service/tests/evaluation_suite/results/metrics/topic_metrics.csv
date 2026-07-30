@@ -1,0 +1,12 @@
+topic,question_count,mae,rmse,exact_match_accuracy_pct,gt_mean_marks,sys_mean_marks
+Complex Numbers,2,0.0,0.0,100.0,5.5,5.5
+General Algebra,1,0.0,0.0,100.0,6.0,6.0
+Logarithms,3,0.0,0.0,100.0,8.0,8.0
+Mathematical Induction,4,0.0,0.0,100.0,7.75,7.75
+Partial Fractions,1,0.0,0.0,100.0,7.0,7.0
+Series & Sequences,1,0.0,0.0,100.0,5.0,5.0
+Trigonometry,2,1.0,1.4142135623730951,50.0,7.5,6.5
+Vectors & Planes,2,1.0,1.0,0.0,5.5,4.5
+Binomial Expansion,2,1.25,1.7677669529663689,50.0,6.5,5.25
+Quadratic Equations,7,1.7142857142857142,3.1509635714446826,42.857142857142854,6.857142857142857,5.571428571428571
+Matrices,3,2.8333333333333335,4.627814458971607,33.33333333333333,6.0,3.5

@@ -1,0 +1,23 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the determinant and inverse of matrix A = [[1, 2, 0], [0, 1, 1], [2, 0, 1]].",
+    "student_steps": [
+      {"step_id": 1, "content": "det(A) = 1·(1·1 - 1·0) - 2·(0·1 - 1·2) + 0·(...) = 1(1) - 2(-2) = 1 + 4 = 5"},
+      {"step_id": 2, "content": "Matrix of Minors M = [[1, -2, -2], [2, 1, -4], [2, 1, 1]]"},
+      {"step_id": 3, "content": "Matrix of Cofactors C = [[1, 2, -2], [-2, 1, 4], [2, -1, 1]]"},
+      {"step_id": 4, "content": "Adjugate matrix adj(A) = Cᵀ = [[1, -2, 2], [2, 1, -1], [-2, 4, 1]]"},
+      {"step_id": 5, "content": "A⁻¹ = (1/det(A))·adj(A) = (1/5) · [[1, -2, 2], [2, 1, -1], [-2, 4, 1]]"}
+    ],
+    "final_answer": "det(A) = 5, A⁻¹ = 1/5 · [[1, -2, 2], [2, 1, -1], [-2, 4, 1]]"
+  },
+  "marking_scheme": {
+    "total_marks": 10,
+    "steps": [
+      {"step_no": 1, "description": "Calculate determinant det(A) = 5 correctly", "marks": 2},
+      {"step_no": 2, "description": "Compute matrix of minors/cofactors accurately", "marks": 3},
+      {"step_no": 3, "description": "Transpose cofactor matrix to obtain adjugate matrix adj(A)", "marks": 2},
+      {"step_no": 4, "description": "Apply formula A⁻¹ = (1/det A) adj(A)", "marks": 2},
+      {"step_no": 5, "description": "State final inverse matrix", "marks": 1}
+    ]
+  }
+}

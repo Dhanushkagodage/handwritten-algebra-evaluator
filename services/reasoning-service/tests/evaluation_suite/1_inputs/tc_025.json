@@ -1,0 +1,22 @@
+{
+  "reasoning_input": {
+    "question_text": "Find a normal vector to the plane containing vectors u = (1, 2, 3) and v = (4, 5, 6).",
+    "student_steps": [
+      {"step_id": 1, "content": "Normal vector n = u × v = det([[i, j, k], [1, 2, 3], [4, 5, 6]])"},
+      {"step_id": 2, "content": "i term: (2·6 - 3·5) = 12 - 15 = -3"},
+      {"step_id": 3, "content": "j term: -(1·6 - 3·4) = -(6 - 12) = 6"},
+      {"step_id": 4, "content": "k term: (1·5 - 2·4) = 5 - 8 = -3"},
+      {"step_id": 5, "content": "n = (-3, 6, -3) = -3(1, -2, 1)"}
+    ],
+    "final_answer": "n = (-3, 6, -3) or simplified n = (1, -2, 1)"
+  },
+  "marking_scheme": {
+    "total_marks": 5,
+    "steps": [
+      {"step_no": 1, "description": "Recognize that normal vector is given by cross product u × v", "marks": 1},
+      {"step_no": 2, "description": "Set up 3x3 determinant definition for cross product", "marks": 1},
+      {"step_no": 3, "description": "Compute components of u × v correctly: i(-3), j(6), k(-3)", "marks": 2},
+      {"step_no": 4, "description": "State final normal vector n = (-3, 6, -3) or parallel vector (1, -2, 1)", "marks": 1}
+    ]
+  }
+}

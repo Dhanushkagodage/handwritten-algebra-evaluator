@@ -1,0 +1,23 @@
+{
+  "reasoning_input": {
+    "question_text": "Solve the modulus equation |2x - 5| = |x + 1|.",
+    "student_steps": [
+      {"step_id": 1, "content": "Method 1: Squaring both sides: (2x - 5)² = (x + 1)²"},
+      {"step_id": 2, "content": "4x² - 20x + 25 = x² + 2x + 1"},
+      {"step_id": 3, "content": "3x² - 22x + 24 = 0"},
+      {"step_id": 4, "content": "(3x - 4)(x - 6) = 0"},
+      {"step_id": 5, "content": "x = 4/3 or x = 6"},
+      {"step_id": 6, "content": "Check x = 4/3: |2(4/3) - 5| = |-7/3| = 7/3; |4/3 + 1| = 7/3. ✓"},
+      {"step_id": 7, "content": "Check x = 6: |2(6) - 5| = |7| = 7; |6 + 1| = 7. ✓"}
+    ],
+    "final_answer": "x = 4/3 or x = 6"
+  },
+  "marking_scheme": {
+    "total_marks": 6,
+    "steps": [
+      {"step_no": 1, "description": "Square both sides or set up dual linear cases (2x - 5 = ±(x + 1))", "marks": 2},
+      {"step_no": 2, "description": "Expand and form quadratic 3x² - 22x + 24 = 0", "marks": 2},
+      {"step_no": 3, "description": "Solve quadratic to find x = 4/3 and x = 6", "marks": 2}
+    ]
+  }
+}

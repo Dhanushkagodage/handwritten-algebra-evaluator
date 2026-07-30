@@ -1,0 +1,26 @@
+{
+  "reasoning_input": {
+    "question_text": "Prove by mathematical induction that 2ⁿ > n² for all integers n ≥ 5.",
+    "student_steps": [
+      {"step_id": 1, "content": "Base case (n = 5): LHS = 2⁵ = 32; RHS = 5² = 25. 32 > 25 ✓ True for n = 5."},
+      {"step_id": 2, "content": "Inductive hypothesis: Assume true for n = k (k ≥ 5), i.e., 2ᵏ > k²."},
+      {"step_id": 3, "content": "Target: Need to show true for n = k + 1, i.e., 2ᵏ⁺¹ > (k + 1)²."},
+      {"step_id": 4, "content": "LHS for n = k + 1: 2ᵏ⁺¹ = 2 · 2ᵏ > 2 · k² = k² + k²  [using hypothesis 2ᵏ > k²]"},
+      {"step_id": 5, "content": "Since k ≥ 5, k² = k · k ≥ 5k = 2k + 3k > 2k + 1"},
+      {"step_id": 6, "content": "Therefore, 2ᵏ⁺¹ > k² + (2k + 1) = (k + 1)²"},
+      {"step_id": 7, "content": "Conclusion: Since statement holds for n = 5 and truth for n = k implies truth for n = k + 1, by mathematical induction 2ⁿ > n² for all integers n ≥ 5."}
+    ],
+    "final_answer": "Proven by mathematical induction for all integers n ≥ 5"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Verify base case n = 5: LHS = 32 > 25 = RHS", "marks": 1},
+      {"step_no": 2, "description": "State inductive hypothesis for n = k (2ᵏ > k² for k ≥ 5)", "marks": 1},
+      {"step_no": 3, "description": "State target inequality for n = k + 1: 2ᵏ⁺¹ > (k + 1)²", "marks": 1},
+      {"step_no": 4, "description": "Apply hypothesis: 2ᵏ⁺¹ = 2(2ᵏ) > 2k² = k² + k²", "marks": 2},
+      {"step_no": 5, "description": "Prove sub-inequality k² > 2k + 1 for k ≥ 5", "marks": 2},
+      {"step_no": 6, "description": "State mathematical induction conclusion", "marks": 1}
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the sum to infinity of the geometric series 2/3 + 4/9 + 8/27 + ...",
+    "student_steps": [
+      {"step_id": 1, "content": "First term a = 2/3"},
+      {"step_id": 2, "content": "Common ratio r = (4/9) / (2/3) = (4/9) · (3/2) = 12/18 = 2/3"},
+      {"step_id": 3, "content": "Check convergence: |r| = |2/3| = 2/3 < 1, so sum to infinity exists."},
+      {"step_id": 4, "content": "S_∞ = a / (1 - r) = (2/3) / (1 - 2/3)"},
+      {"step_id": 5, "content": "S_∞ = (2/3) / (1/3) = 2"}
+    ],
+    "final_answer": "S_∞ = 2"
+  },
+  "marking_scheme": {
+    "total_marks": 5,
+    "steps": [
+      {"step_no": 1, "description": "Identify first term a = 2/3", "marks": 1},
+      {"step_no": 2, "description": "Calculate common ratio r = 2/3", "marks": 1},
+      {"step_no": 3, "description": "State condition |r| < 1 for convergence", "marks": 1},
+      {"step_no": 4, "description": "Apply sum to infinity formula S_∞ = a / (1 - r)", "marks": 1},
+      {"step_no": 5, "description": "Calculate exact sum S_∞ = 2", "marks": 1}
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+metric,value
+n_samples,28
+mean_difference,-0.8214285714285714
+std_difference,2.1697170224874855
+paired_t_statistic,2.003298768713598
+paired_t_p_value,0.05527658411984128
+is_significant_ttest,False
+wilcoxon_statistic,6.5
+wilcoxon_p_value,0.03164177738597927
+is_significant_wilcoxon,True
+cohens_d,-0.3785878816984343
+alpha_threshold,0.05
+conclusion,"Statistically significant difference detected between AI System and Teacher marks (Paired t-test p=0.0553, Wilcoxon p=0.0316 at alpha=0.05)."

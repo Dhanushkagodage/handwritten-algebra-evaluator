@@ -1,0 +1,29 @@
+{
+  "reasoning_input": {
+    "question_text": "Given A = [[3, 0], [2, 1]], prove by induction that Aⁿ = [[3ⁿ, 0], [3ⁿ - 1, 1]] for all n ∈ ℤ⁺.",
+    "student_steps": [
+      {"step_id": 1, "content": "For n = 1: A¹ = [[3¹, 0], [3¹ - 1, 1]] = [[3, 0], [2, 1]] = A. True for n = 1."},
+      {"step_id": 2, "content": "Assume true for n = k: Aᵏ = [[3ᵏ, 0], [3ᵏ - 1, 1]]."},
+      {"step_id": 3, "content": "For n = k + 1: Aᵏ⁺¹ = Aᵏ · A"},
+      {"step_id": 4, "content": "Aᵏ⁺¹ = [[3ᵏ, 0], [3ᵏ - 1, 1]] · [[3, 0], [2, 1]]"},
+      {"step_id": 5, "content": "Row 1 Col 1: 3ᵏ · 3 + 0 · 2 = 3ᵏ⁺¹"},
+      {"step_id": 6, "content": "Row 1 Col 2: 3ᵏ · 0 + 0 · 1 = 0"},
+      {"step_id": 7, "content": "Row 2 Col 1: (3ᵏ - 1)·3 + 1·2 = 3·3ᵏ - 3 + 2 = 3ᵏ⁺¹ - 1"},
+      {"step_id": 8, "content": "Row 2 Col 2: (3ᵏ - 1)·0 + 1·1 = 1"},
+      {"step_id": 9, "content": "Aᵏ⁺¹ = [[3ᵏ⁺¹, 0], [3ᵏ⁺¹ - 1, 1]], which is of the required form for n = k + 1."},
+      {"step_id": 10, "content": "Therefore, by mathematical induction, the result holds for all n ∈ ℤ⁺."}
+    ],
+    "final_answer": "Proven by induction for all n ∈ ℤ⁺"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "Verify base case n=1", "marks": 1},
+      {"step_no": 2, "description": "State inductive hypothesis for n=k", "marks": 1},
+      {"step_no": 3, "description": "Express Aᵏ⁺¹ as Aᵏ · A", "marks": 1},
+      {"step_no": 4, "description": "Multiply matrices correctly to find components", "marks": 3},
+      {"step_no": 5, "description": "Simplify Row 2 Col 1 term to 3ᵏ⁺¹ - 1", "marks": 1},
+      {"step_no": 6, "description": "State complete mathematical induction conclusion", "marks": 1}
+    ]
+  }
+}

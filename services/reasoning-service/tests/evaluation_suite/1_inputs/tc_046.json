@@ -1,0 +1,24 @@
+{
+  "reasoning_input": {
+    "question_text": "Find the Taylor series expansion of f(x) = cos(x) in powers of (x - π/3) up to and including the term in (x - π/3)³.",
+    "student_steps": [
+      {"step_id": 1, "content": "Taylor series formula: f(x) = f(a) + f'(a)(x - a) + f''(a)(x - a)²/2! + f'''(a)(x - a)³/3! + ... with a = π/3"},
+      {"step_id": 2, "content": "f(π/3) = cos(π/3) = 1/2"},
+      {"step_id": 3, "content": "f'(x) = -sin(x) → f'(π/3) = -sin(π/3) = -√3/2"},
+      {"step_id": 4, "content": "f''(x) = -cos(x) → f''(π/3) = -cos(π/3) = -1/2"},
+      {"step_id": 5, "content": "f'''(x) = sin(x) → f'''(π/3) = sin(π/3) = √3/2"},
+      {"step_id": 6, "content": "Substitute: cos(x) = 1/2 - (√3/2)(x - π/3) - (1/4)(x - π/3)² + (√3/12)(x - π/3)³"}
+    ],
+    "final_answer": "cos(x) = 1/2 - √3/2 (x - π/3) - 1/4 (x - π/3)² + √3/12 (x - π/3)³"
+  },
+  "marking_scheme": {
+    "total_marks": 8,
+    "steps": [
+      {"step_no": 1, "description": "State Taylor series expansion formula centered at a = π/3", "marks": 1},
+      {"step_no": 2, "description": "Calculate derivatives f'(x), f''(x), f'''(x)", "marks": 2},
+      {"step_no": 3, "description": "Evaluate derivatives at x = π/3: 1/2, -√3/2, -1/2, √3/2", "marks": 2},
+      {"step_no": 4, "description": "Substitute values into Taylor expansion", "marks": 1},
+      {"step_no": 5, "description": "Divide by factorials to obtain 1/2 - (√3/2)(x - π/3) - (1/4)(x - π/3)² + (√3/12)(x - π/3)³", "marks": 2}
+    ]
+  }
+}
