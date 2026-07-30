@@ -1,0 +1,1600 @@
+[
+  {
+    "image_id": "Q01_FC_W01",
+    "question_id": "Q01",
+    "answer_type": "FC",
+    "question_text": "Solve x^2 - 5x + 6 = 0",
+    "answer_text": "x^2 - 5x + 6 = 0\nx^2 - 5x + 6 = 0\nx^2 - 5x + 6 = 0",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "text": "x^2 - 5x + 6 = 0",
+        "type": "math",
+        "bbox": [
+          54,
+          65,
+          382,
+          55
+        ],
+        "region_image": "data/regions/Q01_FC_W01_step_1.png"
+      },
+      {
+        "step_id": 2,
+        "text": "x^2 - 5x + 6 = 0",
+        "type": "math",
+        "bbox": [
+          55,
+          160,
+          392,
+          63
+        ],
+        "region_image": "data/regions/Q01_FC_W01_step_2.png"
+      },
+      {
+        "step_id": 3,
+        "text": "x^2 - 5x + 6 = 0",
+        "type": "math",
+        "bbox": [
+          54,
+          257,
+          326,
+          53
+        ],
+        "region_image": "data/regions/Q01_FC_W01_step_3.png"
+      }
+    ],
+    "linked_question": "Q01"
+  },
+  {
+    "image_id": "WhatsApp_Image_2026-07-20_at_15_11_24_1",
+    "created_at": "2026-07-20T09:45:09.027677+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Resolve partial fractions: (3x^2 + 5x + 4)/((x - 1)(x^2 + 1))",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "Let (3x^2 + 5x + 4)/((x - 1)(x^2 + 1)) = A/(x - 1) + (Bx + C)/(x^2 + 1)"
+          },
+          {
+            "step_id": 2,
+            "content": "3x^2 + 5x + 4 = A(x^2 + 1) + (Bx + C)(x - 1)"
+          },
+          {
+            "step_id": 3,
+            "content": "Expanding: 3x^2 + 5x + 4 = (A + B)x^2 + (C - B)x + (A - C)"
+          },
+          {
+            "step_id": 4,
+            "content": "Equating coefficients: A + B = 3, C - B = 5, A - C = 4"
+          },
+          {
+            "step_id": 5,
+            "content": "A = 6, B = -3, C = 2"
+          },
+          {
+            "step_id": 6,
+            "content": "Therefore 6/(x - 1) + (-3x + 2)/(x^2 + 1)"
+          }
+        ],
+        "final_answer": "6/(x - 1) + (-3x + 2)/(x^2 + 1)"
+      }
+    }
+  },
+  {
+    "image_id": "WhatsApp_Image_2026-07-20_at_15_11_24_1",
+    "created_at": "2026-07-20T10:03:22.297501+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "\"\" 14 4 + 2 .^$ 3 <?,{~ (t}}"
+          },
+          {
+            "step_id": 2,
+            "content": "47{ 9 + 01$ 61' + (6^; : {a!? Oetkes} A + 8 (1u79 r3't - Yi"
+          },
+          {
+            "step_id": 3,
+            "content": "7f; 4 ((Jsa"
+          }
+        ],
+        "final_answer": "t 'Sit 2 (a * 1)"
+      }
+    }
+  },
+  {
+    "image_id": "WhatsApp_Image_2026-07-20_at_15_11_24",
+    "created_at": "2026-07-20T14:59:56.554943+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given polynomial P(x) = 2x^3 + ax^2 - 5x + 6 leaves equal remainders when divided by x - 1 and x + 2. Find a and common remainder.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "Remainder on division by x - 1"
+          },
+          {
+            "step_id": 2,
+            "content": "P(1) = 2 + a - 5 + 6 = a + 3"
+          },
+          {
+            "step_id": 3,
+            "content": "Remainder on division by x + 2"
+          },
+          {
+            "step_id": 4,
+            "content": "P(-2) = 2(-8) + 4a + 10 + 6"
+          },
+          {
+            "step_id": 5,
+            "content": "P(-2) = 4a"
+          },
+          {
+            "step_id": 6,
+            "content": "Remainders are equal"
+          },
+          {
+            "step_id": 7,
+            "content": "P(1) = P(-2)"
+          },
+          {
+            "step_id": 8,
+            "content": "a + 3 = 4a"
+          },
+          {
+            "step_id": 9,
+            "content": "a = 1"
+          },
+          {
+            "step_id": 10,
+            "content": "P(1) = a + 3 = 1 + 3 = 4"
+          }
+        ],
+        "final_answer": "a = 1, common remainder = 4"
+      }
+    }
+  },
+  {
+    "image_id": "WhatsApp_Image_2026-07-20_at_15_11_23",
+    "created_at": "2026-07-20T15:01:43.371878+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6, x - 2 is a factor of P(x), find k and solve P(x) = 0",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "Since x - 2 is a factor, P(2) = 0"
+          },
+          {
+            "step_id": 2,
+            "content": "8 - 16 + 2k + 6 = 0"
+          },
+          {
+            "step_id": 3,
+            "content": "2k - 2 = 0"
+          },
+          {
+            "step_id": 4,
+            "content": "k = 1"
+          },
+          {
+            "step_id": 5,
+            "content": "P(x) = x^3 - 4x^2 + x + 6"
+          },
+          {
+            "step_id": 6,
+            "content": "Dividing by x - 2, P(x) = (x - 2)(x^2 - 2x - 3)"
+          },
+          {
+            "step_id": 7,
+            "content": "P(x) = (x - 2)(x - 3)(x + 1)"
+          },
+          {
+            "step_id": 8,
+            "content": "x = 2, 3, -1"
+          }
+        ],
+        "final_answer": "x = 2, 3, -1"
+      }
+    }
+  },
+  {
+    "image_id": "WhatsApp_Image_2026-07-20_at_15_11_22_1",
+    "created_at": "2026-07-20T15:04:40.691393+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "The roots of 3x^2 - 5x - 2 = 0 are alpha and beta. Find the quadratic equation whose roots are 1/alpha, 1/beta.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "3x^2 - 5x - 2 = 0, roots alpha and beta"
+          },
+          {
+            "step_id": 2,
+            "content": "alpha + beta = 5/3"
+          },
+          {
+            "step_id": 3,
+            "content": "alpha beta = -2/3"
+          },
+          {
+            "step_id": 4,
+            "content": "Sum of new roots = 1/alpha + 1/beta = 1/(alpha + beta) = 3/5"
+          },
+          {
+            "step_id": 5,
+            "content": "1/(alpha beta) = 3/-2"
+          },
+          {
+            "step_id": 6,
+            "content": "x^2 - (3/5)x - 3/2 = 0"
+          },
+          {
+            "step_id": 7,
+            "content": "10x^2 - 6x - 15 = 0"
+          }
+        ],
+        "final_answer": "10x^2 - 6x - 15 = 0"
+      }
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-26T09:45:34.221358+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Solve 2x^2 + 3x - 2 = 0. Solve 2x + y = 7 and x - y = 2; find x and y values.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "Using quadratic formula: a = 2, b = 3, c = -2"
+          },
+          {
+            "step_id": 2,
+            "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+          },
+          {
+            "step_id": 3,
+            "content": "x = (-3 ± sqrt(9 - 16))/4"
+          },
+          {
+            "step_id": 4,
+            "content": "x = (-3 ± sqrt(-7))/4"
+          },
+          {
+            "step_id": 5,
+            "content": "2x + y = 7"
+          },
+          {
+            "step_id": 6,
+            "content": "x - y = 2"
+          },
+          {
+            "step_id": 7,
+            "content": "Add both equations"
+          },
+          {
+            "step_id": 8,
+            "content": "3x = 9"
+          },
+          {
+            "step_id": 9,
+            "content": "x = 3"
+          }
+        ],
+        "final_answer": "x = 3"
+      }
+    }
+  },
+  {
+    "image_id": "1784015606836",
+    "created_at": "2026-07-26T09:50:07.585809+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": "P(2) = 8 - 16 + k + 6"
+      }
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-26T15:37:47.982438+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Solve 2x^2 + 3x - 2 = 0. Solve 2x + y = 7 and x - y = 2; find x and y values.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "Using quadratic formula: a = 2, b = 3, c = -3"
+          },
+          {
+            "step_id": 2,
+            "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+          },
+          {
+            "step_id": 3,
+            "content": "x = (-3 ± sqrt(9 - 16))/4"
+          },
+          {
+            "step_id": 4,
+            "content": "x = (-3 ± sqrt(-7))/4"
+          },
+          {
+            "step_id": 5,
+            "content": "2x + y = 7"
+          },
+          {
+            "step_id": 6,
+            "content": "x - y = 2"
+          },
+          {
+            "step_id": 7,
+            "content": "Add both equations"
+          },
+          {
+            "step_id": 8,
+            "content": "3x = 9"
+          },
+          {
+            "step_id": 9,
+            "content": "x = 3"
+          }
+        ],
+        "final_answer": "x = 3"
+      }
+    }
+  },
+  {
+    "image_id": "1784015606836",
+    "created_at": "2026-07-26T15:46:45.935440+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": "P(2) = 8 - 16 + k + 6"
+      },
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0.",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "P(2) = 8 - 16 + k + 6"
+            }
+          ],
+          "final_answer": "P(2) = 8 - 16 + k + 6"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "storage_emulated_0_Android_data_com_miui_gallery_cache_SecurityShare_1784015606420",
+    "created_at": "2026-07-26T15:47:33.873969+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Solve 2x^2 + 3x - 2 = 0",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "Using quadratic formula"
+          },
+          {
+            "step_id": 2,
+            "content": "a = 2, b = 3, c = -3"
+          },
+          {
+            "step_id": 3,
+            "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2))) / (2(2))"
+          },
+          {
+            "step_id": 4,
+            "content": "x = (-3 ± sqrt(9 - 16)) / 4"
+          },
+          {
+            "step_id": 5,
+            "content": "x = (-3 ± sqrt(-7)) / 4"
+          }
+        ],
+        "final_answer": "x = (-3 ± sqrt(-7)) / 4"
+      },
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula"
+            },
+            {
+              "step_id": 2,
+              "content": "a = 2, b = 3, c = -3"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2))) / (2(2))"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(9 - 16)) / 4"
+            },
+            {
+              "step_id": 5,
+              "content": "x = (-3 ± sqrt(-7)) / 4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7)) / 4"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015606836",
+    "created_at": "2026-07-26T15:48:13.627152+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": "P(2) = 8 - 16 + k + 6"
+      },
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0.",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "P(2) = 8 - 16 + k + 6"
+            }
+          ],
+          "final_answer": "P(2) = 8 - 16 + k + 6"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-26T15:48:49.143473+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula, a = 2, b = 3, c = -2"
+            },
+            {
+              "step_id": 2,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt(9 - 16))/4"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(-7))/4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7))/4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations"
+            },
+            {
+              "step_id": 4,
+              "content": "3x = 9"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 3"
+            }
+          ],
+          "final_answer": "x = 3"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607279",
+    "created_at": "2026-07-26T15:49:58.535201+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve x^2 - 5x + 6 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "x^2 - 5x + 6 = 0"
+            },
+            {
+              "step_id": 2,
+              "content": "(x + 2)(x + 3) = 0"
+            },
+            {
+              "step_id": 3,
+              "content": "x = -2 or x = -3"
+            }
+          ],
+          "final_answer": "x = -2 or x = -3"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula"
+            },
+            {
+              "step_id": 2,
+              "content": "a = 2, b = 3, c = -2"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(4 + 16))/4"
+            },
+            {
+              "step_id": 5,
+              "content": "x = (-3 ± 5)/4"
+            },
+            {
+              "step_id": 6,
+              "content": "x = 1/2 or x = 2"
+            }
+          ],
+          "final_answer": "x = 1/2 or x = 2"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607310",
+    "created_at": "2026-07-26T15:50:48.933991+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula"
+            },
+            {
+              "step_id": 2,
+              "content": "a = 2, b = 3, c = -3"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(9 - 16))/4"
+            },
+            {
+              "step_id": 5,
+              "content": "x = (-3 ± sqrt(-7))/4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7))/4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations: 3x = 9"
+            },
+            {
+              "step_id": 4,
+              "content": "x = 3"
+            },
+            {
+              "step_id": 5,
+              "content": "Substitute in x - y = 2"
+            },
+            {
+              "step_id": 6,
+              "content": "3 - y = 2"
+            },
+            {
+              "step_id": 7,
+              "content": "y = 1"
+            },
+            {
+              "step_id": 8,
+              "content": "x = 3, y = 1"
+            }
+          ],
+          "final_answer": "x = 3, y = 1"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607519",
+    "created_at": "2026-07-26T15:53:17.805583+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "The root of 3x^2 - 5x - 2 = 0 are alpha and beta. Find the quadratic equation whose roots are 1/alpha, 1/beta.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "3x^2 - 5x - 2 = 0, roots alpha and beta"
+          },
+          {
+            "step_id": 2,
+            "content": "alpha + beta = 5/3"
+          },
+          {
+            "step_id": 3,
+            "content": "alpha beta = -2/3"
+          },
+          {
+            "step_id": 4,
+            "content": "Sum of new roots = 1/alpha + 1/beta = 1/(alpha + beta) = 3/5"
+          },
+          {
+            "step_id": 5,
+            "content": "1/(alpha beta) = 3/-2"
+          },
+          {
+            "step_id": 6,
+            "content": "x^2 - (3/5)x - 3/2 = 0"
+          },
+          {
+            "step_id": 7,
+            "content": "10x^2 - 6x - 15 = 0"
+          }
+        ],
+        "final_answer": "10x^2 - 6x - 15 = 0"
+      },
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "The root of 3x^2 - 5x - 2 = 0 are alpha and beta. Find the quadratic equation whose roots are 1/alpha, 1/beta.",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "3x^2 - 5x - 2 = 0, roots alpha and beta"
+            },
+            {
+              "step_id": 2,
+              "content": "alpha + beta = 5/3"
+            },
+            {
+              "step_id": 3,
+              "content": "alpha beta = -2/3"
+            },
+            {
+              "step_id": 4,
+              "content": "Sum of new roots = 1/alpha + 1/beta = 1/(alpha + beta) = 3/5"
+            },
+            {
+              "step_id": 5,
+              "content": "1/(alpha beta) = 3/-2"
+            },
+            {
+              "step_id": 6,
+              "content": "x^2 - (3/5)x - 3/2 = 0"
+            },
+            {
+              "step_id": 7,
+              "content": "10x^2 - 6x - 15 = 0"
+            }
+          ],
+          "final_answer": "10x^2 - 6x - 15 = 0"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-26T16:22:06.395286+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula, a = 2, b = 3, c = -3"
+            },
+            {
+              "step_id": 2,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt(9 - 16))/4"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(-7))/4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7))/4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations"
+            },
+            {
+              "step_id": 4,
+              "content": "3x = 9"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 3"
+            }
+          ],
+          "final_answer": "x = 3"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015606836",
+    "created_at": "2026-07-26T16:23:42.424185+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": "P(2) = 8 - 16 + k + 6"
+      },
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "P(2) = 8 - 16 + k + 6"
+            }
+          ],
+          "final_answer": "P(2) = 8 - 16 + k + 6"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015606480",
+    "created_at": "2026-07-26T16:24:20.232384+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Solve 2x^2 + 3x - 2 = 0",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "Using quadratic formula"
+          },
+          {
+            "step_id": 2,
+            "content": "a = 2, b = 3, c = -2"
+          },
+          {
+            "step_id": 3,
+            "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+          },
+          {
+            "step_id": 4,
+            "content": "x = (-3 ± sqrt(9 + 16))/4"
+          },
+          {
+            "step_id": 5,
+            "content": "x = (-3 ± 5)/4"
+          },
+          {
+            "step_id": 6,
+            "content": "x = 1/2 or x = 2"
+          }
+        ],
+        "final_answer": "x = 1/2 or x = 2"
+      },
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula"
+            },
+            {
+              "step_id": 2,
+              "content": "a = 2, b = 3, c = -2"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(9 + 16))/4"
+            },
+            {
+              "step_id": 5,
+              "content": "x = (-3 ± 5)/4"
+            },
+            {
+              "step_id": 6,
+              "content": "x = 1/2 or x = 2"
+            }
+          ],
+          "final_answer": "x = 1/2 or x = 2"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015606836",
+    "created_at": "2026-07-26T16:33:54.474894+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": ""
+      }
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-26T16:36:18.006357+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula, a = 2, b = 3, c = -3"
+            },
+            {
+              "step_id": 2,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2))) / (2(2))"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt(9 - 16)) / 4"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(-7)) / 4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7)) / 4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations"
+            },
+            {
+              "step_id": 4,
+              "content": "3x = 9"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 3"
+            }
+          ],
+          "final_answer": "x = 3"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607279",
+    "created_at": "2026-07-26T16:37:40.411377+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve x^2 - 5x + 6 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "x^2 - 5x + 6 = 0"
+            },
+            {
+              "step_id": 2,
+              "content": "(x + 2)(x + 3) = 0"
+            },
+            {
+              "step_id": 3,
+              "content": "x = -2 or x = -3"
+            }
+          ],
+          "final_answer": "x = -2 or x = -3"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula"
+            },
+            {
+              "step_id": 2,
+              "content": "a = 2, b = 3, c = -2"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(9 + 16))/4"
+            },
+            {
+              "step_id": 5,
+              "content": "x = (-3 ± 5)/4"
+            },
+            {
+              "step_id": 6,
+              "content": "x = 1/2 or x = 2"
+            }
+          ],
+          "final_answer": "x = 1/2 or x = 2"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "Screenshot_2026-07-27_004025",
+    "created_at": "2026-07-26T19:11:58.901824+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Expand (3x^2 - x + 2)/(x^3 - 3x^2) into partial fractions.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "(3x^2 - x + 2)/(x^2(x - 3))"
+          },
+          {
+            "step_id": 2,
+            "content": "Let (3x^2 - x + 2)/(x^2(x - 3)) = A/x + B/x^2 + C/(x - 3)"
+          },
+          {
+            "step_id": 3,
+            "content": "x = 0 => B = -2/3"
+          },
+          {
+            "step_id": 4,
+            "content": "x = 3 => C = 26/9"
+          },
+          {
+            "step_id": 5,
+            "content": "A = 1/9"
+          },
+          {
+            "step_id": 6,
+            "content": "1/(9x) - 2/(3x^2) + 26/(9(x - 3))"
+          }
+        ],
+        "final_answer": "1/(9x) - 2/(3x^2) + 26/(9(x - 3))"
+      }
+    }
+  },
+  {
+    "image_id": "Screenshot_2026-07-27_004025",
+    "created_at": "2026-07-26T19:13:53.751570+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "4. lim_(x->0) (1/(7x)) tan^-1((3x - x^3)/(1 - 3x^2))",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "tan^-1((3x - x^3)/(1 - 3x^2)) = 3 tan^-1(x)"
+          },
+          {
+            "step_id": 2,
+            "content": "lim_(x->0) (1/(7x)) * 3 tan^-1(x) = lim_(x->0) (3/7) * (tan^-1(x)/x)"
+          },
+          {
+            "step_id": 3,
+            "content": "(3/7) lim_(x->0) (tan^-1(x)/x), lim_(x->0) (tan^-1(x)/x) = 1"
+          },
+          {
+            "step_id": 4,
+            "content": "3/7 * 1 = 3/7"
+          }
+        ],
+        "final_answer": "3/7"
+      }
+    }
+  },
+  {
+    "image_id": "test",
+    "created_at": "2026-07-27T06:55:21.701947+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Express (5x + 3)/((x + 1)(x - 3)) in partial fractions.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "(5x + 3)/((x + 1)(x - 3)) = A/(x + 1) + B/(x - 3)"
+          },
+          {
+            "step_id": 2,
+            "content": "5x + 3 = A(x - 3) + B(x + 1)"
+          },
+          {
+            "step_id": 3,
+            "content": "Let x = 3; 18 = 4B"
+          },
+          {
+            "step_id": 4,
+            "content": "B = 9/2"
+          },
+          {
+            "step_id": 5,
+            "content": "Let x = -1; -2 = -4A"
+          },
+          {
+            "step_id": 6,
+            "content": "A = 1/2"
+          },
+          {
+            "step_id": 7,
+            "content": "(5x + 3)/((x + 1)(x - 3)) = 1/(2(x + 1)) + 9/(2(x - 3))"
+          }
+        ],
+        "final_answer": "(5x + 3)/((x + 1)(x - 3)) = 1/(2(x + 1)) + 9/(2(x - 3))"
+      }
+    }
+  },
+  {
+    "image_id": "1784015606836",
+    "created_at": "2026-07-27T07:09:42.163916+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": ""
+      }
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-27T22:33:33.899302+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula, a = 2, b = 3, c = -2"
+            },
+            {
+              "step_id": 2,
+              "content": "x = (-3 +/- sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 +/- sqrt(9 - 16))/4"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 +/- sqrt(-7))/4"
+            }
+          ],
+          "final_answer": "x = (-3 +/- sqrt(-7))/4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations"
+            },
+            {
+              "step_id": 4,
+              "content": "3x = 9"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 3"
+            }
+          ],
+          "final_answer": "x = 3"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607454",
+    "created_at": "2026-07-27T22:35:33.489218+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve this inequality: x^2 - 4x + 5 > 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "x^2 - 4x + 5 > 0"
+            },
+            {
+              "step_id": 2,
+              "content": "(x - 5)(x + 1) > 0"
+            }
+          ],
+          "final_answer": "(x - 5)(x + 1) > 0"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Simplify surds: sqrt(50) + sqrt(8) - sqrt(18)",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "sqrt(50) + sqrt(8) - sqrt(18) = sqrt(25 x 2) + sqrt(4 x 2) - sqrt(9 x 2)"
+            },
+            {
+              "step_id": 2,
+              "content": "= 5sqrt(2) + 2sqrt(2) - 3sqrt(2)"
+            },
+            {
+              "step_id": 3,
+              "content": "= 4sqrt(2)"
+            }
+          ],
+          "final_answer": "4sqrt(2)"
+        },
+        {
+          "question_id": "Q3",
+          "question_text": "Find the remainder when f(x) = 2x^3 - 3x^2 + 4x - 5 is divided by x - 2",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using remainder theorem,"
+            },
+            {
+              "step_id": 2,
+              "content": "f(2) = 2(2)^3 - 3(2)^2 + 4(2) - 5"
+            },
+            {
+              "step_id": 3,
+              "content": "= 16 - 12 + 8 - 5"
+            },
+            {
+              "step_id": 4,
+              "content": "= 7"
+            },
+            {
+              "step_id": 5,
+              "content": "Therefore remainder = 7"
+            }
+          ],
+          "final_answer": "remainder = 7"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607397",
+    "created_at": "2026-07-27T22:37:13.662898+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve log_2(x) + log_2(x - 2) = 3",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "log_2(x) + log_2(x - 2) = 3"
+            },
+            {
+              "step_id": 2,
+              "content": "log_2[x(x - 2)] = 3"
+            },
+            {
+              "step_id": 3,
+              "content": "x^2 - 2x = 2^3"
+            },
+            {
+              "step_id": 4,
+              "content": "x^2 - 2x - 8 = 0"
+            },
+            {
+              "step_id": 5,
+              "content": "(x - 4)(x + 2) = 0"
+            },
+            {
+              "step_id": 6,
+              "content": "x = 4 or x = -2"
+            },
+            {
+              "step_id": 7,
+              "content": "Since x > 2, x = 4"
+            }
+          ],
+          "final_answer": "x = 4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve log_2(x) + log_2(x - 2) = 3",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "log_2(x) + log_2(x - 2) = 3"
+            },
+            {
+              "step_id": 2,
+              "content": "log_2[x + x - 2] = 3"
+            },
+            {
+              "step_id": 3,
+              "content": "2x - 2 = 8"
+            },
+            {
+              "step_id": 4,
+              "content": "2x = 10"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 5"
+            }
+          ],
+          "final_answer": "x = 5"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-28T11:24:48.789008+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula: a = 2, b = 3, c = -2"
+            },
+            {
+              "step_id": 2,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt(9 - 16))/4"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(-7))/4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7))/4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations"
+            },
+            {
+              "step_id": 4,
+              "content": "3x = 9"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 3"
+            }
+          ],
+          "final_answer": "x = 3"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015606836_1785305257",
+    "created_at": "2026-07-29T06:07:52.983738+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": ""
+      }
+    }
+  },
+  {
+    "image_id": "1784015606836_1785305286",
+    "created_at": "2026-07-29T06:08:22.930361+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "P(2) = 8 - 16 + k + 6"
+            }
+          ],
+          "final_answer": "P(2) = 8 - 16 + k + 6"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula"
+            },
+            {
+              "step_id": 2,
+              "content": "a = 2, b = 3, c = -3"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(9 - 16))/4"
+            },
+            {
+              "step_id": 5,
+              "content": "x = (-3 ± sqrt(-7))/4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7))/4"
+        },
+        {
+          "question_id": "Q3",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations"
+            },
+            {
+              "step_id": 4,
+              "content": "3x = 9"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 3"
+            }
+          ],
+          "final_answer": "x = 3"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "1784015606836_1785307495",
+    "created_at": "2026-07-29T06:45:04.064523+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x); find k and solve P(x) = 0.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "P(2) = 8 - 16 + k + 6"
+          }
+        ],
+        "final_answer": "P(2) = 8 - 16 + k + 6"
+      }
+    }
+  },
+  {
+    "image_id": "1784015607327",
+    "created_at": "2026-07-29T17:29:37.884927+00:00",
+    "result": {
+      "reasoning_inputs": [
+        {
+          "question_id": "Q1",
+          "question_text": "Solve 2x^2 + 3x - 2 = 0",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "Using quadratic formula, a = 2, b = 3, c = -3"
+            },
+            {
+              "step_id": 2,
+              "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+            },
+            {
+              "step_id": 3,
+              "content": "x = (-3 ± sqrt(9 - 16))/4"
+            },
+            {
+              "step_id": 4,
+              "content": "x = (-3 ± sqrt(-7))/4"
+            }
+          ],
+          "final_answer": "x = (-3 ± sqrt(-7))/4"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+          "student_steps": [
+            {
+              "step_id": 1,
+              "content": "2x + y = 7"
+            },
+            {
+              "step_id": 2,
+              "content": "x - y = 2"
+            },
+            {
+              "step_id": 3,
+              "content": "Add both equations"
+            },
+            {
+              "step_id": 4,
+              "content": "3x = 9"
+            },
+            {
+              "step_id": 5,
+              "content": "x = 3"
+            }
+          ],
+          "final_answer": "x = 3"
+        }
+      ]
+    }
+  },
+  {
+    "image_id": "test",
+    "created_at": "2026-07-30T05:14:22.936264+00:00",
+    "result": {
+      "reasoning_input": {
+        "question_text": "Express (5x + 3)/((x + 1)(x - 3)) in partial fractions.",
+        "student_steps": [
+          {
+            "step_id": 1,
+            "content": "(5x + 3)/((x + 1)(x - 3)) = A/(x + 1) + B/(x - 3)"
+          },
+          {
+            "step_id": 2,
+            "content": "5x + 3 = A(x - 3) + B(x + 1)"
+          },
+          {
+            "step_id": 3,
+            "content": "Let x = 3; 18 = 4B; B = 9/2"
+          },
+          {
+            "step_id": 4,
+            "content": "Let x = -1; -2 = -4A; A = 1/2"
+          },
+          {
+            "step_id": 5,
+            "content": "(5x + 3)/((x + 1)(x - 3)) = 1/(2(x + 1)) + 9/(2(x - 3))"
+          }
+        ],
+        "final_answer": "(5x + 3)/((x + 1)(x - 3)) = 1/(2(x + 1)) + 9/(2(x - 3))"
+      }
+    }
+  }
+]

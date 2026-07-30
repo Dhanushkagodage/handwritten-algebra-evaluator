@@ -1,10 +1,9 @@
-fastapi
-uvicorn[standard]
-pydantic>=2.0
 opencv-python
-easyocr
-pix2tex
-Pillow
 numpy
+pillow
+matplotlib
+fastapi
+uvicorn
 python-multipart
+openai
 python-dotenv

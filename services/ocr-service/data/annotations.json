@@ -1,0 +1,26 @@
+[
+  {
+    "image_id": "Q01_FC_W01",
+    "image_path": "data/raw/Q01_FC_W01.jpg",
+    "question_id": "Q01",
+    "answer_type": "FC",
+    "question_text": "Solve x^2 - 5x + 6 = 0",
+    "ground_truth_steps": [
+      "x^2 - 5x + 6 = 0",
+      "(x - 2)(x - 3) = 0",
+      "x = 2 or x = 3"
+    ]
+  },
+  {
+    "image_id": "Q02_FC_W01",
+    "image_path": "data/raw/Q02_FC_W01.jpg",
+    "question_id": "Q02",
+    "answer_type": "FC",
+    "question_text": "Solve 2x + 3 = 11",
+    "ground_truth_steps": [
+      "2x + 3 = 11",
+      "2x = 8",
+      "x = 4"
+    ]
+  }
+]

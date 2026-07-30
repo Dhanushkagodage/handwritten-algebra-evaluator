@@ -1,0 +1,69 @@
+{
+  "reasoning_inputs": [
+    {
+      "question_id": "Q1",
+      "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6 and x - 2 is a factor of P(x), find k and solve P(x) = 0",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "P(2) = 8 - 16 + k + 6"
+        }
+      ],
+      "final_answer": "P(2) = 8 - 16 + k + 6"
+    },
+    {
+      "question_id": "Q2",
+      "question_text": "Solve 2x^2 + 3x - 2 = 0",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "Using quadratic formula"
+        },
+        {
+          "step_id": 2,
+          "content": "a = 2, b = 3, c = -3"
+        },
+        {
+          "step_id": 3,
+          "content": "x = (-3 ± sqrt((3)^2 - 4(2)(-2)))/(2(2))"
+        },
+        {
+          "step_id": 4,
+          "content": "x = (-3 ± sqrt(9 - 16))/4"
+        },
+        {
+          "step_id": 5,
+          "content": "x = (-3 ± sqrt(-7))/4"
+        }
+      ],
+      "final_answer": "x = (-3 ± sqrt(-7))/4"
+    },
+    {
+      "question_id": "Q3",
+      "question_text": "Solve 2x + y = 7, x - y = 2; find x and y values",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "2x + y = 7"
+        },
+        {
+          "step_id": 2,
+          "content": "x - y = 2"
+        },
+        {
+          "step_id": 3,
+          "content": "Add both equations"
+        },
+        {
+          "step_id": 4,
+          "content": "3x = 9"
+        },
+        {
+          "step_id": 5,
+          "content": "x = 3"
+        }
+      ],
+      "final_answer": "x = 3"
+    }
+  ]
+}

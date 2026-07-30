@@ -1,0 +1,40 @@
+{
+  "reasoning_input": {
+    "question_text": "Given P(x) = x^3 - 4x^2 + kx + 6, x - 2 is a factor of P(x), find k and solve P(x) = 0",
+    "student_steps": [
+      {
+        "step_id": 1,
+        "content": "Since x - 2 is a factor, P(2) = 0"
+      },
+      {
+        "step_id": 2,
+        "content": "8 - 16 + 2k + 6 = 0"
+      },
+      {
+        "step_id": 3,
+        "content": "2k - 2 = 0"
+      },
+      {
+        "step_id": 4,
+        "content": "k = 1"
+      },
+      {
+        "step_id": 5,
+        "content": "P(x) = x^3 - 4x^2 + x + 6"
+      },
+      {
+        "step_id": 6,
+        "content": "Dividing by x - 2, P(x) = (x - 2)(x^2 - 2x - 3)"
+      },
+      {
+        "step_id": 7,
+        "content": "P(x) = (x - 2)(x - 3)(x + 1)"
+      },
+      {
+        "step_id": 8,
+        "content": "x = 2, 3, -1"
+      }
+    ],
+    "final_answer": "x = 2, 3, -1"
+  }
+}

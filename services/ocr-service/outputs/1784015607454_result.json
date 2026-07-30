@@ -1,0 +1,65 @@
+{
+  "reasoning_inputs": [
+    {
+      "question_id": "Q1",
+      "question_text": "Solve this inequality: x^2 - 4x + 5 > 0",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "x^2 - 4x + 5 > 0"
+        },
+        {
+          "step_id": 2,
+          "content": "(x - 5)(x + 1) > 0"
+        }
+      ],
+      "final_answer": "(x - 5)(x + 1) > 0"
+    },
+    {
+      "question_id": "Q2",
+      "question_text": "Simplify surds: sqrt(50) + sqrt(8) - sqrt(18)",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "sqrt(50) + sqrt(8) - sqrt(18) = sqrt(25 x 2) + sqrt(4 x 2) - sqrt(9 x 2)"
+        },
+        {
+          "step_id": 2,
+          "content": "= 5sqrt(2) + 2sqrt(2) - 3sqrt(2)"
+        },
+        {
+          "step_id": 3,
+          "content": "= 4sqrt(2)"
+        }
+      ],
+      "final_answer": "4sqrt(2)"
+    },
+    {
+      "question_id": "Q3",
+      "question_text": "Find the remainder when f(x) = 2x^3 - 3x^2 + 4x - 5 is divided by x - 2",
+      "student_steps": [
+        {
+          "step_id": 1,
+          "content": "Using remainder theorem,"
+        },
+        {
+          "step_id": 2,
+          "content": "f(2) = 2(2)^3 - 3(2)^2 + 4(2) - 5"
+        },
+        {
+          "step_id": 3,
+          "content": "= 16 - 12 + 8 - 5"
+        },
+        {
+          "step_id": 4,
+          "content": "= 7"
+        },
+        {
+          "step_id": 5,
+          "content": "Therefore remainder = 7"
+        }
+      ],
+      "final_answer": "remainder = 7"
+    }
+  ]
+}
