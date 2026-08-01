@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 
 
@@ -10,11 +10,19 @@ class StudentStep(BaseModel):
     marks_awarded: float = 0.0
 
 
-class MarkingSchemeStep(BaseModel):
-    step_number: int
+class SchemeStep(BaseModel):
+    """One marking scheme step. All four fields are required."""
+    step_no: int
+    description: str
     expected_expression: str
-    marks: float
-    description: Optional[str] = None
+    marks: float = Field(..., ge=0)
+
+
+class MarkingScheme(BaseModel):
+    """The canonical marking scheme exchanged between all three modules.
+    `total_marks` lives here and is never duplicated alongside the scheme."""
+    total_marks: float = Field(..., ge=0)
+    steps: List[SchemeStep]
 
 
 class OCROutput(BaseModel):
@@ -29,8 +37,7 @@ class ReasoningResult(BaseModel):
     student_steps: List[StudentStep]
     detected_method: str
     assigned_marks: float
-    total_marks: float
-    marking_scheme: List[MarkingSchemeStep]
+    marking_scheme: MarkingScheme  # .total_marks is the single source of truth
 
 
 class FeedbackOutput(BaseModel):

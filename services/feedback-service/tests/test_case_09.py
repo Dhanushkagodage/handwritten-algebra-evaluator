@@ -3,8 +3,8 @@ Sample case 09 — simultaneous equations by substitution.
 
 Question : Solve y = x + 1 and 2x + 3y = 13
 Steps    : 4 steps, mixed (2.5 / 4.0)
-Exercises: the optional error_description and marking-scheme description fields,
-           which Module 02 may supply and which feed into the prompt
+Exercises: the optional error_description field on student steps, which Module 02
+           may supply and which feeds into the prompt
 
 Run from the feedback-service directory:
     python tests/test_case_09.py                  # ZeroGPU Space (default)

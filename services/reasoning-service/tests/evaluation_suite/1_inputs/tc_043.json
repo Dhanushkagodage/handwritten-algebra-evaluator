@@ -14,11 +14,11 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "Identify normal vectors n₁ = (2, -1, 2) and n₂ = (1, 2, 2)", "marks": 1},
-      {"step_no": 2, "description": "Calculate dot product n₁ · n₂ = 4", "marks": 1},
-      {"step_no": 3, "description": "Calculate magnitudes |n₁| = 3 and |n₂| = 3", "marks": 2},
-      {"step_no": 4, "description": "Apply cos θ formula to get cos θ = 4/9", "marks": 1},
-      {"step_no": 5, "description": "Calculate acute angle θ = 63.6°", "marks": 1}
+      {"step_no": 1, "description": "Identify normal vectors n₁ = (2, -1, 2) and n₂ = (1, 2, 2)", "expected_expression": "n₁ = (2, -1, 2) and n₂ = (1, 2, 2)", "marks": 1},
+      {"step_no": 2, "description": "Calculate dot product n₁ · n₂ = 4", "expected_expression": "n₁ · n₂ = 2 - 2 + 4 = 4", "marks": 1},
+      {"step_no": 3, "description": "Calculate magnitudes |n₁| = 3 and |n₂| = 3", "expected_expression": "|n₁| = 3 and |n₂| = 3", "marks": 2},
+      {"step_no": 4, "description": "Apply cos θ formula to get cos θ = 4/9", "expected_expression": "cos θ = 4/9", "marks": 1},
+      {"step_no": 5, "description": "Calculate acute angle θ = 63.6°", "expected_expression": "θ = arccos(4/9) ≈ 63.6°", "marks": 1}
     ]
   }
 }

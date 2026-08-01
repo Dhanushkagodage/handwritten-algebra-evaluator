@@ -12,11 +12,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Recognize that X = A⁻¹B and set up the inverse process", "marks": 1},
-      {"step_no": 2, "description": "Calculate det(A) = 3·2 - 1·5 = 1", "marks": 2},
-      {"step_no": 3, "description": "Find A⁻¹ = (1/det(A))·[[2, -1], [-5, 3]] = [[2, -1], [-5, 3]]", "marks": 2},
-      {"step_no": 4, "description": "Multiply X = A⁻¹B = [[2·7 + (-1)·11], [(-5)·7 + 3·11]] = [[3], [(-2)]]", "marks": 2},
-      {"step_no": 5, "description": "State the solution X = [[3], [-2]] and verify AX = B", "marks": 1}
+      {"step_no": 1, "description": "Recognize that X = A⁻¹B and set up the inverse process", "expected_expression": "X = A⁻¹B", "marks": 1},
+      {"step_no": 2, "description": "Calculate det(A) = 3·2 - 1·5 = 1", "expected_expression": "det(A) = 3·2 - 1·5 = 1", "marks": 2},
+      {"step_no": 3, "description": "Find A⁻¹ = (1/det(A))·[[2, -1], [-5, 3]] = [[2, -1], [-5, 3]]", "expected_expression": "A⁻¹ = [[2, -1], [-5, 3]]", "marks": 2},
+      {"step_no": 4, "description": "Multiply X = A⁻¹B = [[2·7 + (-1)·11], [(-5)·7 + 3·11]] = [[3], [(-2)]]", "expected_expression": "X = [[2·7 + (-1)·11], [(-5)·7 + 3·11]] = [[3], [-2]]", "marks": 2},
+      {"step_no": 5, "description": "State the solution X = [[3], [-2]] and verify AX = B", "expected_expression": "X = [[3], [-2]]", "marks": 1}
     ]
   }
 }

@@ -24,6 +24,7 @@ class ReasoningInput(BaseModel):
 class SchemeStep(BaseModel):
     step_no: int = Field(..., description="Step number in the marking scheme")
     description: str = Field(..., description="Description of what this step requires")
+    expected_expression: str = Field(..., description="The algebraic result this step should produce")
     marks: float = Field(..., ge=0, description="Marks awarded for this scheme step")
 
 
@@ -53,9 +54,9 @@ class EvaluationRequest(BaseModel):
                 "marking_scheme": {
                     "total_marks": 5,
                     "steps": [
-                        {"step_no": 1, "description": "Correctly write the standard form", "marks": 1},
-                        {"step_no": 2, "description": "Correctly factorise the quadratic", "marks": 2},
-                        {"step_no": 3, "description": "State both correct solutions", "marks": 2}
+                        {"step_no": 1, "description": "Correctly write the standard form", "expected_expression": "x² - 5x + 6 = 0", "marks": 1},
+                        {"step_no": 2, "description": "Correctly factorise the quadratic", "expected_expression": "(x - 2)(x - 3) = 0", "marks": 2},
+                        {"step_no": 3, "description": "State both correct solutions", "expected_expression": "x = 2 or x = 3", "marks": 2}
                     ]
                 }
             }

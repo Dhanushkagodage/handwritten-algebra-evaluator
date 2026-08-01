@@ -64,18 +64,29 @@ export default function Evaluate() {
         if (m) return { expression: m[1].trim(), marks: parseInt(m[2]) }
         return { expression: expr, marks: 1 }
       }
-      const markingScheme = schemeOcr.student_steps.map((s: any) => {
+      // Canonical marking scheme: an object of { total_marks, steps }, where each
+      // step is { step_no, description, expected_expression, marks }. The OCR of a
+      // scheme image gives us one line per step, so it seeds both description and
+      // expected_expression until a richer extraction is wired up.
+      const schemeSteps = schemeOcr.student_steps.map((s: any) => {
         const { expression, marks } = parseSchemeStep(s)
-        return { step_no: s.step_number, description: expression, marks }
+        return {
+          step_no: s.step_number,
+          description: expression,
+          expected_expression: expression,
+          marks,
+        }
       })
-      const totalMarks = markingScheme.reduce((sum: number, m: any) => sum + m.marks, 0) || 5
+      const markingScheme = {
+        total_marks: schemeSteps.reduce((sum: number, m: any) => sum + m.marks, 0) || 5,
+        steps: schemeSteps,
+      }
 
       setActiveStep('reasoning')
       const reasoning = await analyzeReasoning({
         question_text: answerOcr.question_text,
         student_steps: answerOcr.student_steps,
         marking_scheme: markingScheme,
-        total_marks: totalMarks,
       })
       setReasoningResult(reasoning)
 
@@ -85,8 +96,7 @@ export default function Evaluate() {
         student_steps: reasoning.step_analysis,
         detected_method: reasoning.detected_method,
         assigned_marks: reasoning.assigned_marks,
-        total_marks: reasoning.total_marks,
-        marking_scheme: reasoning.marking_scheme,
+        marking_scheme: reasoning.marking_scheme ?? markingScheme,
       })
       setFeedbackResult(feedback)
 

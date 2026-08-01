@@ -14,11 +14,11 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "State Maclaurin series expansion formula", "marks": 1},
-      {"step_no": 2, "description": "Calculate derivatives f'(x), f''(x), f'''(x)", "marks": 2},
-      {"step_no": 3, "description": "Evaluate derivatives at x = 0: f(0)=1, f'(0)=2, f''(0)=4, f'''(0)=8", "marks": 1},
-      {"step_no": 4, "description": "Substitute values into Maclaurin formula and divide by factorials", "marks": 1},
-      {"step_no": 5, "description": "Simplify coefficients to obtain 1 + 2x + 2x² + (4/3)x³", "marks": 1}
+      {"step_no": 1, "description": "State Maclaurin series expansion formula", "expected_expression": "f(x) = f(0) + f'(0)x + f''(0)x²/2! + f'''(0)x³/3! + ...", "marks": 1},
+      {"step_no": 2, "description": "Calculate derivatives f'(x), f''(x), f'''(x)", "expected_expression": "f'(x) = 2e^(2x), f''(x) = 4e^(2x), f'''(x) = 8e^(2x)", "marks": 2},
+      {"step_no": 3, "description": "Evaluate derivatives at x = 0: f(0)=1, f'(0)=2, f''(0)=4, f'''(0)=8", "expected_expression": "f(0) = 1, f'(0) = 2, f''(0) = 4, f'''(0) = 8", "marks": 1},
+      {"step_no": 4, "description": "Substitute values into Maclaurin formula and divide by factorials", "expected_expression": "e^(2x) ≈ 1 + 2x + (4/2)x² + (8/6)x³", "marks": 1},
+      {"step_no": 5, "description": "Simplify coefficients to obtain 1 + 2x + 2x² + (4/3)x³", "expected_expression": "e^(2x) ≈ 1 + 2x + 2x² + (4/3)x³", "marks": 1}
     ]
   }
 }

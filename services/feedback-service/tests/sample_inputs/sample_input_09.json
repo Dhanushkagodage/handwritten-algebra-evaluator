@@ -2,7 +2,6 @@
   "question_text": "Solve the simultaneous equations y = x + 1 and 2x + 3y = 13",
   "detected_method": "substitution",
   "assigned_marks": 2.0,
-  "total_marks": 4.0,
   "student_steps": [
     {
       "step_number": 1,
@@ -32,30 +31,33 @@
       "error_description": "method for finding y is right but the value of x carried in is wrong"
     }
   ],
-  "marking_scheme": [
-    {
-      "step_number": 1,
-      "expected_expression": "2x + 3(x + 1) = 13",
-      "marks": 1.0,
-      "description": "substitute y = x + 1 into the second equation"
-    },
-    {
-      "step_number": 2,
-      "expected_expression": "2x + 3x + 3 = 13",
-      "marks": 1.0,
-      "description": "expand the bracket, multiplying both terms by 3"
-    },
-    {
-      "step_number": 3,
-      "expected_expression": "5x = 10",
-      "marks": 1.0,
-      "description": "collect like terms and subtract 3 from both sides"
-    },
-    {
-      "step_number": 4,
-      "expected_expression": "x = 2, y = 3",
-      "marks": 1.0,
-      "description": "solve for x, then back-substitute to find y"
-    }
-  ]
+  "marking_scheme": {
+    "total_marks": 4.0,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "substitute y = x + 1 into the second equation",
+        "expected_expression": "2x + 3(x + 1) = 13",
+        "marks": 1.0
+      },
+      {
+        "step_no": 2,
+        "description": "expand the bracket, multiplying both terms by 3",
+        "expected_expression": "2x + 3x + 3 = 13",
+        "marks": 1.0
+      },
+      {
+        "step_no": 3,
+        "description": "collect like terms and subtract 3 from both sides",
+        "expected_expression": "5x = 10",
+        "marks": 1.0
+      },
+      {
+        "step_no": 4,
+        "description": "solve for x, then back-substitute to find y",
+        "expected_expression": "x = 2, y = 3",
+        "marks": 1.0
+      }
+    ]
+  }
 }

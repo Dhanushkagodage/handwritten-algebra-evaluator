@@ -35,26 +35,31 @@
       {
         "step_no": 1,
         "description": "Recognise substitution u=2^x to convert to quadratic — not done. 0 marks.",
+        "expected_expression": "u = 2ˣ so that 4ˣ = u²",
         "marks": 0
       },
       {
         "step_no": 2,
         "description": "Form u²-6u+8=0 — not reached.",
+        "expected_expression": "u² - 6u + 8 = 0",
         "marks": 0
       },
       {
         "step_no": 3,
         "description": "Factorise (u-2)(u-4)=0 — not reached.",
+        "expected_expression": "(u - 2)(u - 4) = 0",
         "marks": 0
       },
       {
         "step_no": 4,
         "description": "Find u=2 and u=4 — not reached.",
+        "expected_expression": "u = 2 or u = 4",
         "marks": 0
       },
       {
         "step_no": 5,
         "description": "Convert back: x=1 and x=2 — not reached.",
+        "expected_expression": "x = 1 or x = 2",
         "marks": 0
       }
     ]

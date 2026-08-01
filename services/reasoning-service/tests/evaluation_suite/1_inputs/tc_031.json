@@ -15,9 +15,9 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "Square both sides or set up dual linear cases (2x - 5 = ±(x + 1))", "marks": 2},
-      {"step_no": 2, "description": "Expand and form quadratic 3x² - 22x + 24 = 0", "marks": 2},
-      {"step_no": 3, "description": "Solve quadratic to find x = 4/3 and x = 6", "marks": 2}
+      {"step_no": 1, "description": "Square both sides or set up dual linear cases (2x - 5 = ±(x + 1))", "expected_expression": "(2x - 5)² = (x + 1)²", "marks": 2},
+      {"step_no": 2, "description": "Expand and form quadratic 3x² - 22x + 24 = 0", "expected_expression": "3x² - 22x + 24 = 0", "marks": 2},
+      {"step_no": 3, "description": "Solve quadratic to find x = 4/3 and x = 6", "expected_expression": "(3x - 4)(x - 6) = 0, so x = 4/3 or x = 6", "marks": 2}
     ]
   }
 }

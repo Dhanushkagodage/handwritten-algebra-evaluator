@@ -36,7 +36,7 @@ async def run() -> None:
 
     print(f"Question: {request.question_text}")
     print(f"Method  : {request.detected_method}")
-    print(f"Score   : {request.assigned_marks} / {request.total_marks}")
+    print(f"Score   : {request.assigned_marks} / {request.marking_scheme.total_marks}")
     print("Calling trained model via SPACE_ID...\n")
 
     generator = FeedbackGenerator()
@@ -58,7 +58,7 @@ async def run() -> None:
                 f"Step {sf.step_number} lost marks but has no deduction explanation"
             )
     assert response.final_score == request.assigned_marks
-    assert response.total_marks == request.total_marks
+    assert response.total_marks == request.marking_scheme.total_marks
     assert response.improvement_suggestions, "Expected at least one improvement suggestion"
 
     print("\nAll assertions passed.")

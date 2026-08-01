@@ -13,11 +13,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Set up correct partial fraction form A/(x - 1) + (Bx + C)/(x² + 1)", "marks": 2},
-      {"step_no": 2, "description": "Multiply through to obtain identity x² + 2x + 3 = A(x² + 1) + (Bx + C)(x - 1)", "marks": 1},
-      {"step_no": 3, "description": "Substitute x = 1 to solve A = 3", "marks": 2},
-      {"step_no": 4, "description": "Equate coefficients or substitute values to solve B = -2 and C = 0", "marks": 2},
-      {"step_no": 5, "description": "State final expression 3/(x - 1) - 2x/(x² + 1)", "marks": 1}
+      {"step_no": 1, "description": "Set up correct partial fraction form A/(x - 1) + (Bx + C)/(x² + 1)", "expected_expression": "A/(x - 1) + (Bx + C)/(x² + 1)", "marks": 2},
+      {"step_no": 2, "description": "Multiply through to obtain identity x² + 2x + 3 = A(x² + 1) + (Bx + C)(x - 1)", "expected_expression": "x² + 2x + 3 = A(x² + 1) + (Bx + C)(x - 1)", "marks": 1},
+      {"step_no": 3, "description": "Substitute x = 1 to solve A = 3", "expected_expression": "6 = 2A, so A = 3", "marks": 2},
+      {"step_no": 4, "description": "Equate coefficients or substitute values to solve B = -2 and C = 0", "expected_expression": "B = -2 and C = 0", "marks": 2},
+      {"step_no": 5, "description": "State final expression 3/(x - 1) - 2x/(x² + 1)", "expected_expression": "3/(x - 1) - 2x/(x² + 1)", "marks": 1}
     ]
   }
 }

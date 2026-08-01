@@ -198,9 +198,8 @@ Return only valid JSON in this exact shape:
   "marking_scheme": {{
     "total_marks": 0,
     "steps": [
-      {{"step_no": 1, "description": "", "marks": 0}}
-    ],
-    "final_answer": ""
+      {{"step_no": 1, "description": "", "expected_expression": "", "marks": 0}}
+    ]
   }}
 }}
 
@@ -208,11 +207,13 @@ Rules:
 - Use plain text math such as x^2, (x - 1)^2, A/(x - 1), sqrt(31).
 - Preserve the order of the expected marking steps.
 - Write each marking point as a clear description.
+- Put the algebraic result the step should produce in expected_expression, in plain text math.
+  If the step is purely descriptive with no expression written, restate the required result as an expression.
+- The final expected answer belongs in the last step's expected_expression.
 - If marks are written beside a step, put that value in marks as a number.
 - If a step has no visible mark value, use 0 for marks.
 - If total marks are not visible, calculate it from the step marks. If it cannot be calculated, use 0.
-- Include final_answer only if a final expected answer is visible; otherwise use an empty string.
-- Do not include student_steps, reasoning_input, marking_scheme_input, bounding boxes, explanations, OCR confidence, or markdown.
+- Do not include student_steps, reasoning_input, marking_scheme_input, final_answer, bounding boxes, explanations, OCR confidence, or markdown.
 """.strip()
 
 
@@ -313,9 +314,11 @@ def parse_marking_scheme_json(text: str) -> dict:
     for step in raw_steps:
         if isinstance(step, dict):
             content = str(step.get("description", step.get("content", ""))).strip()
+            expected = str(step.get("expected_expression", step.get("expression", ""))).strip()
             raw_marks = step.get("marks", 0.0)
         else:
             content = str(step).strip()
+            expected = ""
             raw_marks = 0.0
 
         if not content:
@@ -330,6 +333,7 @@ def parse_marking_scheme_json(text: str) -> dict:
             {
                 "step_no": len(cleaned_steps) + 1,
                 "description": content,
+                "expected_expression": expected or content,
                 "marks": marks,
             }
         )
@@ -339,15 +343,9 @@ def parse_marking_scheme_json(text: str) -> dict:
     except (TypeError, ValueError):
         total_marks = 0.0
 
-    result = {
+    return {
         "marking_scheme": {
             "total_marks": total_marks,
             "steps": cleaned_steps,
         }
     }
-
-    final_answer = str(marking_scheme.get("final_answer", "")).strip()
-    if final_answer:
-        result["marking_scheme"]["final_answer"] = final_answer
-
-    return result

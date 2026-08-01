@@ -43,21 +43,25 @@
       {
         "step_no": 1,
         "description": "Show p(2)=0 to verify factor.",
+        "expected_expression": "p(2) = 8 - 24 + 22 - 6 = 0",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Polynomial division giving x²-4x+3.",
+        "expected_expression": "x³ - 6x² + 11x - 6 = (x - 2)(x² - 4x + 3)",
         "marks": 3
       },
       {
         "step_no": 3,
         "description": "Factorise quadratic to (x-1)(x-3).",
+        "expected_expression": "x² - 4x + 3 = (x - 1)(x - 3)",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "State complete factorisation (x-2)(x-1)(x-3) — not done. 0 marks.",
+        "expected_expression": "p(x) = (x - 2)(x - 1)(x - 3)",
         "marks": 0
       }
     ]

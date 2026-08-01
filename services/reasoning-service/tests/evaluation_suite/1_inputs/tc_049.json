@@ -15,10 +15,10 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "State Newton-Raphson formula and differentiate f(x) to get f'(x) = 3x² - 2", "marks": 2},
-      {"step_no": 2, "description": "Compute first iteration x₁ = 2.1", "marks": 2},
-      {"step_no": 3, "description": "Compute second iteration x₂ ≈ 2.095", "marks": 1},
-      {"step_no": 4, "description": "Verify convergence to state root x = 2.095 correct to 3 decimal places", "marks": 1}
+      {"step_no": 1, "description": "State Newton-Raphson formula and differentiate f(x) to get f'(x) = 3x² - 2", "expected_expression": "x_{n+1} = x_n - f(x_n)/f'(x_n) with f'(x) = 3x² - 2", "marks": 2},
+      {"step_no": 2, "description": "Compute first iteration x₁ = 2.1", "expected_expression": "x₁ = 2 - (-1)/10 = 2.1", "marks": 2},
+      {"step_no": 3, "description": "Compute second iteration x₂ ≈ 2.095", "expected_expression": "x₂ = 2.1 - 0.061/11.23 ≈ 2.095", "marks": 1},
+      {"step_no": 4, "description": "Verify convergence to state root x = 2.095 correct to 3 decimal places", "expected_expression": "x ≈ 2.095", "marks": 1}
     ]
   }
 }

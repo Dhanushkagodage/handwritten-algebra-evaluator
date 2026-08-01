@@ -15,11 +15,11 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Apply change of base formula logₓ(16) = 4 / log₂(x)", "marks": 2},
-      {"step_no": 2, "description": "Substitute y = log₂(x) to obtain y + 4/y = 5", "marks": 1},
-      {"step_no": 3, "description": "Rearrange to quadratic y² - 5y + 4 = 0", "marks": 1},
-      {"step_no": 4, "description": "Solve quadratic for y = 1 and y = 4", "marks": 1},
-      {"step_no": 5, "description": "Solve for x = 2 and x = 16", "marks": 2}
+      {"step_no": 1, "description": "Apply change of base formula logₓ(16) = 4 / log₂(x)", "expected_expression": "logₓ(16) = 4 / log₂(x)", "marks": 2},
+      {"step_no": 2, "description": "Substitute y = log₂(x) to obtain y + 4/y = 5", "expected_expression": "y + 4/y = 5 where y = log₂(x)", "marks": 1},
+      {"step_no": 3, "description": "Rearrange to quadratic y² - 5y + 4 = 0", "expected_expression": "y² - 5y + 4 = 0", "marks": 1},
+      {"step_no": 4, "description": "Solve quadratic for y = 1 and y = 4", "expected_expression": "(y - 1)(y - 4) = 0, so y = 1 or y = 4", "marks": 1},
+      {"step_no": 5, "description": "Solve for x = 2 and x = 16", "expected_expression": "x = 2 or x = 16", "marks": 2}
     ]
   }
 }

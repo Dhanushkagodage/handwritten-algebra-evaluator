@@ -80,7 +80,7 @@ class FeedbackGenerator:
 
         return FeedbackResponse(
             final_score=request.assigned_marks,
-            total_marks=request.total_marks,
+            total_marks=request.marking_scheme.total_marks,
             step_feedback=step_feedback,
             overall_feedback=self._build_overall_feedback(request, step_feedback),
             improvement_suggestions=self._extract_suggestions(step_feedback),
@@ -91,7 +91,7 @@ class FeedbackGenerator:
     # ------------------------------------------------------------------
 
     def _build_messages(self, request: FeedbackRequest) -> List[Dict]:
-        scheme_marks = {m.step_number: m.marks for m in request.marking_scheme}
+        scheme_marks = {m.step_no: m.marks for m in request.marking_scheme.steps}
 
         steps_text = "\n".join(
             "Step {n}: {expr} [{v}, {awarded}/{possible} marks]{err}".format(
@@ -106,19 +106,19 @@ class FeedbackGenerator:
         )
 
         scheme_text = "\n".join(
-            "Step {n}: {expr} [{m} marks]{desc}".format(
-                n=m.step_number,
+            "Step {n}: {expr} [{m} marks] — {desc}".format(
+                n=m.step_no,
                 expr=m.expected_expression,
                 m=m.marks,
-                desc=f" — {m.description}" if m.description else "",
+                desc=m.description,
             )
-            for m in request.marking_scheme
+            for m in request.marking_scheme.steps
         )
 
         user_content = (
             f"Question: {request.question_text}\n"
             f"Solution Method: {request.detected_method}\n"
-            f"Score: {request.assigned_marks} / {request.total_marks}\n\n"
+            f"Score: {request.assigned_marks} / {request.marking_scheme.total_marks}\n\n"
             f"Student's Steps:\n{steps_text}\n\n"
             f"Marking Scheme:\n{scheme_text}\n"
             f"{_FORMAT_INSTRUCTION}"
@@ -257,14 +257,11 @@ class FeedbackGenerator:
         incorrect = sum(1 for sf in step_feedback if sf.validity == StepValidity.INCORRECT)
         total = len(step_feedback)
 
-        pct = (
-            (request.assigned_marks / request.total_marks * 100)
-            if request.total_marks > 0
-            else 0
-        )
+        total_marks = request.marking_scheme.total_marks
+        pct = (request.assigned_marks / total_marks * 100) if total_marks > 0 else 0
 
         summary = (
-            f"You scored {request.assigned_marks:.1f}/{request.total_marks:.1f} marks "
+            f"You scored {request.assigned_marks:.1f}/{total_marks:.1f} marks "
             f"({pct:.0f}%) using the {request.detected_method} method. "
         )
 

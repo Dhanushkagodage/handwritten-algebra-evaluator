@@ -43,31 +43,37 @@
       {
         "step_no": 1,
         "description": "Identify repeated factor form correctly.",
+        "expected_expression": "A/(x-2) + B/(x-2)² + C/(x+1)",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Form identity by multiplying through.",
+        "expected_expression": "4x² - 3x + 5 = A(x-2)(x+1) + B(x+1) + C(x-2)²",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Find B = 5 using x=2.",
+        "expected_expression": "3B = 15, so B = 5",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Find C = 4/3 using x=-1.",
+        "expected_expression": "9C = 12, so C = 4/3",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Find A = 8/3 by comparing coefficients.",
+        "expected_expression": "4 = A + 4/3, so A = 8/3",
         "marks": 2
       },
       {
         "step_no": 6,
         "description": "State complete final answer.",
+        "expected_expression": "(8/3)/(x-2) + 5/(x-2)² + (4/3)/(x+1)",
         "marks": 1
       }
     ]

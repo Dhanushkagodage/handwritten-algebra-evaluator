@@ -35,31 +35,37 @@
       {
         "step_no": 1,
         "description": "Set up matrix equation correctly.",
+        "expected_expression": "[[2, -1], [1, 3]]·[x, y]ᵀ = [3, 10]ᵀ",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Calculate det = 7.",
+        "expected_expression": "det = 2(3) - (-1)(1) = 7",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Write inverse correctly.",
+        "expected_expression": "inverse = (1/7)[[3, 1], [-1, 2]]",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Multiply to find x = 19/7.",
+        "expected_expression": "x = (1/7)(3(3) + 1(10)) = 19/7",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Find y = 17/7.",
+        "expected_expression": "y = (1/7)(-1(3) + 2(10)) = 17/7",
         "marks": 1
       },
       {
         "step_no": 6,
         "description": "Verify — not done. 0 marks.",
+        "expected_expression": "2(19/7) - 17/7 = 3 and 19/7 + 3(17/7) = 10",
         "marks": 0
       }
     ]

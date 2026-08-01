@@ -16,11 +16,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Separate variables correctly with dy and dx on opposite sides", "marks": 2},
-      {"step_no": 2, "description": "Integrate LHS to get ln|y - 1|", "marks": 1},
-      {"step_no": 3, "description": "Integrate RHS to get (1/2) ln(x² + 1)", "marks": 2},
-      {"step_no": 4, "description": "Include constant of integration + C and apply initial condition (0, 3) to solve C = ln(2)", "marks": 2},
-      {"step_no": 5, "description": "Solve for y in explicit form y = 1 + 2 √(x² + 1)", "marks": 1}
+      {"step_no": 1, "description": "Separate variables correctly with dy and dx on opposite sides", "expected_expression": "(1/(y - 1)) dy = (x/(x² + 1)) dx", "marks": 2},
+      {"step_no": 2, "description": "Integrate LHS to get ln|y - 1|", "expected_expression": "∫ (1/(y - 1)) dy = ln|y - 1|", "marks": 1},
+      {"step_no": 3, "description": "Integrate RHS to get (1/2) ln(x² + 1)", "expected_expression": "∫ (x/(x² + 1)) dx = (1/2) ln(x² + 1)", "marks": 2},
+      {"step_no": 4, "description": "Include constant of integration + C and apply initial condition (0, 3) to solve C = ln(2)", "expected_expression": "ln|y - 1| = (1/2) ln(x² + 1) + C with C = ln 2", "marks": 2},
+      {"step_no": 5, "description": "Solve for y in explicit form y = 1 + 2 √(x² + 1)", "expected_expression": "y = 1 + 2√(x² + 1)", "marks": 1}
     ]
   }
 }

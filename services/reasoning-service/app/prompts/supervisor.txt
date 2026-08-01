@@ -9,7 +9,10 @@ You will receive:
 1. step_validations: Output from Step Validation Agent (mathematical correctness per step)
 2. method_detection: Output from Method Detection Agent (solving approach used)
 3. scheme_matching: Output from Scheme Matching Agent (how student steps map to scheme)
-4. marking_scheme: The official marking scheme with marks per step
+4. marking_scheme: The official marking scheme — `total_marks` plus `steps`, where each step carries
+   `step_no`, `description` (the objective in words), `expected_expression` (the algebraic result the
+   step should produce) and `marks`. Treat `expected_expression` as a reference form to compare
+   against for mathematical equivalence, never as a string the student must reproduce literally.
 
 ## YOUR RESPONSIBILITIES
 For each student step:

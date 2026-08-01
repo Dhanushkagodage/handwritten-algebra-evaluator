@@ -13,11 +13,11 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Apply factor theorem: evaluate P(1) = 0 to confirm (x - 1) is a factor", "marks": 2},
-      {"step_no": 2, "description": "Use synthetic division (not long division) to divide P(x) by (x - 1) and obtain x² - 5x + 6", "marks": 2},
-      {"step_no": 3, "description": "Verify quotient: x² - 5x + 6 is correctly obtained", "marks": 1},
-      {"step_no": 4, "description": "Factorise the quotient quadratic into (x - 2)(x - 3)", "marks": 1},
-      {"step_no": 5, "description": "Write the complete factorisation P(x) = (x - 1)(x - 2)(x - 3)", "marks": 1}
+      {"step_no": 1, "description": "Apply factor theorem: evaluate P(1) = 0 to confirm (x - 1) is a factor", "expected_expression": "P(1) = 1 - 6 + 11 - 6 = 0, so (x - 1) is a factor", "marks": 2},
+      {"step_no": 2, "description": "Use synthetic division (not long division) to divide P(x) by (x - 1) and obtain x² - 5x + 6", "expected_expression": "x³ - 6x² + 11x - 6 = (x - 1)(x² - 5x + 6)", "marks": 2},
+      {"step_no": 3, "description": "Verify quotient: x² - 5x + 6 is correctly obtained", "expected_expression": "quotient = x² - 5x + 6", "marks": 1},
+      {"step_no": 4, "description": "Factorise the quotient quadratic into (x - 2)(x - 3)", "expected_expression": "x² - 5x + 6 = (x - 2)(x - 3)", "marks": 1},
+      {"step_no": 5, "description": "Write the complete factorisation P(x) = (x - 1)(x - 2)(x - 3)", "expected_expression": "P(x) = (x - 1)(x - 2)(x - 3)", "marks": 1}
     ]
   }
 }

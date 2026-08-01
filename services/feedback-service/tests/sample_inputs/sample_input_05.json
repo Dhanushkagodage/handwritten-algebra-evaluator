@@ -2,7 +2,6 @@
   "question_text": "Solve the inequality 4 - 3x < 13",
   "detected_method": "linear inequality",
   "assigned_marks": 2.0,
-  "total_marks": 3.0,
   "student_steps": [
     {
       "step_number": 1,
@@ -23,21 +22,27 @@
       "marks_awarded": 1.0
     }
   ],
-  "marking_scheme": [
-    {
-      "step_number": 1,
-      "expected_expression": "-3x < 9",
-      "marks": 1.0
-    },
-    {
-      "step_number": 2,
-      "expected_expression": "x > -3",
-      "marks": 1.0
-    },
-    {
-      "step_number": 3,
-      "expected_expression": "solution set: x > -3",
-      "marks": 1.0
-    }
-  ]
+  "marking_scheme": {
+    "total_marks": 3.0,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Subtract 4 from both sides",
+        "expected_expression": "-3x < 9",
+        "marks": 1.0
+      },
+      {
+        "step_no": 2,
+        "description": "Divide by -3 and reverse the inequality sign",
+        "expected_expression": "x > -3",
+        "marks": 1.0
+      },
+      {
+        "step_no": 3,
+        "description": "State the solution set",
+        "expected_expression": "solution set: x > -3",
+        "marks": 1.0
+      }
+    ]
+  }
 }

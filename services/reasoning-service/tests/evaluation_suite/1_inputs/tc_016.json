@@ -13,10 +13,10 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Apply Factor Theorem: test value and state (x - 1) is a factor", "marks": 2},
-      {"step_no": 2, "description": "Perform polynomial division/synthetic division to obtain quotient x² - 5x + 6", "marks": 2},
-      {"step_no": 3, "description": "Factorise the quotient quadratic into (x - 2)(x - 3)", "marks": 2},
-      {"step_no": 4, "description": "State all three solutions x = 1, 2, 3", "marks": 1}
+      {"step_no": 1, "description": "Apply Factor Theorem: test value and state (x - 1) is a factor", "expected_expression": "f(1) = 0, so (x - 1) is a factor", "marks": 2},
+      {"step_no": 2, "description": "Perform polynomial division/synthetic division to obtain quotient x² - 5x + 6", "expected_expression": "x³ - 6x² + 11x - 6 = (x - 1)(x² - 5x + 6)", "marks": 2},
+      {"step_no": 3, "description": "Factorise the quotient quadratic into (x - 2)(x - 3)", "expected_expression": "x² - 5x + 6 = (x - 2)(x - 3)", "marks": 2},
+      {"step_no": 4, "description": "State all three solutions x = 1, 2, 3", "expected_expression": "x = 1, x = 2, x = 3", "marks": 1}
     ]
   }
 }

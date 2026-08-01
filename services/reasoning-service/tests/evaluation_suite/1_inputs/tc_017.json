@@ -14,11 +14,11 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "Calculate modulus r = 2 correctly", "marks": 1},
-      {"step_no": 2, "description": "Calculate argument θ = π/3 correctly", "marks": 1},
-      {"step_no": 3, "description": "Write z in polar / exponential form", "marks": 1},
-      {"step_no": 4, "description": "Apply De Moivre's Theorem correctly: z⁶ = 2⁶ (cos 2π + i sin 2π)", "marks": 2},
-      {"step_no": 5, "description": "Evaluate exact final result to 64", "marks": 1}
+      {"step_no": 1, "description": "Calculate modulus r = 2 correctly", "expected_expression": "r = √(1² + (√3)²) = 2", "marks": 1},
+      {"step_no": 2, "description": "Calculate argument θ = π/3 correctly", "expected_expression": "θ = arctan(√3/1) = π/3", "marks": 1},
+      {"step_no": 3, "description": "Write z in polar / exponential form", "expected_expression": "z = 2(cos(π/3) + i sin(π/3))", "marks": 1},
+      {"step_no": 4, "description": "Apply De Moivre's Theorem correctly: z⁶ = 2⁶ (cos 2π + i sin 2π)", "expected_expression": "z⁶ = 2⁶(cos 2π + i sin 2π)", "marks": 2},
+      {"step_no": 5, "description": "Evaluate exact final result to 64", "expected_expression": "z⁶ = 64", "marks": 1}
     ]
   }
 }

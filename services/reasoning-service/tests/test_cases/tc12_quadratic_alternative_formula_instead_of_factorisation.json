@@ -13,10 +13,10 @@
   "marking_scheme": {
     "total_marks": 5,
     "steps": [
-      {"step_no": 1, "description": "Write the equation in standard form", "marks": 1},
-      {"step_no": 2, "description": "Factorise correctly: (x - 2)(x - 3) = 0", "marks": 2},
-      {"step_no": 3, "description": "Apply zero-product property", "marks": 1},
-      {"step_no": 4, "description": "State both solutions: x = 2 or x = 3", "marks": 1}
+      {"step_no": 1, "description": "Write the equation in standard form", "expected_expression": "x² - 5x + 6 = 0", "marks": 1},
+      {"step_no": 2, "description": "Factorise correctly: (x - 2)(x - 3) = 0", "expected_expression": "(x - 2)(x - 3) = 0", "marks": 2},
+      {"step_no": 3, "description": "Apply zero-product property", "expected_expression": "x - 2 = 0 or x - 3 = 0", "marks": 1},
+      {"step_no": 4, "description": "State both solutions: x = 2 or x = 3", "expected_expression": "x = 2 or x = 3", "marks": 1}
     ]
   }
 }

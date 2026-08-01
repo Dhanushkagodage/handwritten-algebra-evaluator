@@ -17,12 +17,12 @@
   "marking_scheme": {
     "total_marks": 10,
     "steps": [
-      {"step_no": 1, "description": "Verify base case n=1: LHS = 2, RHS = 1·2·3/3 = 2", "marks": 1},
-      {"step_no": 2, "description": "State the inductive hypothesis for n=k clearly and correctly", "marks": 2},
-      {"step_no": 3, "description": "State what needs to be proven for n=k+1", "marks": 1},
-      {"step_no": 4, "description": "Split the sum: Σ(k+1) = Σ(k) + (k+1)(k+2) and apply the hypothesis", "marks": 2},
-      {"step_no": 5, "description": "Correctly factorise and simplify the algebra to reach (k+1)(k+2)(k+3)/3", "marks": 3},
-      {"step_no": 6, "description": "State the conclusion clearly, invoking the principle of induction", "marks": 1}
+      {"step_no": 1, "description": "Verify base case n=1: LHS = 2, RHS = 1·2·3/3 = 2", "expected_expression": "LHS = 1·2 = 2, RHS = 1·2·3/3 = 2", "marks": 1},
+      {"step_no": 2, "description": "State the inductive hypothesis for n=k clearly and correctly", "expected_expression": "Σ(r=1 to k) r(r+1) = k(k+1)(k+2)/3", "marks": 2},
+      {"step_no": 3, "description": "State what needs to be proven for n=k+1", "expected_expression": "Σ(r=1 to k+1) r(r+1) = (k+1)(k+2)(k+3)/3", "marks": 1},
+      {"step_no": 4, "description": "Split the sum: Σ(k+1) = Σ(k) + (k+1)(k+2) and apply the hypothesis", "expected_expression": "Σ(r=1 to k+1) r(r+1) = k(k+1)(k+2)/3 + (k+1)(k+2)", "marks": 2},
+      {"step_no": 5, "description": "Correctly factorise and simplify the algebra to reach (k+1)(k+2)(k+3)/3", "expected_expression": "(k+1)(k+2)(k/3 + 1) = (k+1)(k+2)(k+3)/3", "marks": 3},
+      {"step_no": 6, "description": "State the conclusion clearly, invoking the principle of induction", "expected_expression": "True for all n ∈ ℤ⁺ by the principle of mathematical induction", "marks": 1}
     ]
   }
 }

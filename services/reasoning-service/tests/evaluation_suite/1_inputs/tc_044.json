@@ -15,12 +15,12 @@
   "marking_scheme": {
     "total_marks": 9,
     "steps": [
-      {"step_no": 1, "description": "Identify direction vectors d₁ and d₂ and set up cross product", "marks": 1},
-      {"step_no": 2, "description": "Calculate common perpendicular vector n = (-6, 6, -3)", "marks": 2},
-      {"step_no": 3, "description": "Calculate magnitude |n| = 9", "marks": 1},
-      {"step_no": 4, "description": "Form displacement vector a₂ - a₁ = (-1, 2, 1)", "marks": 1},
-      {"step_no": 5, "description": "Calculate scalar product (a₂ - a₁) · n = 15", "marks": 2},
-      {"step_no": 6, "description": "Apply projection formula d = |(a₂ - a₁) · n| / |n| to get 5/3", "marks": 2}
+      {"step_no": 1, "description": "Identify direction vectors d₁ and d₂ and set up cross product", "expected_expression": "d₁ = (1, 2, 2), d₂ = (2, 1, -2), n = d₁ × d₂", "marks": 1},
+      {"step_no": 2, "description": "Calculate common perpendicular vector n = (-6, 6, -3)", "expected_expression": "n = (-6, 6, -3)", "marks": 2},
+      {"step_no": 3, "description": "Calculate magnitude |n| = 9", "expected_expression": "|n| = 9", "marks": 1},
+      {"step_no": 4, "description": "Form displacement vector a₂ - a₁ = (-1, 2, 1)", "expected_expression": "a₂ - a₁ = (-1, 2, 1)", "marks": 1},
+      {"step_no": 5, "description": "Calculate scalar product (a₂ - a₁) · n = 15", "expected_expression": "(a₂ - a₁) · n = 15", "marks": 2},
+      {"step_no": 6, "description": "Apply projection formula d = |(a₂ - a₁) · n| / |n| to get 5/3", "expected_expression": "d = 15/9 = 5/3", "marks": 2}
     ]
   }
 }

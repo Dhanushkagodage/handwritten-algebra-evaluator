@@ -13,11 +13,11 @@
   "marking_scheme": {
     "total_marks": 5,
     "steps": [
-      {"step_no": 1, "description": "Identify first term a = 2/3", "marks": 1},
-      {"step_no": 2, "description": "Calculate common ratio r = 2/3", "marks": 1},
-      {"step_no": 3, "description": "State condition |r| < 1 for convergence", "marks": 1},
-      {"step_no": 4, "description": "Apply sum to infinity formula S_∞ = a / (1 - r)", "marks": 1},
-      {"step_no": 5, "description": "Calculate exact sum S_∞ = 2", "marks": 1}
+      {"step_no": 1, "description": "Identify first term a = 2/3", "expected_expression": "a = 2/3", "marks": 1},
+      {"step_no": 2, "description": "Calculate common ratio r = 2/3", "expected_expression": "r = (4/9) ÷ (2/3) = 2/3", "marks": 1},
+      {"step_no": 3, "description": "State condition |r| < 1 for convergence", "expected_expression": "|r| = 2/3 < 1", "marks": 1},
+      {"step_no": 4, "description": "Apply sum to infinity formula S_∞ = a / (1 - r)", "expected_expression": "S∞ = a/(1 - r) = (2/3)/(1 - 2/3)", "marks": 1},
+      {"step_no": 5, "description": "Calculate exact sum S_∞ = 2", "expected_expression": "S∞ = 2", "marks": 1}
     ]
   }
 }

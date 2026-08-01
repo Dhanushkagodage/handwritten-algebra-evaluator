@@ -232,7 +232,7 @@ curl -X POST http://localhost:8001/api/v1/ocr \
 ### **Reasoning Service** (:8002)
 
 **POST** `/api/v1/analyze`
-- **Input:** `{ question_text, student_steps[], marking_scheme[], total_marks }`
+- **Input:** `{ question_text, student_steps[], marking_scheme }`
 - **Output:** `{ step_analysis[], detected_method, assigned_marks, total_marks }`
 
 ```json
@@ -242,11 +242,23 @@ curl -X POST http://localhost:8001/api/v1/ocr \
     {"step_number": 1, "expression": "x^2 - 5x + 6 = 0"},
     {"step_number": 2, "expression": "(x-2)(x-3) = 0"}
   ],
-  "marking_scheme": [
-    {"step_number": 1, "expected_expression": "x^2 - 5x + 6 = 0", "marks": 1},
-    {"step_number": 2, "expected_expression": "(x-2)(x-3) = 0", "marks": 2}
-  ],
-  "total_marks": 5
+  "marking_scheme": {
+    "total_marks": 3,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "State the equation in standard form",
+        "expected_expression": "x^2 - 5x + 6 = 0",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Factorise the quadratic into two linear factors",
+        "expected_expression": "(x-2)(x-3) = 0",
+        "marks": 2
+      }
+    ]
+  }
 }
 ```
 
@@ -269,10 +281,13 @@ curl -X POST http://localhost:8001/api/v1/ocr \
   ],
   "detected_method": "factorization",
   "assigned_marks": 3,
-  "total_marks": 5,
-  "marking_scheme": [...]
+  "marking_scheme": {"total_marks": 3, "steps": [...]}
 }
 ```
+
+> All three services exchange the **same** marking scheme object:
+> `{ total_marks, steps: [{ step_no, description, expected_expression, marks }] }`.
+> `total_marks` lives inside it and is never repeated as a sibling field.
 
 **GET** `/health` — Service status
 

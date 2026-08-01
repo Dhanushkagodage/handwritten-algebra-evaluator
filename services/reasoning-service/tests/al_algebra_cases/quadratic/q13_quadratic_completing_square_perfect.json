@@ -31,21 +31,25 @@
       {
         "step_no": 1,
         "description": "Factor out 2 from x² term.",
+        "expected_expression": "f(x) = 2(x² - 4x) + 11",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Complete the square inside brackets: (x-2)²-4.",
+        "expected_expression": "2[(x - 2)² - 4] + 11",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Expand and simplify to 2(x-2)²+3.",
+        "expected_expression": "2(x - 2)² + 3",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "State minimum value 3 and x=2.",
+        "expected_expression": "minimum value 3 at x = 2",
         "marks": 2
       }
     ]

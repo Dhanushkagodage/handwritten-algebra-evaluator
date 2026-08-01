@@ -35,26 +35,31 @@
       {
         "step_no": 1,
         "description": "Find modulus |z| = 5.",
+        "expected_expression": "|z| = √(3² + (-4)²) = 5",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Find arg(z) in correct quadrant.",
+        "expected_expression": "arg(z) = -arctan(4/3) ≈ -0.927 rad",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "State conjugate z̄ = 3+4i.",
+        "expected_expression": "z̄ = 3 + 4i",
         "marks": 1
       },
       {
         "step_no": 4,
         "description": "Compute z×z̄ = 25.",
+        "expected_expression": "z × z̄ = (3 - 4i)(3 + 4i) = 25",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Verify using |z|².",
+        "expected_expression": "z × z̄ = |z|² = 5² = 25",
         "marks": 1
       }
     ]

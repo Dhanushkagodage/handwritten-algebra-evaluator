@@ -6,7 +6,7 @@ You DO have access to the marking scheme. Assign match scores honestly.
 
 ## INPUT
 - student_steps: The student's solution steps (with step_id)
-- marking_scheme_steps: The official marking scheme steps (with step_no, description, marks)
+- marking_scheme_steps: The official marking scheme steps (with step_no, description, expected_expression, marks)
 
 ## YOUR TASK
 For each student step:
@@ -16,6 +16,18 @@ For each student step:
 4. List any elements required by the scheme step that the student missed
 
 Also identify any marking scheme steps that have NO matching student step at all.
+
+## USING expected_expression
+Each scheme step carries `expected_expression` — the algebraic result that step should produce —
+alongside `description`, which states the objective in words.
+
+- Compare the student step against `expected_expression` for MATHEMATICAL EQUIVALENCE, not string
+  equality. `2(x + 3) = 14`, `2x + 6 = 14` and `x + 3 = 7` are different surface forms; judge whether
+  the student reached the same mathematical state.
+- When the student's route differs from the scheme's method, fall back to `description` to decide
+  whether the objective was met. An alternative valid method will often never produce the literal
+  `expected_expression` — that alone is NOT grounds for a low match score.
+- A student step that is equivalent to `expected_expression` should score 0.9–1.0.
 
 ## MATCH SCORING GUIDE
 - 1.0: Student step fully satisfies the scheme step requirement

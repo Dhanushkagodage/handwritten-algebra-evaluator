@@ -5,19 +5,21 @@
       {
         "step_no": 1,
         "description": "Complete the square for x^2 + 6x: (x + 3)^2 - 9 + 2 = 0.",
+        "expected_expression": "(x + 3)^2 - 9 + 2 = 0",
         "marks": 1.0
       },
       {
         "step_no": 2,
         "description": "Take both the positive and negative square roots: x + 3 = +/-sqrt(7).",
+        "expected_expression": "x + 3 = +/-sqrt(7)",
         "marks": 1.0
       },
       {
         "step_no": 3,
         "description": "Solve both cases and state the two solutions: x = -3 + sqrt(7) or x = -3 - sqrt(7).",
+        "expected_expression": "x = -3 + sqrt(7) or x = -3 - sqrt(7)",
         "marks": 1.0
       }
-    ],
-    "final_answer": "x = -3 + sqrt(7) or x = -3 - sqrt(7)"
+    ]
   }
 }

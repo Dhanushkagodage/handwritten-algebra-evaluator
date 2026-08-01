@@ -13,10 +13,10 @@
   "marking_scheme": {
     "total_marks": 5,
     "steps": [
-      {"step_no": 1, "description": "Recognize that normal vector is given by cross product u × v", "marks": 1},
-      {"step_no": 2, "description": "Set up 3x3 determinant definition for cross product", "marks": 1},
-      {"step_no": 3, "description": "Compute components of u × v correctly: i(-3), j(6), k(-3)", "marks": 2},
-      {"step_no": 4, "description": "State final normal vector n = (-3, 6, -3) or parallel vector (1, -2, 1)", "marks": 1}
+      {"step_no": 1, "description": "Recognize that normal vector is given by cross product u × v", "expected_expression": "n = u × v", "marks": 1},
+      {"step_no": 2, "description": "Set up 3x3 determinant definition for cross product", "expected_expression": "n = det([[i, j, k], [1, 2, 3], [4, 5, 6]])", "marks": 1},
+      {"step_no": 3, "description": "Compute components of u × v correctly: i(-3), j(6), k(-3)", "expected_expression": "n = (-3, 6, -3)", "marks": 2},
+      {"step_no": 4, "description": "State final normal vector n = (-3, 6, -3) or parallel vector (1, -2, 1)", "expected_expression": "n = (-3, 6, -3), or the parallel vector (1, -2, 1)", "marks": 1}
     ]
   }
 }

@@ -2,7 +2,6 @@
   "question_text": "Solve the simultaneous equations 3x + 2y = 16 and x - 2y = 0",
   "detected_method": "elimination",
   "assigned_marks": 3.0,
-  "total_marks": 4.0,
   "student_steps": [
     {
       "step_number": 1,
@@ -29,26 +28,33 @@
       "marks_awarded": 0.0
     }
   ],
-  "marking_scheme": [
-    {
-      "step_number": 1,
-      "expected_expression": "(3x + 2y) + (x - 2y) = 16 + 0",
-      "marks": 1.0
-    },
-    {
-      "step_number": 2,
-      "expected_expression": "4x = 16",
-      "marks": 1.0
-    },
-    {
-      "step_number": 3,
-      "expected_expression": "x = 4",
-      "marks": 1.0
-    },
-    {
-      "step_number": 4,
-      "expected_expression": "y = 2",
-      "marks": 1.0
-    }
-  ]
+  "marking_scheme": {
+    "total_marks": 4.0,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Add the two equations to eliminate y",
+        "expected_expression": "(3x + 2y) + (x - 2y) = 16 + 0",
+        "marks": 1.0
+      },
+      {
+        "step_no": 2,
+        "description": "Simplify to a single-variable equation",
+        "expected_expression": "4x = 16",
+        "marks": 1.0
+      },
+      {
+        "step_no": 3,
+        "description": "Solve for x",
+        "expected_expression": "x = 4",
+        "marks": 1.0
+      },
+      {
+        "step_no": 4,
+        "description": "Back-substitute to find y",
+        "expected_expression": "y = 2",
+        "marks": 1.0
+      }
+    ]
+  }
 }

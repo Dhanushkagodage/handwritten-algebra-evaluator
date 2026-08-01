@@ -15,12 +15,12 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Equate coefficients: R cos α = 3 and R sin α = 4", "marks": 1},
-      {"step_no": 2, "description": "Calculate R = 5", "marks": 1},
-      {"step_no": 3, "description": "Calculate α = arctan(4/3) ≈ 0.927 rad", "marks": 1},
-      {"step_no": 4, "description": "Set up equation 5 cos(x - 0.927) = 2.5 → cos(x - 0.927) = 0.5", "marks": 1},
-      {"step_no": 5, "description": "Find first principal angle x - α = π/3 and solve x₁ = 1.97 rad", "marks": 2},
-      {"step_no": 6, "description": "Find second angle x - α = 2π - π/3 and solve x₂ = 6.16 rad", "marks": 2}
+      {"step_no": 1, "description": "Equate coefficients: R cos α = 3 and R sin α = 4", "expected_expression": "R cos α = 3 and R sin α = 4", "marks": 1},
+      {"step_no": 2, "description": "Calculate R = 5", "expected_expression": "R = √(3² + 4²) = 5", "marks": 1},
+      {"step_no": 3, "description": "Calculate α = arctan(4/3) ≈ 0.927 rad", "expected_expression": "α = arctan(4/3) ≈ 0.927 rad", "marks": 1},
+      {"step_no": 4, "description": "Set up equation 5 cos(x - 0.927) = 2.5 → cos(x - 0.927) = 0.5", "expected_expression": "cos(x - 0.927) = 0.5", "marks": 1},
+      {"step_no": 5, "description": "Find first principal angle x - α = π/3 and solve x₁ = 1.97 rad", "expected_expression": "x₁ = π/3 + 0.927 ≈ 1.97 rad", "marks": 2},
+      {"step_no": 6, "description": "Find second angle x - α = 2π - π/3 and solve x₂ = 6.16 rad", "expected_expression": "x₂ = 2π - π/3 + 0.927 ≈ 6.16 rad", "marks": 2}
     ]
   }
 }

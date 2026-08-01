@@ -13,9 +13,9 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Form correct auxiliary equation r² - 5r + 6 = 0", "marks": 2},
-      {"step_no": 2, "description": "Solve auxiliary equation to find roots r₁ = 2 and r₂ = 3", "marks": 2},
-      {"step_no": 3, "description": "State complementary function / general solution form y = A e^(2x) + B e^(3x)", "marks": 3}
+      {"step_no": 1, "description": "Form correct auxiliary equation r² - 5r + 6 = 0", "expected_expression": "r² - 5r + 6 = 0", "marks": 2},
+      {"step_no": 2, "description": "Solve auxiliary equation to find roots r₁ = 2 and r₂ = 3", "expected_expression": "(r - 2)(r - 3) = 0, so r₁ = 2 and r₂ = 3", "marks": 2},
+      {"step_no": 3, "description": "State complementary function / general solution form y = A e^(2x) + B e^(3x)", "expected_expression": "y = A e^(2x) + B e^(3x)", "marks": 3}
     ]
   }
 }

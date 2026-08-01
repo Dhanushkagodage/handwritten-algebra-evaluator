@@ -13,11 +13,11 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Correctly set up partial fraction form A/(x+1) + B/(x-3)", "marks": 1},
-      {"step_no": 2, "description": "Multiply through and write the identity 5x+3 = A(x-3) + B(x+1)", "marks": 1},
-      {"step_no": 3, "description": "Substitute x = 3 correctly: 18 = 4B → B = 9/2", "marks": 2},
-      {"step_no": 4, "description": "Substitute x = -1 correctly: -2 = -4A → A = 1/2", "marks": 2},
-      {"step_no": 5, "description": "Write final answer: 1/(2(x+1)) + 9/(2(x-3))", "marks": 1}
+      {"step_no": 1, "description": "Correctly set up partial fraction form A/(x+1) + B/(x-3)", "expected_expression": "(5x + 3)/((x + 1)(x - 3)) = A/(x + 1) + B/(x - 3)", "marks": 1},
+      {"step_no": 2, "description": "Multiply through and write the identity 5x+3 = A(x-3) + B(x+1)", "expected_expression": "5x + 3 = A(x - 3) + B(x + 1)", "marks": 1},
+      {"step_no": 3, "description": "Substitute x = 3 correctly: 18 = 4B → B = 9/2", "expected_expression": "18 = 4B, so B = 9/2", "marks": 2},
+      {"step_no": 4, "description": "Substitute x = -1 correctly: -2 = -4A → A = 1/2", "expected_expression": "-2 = -4A, so A = 1/2", "marks": 2},
+      {"step_no": 5, "description": "Write final answer: 1/(2(x+1)) + 9/(2(x-3))", "expected_expression": "1/(2(x + 1)) + 9/(2(x - 3))", "marks": 1}
     ]
   }
 }

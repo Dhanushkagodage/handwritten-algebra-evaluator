@@ -16,12 +16,12 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Expand r²(r-1) to r³ - r² and apply linearity of summation", "marks": 1},
-      {"step_no": 2, "description": "State standard formula for Σ r³ = n²(n+1)²/4", "marks": 1},
-      {"step_no": 3, "description": "State standard formula for Σ r² = n(n+1)(2n+1)/6", "marks": 1},
-      {"step_no": 4, "description": "Factor out common term n(n+1)/12", "marks": 2},
-      {"step_no": 5, "description": "Simplify inside brackets to 3n² - n - 2", "marks": 1},
-      {"step_no": 6, "description": "Factorise quadratic to (3n+2)(n-1) and state final factored expression", "marks": 2}
+      {"step_no": 1, "description": "Expand r²(r-1) to r³ - r² and apply linearity of summation", "expected_expression": "Σ(r³ - r²) = Σr³ - Σr²", "marks": 1},
+      {"step_no": 2, "description": "State standard formula for Σ r³ = n²(n+1)²/4", "expected_expression": "Σr³ = n²(n+1)²/4", "marks": 1},
+      {"step_no": 3, "description": "State standard formula for Σ r² = n(n+1)(2n+1)/6", "expected_expression": "Σr² = n(n+1)(2n+1)/6", "marks": 1},
+      {"step_no": 4, "description": "Factor out common term n(n+1)/12", "expected_expression": "(n(n+1)/12)[3n(n+1) - 2(2n+1)]", "marks": 2},
+      {"step_no": 5, "description": "Simplify inside brackets to 3n² - n - 2", "expected_expression": "3n² - n - 2", "marks": 1},
+      {"step_no": 6, "description": "Factorise quadratic to (3n+2)(n-1) and state final factored expression", "expected_expression": "n(n - 1)(n + 1)(3n + 2)/12", "marks": 2}
     ]
   }
 }

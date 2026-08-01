@@ -31,26 +31,31 @@
       {
         "step_no": 1,
         "description": "Change base: log₄(x) = log₂(x)/2 correctly.",
+        "expected_expression": "log₄(x) = log₂(x)/2",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Substitute y = log₂(x) and form equation.",
+        "expected_expression": "y/2 = y - 3 where y = log₂(x)",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Solve y = 6 correctly.",
+        "expected_expression": "y = 6",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Convert to x = 64.",
+        "expected_expression": "x = 2⁶ = 64",
         "marks": 1
       },
       {
         "step_no": 5,
         "description": "Verify: log₄(64)=3, log₂(64)=6, 6-3=3 ✓ — not done. 0 marks.",
+        "expected_expression": "log₄(64) = 3 and log₂(64) = 6, so 6 - 3 = 3",
         "marks": 0
       }
     ]

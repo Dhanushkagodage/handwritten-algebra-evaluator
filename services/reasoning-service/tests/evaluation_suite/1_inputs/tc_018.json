@@ -16,12 +16,12 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Apply quadratic formula to form expression for z", "marks": 1},
-      {"step_no": 2, "description": "Expand (3 + 2i)² to 5 + 12i", "marks": 1},
-      {"step_no": 3, "description": "Compute discriminant Δ = -15 + 8i", "marks": 1},
-      {"step_no": 4, "description": "Set up equations x² - y² = -15 and 2xy = 8 to find √Δ", "marks": 2},
-      {"step_no": 5, "description": "Solve for x and y to find √Δ = ±(1 + 4i)", "marks": 1},
-      {"step_no": 6, "description": "Evaluate roots z₁ = 2 + 3i and z₂ = 1 - i correctly", "marks": 2}
+      {"step_no": 1, "description": "Apply quadratic formula to form expression for z", "expected_expression": "z = [(3 + 2i) ± √((3 + 2i)² - 4(5 + i))] / 2", "marks": 1},
+      {"step_no": 2, "description": "Expand (3 + 2i)² to 5 + 12i", "expected_expression": "(3 + 2i)² = 5 + 12i", "marks": 1},
+      {"step_no": 3, "description": "Compute discriminant Δ = -15 + 8i", "expected_expression": "Δ = (5 + 12i) - (20 + 4i) = -15 + 8i", "marks": 1},
+      {"step_no": 4, "description": "Set up equations x² - y² = -15 and 2xy = 8 to find √Δ", "expected_expression": "x² - y² = -15 and 2xy = 8", "marks": 2},
+      {"step_no": 5, "description": "Solve for x and y to find √Δ = ±(1 + 4i)", "expected_expression": "√Δ = ±(1 + 4i)", "marks": 1},
+      {"step_no": 6, "description": "Evaluate roots z₁ = 2 + 3i and z₂ = 1 - i correctly", "expected_expression": "z₁ = 2 + 3i and z₂ = 1 - i", "marks": 2}
     ]
   }
 }
