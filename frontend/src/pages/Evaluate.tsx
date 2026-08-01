@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDropzone } from 'react-dropzone'
-import { processImage, analyzeReasoning, generateFeedback } from '../lib/api'
-import { useEvaluationStore } from '../store/useEvaluationStore'
+import ErrorPanel from '../components/ErrorPanel'
+import PipelineProgress from '../components/PipelineProgress'
+import { useEvaluation } from '../hooks/useEvaluation'
 
 const UploadIcon = () => (
   <svg className="w-8 h-8 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -10,20 +11,28 @@ const UploadIcon = () => (
   </svg>
 )
 
-const PIPELINE_STEPS = [
-  { key: 'ocr', label: 'OCR Extraction' },
-  { key: 'reasoning', label: 'Reasoning & Marking' },
-  { key: 'feedback', label: 'Generating Feedback' },
-]
+/** Object URLs leak unless they are revoked, and re-created on every render. */
+function usePreviewUrl(file: File | null): string | null {
+  const url = useMemo(() => (file ? URL.createObjectURL(file) : null), [file])
+  useEffect(() => {
+    return () => {
+      if (url) URL.revokeObjectURL(url)
+    }
+  }, [url])
+  return url
+}
 
 export default function Evaluate() {
   const [answerFile, setAnswerFile] = useState<File | null>(null)
   const [schemeFile, setSchemeFile] = useState<File | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [activeStep, setActiveStep] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
-  const { setOcrResult, setReasoningResult, setFeedbackResult } = useEvaluationStore()
+  const [questionText, setQuestionText] = useState('')
   const navigate = useNavigate()
+
+  const onSuccess = useCallback(() => navigate('/results'), [navigate])
+  const evaluation = useEvaluation(onSuccess)
+
+  const answerPreview = usePreviewUrl(answerFile)
+  const schemePreview = usePreviewUrl(schemeFile)
 
   const {
     getRootProps: getAnswerRootProps,
@@ -45,71 +54,17 @@ export default function Evaluate() {
     onDrop: (files) => setSchemeFile(files[0]),
   })
 
-  const handleSubmit = async () => {
+  // One call. The gateway extracts the answer AND the marking scheme (via the
+  // purpose-built /extract-marking-scheme endpoint), runs the reasoning agents,
+  // and generates feedback — all server-side.
+  const handleSubmit = () => {
     if (!answerFile || !schemeFile) return
-    setLoading(true)
-    setError(null)
-
-    try {
-      setActiveStep('ocr')
-      const [answerOcr, schemeOcr] = await Promise.all([
-        processImage(answerFile),
-        processImage(schemeFile),
-      ])
-      setOcrResult(answerOcr)
-
-      const parseSchemeStep = (s: any) => {
-        const expr: string = s.expression || ''
-        const m = expr.match(/^(.*?)\s+(\d+)\s+marks?$/i)
-        if (m) return { expression: m[1].trim(), marks: parseInt(m[2]) }
-        return { expression: expr, marks: 1 }
-      }
-      // Canonical marking scheme: an object of { total_marks, steps }, where each
-      // step is { step_no, description, expected_expression, marks }. The OCR of a
-      // scheme image gives us one line per step, so it seeds both description and
-      // expected_expression until a richer extraction is wired up.
-      const schemeSteps = schemeOcr.student_steps.map((s: any) => {
-        const { expression, marks } = parseSchemeStep(s)
-        return {
-          step_no: s.step_number,
-          description: expression,
-          expected_expression: expression,
-          marks,
-        }
-      })
-      const markingScheme = {
-        total_marks: schemeSteps.reduce((sum: number, m: any) => sum + m.marks, 0) || 5,
-        steps: schemeSteps,
-      }
-
-      setActiveStep('reasoning')
-      const reasoning = await analyzeReasoning({
-        question_text: answerOcr.question_text,
-        student_steps: answerOcr.student_steps,
-        marking_scheme: markingScheme,
-      })
-      setReasoningResult(reasoning)
-
-      setActiveStep('feedback')
-      const feedback = await generateFeedback({
-        question_text: reasoning.question_text,
-        student_steps: reasoning.step_analysis,
-        detected_method: reasoning.detected_method,
-        assigned_marks: reasoning.assigned_marks,
-        marking_scheme: reasoning.marking_scheme ?? markingScheme,
-      })
-      setFeedbackResult(feedback)
-
-      navigate('/results')
-    } catch (err: any) {
-      setError(err?.response?.data?.detail || err.message || 'Something went wrong.')
-    } finally {
-      setLoading(false)
-      setActiveStep('')
-    }
+    evaluation.submit({
+      answerImages: [answerFile],
+      schemeImage: schemeFile,
+      questionText,
+    })
   }
-
-  const activeIdx = PIPELINE_STEPS.findIndex((s) => s.key === activeStep)
 
   return (
     <div className="max-w-3xl mx-auto py-4">
@@ -119,7 +74,7 @@ export default function Evaluate() {
       </div>
 
       {/* Upload grid */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-2 gap-4 mb-4">
         {/* Answer sheet */}
         <div>
           <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
@@ -131,15 +86,15 @@ export default function Evaluate() {
               isAnswerDragActive
                 ? 'border-blue-400 bg-blue-50'
                 : answerFile
-                ? 'border-blue-300 bg-blue-50/40'
-                : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
+                  ? 'border-blue-300 bg-blue-50/40'
+                  : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
             }`}
           >
             <input {...getAnswerInputProps()} />
-            {answerFile ? (
+            {answerFile && answerPreview ? (
               <>
                 <img
-                  src={URL.createObjectURL(answerFile)}
+                  src={answerPreview}
                   alt="Answer sheet preview"
                   className="rounded-lg max-h-28 object-contain mb-2"
                 />
@@ -167,15 +122,15 @@ export default function Evaluate() {
               isSchemeDragActive
                 ? 'border-emerald-400 bg-emerald-50'
                 : schemeFile
-                ? 'border-emerald-300 bg-emerald-50/40'
-                : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
+                  ? 'border-emerald-300 bg-emerald-50/40'
+                  : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
             }`}
           >
             <input {...getSchemeInputProps()} />
-            {schemeFile ? (
+            {schemeFile && schemePreview ? (
               <>
                 <img
-                  src={URL.createObjectURL(schemeFile)}
+                  src={schemePreview}
                   alt="Marking scheme preview"
                   className="rounded-lg max-h-28 object-contain mb-2"
                 />
@@ -193,56 +148,51 @@ export default function Evaluate() {
         </div>
       </div>
 
-      {/* Pipeline progress */}
-      {loading && (
-        <div className="bg-white rounded-xl border border-gray-100 px-5 py-4 mb-4">
-          <div className="flex items-center gap-2">
-            {PIPELINE_STEPS.map((s, i) => {
-              const done = i < activeIdx
-              const active = s.key === activeStep
-              return (
-                <div key={s.key} className="flex items-center gap-2">
-                  <div
-                    className={`w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 font-semibold ${
-                      done
-                        ? 'bg-green-100 text-green-600'
-                        : active
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-400'
-                    }`}
-                  >
-                    {done ? '✓' : i + 1}
-                  </div>
-                  <span
-                    className={`text-xs font-medium ${
-                      done ? 'text-green-600' : active ? 'text-blue-600' : 'text-gray-400'
-                    }`}
-                  >
-                    {s.label}
-                  </span>
-                  {i < PIPELINE_STEPS.length - 1 && (
-                    <div className="w-5 h-px bg-gray-200 mx-1" />
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
+      {/* Both OCR endpoints use this to anchor extraction, so it materially
+          improves accuracy when the question isn't legible on the sheet. */}
+      <div className="mb-6">
+        <label htmlFor="question-text" className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+          Question Text <span className="text-gray-300 normal-case font-normal">(optional, improves accuracy)</span>
+        </label>
+        <input
+          id="question-text"
+          type="text"
+          value={questionText}
+          onChange={(e) => setQuestionText(e.target.value)}
+          placeholder="e.g. Solve x² − 5x + 6 = 0"
+          disabled={evaluation.loading}
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm placeholder:text-gray-300 focus:outline-none focus:border-blue-300 disabled:bg-gray-50"
+        />
+      </div>
+
+      {evaluation.loading && (
+        <PipelineProgress
+          stage={evaluation.stage}
+          stageMessage={evaluation.stageMessage}
+          uploadPercent={evaluation.uploadPercent}
+          elapsedSeconds={evaluation.elapsedSeconds}
+          onCancel={evaluation.cancel}
+        />
       )}
 
-      {error && (
-        <div className="bg-red-50 border border-red-100 rounded-lg px-4 py-3 mb-4">
-          <p className="text-red-600 text-sm">{error}</p>
-        </div>
+      {evaluation.error && !evaluation.loading && (
+        <ErrorPanel error={evaluation.error} onRetry={evaluation.reset} />
       )}
 
       <button
         onClick={handleSubmit}
-        disabled={!answerFile || !schemeFile || loading}
+        disabled={!answerFile || !schemeFile || evaluation.loading}
         className="w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
       >
-        {loading ? 'Evaluating…' : 'Evaluate Answer Sheet'}
+        {evaluation.loading ? 'Evaluating…' : 'Evaluate Answer Sheet'}
       </button>
+
+      {!evaluation.loading && (
+        <p className="text-xs text-gray-300 text-center mt-3 leading-relaxed">
+          A full evaluation takes about a minute. The first run of the day can take longer
+          while the feedback model wakes up.
+        </p>
+      )}
     </div>
   )
 }
