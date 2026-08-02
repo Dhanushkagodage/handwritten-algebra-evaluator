@@ -277,7 +277,13 @@ export default function Evaluate() {
 
   return (
     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] gap-8 items-start">
-      {uploadPanel}
+      {/* Pinned while the report scrolls past it. `top` clears the sticky navbar
+          (h-14) plus the main element's py-8; the max-height/overflow pair keeps
+          the panel usable on short viewports, where it would otherwise have its
+          bottom — including the evaluate button — cut off with no way to reach it. */}
+      <div className="lg:sticky lg:top-[4.5rem] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto lg:pr-1">
+        {uploadPanel}
+      </div>
       <div ref={resultRef} className="min-w-0 scroll-mt-20">
         <ResultsPanel
           result={result}
