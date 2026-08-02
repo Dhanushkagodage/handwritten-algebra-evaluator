@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useDropzone } from 'react-dropzone'
 import ErrorPanel from '../components/ErrorPanel'
@@ -33,15 +33,33 @@ const ACCENTS = {
   },
 } as const
 
-/** Object URLs leak unless they are revoked, and re-created on every render. */
+/**
+ * Object URLs leak unless they are revoked, and re-created on every render.
+ *
+ * The URL is created inside the effect rather than in a useMemo so that create
+ * and revoke are the same statement. A memoised URL revoked by a cleanup can
+ * never be recreated — the memo won't re-run, since `file` hasn't changed — and
+ * StrictMode does exactly that on every mount (setup → cleanup → setup), so any
+ * remount of this component would leave a live <img> pointing at a dead blob.
+ */
 function usePreviewUrl(file: File | null): string | null {
-  const url = useMemo(() => (file ? URL.createObjectURL(file) : null), [file])
+  const [entry, setEntry] = useState<{ file: File; url: string } | null>(null)
+
   useEffect(() => {
-    return () => {
-      if (url) URL.revokeObjectURL(url)
-    }
-  }, [url])
-  return url
+    if (!file) return
+    const url = URL.createObjectURL(file)
+    // Allocating the blob URL is external-resource sync, the carve-out the rule
+    // documents: it has to pair with the revoke in this cleanup, and the render
+    // pass cannot produce it without leaking one URL per render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setEntry({ file, url })
+    return () => URL.revokeObjectURL(url)
+  }, [file])
+
+  // An entry for any other file is stale — either the effect for a just-selected
+  // file hasn't run yet, or the file was cleared and the cleanup already revoked
+  // this URL. Both read as "no preview", without a second setState round-trip.
+  return entry?.file === file ? entry.url : null
 }
 
 interface UploadBoxProps {
@@ -271,40 +289,54 @@ export default function Evaluate() {
     </div>
   )
 
-  if (!split) {
-    return <div className="max-w-3xl mx-auto">{uploadPanel}</div>
-  }
-
+  // Both layouts render the same element tree — only the class names differ, and
+  // the results column is appended. Branching into two separate `return`s instead
+  // would change the shape of the tree at the moment a result arrives, so React
+  // would reconcile the wrapper against the panel it wraps, unmount both upload
+  // boxes and mount fresh ones. That silently discards their state (the selected
+  // file survives only because it lives up here) for no visual gain.
   return (
-    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] gap-8 items-start">
+    <div
+      className={
+        split
+          ? 'max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] gap-8 items-start'
+          : 'max-w-3xl mx-auto'
+      }
+    >
       {/* Pinned while the report scrolls past it. `top` clears the sticky navbar
           (h-14) plus the main element's py-8; the max-height/overflow pair keeps
           the panel usable on short viewports, where it would otherwise have its
           bottom — including the evaluate button — cut off with no way to reach it. */}
-      <div className="lg:sticky lg:top-[4.5rem] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto lg:pr-1">
+      <div
+        className={
+          split ? 'lg:sticky lg:top-[4.5rem] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto lg:pr-1' : ''
+        }
+      >
         {uploadPanel}
       </div>
-      <div ref={resultRef} className="min-w-0 scroll-mt-20">
-        <ResultsPanel
-          result={result}
-          footer={
-            <div className="flex gap-3 items-center pb-4">
-              <button
-                type="button"
-                onClick={clearResult}
-                className="bg-gray-100 text-gray-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition"
-              >
-                Clear Results
-              </button>
-              {result.timings_ms.total != null && (
-                <span className="text-xs text-gray-300 ml-auto">
-                  Evaluated in {(result.timings_ms.total / 1000).toFixed(1)}s
-                </span>
-              )}
-            </div>
-          }
-        />
-      </div>
+      {split && (
+        <div ref={resultRef} className="min-w-0 scroll-mt-20">
+          <ResultsPanel
+            result={result}
+            footer={
+              <div className="flex gap-3 items-center pb-4">
+                <button
+                  type="button"
+                  onClick={clearResult}
+                  className="bg-gray-100 text-gray-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition"
+                >
+                  Clear Results
+                </button>
+                {result.timings_ms.total != null && (
+                  <span className="text-xs text-gray-300 ml-auto">
+                    Evaluated in {(result.timings_ms.total / 1000).toFixed(1)}s
+                  </span>
+                )}
+              </div>
+            }
+          />
+        </div>
+      )}
     </div>
   )
 }
