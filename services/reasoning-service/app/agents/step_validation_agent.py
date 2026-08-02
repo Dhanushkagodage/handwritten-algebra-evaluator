@@ -26,6 +26,43 @@ _SYSTEM_PROMPT: str = _PROMPT_PATH.read_text(encoding="utf-8")
 
 MAX_RETRIES = 3
 
+# A step lists multiple candidate roots if it contains two or more "x = <number>"
+# assignments (e.g. "x = 5 or x = -1", "x = 5, x = -1").
+_MULTI_ROOT_RE = re.compile(r"x\s*=\s*[-+±]?\s*\d")
+
+# Domain/extraneous-root rejection language — indicates the LLM rejected the step
+# for a restriction that only applies to a FINAL answer, not to a step that is
+# merely listing candidate roots from the zero-product property.
+_DOMAIN_REJECT_RE = re.compile(
+    r"domain|not valid since|only valid|extraneous|reject|out of (the )?domain|"
+    r"x\s*[<>]|undefined for|restrict",
+    re.IGNORECASE,
+)
+
+
+def _fix_premature_domain_rejections(validated: StepValidationOutput, student_steps: list) -> None:
+    """
+    Deterministic guardrail (does not depend on the LLM following the prompt):
+    a step that only LISTS candidate roots (e.g. "x = 5 or x = -1" from a factored
+    equation) must not be marked incorrect solely because a domain restriction will
+    later exclude one of them. That filtering is the job of whichever later step
+    actually applies the restriction — this step is judged only on its own algebra.
+    """
+    content_map = {s["step_id"]: s.get("content", "") for s in student_steps}
+    for result in validated.step_validations:
+        if result.status != "incorrect" or not result.error:
+            continue
+        content = content_map.get(result.step_id, "")
+        if len(_MULTI_ROOT_RE.findall(content)) >= 2 and _DOMAIN_REJECT_RE.search(result.error):
+            logger.warning(
+                "[StepValidationAgent] Overriding premature domain rejection on step %d "
+                "(content=%r, error=%r)",
+                result.step_id, content, result.error,
+            )
+            result.status = "correct"
+            result.is_valid = True
+            result.error = None
+
 
 def _extract_json(text: str) -> dict:
     """Extract first JSON object from text, handling markdown fences."""
@@ -87,6 +124,7 @@ async def step_validation_agent(state: dict) -> dict:
             response = await llm.ainvoke(messages)
             raw = _extract_json(response.content)
             validated = StepValidationOutput(**raw)
+            _fix_premature_domain_rejections(validated, student_steps)
             logger.info(
                 "[StepValidationAgent] Success — %d steps validated",
                 len(validated.step_validations),
