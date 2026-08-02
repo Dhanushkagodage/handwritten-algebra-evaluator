@@ -1,7 +1,7 @@
 # Evaluation Report: AI-Based Stepwise Algebra Evaluation System
 
 **Dataset**: Advanced Level Stepwise Mathematics Grading Benchmark  
-**Total Questions ($N_Q$)**: 28 | **Total Solution Steps ($N_S$)**: 177
+**Total Questions ($N_Q$)**: 50 | **Total Solution Steps ($N_S$)**: 320
 
 ---
 
@@ -9,12 +9,12 @@
 
 | Metric | Measured Value | Interpretation |
 | :--- | :---: | :--- |
-| **MAE** | **0.9643** | Average magnitude of mark error per question. |
-| **Pearson Correlation (r)** | **0.5332** | Linear alignment between Teacher and AI marks. |
-| **Exact Match Accuracy** | **64.29%** | Percentage of exact score matches. |
-| **Mean Bias Error (MBE)** | **-0.8214** | Directional bias (Positive = Lenient, Negative = Strict). |
-| **RMSE** | **2.2835** | Root mean squared error (penalizes larger errors). |
-| **R² Score** | **-0.1124** | Proportion of teacher score variance explained by AI. |
+| **MAE** | **0.8300** | Average magnitude of mark error per question. |
+| **Pearson Correlation (r)** | **0.4810** | Linear alignment between Teacher and AI marks. |
+| **Exact Match Accuracy** | **72.00%** | Percentage of exact score matches. |
+| **Mean Bias Error (MBE)** | **-0.7500** | Directional bias (Positive = Lenient, Negative = Strict). |
+| **RMSE** | **2.0797** | Root mean squared error (penalizes larger errors). |
+| **R² Score** | **-0.3968** | Proportion of teacher score variance explained by AI. |
 
 ---
 
@@ -22,16 +22,16 @@
 
 | Metric | Measured Value | Interpretation |
 | :--- | :---: | :--- |
-| **Macro F1** | **0.4351** | Unweighted mean F1-score across all validity classes. |
-| **Weighted F1** | **0.8936** | Class-weighted F1-score accounting for sample imbalance. |
-| **Micro F1** | **0.8814** | Global F1-score across all individual predictions. |
-| **F1 (correct)** | **0.9350** | F1-score for identifying fully valid mathematical steps. |
+| **Macro F1** | **0.4032** | Unweighted mean F1-score across all validity classes. |
+| **Weighted F1** | **0.9139** | Class-weighted F1-score accounting for sample imbalance. |
+| **Micro F1** | **0.8875** | Global F1-score across all individual predictions. |
+| **F1 (correct)** | **0.9394** | F1-score for identifying fully valid mathematical steps. |
 | **F1 (partially_correct)** | **0.0000** | F1-score for identifying partially correct steps. |
-| **F1 (incorrect)** | **0.3704** | F1-score for identifying invalid/wrong steps. |
-| **Cohen's κ** | **0.2729** | Inter-rater agreement controlling for chance. |
-| **Accuracy** | **88.14%** | Overall step correctness classification rate. |
-| **Precision** | **0.9139** | Weighted precision across validity classes. |
-| **Recall** | **0.8814** | Weighted recall across validity classes. |
+| **F1 (incorrect)** | **0.2703** | F1-score for identifying invalid/wrong steps. |
+| **Cohen's κ** | **0.1821** | Inter-rater agreement controlling for chance. |
+| **Accuracy** | **88.75%** | Overall step correctness classification rate. |
+| **Precision** | **0.9496** | Weighted precision across validity classes. |
+| **Recall** | **0.8875** | Weighted recall across validity classes. |
 
 ---
 
@@ -39,10 +39,10 @@
 
 | Metric | Measured Value | Interpretation |
 | :--- | :---: | :--- |
-| **Step MAE** | **0.2599** | Mean absolute error per step mark. |
-| **Step RMSE** | **0.5761** | Root mean squared error per step mark. |
-| **Pearson r** | **0.5562** | Correlation between step-level marks. |
-| **Mean Difference** | **-0.1299** | Average difference (AI Marks - Teacher Marks). |
+| **Step MAE** | **0.3016** | Mean absolute error per step mark. |
+| **Step RMSE** | **0.5752** | Root mean squared error per step mark. |
+| **Pearson r** | **0.6082** | Correlation between step-level marks. |
+| **Mean Difference** | **-0.1172** | Average difference (AI Marks - Teacher Marks). |
 
 ---
 
