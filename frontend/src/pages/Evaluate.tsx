@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate } from 'react-router-dom'
 import { useDropzone } from 'react-dropzone'
 import ErrorPanel from '../components/ErrorPanel'
 import PipelineProgress from '../components/PipelineProgress'
+import ResultsPanel from '../components/results/ResultsPanel'
 import { useEvaluation } from '../hooks/useEvaluation'
+import { useEvaluationStore } from '../store/useEvaluationStore'
 
 const UploadIcon = () => (
   <svg className="w-8 h-8 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,9 +49,11 @@ interface UploadBoxProps {
   accent: keyof typeof ACCENTS
   file: File | null
   onFile: (file: File | null) => void
+  /** Shorter box for the narrow left column of the side-by-side results view. */
+  compact?: boolean
 }
 
-function UploadBox({ label, accent, file, onFile }: UploadBoxProps) {
+function UploadBox({ label, accent, file, onFile, compact = false }: UploadBoxProps) {
   const preview = usePreviewUrl(file)
   const tone = ACCENTS[accent]
   const [zoomed, setZoomed] = useState(false)
@@ -82,7 +85,7 @@ function UploadBox({ label, accent, file, onFile }: UploadBoxProps) {
       </p>
       <div
         {...getRootProps()}
-        className={`relative h-[400px] border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center ${
+        className={`relative ${compact ? 'h-[230px]' : 'h-[400px]'} border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center ${
           isDragActive
             ? tone.dragging
             : file
@@ -108,7 +111,7 @@ function UploadBox({ label, accent, file, onFile }: UploadBoxProps) {
                     e.stopPropagation()
                     setZoomed(true)
                   }}
-                  className="block w-auto h-auto max-h-[310px] max-w-full rounded-lg cursor-zoom-in"
+                  className={`block w-auto h-auto ${compact ? 'max-h-[140px]' : 'max-h-[310px]'} max-w-full rounded-lg cursor-zoom-in`}
                 />
                 {/* Clicks bubble into the dropzone root, which would re-open the
                     file picker instead of clearing the selection. */}
@@ -175,10 +178,26 @@ function UploadBox({ label, accent, file, onFile }: UploadBoxProps) {
 export default function Evaluate() {
   const [answerFile, setAnswerFile] = useState<File | null>(null)
   const [schemeFile, setSchemeFile] = useState<File | null>(null)
-  const navigate = useNavigate()
+  const resultRef = useRef<HTMLDivElement | null>(null)
 
-  const onSuccess = useCallback(() => navigate('/results'), [navigate])
+  // The result lives in the store, so the uploads stay mounted alongside it
+  // instead of the page being replaced by /results.
+  const result = useEvaluationStore((state) => state.result)
+  const clearResult = useEvaluationStore((state) => state.reset)
+
+  // The hook already writes the result to the store; nothing else to do here,
+  // but the callback must be stable or the hook's effect re-fires every render.
+  const onSuccess = useCallback(() => {
+    // Stacked layout (narrow screens) puts the report below the fold.
+    if (window.innerWidth < 1024) {
+      window.requestAnimationFrame(() =>
+        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      )
+    }
+  }, [])
   const evaluation = useEvaluation(onSuccess)
+
+  const split = result !== null
 
   // One call. The gateway extracts the answer AND the marking scheme (via the
   // purpose-built /extract-marking-scheme endpoint), runs the reasoning agents,
@@ -191,26 +210,33 @@ export default function Evaluate() {
     })
   }
 
-  return (
-    <div className="max-w-3xl mx-auto">
-      <div className="mb-8">
+  const uploadPanel = (
+    <div>
+      <div className="mb-6">
         <h2 className="text-xl font-bold text-gray-900 mb-1">Evaluate Answer Sheet</h2>
-        <p className="text-gray-400 text-sm">Upload both images to begin the evaluation pipeline.</p>
+        <p className="text-gray-400 text-sm">
+          {split
+            ? 'Swap either image and evaluate again — the report updates on the right.'
+            : 'Upload both images to begin the evaluation pipeline.'}
+        </p>
       </div>
 
-      {/* Upload grid */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      {/* Side by side while there is room; stacked once the results panel
+          takes the other half of the row. */}
+      <div className={`grid gap-4 mb-6 ${split ? 'grid-cols-1' : 'grid-cols-2'}`}>
         <UploadBox
           label="Student Answer Sheet"
           accent="blue"
           file={answerFile}
           onFile={setAnswerFile}
+          compact={split}
         />
         <UploadBox
           label="Marking Scheme"
           accent="emerald"
           file={schemeFile}
           onFile={setSchemeFile}
+          compact={split}
         />
       </div>
 
@@ -233,7 +259,7 @@ export default function Evaluate() {
         disabled={!answerFile || !schemeFile || evaluation.loading}
         className="w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
       >
-        {evaluation.loading ? 'Evaluating…' : 'Evaluate Answer Sheet'}
+        {evaluation.loading ? 'Evaluating…' : split ? 'Evaluate Again' : 'Evaluate Answer Sheet'}
       </button>
 
       {!evaluation.loading && (
@@ -242,6 +268,37 @@ export default function Evaluate() {
           while the feedback model wakes up.
         </p>
       )}
+    </div>
+  )
+
+  if (!split) {
+    return <div className="max-w-3xl mx-auto">{uploadPanel}</div>
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] gap-8 items-start">
+      {uploadPanel}
+      <div ref={resultRef} className="min-w-0 scroll-mt-20">
+        <ResultsPanel
+          result={result}
+          footer={
+            <div className="flex gap-3 items-center pb-4">
+              <button
+                type="button"
+                onClick={clearResult}
+                className="bg-gray-100 text-gray-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition"
+              >
+                Clear Results
+              </button>
+              {result.timings_ms.total != null && (
+                <span className="text-xs text-gray-300 ml-auto">
+                  Evaluated in {(result.timings_ms.total / 1000).toFixed(1)}s
+                </span>
+              )}
+            </div>
+          }
+        />
+      </div>
     </div>
   )
 }
