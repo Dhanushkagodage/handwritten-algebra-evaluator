@@ -244,6 +244,129 @@ eat a noticeable chunk of your ZeroGPU quota.
 
 ---
 
+## Part D — Measure it: fine-tuned vs base Qwen2.5 (Colab)
+
+Part C shows the model working on hand-picked cases. This scores it on the
+80 held-out examples in `app/training/data/feedback_dataset_eval.json` —
+none of which the model saw during training — and reports what the LoRA
+fine-tune actually bought over stock `Qwen2.5-3B-Instruct` on the same
+prompts.
+
+Both models get the identical prompt (it spells out the
+`=== STEP N [VALIDITY] ===` format in full, so the base model is not being
+asked to guess a format it was never told), identical greedy decoding and
+the same 300-token budget. The only difference is whether the LoRA weights
+are active.
+
+### What gets measured
+
+| Metric | Meaning |
+|---|---|
+| Format compliance | completion parses into `=== STEP N [VALIDITY] ===` blocks at all |
+| Step count match | produced one feedback block per student step |
+| Validity accuracy | predicted `CORRECT`/`PARTIAL`/`INCORRECT` matches the reference |
+| Validity macro F1 | same, averaged per class, so the rare labels count |
+| Field-rule violations | missing `CORRECT`/`IMPROVE`, or `MISSING`/`DEDUCTION` on a fully correct step |
+| ROUGE-L per field | wording overlap with the reference feedback |
+
+Plus a per-example win/loss count (how many of the 80 each model wrote
+better feedback for) and total generation time per model.
+
+### Cell 1 — get the code and the GPU dependencies
+
+Runtime → Change runtime type → **T4 GPU** → Save.
+
+```python
+import os
+%cd /content
+if not os.path.exists("handwritten-algebra-evaluator"):
+    !git clone -b integrate-all-modules https://github.com/Dhanushkagodage/handwritten-algebra-evaluator.git
+%cd /content/handwritten-algebra-evaluator/services/feedback-service
+!pip install -r requirements-train.txt
+```
+
+Use whichever branch has `tests/evaluation_suite/compare.py` on it — it is
+not on `main` yet.
+
+### Cell 2 — run the comparison
+
+```python
+import os
+%cd /content/handwritten-algebra-evaluator/services/feedback-service
+os.environ["ADAPTER_PATH"] = "DhanushkaGodage/qwen25-feedback-lora"
+os.environ["HF_TOKEN"]     = "hf_..."   # only needed for a private adapter repo
+# os.environ["LIMIT"] = "5"             # smoke test first, then remove
+!python -m tests.evaluation_suite.compare
+```
+
+If you just trained in this same session, use `"./lora-adapter"` instead of
+the Hub id. Both models run per example, so budget roughly twice the
+single-model time — about 15–25 minutes for all 80 on a T4.
+
+It prints the delta table and writes, under
+`tests/evaluation_suite/results/`:
+
+```
+base/summary-<stamp>.json         base-model metrics
+base/predictions-<stamp>.json     every base completion, for eyeballing
+tuned/summary-<stamp>.json        fine-tuned metrics
+tuned/predictions-<stamp>.json    every fine-tuned completion
+comparison-<stamp>.json           the delta table + per-example wins
+```
+
+### Cell 3 — figures for the report
+
+```python
+%cd /content/handwritten-algebra-evaluator/services/feedback-service
+!pip install matplotlib
+!python -m tests.evaluation_suite.plots \
+    --results tests/evaluation_suite/results/tuned \
+    --baseline tests/evaluation_suite/results/base
+```
+
+Writes PNGs to `tests/evaluation_suite/results/tuned/figures/` —
+`fig1-headline`, `fig2-per-class`, `fig3-confusion`, `fig4-rouge`, and
+`fig5-baseline` (the before/after dumbbell chart; only produced when
+`--baseline` is given).
+
+Download them out of Colab before the runtime resets:
+
+```python
+from google.colab import files
+!zip -r eval-figures.zip tests/evaluation_suite/results
+files.download("eval-figures.zip")
+```
+
+### Scoring one model on its own
+
+`compare.py` loads the 3B model once and toggles the adapter, which is why
+it is the cheaper way to get both numbers. To score a single configuration
+instead:
+
+```python
+!ADAPTER_PATH=DhanushkaGodage/qwen25-feedback-lora python -m tests.evaluation_suite.evaluate
+!ADAPTER_PATH=none python -m tests.evaluation_suite.evaluate   # base-model baseline
+```
+
+### Reading the result
+
+Expect the fine-tune's clearest gains on **format compliance** and
+**field-rule violations** — the base model tends to answer in prose, or add
+a preamble before the first `=== STEP 1 ===`, and an unparseable completion
+scores zero on everything downstream. Treat a large ROUGE-L gain as
+evidence the model learned the house style of the feedback, not that it
+reasons better about algebra; validity accuracy is the metric that speaks
+to the marking judgement.
+
+One caveat worth stating in the report: the base model's rambling costs it
+the 300-token budget, and a truncated completion is scored as harshly as a
+malformed one. That is a genuine property of the untuned model on this
+prompt, but if you want to show the gap is not purely a length effect,
+re-run with `os.environ["MAX_NEW_TOKENS"] = "600"` — it applies to both
+sides — and report both runs.
+
+---
+
 ## Useful commands (Colab)
 
 Handy one-liners for checking on things while training in Colab.
