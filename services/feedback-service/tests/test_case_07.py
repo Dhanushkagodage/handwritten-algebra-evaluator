@@ -1,9 +1,10 @@
 """
-Sample case 07 — difference of squares.
+Sample case 07 — logarithmic equation (Module 02 output).
 
-Question : Factorise 25x^2 - 49
-Steps    : 2 steps — correct, partial (1.5 / 2.0)
-Exercises: the shortest answer shape the service has to handle
+Question : Solve log_2(x - 1) + log_2(x - 3) = 3 where x > 3
+Steps    : 8 steps — 6 correct, 2 partial (6.0 / 6.0)
+Exercises: the longest answer shape the service has to handle, plus a
+           domain-restriction step at the end
 
 Run from the feedback-service directory:
     python tests/test_case_07.py                  # ZeroGPU Space (default)
