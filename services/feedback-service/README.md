@@ -126,24 +126,6 @@ Edit `tests/sample_input.json` with your own `question_text`,
 `student_steps`, and `marking_scheme` (see the schema in
 `app/models/schemas.py`), then re-run:
 
-`marking_scheme` is an object — `total_marks` plus `steps`, where every step
-carries `step_no`, `description`, `expected_expression` and `marks`. There is no
-top-level `total_marks`; `marking_scheme.total_marks` is the only source:
-
-```json
-"marking_scheme": {
-  "total_marks": 2.0,
-  "steps": [
-    {
-      "step_no": 1,
-      "description": "Rewrite both terms as perfect squares.",
-      "expected_expression": "25x^2 - 49 = (5x)^2 - 7^2",
-      "marks": 1.0
-    }
-  ]
-}
-```
-
 ```powershell
 py tests\test_feedback.py
 ```
@@ -166,7 +148,7 @@ with its own runner script, so you can step through them one at a time:
 | `test_case_06.py` | simplifying algebraic fractions | 3 | 0.0/3.0 | zero-marks edge case |
 | `test_case_07.py` | difference of squares | 2 | 1.5/2.0 | shortest answer |
 | `test_case_08.py` | index laws | 5 | 3.0/5.0 | longest chain |
-| `test_case_09.py` | substitution | 4 | 2.0/4.0 | optional `error_description` on student steps |
+| `test_case_09.py` | substitution | 4 | 2.0/4.0 | optional `error_description` / scheme `description` |
 | `test_case_10.py` | remainder theorem | 4 | 3.0/4.0 | Module 02's legacy `is_correct` bool |
 
 ### Two backends
