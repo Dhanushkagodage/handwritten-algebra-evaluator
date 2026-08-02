@@ -5,9 +5,10 @@ identically no matter which directory uvicorn was launched from.
 """
 from pathlib import Path
 from typing import List
+from typing_extensions import Annotated
 
 from pydantic import field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 SERVICE_ROOT = Path(__file__).resolve().parent.parent
 
@@ -21,7 +22,10 @@ class Settings(BaseSettings):
     )
 
     gateway_port: int = 8080
-    gateway_cors_origins: List[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    gateway_cors_origins: Annotated[List[str], NoDecode] = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
 
     # ocr-service really does listen on 8000 — see its Dockerfile. The repo-root
     # .env.example says 8001 and is wrong.

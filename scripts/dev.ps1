@@ -33,7 +33,7 @@ $Services = @(
     [pscustomobject]@{ Name = 'ocr';       Dir = 'services\ocr-service';       Module = 'app:app';      Port = 8000; Health = 'http://127.0.0.1:8000/';              NeedsEnv = $true  }
     [pscustomobject]@{ Name = 'reasoning'; Dir = 'services\reasoning-service'; Module = 'app.main:app'; Port = 8002; Health = 'http://127.0.0.1:8002/health';        NeedsEnv = $true  }
     [pscustomobject]@{ Name = 'feedback';  Dir = 'services\feedback-service';  Module = 'app.main:app'; Port = 8003; Health = 'http://127.0.0.1:8003/health';        NeedsEnv = $true  }
-    [pscustomobject]@{ Name = 'gateway';   Dir = 'services\gateway';           Module = 'app.main:app'; Port = 8080; Health = 'http://127.0.0.1:8080/health';        NeedsEnv = $false }
+    [pscustomobject]@{ Name = 'gateway';   Dir = 'services\gateway';           Module = 'app.main:app'; Port = 8090; Health = 'http://127.0.0.1:8090/health';        NeedsEnv = $false }
 )
 
 # -- Preflight ------------------------------------------------------------
@@ -157,7 +157,7 @@ if (-not $SkipHealthWait) {
     if ($pending.Count -eq 0) {
         Write-Step 'Gateway view of the three modules'
         try {
-            Invoke-RestMethod -Uri 'http://127.0.0.1:8080/health/services' -TimeoutSec 10 |
+            Invoke-RestMethod -Uri 'http://127.0.0.1:8090/health/services' -TimeoutSec 10 |
                 ConvertTo-Json -Depth 6 | Write-Host
         } catch {
             Write-Warn "Could not read /health/services: $_"
@@ -168,7 +168,7 @@ if (-not $SkipHealthWait) {
 # -- Banner ------------------------------------------------------------
 
 Write-Host ''
-Write-Host '  Gateway    http://127.0.0.1:8080/docs   <- the one call' -ForegroundColor White
+Write-Host '  Gateway    http://127.0.0.1:8090/docs   <- the one call' -ForegroundColor White
 Write-Host '  OCR        http://127.0.0.1:8000/docs'
 Write-Host '  Reasoning  http://127.0.0.1:8002/docs'
 Write-Host '  Feedback   http://127.0.0.1:8003/docs'

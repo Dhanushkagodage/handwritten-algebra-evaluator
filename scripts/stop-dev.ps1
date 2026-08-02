@@ -12,7 +12,7 @@ param()
 $ErrorActionPreference = 'Continue'
 $Root = Split-Path -Parent $PSScriptRoot
 $PidFile = Join-Path $Root '.logs\pids.json'
-$Ports = @(8000, 8002, 8003, 8080, 5173)
+$Ports = @(8000, 8002, 8003, 8090, 5173)
 
 function Write-Ok($message)  { Write-Host "  + $message" -ForegroundColor Green }
 function Write-Info($message) { Write-Host "  - $message" -ForegroundColor DarkGray }

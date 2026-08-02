@@ -14,7 +14,7 @@ param(
     [Parameter(Mandatory = $true)][string]$AnswerImage,
     [Parameter(Mandatory = $true)][string]$SchemeImage,
     [string]$QuestionText = '',
-    [string]$GatewayUrl = 'http://127.0.0.1:8080',
+    [string]$GatewayUrl = 'http://127.0.0.1:8090',
     [int]$TimeoutSec = 360
 )
 
