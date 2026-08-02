@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 import { useDropzone } from 'react-dropzone'
 import ErrorPanel from '../components/ErrorPanel'
@@ -11,6 +12,26 @@ const UploadIcon = () => (
   </svg>
 )
 
+const CloseIcon = ({ className = 'w-3.5 h-3.5' }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+)
+
+/** Tailwind can't build class names at runtime, so accents are full literals. */
+const ACCENTS = {
+  blue: {
+    dragging: 'border-blue-400 bg-blue-50',
+    filled: 'border-blue-300 bg-blue-50/40',
+    filename: 'text-blue-600',
+  },
+  emerald: {
+    dragging: 'border-emerald-400 bg-emerald-50',
+    filled: 'border-emerald-300 bg-emerald-50/40',
+    filename: 'text-emerald-600',
+  },
+} as const
+
 /** Object URLs leak unless they are revoked, and re-created on every render. */
 function usePreviewUrl(file: File | null): string | null {
   const url = useMemo(() => (file ? URL.createObjectURL(file) : null), [file])
@@ -22,37 +43,142 @@ function usePreviewUrl(file: File | null): string | null {
   return url
 }
 
+interface UploadBoxProps {
+  label: string
+  accent: keyof typeof ACCENTS
+  file: File | null
+  onFile: (file: File | null) => void
+}
+
+function UploadBox({ label, accent, file, onFile }: UploadBoxProps) {
+  const preview = usePreviewUrl(file)
+  const tone = ACCENTS[accent]
+  const [zoomed, setZoomed] = useState(false)
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: { 'image/*': [] },
+    maxFiles: 1,
+    onDrop: (files) => onFile(files[0]),
+  })
+
+  // Removing the file while zoomed would leave an overlay with a revoked src.
+  useEffect(() => {
+    if (!file) setZoomed(false)
+  }, [file])
+
+  useEffect(() => {
+    if (!zoomed) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setZoomed(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [zoomed])
+
+  return (
+    <div>
+      <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+        {label} <span className="text-red-400 normal-case font-normal">*</span>
+      </p>
+      <div
+        {...getRootProps()}
+        className={`relative h-[400px] border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center ${
+          isDragActive
+            ? tone.dragging
+            : file
+              ? tone.filled
+              : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
+        }`}
+      >
+        <input {...getInputProps()} />
+        {file && preview ? (
+          <>
+            {/* The image is capped by max-height/max-width with auto dimensions
+                rather than stretched with object-contain, so its element box is
+                exactly the picture — no letterbox gap for the remove button to
+                float in. The wrapper then shrink-wraps it in both axes. */}
+            <div className="flex-1 min-h-0 w-full flex items-center justify-center mb-2">
+              <div className="relative min-w-0 max-w-full">
+                {/* Without stopPropagation this would hit the dropzone root and
+                    open the file picker instead of the lightbox. */}
+                <img
+                  src={preview}
+                  alt={`${label} preview`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setZoomed(true)
+                  }}
+                  className="block w-auto h-auto max-h-[310px] max-w-full rounded-lg cursor-zoom-in"
+                />
+                {/* Clicks bubble into the dropzone root, which would re-open the
+                    file picker instead of clearing the selection. */}
+                <button
+                  type="button"
+                  aria-label={`Remove ${label}`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onFile(null)
+                  }}
+                  className="absolute top-1 right-1 w-6 h-6 rounded-full bg-white/90 border border-gray-200 text-gray-400 flex items-center justify-center shadow-sm hover:bg-red-50 hover:border-red-200 hover:text-red-500 transition"
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+            </div>
+            <p className={`shrink-0 text-xs font-medium truncate max-w-full px-2 ${tone.filename}`}>{file.name}</p>
+            <p className="shrink-0 text-xs text-gray-400 mt-0.5">
+              Click the image to enlarge · click here to replace
+            </p>
+          </>
+        ) : (
+          <>
+            <UploadIcon />
+            <p className="text-xs text-gray-400 mt-2">Drag & drop or click to select</p>
+            <p className="text-xs text-gray-300 mt-0.5">PNG, JPG</p>
+          </>
+        )}
+      </div>
+
+      {/* Portalled to <body>: rendered inside the dropzone, every click in the
+          overlay would bubble back into it and re-open the file picker. */}
+      {zoomed &&
+        preview &&
+        createPortal(
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${label} preview`}
+            onClick={() => setZoomed(false)}
+            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-8 cursor-zoom-out"
+          >
+            <img
+              src={preview}
+              alt={`${label} enlarged preview`}
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-full max-w-full rounded-lg object-contain shadow-2xl cursor-default"
+            />
+            <button
+              type="button"
+              aria-label="Close preview"
+              onClick={() => setZoomed(false)}
+              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/90 text-gray-600 flex items-center justify-center hover:bg-white transition"
+            >
+              <CloseIcon className="w-5 h-5" />
+            </button>
+          </div>,
+          document.body,
+        )}
+    </div>
+  )
+}
+
 export default function Evaluate() {
   const [answerFile, setAnswerFile] = useState<File | null>(null)
   const [schemeFile, setSchemeFile] = useState<File | null>(null)
-  const [questionText, setQuestionText] = useState('')
   const navigate = useNavigate()
 
   const onSuccess = useCallback(() => navigate('/results'), [navigate])
   const evaluation = useEvaluation(onSuccess)
-
-  const answerPreview = usePreviewUrl(answerFile)
-  const schemePreview = usePreviewUrl(schemeFile)
-
-  const {
-    getRootProps: getAnswerRootProps,
-    getInputProps: getAnswerInputProps,
-    isDragActive: isAnswerDragActive,
-  } = useDropzone({
-    accept: { 'image/*': [] },
-    maxFiles: 1,
-    onDrop: (files) => setAnswerFile(files[0]),
-  })
-
-  const {
-    getRootProps: getSchemeRootProps,
-    getInputProps: getSchemeInputProps,
-    isDragActive: isSchemeDragActive,
-  } = useDropzone({
-    accept: { 'image/*': [] },
-    maxFiles: 1,
-    onDrop: (files) => setSchemeFile(files[0]),
-  })
 
   // One call. The gateway extracts the answer AND the marking scheme (via the
   // purpose-built /extract-marking-scheme endpoint), runs the reasoning agents,
@@ -62,106 +188,29 @@ export default function Evaluate() {
     evaluation.submit({
       answerImages: [answerFile],
       schemeImage: schemeFile,
-      questionText,
     })
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-4">
+    <div className="max-w-3xl mx-auto">
       <div className="mb-8">
         <h2 className="text-xl font-bold text-gray-900 mb-1">Evaluate Answer Sheet</h2>
         <p className="text-gray-400 text-sm">Upload both images to begin the evaluation pipeline.</p>
       </div>
 
       {/* Upload grid */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        {/* Answer sheet */}
-        <div>
-          <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
-            Student Answer Sheet <span className="text-red-400 normal-case font-normal">*</span>
-          </p>
-          <div
-            {...getAnswerRootProps()}
-            className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all min-h-[160px] flex flex-col items-center justify-center ${
-              isAnswerDragActive
-                ? 'border-blue-400 bg-blue-50'
-                : answerFile
-                  ? 'border-blue-300 bg-blue-50/40'
-                  : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
-            }`}
-          >
-            <input {...getAnswerInputProps()} />
-            {answerFile && answerPreview ? (
-              <>
-                <img
-                  src={answerPreview}
-                  alt="Answer sheet preview"
-                  className="rounded-lg max-h-28 object-contain mb-2"
-                />
-                <p className="text-xs text-blue-600 font-medium truncate max-w-full px-2">{answerFile.name}</p>
-                <p className="text-xs text-gray-400 mt-0.5">Click to replace</p>
-              </>
-            ) : (
-              <>
-                <UploadIcon />
-                <p className="text-xs text-gray-400 mt-2">Drag & drop or click to select</p>
-                <p className="text-xs text-gray-300 mt-0.5">PNG, JPG</p>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Marking scheme */}
-        <div>
-          <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
-            Marking Scheme <span className="text-red-400 normal-case font-normal">*</span>
-          </p>
-          <div
-            {...getSchemeRootProps()}
-            className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all min-h-[160px] flex flex-col items-center justify-center ${
-              isSchemeDragActive
-                ? 'border-emerald-400 bg-emerald-50'
-                : schemeFile
-                  ? 'border-emerald-300 bg-emerald-50/40'
-                  : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50/60'
-            }`}
-          >
-            <input {...getSchemeInputProps()} />
-            {schemeFile && schemePreview ? (
-              <>
-                <img
-                  src={schemePreview}
-                  alt="Marking scheme preview"
-                  className="rounded-lg max-h-28 object-contain mb-2"
-                />
-                <p className="text-xs text-emerald-600 font-medium truncate max-w-full px-2">{schemeFile.name}</p>
-                <p className="text-xs text-gray-400 mt-0.5">Click to replace</p>
-              </>
-            ) : (
-              <>
-                <UploadIcon />
-                <p className="text-xs text-gray-400 mt-2">Drag & drop or click to select</p>
-                <p className="text-xs text-gray-300 mt-0.5">PNG, JPG</p>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Both OCR endpoints use this to anchor extraction, so it materially
-          improves accuracy when the question isn't legible on the sheet. */}
-      <div className="mb-6">
-        <label htmlFor="question-text" className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
-          Question Text <span className="text-gray-300 normal-case font-normal">(optional, improves accuracy)</span>
-        </label>
-        <input
-          id="question-text"
-          type="text"
-          value={questionText}
-          onChange={(e) => setQuestionText(e.target.value)}
-          placeholder="e.g. Solve x² − 5x + 6 = 0"
-          disabled={evaluation.loading}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm placeholder:text-gray-300 focus:outline-none focus:border-blue-300 disabled:bg-gray-50"
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <UploadBox
+          label="Student Answer Sheet"
+          accent="blue"
+          file={answerFile}
+          onFile={setAnswerFile}
+        />
+        <UploadBox
+          label="Marking Scheme"
+          accent="emerald"
+          file={schemeFile}
+          onFile={setSchemeFile}
         />
       </div>
 
