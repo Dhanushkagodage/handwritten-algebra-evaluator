@@ -61,11 +61,18 @@ export function toApiError(err: unknown): ApiError {
     }
 
     if (!err.response) {
-      const where = GATEWAY_ORIGIN || window.location.origin
+      // With VITE_GATEWAY_URL unset we call our own origin and let the Vite dev
+      // proxy forward /api to :8080. Naming the page's own URL here would point
+      // the reader at the wrong port, so describe the real target instead.
+      const where = GATEWAY_ORIGIN
+        ? GATEWAY_ORIGIN
+        : 'http://127.0.0.1:8080 (via the Vite dev proxy)'
       return new ApiError({
         message:
-          `Couldn't reach the gateway at ${where}. Start it with ` +
-          `"uvicorn app.main:app --port 8080" in services/gateway, or run scripts\\dev.ps1.`,
+          `Couldn't reach the gateway at ${where}. Start the backend with ` +
+          `scripts\\dev.ps1, or run "uvicorn app.main:app --port 8080" in services/gateway. ` +
+          `First time on this machine? Each service also needs its own .env file — ` +
+          `those are gitignored, so they do not arrive with a git pull.`,
         kind: 'network',
       })
     }

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Stop everything dev.ps1 started.
 
@@ -32,7 +32,7 @@ if (Test-Path $PidFile) {
     Remove-Item $PidFile -ErrorAction SilentlyContinue
 }
 
-# Catch anything still holding a port — e.g. a service started manually, or a
+# Catch anything still holding a port - e.g. a service started manually, or a
 # uvicorn child that outlived its launcher window.
 foreach ($port in $Ports) {
     $listening = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue

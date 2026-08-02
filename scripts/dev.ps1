@@ -1,10 +1,10 @@
-<#
+﻿<#
 .SYNOPSIS
     Start all three module services plus the gateway (and optionally the frontend).
 
 .DESCRIPTION
     Each service keeps its own venv and can still be started by hand exactly as
-    before — this script is a convenience, not a new requirement.
+    before - this script is a convenience, not a new requirement.
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File .\scripts\dev.ps1 -WithFrontend
@@ -27,7 +27,7 @@ function Write-Warn($message) { Write-Host "  ! $message" -ForegroundColor Yello
 function Write-Ok($message)   { Write-Host "  + $message" -ForegroundColor Green }
 function Write-Bad($message)  { Write-Host "  x $message" -ForegroundColor Red }
 
-# NOTE: ocr-service is `app:app` on port 8000 — a flat app.py, not app.main:app,
+# NOTE: ocr-service is `app:app` on port 8000 - a flat app.py, not app.main:app,
 # and not port 8001 as the repo-root README claims.
 $Services = @(
     [pscustomobject]@{ Name = 'ocr';       Dir = 'services\ocr-service';       Module = 'app:app';      Port = 8000; Health = 'http://127.0.0.1:8000/';              NeedsEnv = $true  }
@@ -36,7 +36,7 @@ $Services = @(
     [pscustomobject]@{ Name = 'gateway';   Dir = 'services\gateway';           Module = 'app.main:app'; Port = 8080; Health = 'http://127.0.0.1:8080/health';        NeedsEnv = $false }
 )
 
-# ── Preflight ────────────────────────────────────────────────────────────────
+# -- Preflight ------------------------------------------------------------
 
 Write-Step 'Preflight'
 
@@ -79,7 +79,7 @@ foreach ($service in $Services) {
     # reasoning-service raises at IMPORT time without OPENAI_API_KEY, so a missing
     # .env there is a hard failure rather than a late 503.
     if ($service.NeedsEnv -and -not (Test-Path (Join-Path $dir '.env'))) {
-        Write-Warn "$($service.Name): no .env file — copy .env.example to .env and fill it in."
+        Write-Warn "$($service.Name): no .env file - copy .env.example to .env and fill it in."
         if ($service.Name -eq 'reasoning') {
             Write-Bad 'reasoning-service fails at import without OPENAI_API_KEY. Aborting.'
             Write-Host "      Copy-Item $dir\.env.example $dir\.env   # then set OPENAI_API_KEY"
@@ -89,12 +89,12 @@ foreach ($service in $Services) {
 }
 
 if (-not (Test-Path (Join-Path $Root 'services\gateway\.env'))) {
-    Write-Warn 'gateway: no .env — using built-in defaults (ocr 8000 / reasoning 8002 / feedback 8003).'
+    Write-Warn 'gateway: no .env - using built-in defaults (ocr 8000 / reasoning 8002 / feedback 8003).'
 }
 
 if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir | Out-Null }
 
-# ── Launch ───────────────────────────────────────────────────────────────────
+# -- Launch ------------------------------------------------------------
 
 Write-Step 'Starting services'
 if ($Reload) {
@@ -104,13 +104,14 @@ if ($Reload) {
 $started = @()
 foreach ($service in $Services) {
     $dir = Join-Path $Root $service.Dir
-    $args = "-m uvicorn $($service.Module) --host 127.0.0.1 --port $($service.Port)"
-    # The gateway's job store lives in this process — never more than one worker.
-    if ($service.Name -eq 'gateway') { $args += ' --workers 1' }
-    if ($Reload) { $args += ' --reload' }
+    # Not $args - that is a PowerShell automatic variable.
+    $uvicornArgs = "-m uvicorn $($service.Module) --host 127.0.0.1 --port $($service.Port)"
+    # The gateway's job store lives in this process - never more than one worker.
+    if ($service.Name -eq 'gateway') { $uvicornArgs += ' --workers 1' }
+    if ($Reload) { $uvicornArgs += ' --reload' }
 
     $process = Start-Process -FilePath 'powershell' -ArgumentList @(
-        '-NoExit', '-Command', "`$host.UI.RawUI.WindowTitle = '$($service.Name) :$($service.Port)'; Set-Location '$dir'; & '$($service.Python)' $args"
+        '-NoExit', '-Command', "`$host.UI.RawUI.WindowTitle = '$($service.Name) :$($service.Port)'; Set-Location '$dir'; & '$($service.Python)' $uvicornArgs"
     ) -PassThru
     $started += [pscustomobject]@{ name = $service.Name; pid = $process.Id; port = $service.Port }
     Write-Ok "$($service.Name) starting on :$($service.Port) (PID $($process.Id))"
@@ -127,11 +128,11 @@ if ($WithFrontend) {
 
 $started | ConvertTo-Json | Out-File -FilePath (Join-Path $LogDir 'pids.json') -Encoding utf8
 
-# ── Health wait ──────────────────────────────────────────────────────────────
+# -- Health wait ------------------------------------------------------------
 
 if (-not $SkipHealthWait) {
     Write-Step "Waiting for services (up to ${HealthTimeoutSec}s)"
-    Write-Host '      reasoning-service takes longest — it imports LangGraph and LangChain.'
+    Write-Host '      reasoning-service takes longest - it imports LangGraph and LangChain.'
 
     $deadline = (Get-Date).AddSeconds($HealthTimeoutSec)
     $pending = [System.Collections.ArrayList]@($Services)
@@ -164,7 +165,7 @@ if (-not $SkipHealthWait) {
     }
 }
 
-# ── Banner ───────────────────────────────────────────────────────────────────
+# -- Banner ------------------------------------------------------------
 
 Write-Host ''
 Write-Host '  Gateway    http://127.0.0.1:8080/docs   <- the one call' -ForegroundColor White

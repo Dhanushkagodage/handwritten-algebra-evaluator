@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     End-to-end smoke test against a running stack.
 
@@ -31,7 +31,7 @@ $health.services.PSObject.Properties | ForEach-Object {
     Write-Host ("  {0,-10} {1,-5} {2}" -f $_.Name, $_.Value.status, $_.Value.url) -ForegroundColor $colour
 }
 if ($health.status -ne 'ok') {
-    Write-Host 'Some services are down — start them with .\scripts\dev.ps1' -ForegroundColor Red
+    Write-Host 'Some services are down - start them with .\scripts\dev.ps1' -ForegroundColor Red
     exit 1
 }
 
@@ -62,7 +62,7 @@ while ((Get-Date) -lt $deadline) {
         Write-Host "  Timings    $($status.result.timings_ms | ConvertTo-Json -Compress)"
         Write-Host ''
         foreach ($step in $status.result.step_feedback) {
-            Write-Host "  Step $($step.step_number) [$($step.validity)] $($step.marks_awarded) marks — $($step.expression)"
+            Write-Host "  Step $($step.step_number) [$($step.validity)] $($step.marks_awarded) marks - $($step.expression)"
             Write-Host "      correct : $($step.what_is_correct)"
             if ($step.what_is_missing)    { Write-Host "      missing : $($step.what_is_missing)" }
             if ($step.why_marks_reduced)  { Write-Host "      why     : $($step.why_marks_reduced)" }
