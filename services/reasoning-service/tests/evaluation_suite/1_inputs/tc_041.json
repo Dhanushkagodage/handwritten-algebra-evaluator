@@ -15,9 +15,9 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "Combine fractions over common denominator sin θ cos θ", "marks": 2},
-      {"step_no": 2, "description": "Apply sine compound angle identity to simplify numerator to sin(2θ)", "marks": 2},
-      {"step_no": 3, "description": "Substitute double angle identity sin(2θ) = 2 sin θ cos θ and cancel to prove RHS = 2", "marks": 2}
+      {"step_no": 1, "description": "Combine fractions over common denominator sin θ cos θ", "expected_expression": "(sin 3θ cos θ - cos 3θ sin θ) / (sin θ cos θ)", "marks": 2},
+      {"step_no": 2, "description": "Apply sine compound angle identity to simplify numerator to sin(2θ)", "expected_expression": "sin(2θ) / (sin θ cos θ)", "marks": 2},
+      {"step_no": 3, "description": "Substitute double angle identity sin(2θ) = 2 sin θ cos θ and cancel to prove RHS = 2", "expected_expression": "(2 sin θ cos θ)/(sin θ cos θ) = 2", "marks": 2}
     ]
   }
 }

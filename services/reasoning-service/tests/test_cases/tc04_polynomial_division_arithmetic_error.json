@@ -16,12 +16,12 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Set up polynomial long division correctly", "marks": 1},
-      {"step_no": 2, "description": "First division step: obtain 2x² and subtract 2x²(x-2) correctly", "marks": 1},
-      {"step_no": 3, "description": "Second step: obtain x (not wrong value) — correct subtraction gives -3x²+4x²=x²", "marks": 2},
-      {"step_no": 4, "description": "Third step: correctly obtain 3 (constant term) from 3x-5 divided by x-2", "marks": 2},
-      {"step_no": 5, "description": "State correct remainder using Remainder Theorem or long division: f(2)=2(8)-3(4)+2-5=16-12+2-5=1", "marks": 1},
-      {"step_no": 6, "description": "Write the complete factored form correctly", "marks": 1}
+      {"step_no": 1, "description": "Set up polynomial long division correctly", "expected_expression": "(2x³ - 3x² + x - 5) ÷ (x - 2)", "marks": 1},
+      {"step_no": 2, "description": "First division step: obtain 2x² and subtract 2x²(x-2) correctly", "expected_expression": "2x³ ÷ x = 2x²; 2x²(x - 2) = 2x³ - 4x²", "marks": 1},
+      {"step_no": 3, "description": "Second step: obtain x (not wrong value) — correct subtraction gives -3x²+4x²=x²", "expected_expression": "-3x² + 4x² = x², so the next quotient term is x", "marks": 2},
+      {"step_no": 4, "description": "Third step: correctly obtain 3 (constant term) from 3x-5 divided by x-2", "expected_expression": "3x - 5 divided by x - 2 gives the constant term 3", "marks": 2},
+      {"step_no": 5, "description": "State correct remainder using Remainder Theorem or long division: f(2)=2(8)-3(4)+2-5=16-12+2-5=1", "expected_expression": "f(2) = 2(8) - 3(4) + 2 - 5 = 1", "marks": 1},
+      {"step_no": 6, "description": "Write the complete factored form correctly", "expected_expression": "2x³ - 3x² + x - 5 = (x - 2)(2x² + x + 3) + 1", "marks": 1}
     ]
   }
 }

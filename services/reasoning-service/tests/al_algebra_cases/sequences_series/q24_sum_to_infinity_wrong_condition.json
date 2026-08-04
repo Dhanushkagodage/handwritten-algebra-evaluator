@@ -23,16 +23,19 @@
       {
         "step_no": 1,
         "description": "Use S∞ = a/(1-r) = 20.",
+        "expected_expression": "12/(1 - r) = 20",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Solve for r = 0.4.",
+        "expected_expression": "r = 0.4",
         "marks": 3
       },
       {
         "step_no": 3,
         "description": "State correct convergence condition |r| < 1 — student wrote r>0. 0 marks.",
+        "expected_expression": "|r| < 1",
         "marks": 0
       }
     ]

@@ -31,26 +31,31 @@
       {
         "step_no": 1,
         "description": "Form two equations using AP formula.",
+        "expected_expression": "a + 3d = 17 and a + 9d = 35",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Solve for d = 3.",
+        "expected_expression": "6d = 18, so d = 3",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Find a = 8.",
+        "expected_expression": "a = 8",
         "marks": 1
       },
       {
         "step_no": 4,
         "description": "Apply sum formula Sₙ = n/2[2a+(n-1)d].",
+        "expected_expression": "S₂₀ = (20/2)[2(8) + 19(3)]",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Compute S₂₀ = 730.",
+        "expected_expression": "S₂₀ = 730",
         "marks": 1
       }
     ]

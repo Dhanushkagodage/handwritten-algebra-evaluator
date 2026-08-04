@@ -31,21 +31,25 @@
       {
         "step_no": 1,
         "description": "Apply GP sum formula correctly.",
+        "expected_expression": "Sₙ = 5(3ⁿ - 1)/2",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Form inequality 3ⁿ > 4001.",
+        "expected_expression": "3ⁿ > 4001",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Take logarithms and solve n > 7.55.",
+        "expected_expression": "n > log(4001)/log(3) ≈ 7.55",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Round up to n=8 since n must be integer — student rounded down. 0 marks.",
+        "expected_expression": "n = 8",
         "marks": 0
       }
     ]

@@ -14,11 +14,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Form characteristic equation det(A - λI) = 0", "marks": 1},
-      {"step_no": 2, "description": "Expand determinant to form quadratic λ² - 7λ + 10 = 0", "marks": 2},
-      {"step_no": 3, "description": "Solve quadratic to find eigenvalues λ₁ = 5 and λ₂ = 2", "marks": 1},
-      {"step_no": 4, "description": "Find eigenvector corresponding to λ = 5", "marks": 2},
-      {"step_no": 5, "description": "Find eigenvector corresponding to λ = 2", "marks": 2}
+      {"step_no": 1, "description": "Form characteristic equation det(A - λI) = 0", "expected_expression": "det(A - λI) = 0", "marks": 1},
+      {"step_no": 2, "description": "Expand determinant to form quadratic λ² - 7λ + 10 = 0", "expected_expression": "(4 - λ)(3 - λ) - 2 = λ² - 7λ + 10 = 0", "marks": 2},
+      {"step_no": 3, "description": "Solve quadratic to find eigenvalues λ₁ = 5 and λ₂ = 2", "expected_expression": "(λ - 5)(λ - 2) = 0, so λ₁ = 5 and λ₂ = 2", "marks": 1},
+      {"step_no": 4, "description": "Find eigenvector corresponding to λ = 5", "expected_expression": "v₁ = [[1], [1]]", "marks": 2},
+      {"step_no": 5, "description": "Find eigenvector corresponding to λ = 2", "expected_expression": "v₂ = [[1], [-2]]", "marks": 2}
     ]
   }
 }

@@ -16,11 +16,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Substitute exponential definitions of cosh(x) and sinh(x)", "marks": 2},
-      {"step_no": 2, "description": "Simplify equation to form 3eˣ - e⁻ˣ = 6", "marks": 1},
-      {"step_no": 3, "description": "Multiply by eˣ to form quadratic 3(eˣ)² - 6eˣ - 1 = 0", "marks": 1},
-      {"step_no": 4, "description": "Solve quadratic to get eˣ = 1 ± (2√3)/3", "marks": 2},
-      {"step_no": 5, "description": "Reject negative value for eˣ and state valid solution x = ln(1 + 2√3/3)", "marks": 2}
+      {"step_no": 1, "description": "Substitute exponential definitions of cosh(x) and sinh(x)", "expected_expression": "(eˣ + e⁻ˣ)/2 + 2·((eˣ - e⁻ˣ)/2) = 3", "marks": 2},
+      {"step_no": 2, "description": "Simplify equation to form 3eˣ - e⁻ˣ = 6", "expected_expression": "3eˣ - e⁻ˣ = 6", "marks": 1},
+      {"step_no": 3, "description": "Multiply by eˣ to form quadratic 3(eˣ)² - 6eˣ - 1 = 0", "expected_expression": "3(eˣ)² - 6eˣ - 1 = 0", "marks": 1},
+      {"step_no": 4, "description": "Solve quadratic to get eˣ = 1 ± (2√3)/3", "expected_expression": "eˣ = 1 ± (2√3)/3", "marks": 2},
+      {"step_no": 5, "description": "Reject negative value for eˣ and state valid solution x = ln(1 + 2√3/3)", "expected_expression": "x = ln(1 + 2√3/3)", "marks": 2}
     ]
   }
 }

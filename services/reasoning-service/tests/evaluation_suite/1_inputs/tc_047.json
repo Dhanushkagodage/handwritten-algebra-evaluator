@@ -15,11 +15,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Identify P(x) = 2 and calculate integrating factor I(x) = e^(2x)", "marks": 2},
-      {"step_no": 2, "description": "Multiply ODE by e^(2x) and rewrite LHS as d/dx [y e^(2x)]", "marks": 2},
-      {"step_no": 3, "description": "Integrate RHS to obtain y e^(2x) = eˣ + C", "marks": 2},
-      {"step_no": 4, "description": "Substitute initial condition (0, 2) to solve C = 1", "marks": 1},
-      {"step_no": 5, "description": "State explicit general solution y = e⁻ˣ + e⁻²ˣ", "marks": 1}
+      {"step_no": 1, "description": "Identify P(x) = 2 and calculate integrating factor I(x) = e^(2x)", "expected_expression": "P(x) = 2 and I(x) = e^(2x)", "marks": 2},
+      {"step_no": 2, "description": "Multiply ODE by e^(2x) and rewrite LHS as d/dx [y e^(2x)]", "expected_expression": "d/dx [y e^(2x)] = eˣ", "marks": 2},
+      {"step_no": 3, "description": "Integrate RHS to obtain y e^(2x) = eˣ + C", "expected_expression": "y e^(2x) = eˣ + C", "marks": 2},
+      {"step_no": 4, "description": "Substitute initial condition (0, 2) to solve C = 1", "expected_expression": "C = 1", "marks": 1},
+      {"step_no": 5, "description": "State explicit general solution y = e⁻ˣ + e⁻²ˣ", "expected_expression": "y = e⁻ˣ + e⁻²ˣ", "marks": 1}
     ]
   }
 }

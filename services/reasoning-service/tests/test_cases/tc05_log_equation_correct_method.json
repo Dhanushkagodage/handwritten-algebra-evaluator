@@ -16,12 +16,12 @@
   "marking_scheme": {
     "total_marks": 9,
     "steps": [
-      {"step_no": 1, "description": "Combine logarithms using product rule: log₃((x+4)(x-2)) = 3", "marks": 2},
-      {"step_no": 2, "description": "Convert to exponential form: (x+4)(x-2) = 27", "marks": 1},
-      {"step_no": 3, "description": "Expand and form quadratic: x² + 2x - 35 = 0", "marks": 2},
-      {"step_no": 4, "description": "Solve the quadratic correctly to get x = 5 or x = -7", "marks": 2},
-      {"step_no": 5, "description": "Apply domain restriction (argument of log must be positive) and reject x = -7", "marks": 1},
-      {"step_no": 6, "description": "State final valid answer x = 5 with verification", "marks": 1}
+      {"step_no": 1, "description": "Combine logarithms using product rule: log₃((x+4)(x-2)) = 3", "expected_expression": "log₃((x + 4)(x - 2)) = 3", "marks": 2},
+      {"step_no": 2, "description": "Convert to exponential form: (x+4)(x-2) = 27", "expected_expression": "(x + 4)(x - 2) = 27", "marks": 1},
+      {"step_no": 3, "description": "Expand and form quadratic: x² + 2x - 35 = 0", "expected_expression": "x² + 2x - 35 = 0", "marks": 2},
+      {"step_no": 4, "description": "Solve the quadratic correctly to get x = 5 or x = -7", "expected_expression": "(x + 7)(x - 5) = 0, so x = 5 or x = -7", "marks": 2},
+      {"step_no": 5, "description": "Apply domain restriction (argument of log must be positive) and reject x = -7", "expected_expression": "x = -7 rejected because x + 4 > 0 and x - 2 > 0 require x > 2", "marks": 1},
+      {"step_no": 6, "description": "State final valid answer x = 5 with verification", "expected_expression": "x = 5", "marks": 1}
     ]
   }
 }

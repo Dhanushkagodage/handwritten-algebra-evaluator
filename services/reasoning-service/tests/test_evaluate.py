@@ -26,9 +26,9 @@ SAMPLE_REQUEST = {
     "marking_scheme": {
         "total_marks": 5,
         "steps": [
-            {"step_no": 1, "description": "Correctly write the standard form of the equation", "marks": 1},
-            {"step_no": 2, "description": "Correctly factorise the quadratic into two linear factors", "marks": 2},
-            {"step_no": 3, "description": "State both correct solutions", "marks": 2}
+            {"step_no": 1, "description": "Correctly write the standard form of the equation", "expected_expression": "x² - 5x + 6 = 0", "marks": 1},
+            {"step_no": 2, "description": "Correctly factorise the quadratic into two linear factors", "expected_expression": "(x - 2)(x - 3) = 0", "marks": 2},
+            {"step_no": 3, "description": "State both correct solutions", "expected_expression": "x = 2 or x = 3", "marks": 2}
         ]
     }
 }

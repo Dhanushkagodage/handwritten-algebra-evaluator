@@ -15,10 +15,10 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "State correct matrix for reflection in y = x", "marks": 1},
-      {"step_no": 2, "description": "State correct matrix for 90° anticlockwise rotation", "marks": 1},
-      {"step_no": 3, "description": "Apply correct order of matrix multiplication: M_rotation · M_reflection", "marks": 2},
-      {"step_no": 4, "description": "Perform matrix multiplication to obtain T = [[-1, 0], [0, 1]]", "marks": 2}
+      {"step_no": 1, "description": "State correct matrix for reflection in y = x", "expected_expression": "M_reflection = [[0, 1], [1, 0]]", "marks": 1},
+      {"step_no": 2, "description": "State correct matrix for 90° anticlockwise rotation", "expected_expression": "M_rotation = [[0, -1], [1, 0]]", "marks": 1},
+      {"step_no": 3, "description": "Apply correct order of matrix multiplication: M_rotation · M_reflection", "expected_expression": "T = M_rotation · M_reflection", "marks": 2},
+      {"step_no": 4, "description": "Perform matrix multiplication to obtain T = [[-1, 0], [0, 1]]", "expected_expression": "T = [[-1, 0], [0, 1]]", "marks": 2}
     ]
   }
 }

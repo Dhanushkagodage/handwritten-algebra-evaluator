@@ -15,12 +15,12 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "State or use the general binomial expansion formula for negative/fractional index", "marks": 1},
-      {"step_no": 2, "description": "Correctly identify n = -2 and u = 3x", "marks": 1},
-      {"step_no": 3, "description": "Correctly compute term in x: (-2)(3x) = -6x", "marks": 1},
-      {"step_no": 4, "description": "Correctly compute term in x²: 3·9x² = 27x²", "marks": 2},
-      {"step_no": 5, "description": "Correctly compute term in x³: (-4)·27x³ = -108x³", "marks": 2},
-      {"step_no": 6, "description": "State validity condition: |3x| < 1 i.e. |x| < 1/3", "marks": 1}
+      {"step_no": 1, "description": "State or use the general binomial expansion formula for negative/fractional index", "expected_expression": "(1 + u)^n = 1 + nu + n(n-1)/2! · u² + n(n-1)(n-2)/3! · u³ + ...", "marks": 1},
+      {"step_no": 2, "description": "Correctly identify n = -2 and u = 3x", "expected_expression": "n = -2, u = 3x", "marks": 1},
+      {"step_no": 3, "description": "Correctly compute term in x: (-2)(3x) = -6x", "expected_expression": "(-2)(3x) = -6x", "marks": 1},
+      {"step_no": 4, "description": "Correctly compute term in x²: 3·9x² = 27x²", "expected_expression": "3 · 9x² = 27x²", "marks": 2},
+      {"step_no": 5, "description": "Correctly compute term in x³: (-4)·27x³ = -108x³", "expected_expression": "(-4) · 27x³ = -108x³", "marks": 2},
+      {"step_no": 6, "description": "State validity condition: |3x| < 1 i.e. |x| < 1/3", "expected_expression": "|3x| < 1, i.e. |x| < 1/3", "marks": 1}
     ]
   }
 }

@@ -14,11 +14,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "State Taylor series expansion formula centered at a = π/3", "marks": 1},
-      {"step_no": 2, "description": "Calculate derivatives f'(x), f''(x), f'''(x)", "marks": 2},
-      {"step_no": 3, "description": "Evaluate derivatives at x = π/3: 1/2, -√3/2, -1/2, √3/2", "marks": 2},
-      {"step_no": 4, "description": "Substitute values into Taylor expansion", "marks": 1},
-      {"step_no": 5, "description": "Divide by factorials to obtain 1/2 - (√3/2)(x - π/3) - (1/4)(x - π/3)² + (√3/12)(x - π/3)³", "marks": 2}
+      {"step_no": 1, "description": "State Taylor series expansion formula centered at a = π/3", "expected_expression": "f(x) = f(a) + f'(a)(x - a) + f''(a)(x - a)²/2! + f'''(a)(x - a)³/3! with a = π/3", "marks": 1},
+      {"step_no": 2, "description": "Calculate derivatives f'(x), f''(x), f'''(x)", "expected_expression": "f'(x) = -sin x, f''(x) = -cos x, f'''(x) = sin x", "marks": 2},
+      {"step_no": 3, "description": "Evaluate derivatives at x = π/3: 1/2, -√3/2, -1/2, √3/2", "expected_expression": "f(π/3) = 1/2, f'(π/3) = -√3/2, f''(π/3) = -1/2, f'''(π/3) = √3/2", "marks": 2},
+      {"step_no": 4, "description": "Substitute values into Taylor expansion", "expected_expression": "cos x = 1/2 - (√3/2)(x - π/3) - (1/2)(x - π/3)²/2! + (√3/2)(x - π/3)³/3!", "marks": 1},
+      {"step_no": 5, "description": "Divide by factorials to obtain 1/2 - (√3/2)(x - π/3) - (1/4)(x - π/3)² + (√3/12)(x - π/3)³", "expected_expression": "cos x = 1/2 - (√3/2)(x - π/3) - (1/4)(x - π/3)² + (√3/12)(x - π/3)³", "marks": 2}
     ]
   }
 }

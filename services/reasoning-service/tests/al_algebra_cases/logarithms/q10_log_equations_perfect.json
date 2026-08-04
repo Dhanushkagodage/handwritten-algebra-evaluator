@@ -39,26 +39,31 @@
       {
         "step_no": 1,
         "description": "Use product rule to combine logs.",
+        "expected_expression": "log₂[x(x - 6)] = 4",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Convert to exponential form: x(x-6) = 16.",
+        "expected_expression": "x(x - 6) = 16",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Form and solve quadratic x²-6x-16=0.",
+        "expected_expression": "x² - 6x - 16 = 0, so (x - 8)(x + 2) = 0",
         "marks": 3
       },
       {
         "step_no": 4,
         "description": "Apply domain restriction and reject x=-2.",
+        "expected_expression": "x = -2 rejected because x > 6 is required",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "State x=8 with verification.",
+        "expected_expression": "x = 8",
         "marks": 1
       }
     ]

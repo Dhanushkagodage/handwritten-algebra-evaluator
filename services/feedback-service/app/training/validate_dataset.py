@@ -30,8 +30,12 @@ EVAL_PATH = "app/training/data/feedback_dataset_eval.json"
 
 REQUIRED_KEYS = {
     "id", "topic", "difficulty", "question", "method",
-    "assigned_marks", "total_marks", "steps", "marking_scheme", "step_feedback",
+    "assigned_marks", "steps", "marking_scheme", "step_feedback",
 }
+# Canonical marking scheme shape — an object of exactly these keys, whose steps
+# carry exactly SCHEME_STEP_KEYS. total_marks lives here, not at the top level.
+SCHEME_KEYS = {"total_marks", "steps"}
+SCHEME_STEP_KEYS = {"step_no", "description", "expected_expression", "marks"}
 STEP_VALIDITIES = {"correct", "partial", "incorrect"}
 MARK_EPS = 1e-6
 
@@ -104,19 +108,52 @@ def check_schema(raw: List[Dict]) -> List[str]:
             errors.append(f"{where}: invalid difficulty {item['difficulty']!r}")
         if not item["steps"]:
             errors.append(f"{where}: empty steps")
-        if not item["marking_scheme"]:
-            errors.append(f"{where}: empty marking_scheme")
         if not item["step_feedback"]:
             errors.append(f"{where}: empty step_feedback")
 
         for s in item["steps"]:
             if s["validity"] not in STEP_VALIDITIES:
-                errors.append(f"{where}: step {s.get('step_number')} invalid validity {s['validity']!r}")
+                errors.append(f"{where}: step {s.get('step_no')} invalid validity {s['validity']!r}")
+
+        scheme = item["marking_scheme"]
+        if not isinstance(scheme, dict):
+            errors.append(f"{where}: marking_scheme must be an object, got {type(scheme).__name__}")
+            continue
+        if set(scheme.keys()) != SCHEME_KEYS:
+            errors.append(
+                f"{where}: marking_scheme keys {sorted(scheme.keys())} != {sorted(SCHEME_KEYS)}"
+            )
+            continue
+        if not scheme["steps"]:
+            errors.append(f"{where}: empty marking_scheme.steps")
+            continue
+
+        for j, m in enumerate(scheme["steps"], start=1):
+            if set(m.keys()) != SCHEME_STEP_KEYS:
+                errors.append(
+                    f"{where}: marking_scheme.steps[{j}] keys {sorted(m.keys())} "
+                    f"!= {sorted(SCHEME_STEP_KEYS)}"
+                )
+                continue
+            if m["step_no"] != j:
+                errors.append(
+                    f"{where}: marking_scheme.steps[{j}] has step_no={m['step_no']} "
+                    f"(must be 1-based and contiguous)"
+                )
+            if not str(m["description"]).strip():
+                errors.append(f"{where}: marking_scheme step {m['step_no']} has empty description")
+            if not str(m["expected_expression"]).strip():
+                errors.append(
+                    f"{where}: marking_scheme step {m['step_no']} has empty expected_expression"
+                )
+
+        total_marks = scheme["total_marks"]
 
         # assigned_marks <= total_marks
-        if item["assigned_marks"] > item["total_marks"] + MARK_EPS:
+        if item["assigned_marks"] > total_marks + MARK_EPS:
             errors.append(
-                f"{where}: assigned_marks ({item['assigned_marks']}) > total_marks ({item['total_marks']})"
+                f"{where}: assigned_marks ({item['assigned_marks']}) > "
+                f"marking_scheme.total_marks ({total_marks})"
             )
 
         # marks_awarded across steps must sum to assigned_marks
@@ -126,21 +163,22 @@ def check_schema(raw: List[Dict]) -> List[str]:
                 f"{where}: sum(steps.marks_awarded)={step_sum} != assigned_marks={item['assigned_marks']}"
             )
 
-        # marking_scheme marks must sum to total_marks
-        scheme_sum = sum(m["marks"] for m in item["marking_scheme"])
-        if abs(scheme_sum - item["total_marks"]) > MARK_EPS:
+        # marking_scheme step marks must sum to marking_scheme.total_marks
+        scheme_sum = sum(m["marks"] for m in scheme["steps"])
+        if abs(scheme_sum - total_marks) > MARK_EPS:
             errors.append(
-                f"{where}: sum(marking_scheme.marks)={scheme_sum} != total_marks={item['total_marks']}"
+                f"{where}: sum(marking_scheme.steps.marks)={scheme_sum} != "
+                f"marking_scheme.total_marks={total_marks}"
             )
 
         # partial/incorrect steps should carry an error_description or missing/deduction feedback
-        fb_by_step = {fb["step_number"]: fb for fb in item["step_feedback"]}
+        fb_by_step = {fb["step_no"]: fb for fb in item["step_feedback"]}
         for s in item["steps"]:
             if s["validity"] in ("partial", "incorrect"):
-                fb = fb_by_step.get(s["step_number"], {})
+                fb = fb_by_step.get(s["step_no"], {})
                 if not s.get("error_description") and not fb.get("missing"):
                     errors.append(
-                        f"{where}: step {s['step_number']} is {s['validity']} but has no "
+                        f"{where}: step {s['step_no']} is {s['validity']} but has no "
                         f"error_description or feedback.missing explaining why"
                     )
     return errors

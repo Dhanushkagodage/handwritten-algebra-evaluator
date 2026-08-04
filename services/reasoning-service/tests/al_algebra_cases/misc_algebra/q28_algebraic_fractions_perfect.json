@@ -47,21 +47,25 @@
       {
         "step_no": 1,
         "description": "Factorise all four expressions correctly.",
+        "expected_expression": "x² - 4 = (x-2)(x+2), x² - x - 6 = (x-3)(x+2), x² - 9 = (x-3)(x+3)",
         "marks": 3
       },
       {
         "step_no": 2,
         "description": "Invert and multiply (flip second fraction for division).",
+        "expected_expression": "[(x-2)(x+2)]/[(x-3)(x+2)] × [(x-3)(x+3)]/(x+2)",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Cancel common factors systematically.",
+        "expected_expression": "(x-2)(x-3)(x+3)/[(x-3)(x+2)]",
         "marks": 3
       },
       {
         "step_no": 4,
         "description": "State final simplified form.",
+        "expected_expression": "(x-2)(x+3)/(x+2)",
         "marks": 1
       }
     ]

@@ -14,11 +14,11 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Substitute identity cos(2x) = 1 - 2 sin²(x)", "marks": 1},
-      {"step_no": 2, "description": "Form quadratic 2 sin²(x) - 3 sin(x) + 1 = 0", "marks": 1},
-      {"step_no": 3, "description": "Factorise or solve quadratic for sin(x) = 1/2 and sin(x) = 1", "marks": 2},
-      {"step_no": 4, "description": "State solutions for sin(x) = 1/2: x = π/6 and 5π/6", "marks": 2},
-      {"step_no": 5, "description": "State solution for sin(x) = 1: x = π/2", "marks": 1}
+      {"step_no": 1, "description": "Substitute identity cos(2x) = 1 - 2 sin²(x)", "expected_expression": "cos(2x) = 1 - 2 sin²(x)", "marks": 1},
+      {"step_no": 2, "description": "Form quadratic 2 sin²(x) - 3 sin(x) + 1 = 0", "expected_expression": "2 sin²(x) - 3 sin(x) + 1 = 0", "marks": 1},
+      {"step_no": 3, "description": "Factorise or solve quadratic for sin(x) = 1/2 and sin(x) = 1", "expected_expression": "(2 sin(x) - 1)(sin(x) - 1) = 0, so sin(x) = 1/2 or sin(x) = 1", "marks": 2},
+      {"step_no": 4, "description": "State solutions for sin(x) = 1/2: x = π/6 and 5π/6", "expected_expression": "x = π/6 and x = 5π/6", "marks": 2},
+      {"step_no": 5, "description": "State solution for sin(x) = 1: x = π/2", "expected_expression": "x = π/2", "marks": 1}
     ]
   }
 }

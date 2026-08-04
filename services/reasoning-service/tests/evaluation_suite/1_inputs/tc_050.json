@@ -15,12 +15,12 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Verify base case n = 5: LHS = 32 > 25 = RHS", "marks": 1},
-      {"step_no": 2, "description": "State inductive hypothesis for n = k (2ᵏ > k² for k ≥ 5)", "marks": 1},
-      {"step_no": 3, "description": "State target inequality for n = k + 1: 2ᵏ⁺¹ > (k + 1)²", "marks": 1},
-      {"step_no": 4, "description": "Apply hypothesis: 2ᵏ⁺¹ = 2(2ᵏ) > 2k² = k² + k²", "marks": 2},
-      {"step_no": 5, "description": "Prove sub-inequality k² > 2k + 1 for k ≥ 5", "marks": 2},
-      {"step_no": 6, "description": "State mathematical induction conclusion", "marks": 1}
+      {"step_no": 1, "description": "Verify base case n = 5: LHS = 32 > 25 = RHS", "expected_expression": "2⁵ = 32 > 25 = 5²", "marks": 1},
+      {"step_no": 2, "description": "State inductive hypothesis for n = k (2ᵏ > k² for k ≥ 5)", "expected_expression": "2ᵏ > k² for k ≥ 5", "marks": 1},
+      {"step_no": 3, "description": "State target inequality for n = k + 1: 2ᵏ⁺¹ > (k + 1)²", "expected_expression": "2ᵏ⁺¹ > (k + 1)²", "marks": 1},
+      {"step_no": 4, "description": "Apply hypothesis: 2ᵏ⁺¹ = 2(2ᵏ) > 2k² = k² + k²", "expected_expression": "2ᵏ⁺¹ = 2(2ᵏ) > 2k² = k² + k²", "marks": 2},
+      {"step_no": 5, "description": "Prove sub-inequality k² > 2k + 1 for k ≥ 5", "expected_expression": "k² ≥ 5k = 2k + 3k > 2k + 1", "marks": 2},
+      {"step_no": 6, "description": "State mathematical induction conclusion", "expected_expression": "2ⁿ > n² for all integers n ≥ 5", "marks": 1}
     ]
   }
 }

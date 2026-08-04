@@ -15,12 +15,12 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "State premise of proof by contradiction: assume √2 = a/b in lowest terms (gcd(a,b)=1)", "marks": 2},
-      {"step_no": 2, "description": "Square and rearrange to a² = 2b²", "marks": 1},
-      {"step_no": 3, "description": "Deduce a is even and substitute a = 2k", "marks": 1},
-      {"step_no": 4, "description": "Simplify to b² = 2k² and deduce b is even", "marks": 1},
-      {"step_no": 5, "description": "Identify contradiction (both a and b even implies common factor 2)", "marks": 1},
-      {"step_no": 6, "description": "State final conclusion that √2 is irrational", "marks": 1}
+      {"step_no": 1, "description": "State premise of proof by contradiction: assume √2 = a/b in lowest terms (gcd(a,b)=1)", "expected_expression": "√2 = a/b with a, b ∈ ℤ, b ≠ 0 and gcd(a, b) = 1", "marks": 2},
+      {"step_no": 2, "description": "Square and rearrange to a² = 2b²", "expected_expression": "a² = 2b²", "marks": 1},
+      {"step_no": 3, "description": "Deduce a is even and substitute a = 2k", "expected_expression": "a = 2k for some integer k", "marks": 1},
+      {"step_no": 4, "description": "Simplify to b² = 2k² and deduce b is even", "expected_expression": "b² = 2k²", "marks": 1},
+      {"step_no": 5, "description": "Identify contradiction (both a and b even implies common factor 2)", "expected_expression": "2 divides both a and b, contradicting gcd(a, b) = 1", "marks": 1},
+      {"step_no": 6, "description": "State final conclusion that √2 is irrational", "expected_expression": "√2 is irrational", "marks": 1}
     ]
   }
 }

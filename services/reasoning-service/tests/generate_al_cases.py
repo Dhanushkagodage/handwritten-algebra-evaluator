@@ -56,12 +56,12 @@ def q01_induction_perfect():
         "marking_scheme": {
             "total_marks": 10,
             "steps": [
-                {"step_no": 1, "description": "Verify base case n=1 correctly.", "marks": 1},
-                {"step_no": 2, "description": "State inductive hypothesis for n=k clearly.", "marks": 2},
-                {"step_no": 3, "description": "Set up the sum for n=k+1 using the hypothesis.", "marks": 2},
-                {"step_no": 4, "description": "Algebraic manipulation to reach (k+1)(k+2)/2.", "marks": 3},
-                {"step_no": 5, "description": "Recognise result matches formula for n=k+1.", "marks": 1},
-                {"step_no": 6, "description": "State conclusion invoking the induction principle.", "marks": 1},
+                {"step_no": 1, "description": "Verify base case n=1 correctly.", "expected_expression": "LHS = 1, RHS = 1(1+1)/2 = 1", "marks": 1},
+                {"step_no": 2, "description": "State inductive hypothesis for n=k clearly.", "expected_expression": "1 + 2 + ... + k = k(k+1)/2", "marks": 2},
+                {"step_no": 3, "description": "Set up the sum for n=k+1 using the hypothesis.", "expected_expression": "1 + 2 + ... + k + (k + 1) = k(k+1)/2 + (k + 1)", "marks": 2},
+                {"step_no": 4, "description": "Algebraic manipulation to reach (k+1)(k+2)/2.", "expected_expression": "(k + 1)(k/2 + 1) = (k+1)(k+2)/2", "marks": 3},
+                {"step_no": 5, "description": "Recognise result matches formula for n=k+1.", "expected_expression": "(k+1)((k+1)+1)/2", "marks": 1},
+                {"step_no": 6, "description": "State conclusion invoking the induction principle.", "expected_expression": "True for all positive integers n by the principle of mathematical induction", "marks": 1},
             ]
         }
     }
@@ -91,13 +91,13 @@ def q02_induction_missing_hypothesis():
         "marking_scheme": {
             "total_marks": 10,
             "steps": [
-                {"step_no": 1, "description": "Verify base case n=1.", "marks": 1},
-                {"step_no": 2, "description": "State hypothesis explicitly for n=k (student vague — loses 1 mark).", "marks": 1},
-                {"step_no": 3, "description": "Set up LHS for n=k+1.", "marks": 1},
-                {"step_no": 4, "description": "Substitute k(k+1)(2k+1)/6 correctly.", "marks": 2},
-                {"step_no": 5, "description": "Factor and simplify to (k+1)(k+2)(2k+3)/6.", "marks": 3},
-                {"step_no": 6, "description": "Recognise form matches formula for n=k+1.", "marks": 1},
-                {"step_no": 7, "description": "State induction conclusion (student did state it).", "marks": 1},
+                {"step_no": 1, "description": "Verify base case n=1.", "expected_expression": "LHS = 1, RHS = 1(2)(3)/6 = 1", "marks": 1},
+                {"step_no": 2, "description": "State hypothesis explicitly for n=k (student vague — loses 1 mark).", "expected_expression": "1² + 2² + ... + k² = k(k+1)(2k+1)/6", "marks": 1},
+                {"step_no": 3, "description": "Set up LHS for n=k+1.", "expected_expression": "1² + 2² + ... + k² + (k+1)²", "marks": 1},
+                {"step_no": 4, "description": "Substitute k(k+1)(2k+1)/6 correctly.", "expected_expression": "k(k+1)(2k+1)/6 + (k+1)²", "marks": 2},
+                {"step_no": 5, "description": "Factor and simplify to (k+1)(k+2)(2k+3)/6.", "expected_expression": "(k+1)(2k² + 7k + 6)/6 = (k+1)(k+2)(2k+3)/6", "marks": 3},
+                {"step_no": 6, "description": "Recognise form matches formula for n=k+1.", "expected_expression": "(k+1)((k+1)+1)(2(k+1)+1)/6", "marks": 1},
+                {"step_no": 7, "description": "State induction conclusion (student did state it).", "expected_expression": "True for all positive integers n by the principle of mathematical induction", "marks": 1},
             ]
         }
     }
@@ -126,12 +126,12 @@ def q03_induction_wrong_base_case():
         "marking_scheme": {
             "total_marks": 10,
             "steps": [
-                {"step_no": 1, "description": "Correct base case: 1³-1=0, and 6|0 (student error here — loses 1 mark).", "marks": 0},
-                {"step_no": 2, "description": "State inductive hypothesis for n=k clearly.", "marks": 2},
-                {"step_no": 3, "description": "Expand (k+1)³-(k+1) correctly.", "marks": 2},
-                {"step_no": 4, "description": "Regroup as (k³-k)+3k(k+1).", "marks": 2},
-                {"step_no": 5, "description": "Argue divisibility by 6 of both parts.", "marks": 2},
-                {"step_no": 6, "description": "State final conclusion.", "marks": 2},
+                {"step_no": 1, "description": "Correct base case: 1³-1=0, and 6|0 (student error here — loses 1 mark).", "expected_expression": "1³ - 1 = 0 and 6 divides 0", "marks": 0},
+                {"step_no": 2, "description": "State inductive hypothesis for n=k clearly.", "expected_expression": "6 divides (k³ - k)", "marks": 2},
+                {"step_no": 3, "description": "Expand (k+1)³-(k+1) correctly.", "expected_expression": "(k+1)³ - (k+1) = k³ + 3k² + 3k + 1 - k - 1", "marks": 2},
+                {"step_no": 4, "description": "Regroup as (k³-k)+3k(k+1).", "expected_expression": "(k³ - k) + 3k(k + 1)", "marks": 2},
+                {"step_no": 5, "description": "Argue divisibility by 6 of both parts.", "expected_expression": "6 divides (k³ - k) and 6 divides 3k(k + 1)", "marks": 2},
+                {"step_no": 6, "description": "State final conclusion.", "expected_expression": "n³ - n is divisible by 6 for all positive integers n", "marks": 2},
             ]
         }
     }
@@ -163,12 +163,12 @@ def q04_partial_fractions_perfect():
         "marking_scheme": {
             "total_marks": 9,
             "steps": [
-                {"step_no": 1, "description": "Set up correct partial fraction form.", "marks": 1},
-                {"step_no": 2, "description": "Multiply out and write identity correctly.", "marks": 1},
-                {"step_no": 3, "description": "Find A by substituting x=1.", "marks": 2},
-                {"step_no": 4, "description": "Find B by substituting x=-2.", "marks": 2},
-                {"step_no": 5, "description": "Find C by substituting x=3.", "marks": 2},
-                {"step_no": 6, "description": "State final answer clearly.", "marks": 1},
+                {"step_no": 1, "description": "Set up correct partial fraction form.", "expected_expression": "(5x+1)/[(x-1)(x+2)(x-3)] = A/(x-1) + B/(x+2) + C/(x-3)", "marks": 1},
+                {"step_no": 2, "description": "Multiply out and write identity correctly.", "expected_expression": "5x + 1 = A(x+2)(x-3) + B(x-1)(x-3) + C(x-1)(x+2)", "marks": 1},
+                {"step_no": 3, "description": "Find A by substituting x=1.", "expected_expression": "6 = -6A, so A = -1", "marks": 2},
+                {"step_no": 4, "description": "Find B by substituting x=-2.", "expected_expression": "-9 = 15B, so B = -3/5", "marks": 2},
+                {"step_no": 5, "description": "Find C by substituting x=3.", "expected_expression": "16 = 10C, so C = 8/5", "marks": 2},
+                {"step_no": 6, "description": "State final answer clearly.", "expected_expression": "-1/(x-1) - (3/5)/(x+2) + (8/5)/(x-3)", "marks": 1},
             ]
         }
     }
@@ -194,11 +194,11 @@ def q05_partial_fractions_partially_correct():
         "marking_scheme": {
             "total_marks": 9,
             "steps": [
-                {"step_no": 1, "description": "Correct form: A/(x+1) + (Bx+C)/(x²+4) — student failed here (0 marks).", "marks": 0},
-                {"step_no": 2, "description": "Multiply and form identity.", "marks": 1},
-                {"step_no": 3, "description": "Use x=-1 to find A = 0/5 — correct substitution attempted.", "marks": 1},
-                {"step_no": 4, "description": "Compare coefficients to find B and C — not done.", "marks": 0},
-                {"step_no": 5, "description": "State final answer.", "marks": 0},
+                {"step_no": 1, "description": "Correct form: A/(x+1) + (Bx+C)/(x²+4) — student failed here (0 marks).", "expected_expression": "A/(x+1) + (Bx + C)/(x² + 4)", "marks": 0},
+                {"step_no": 2, "description": "Multiply and form identity.", "expected_expression": "3x² + 2x - 1 = A(x² + 4) + (Bx + C)(x + 1)", "marks": 1},
+                {"step_no": 3, "description": "Use x=-1 to find A = 0/5 — correct substitution attempted.", "expected_expression": "0 = 5A, so A = 0", "marks": 1},
+                {"step_no": 4, "description": "Compare coefficients to find B and C — not done.", "expected_expression": "B = 3 and C = -1", "marks": 0},
+                {"step_no": 5, "description": "State final answer.", "expected_expression": "(3x - 1)/(x² + 4)", "marks": 0},
             ]
         }
     }
@@ -226,12 +226,12 @@ def q06_partial_fractions_repeated_factor_perfect():
         "marking_scheme": {
             "total_marks": 10,
             "steps": [
-                {"step_no": 1, "description": "Identify repeated factor form correctly.", "marks": 2},
-                {"step_no": 2, "description": "Form identity by multiplying through.", "marks": 1},
-                {"step_no": 3, "description": "Find B = 5 using x=2.", "marks": 2},
-                {"step_no": 4, "description": "Find C = 4/3 using x=-1.", "marks": 2},
-                {"step_no": 5, "description": "Find A = 8/3 by comparing coefficients.", "marks": 2},
-                {"step_no": 6, "description": "State complete final answer.", "marks": 1},
+                {"step_no": 1, "description": "Identify repeated factor form correctly.", "expected_expression": "A/(x-2) + B/(x-2)² + C/(x+1)", "marks": 2},
+                {"step_no": 2, "description": "Form identity by multiplying through.", "expected_expression": "4x² - 3x + 5 = A(x-2)(x+1) + B(x+1) + C(x-2)²", "marks": 1},
+                {"step_no": 3, "description": "Find B = 5 using x=2.", "expected_expression": "3B = 15, so B = 5", "marks": 2},
+                {"step_no": 4, "description": "Find C = 4/3 using x=-1.", "expected_expression": "9C = 12, so C = 4/3", "marks": 2},
+                {"step_no": 5, "description": "Find A = 8/3 by comparing coefficients.", "expected_expression": "4 = A + 4/3, so A = 8/3", "marks": 2},
+                {"step_no": 6, "description": "State complete final answer.", "expected_expression": "(8/3)/(x-2) + 5/(x-2)² + (4/3)/(x+1)", "marks": 1},
             ]
         }
     }
@@ -265,12 +265,12 @@ def q07_binomial_perfect():
         "marking_scheme": {
             "total_marks": 10,
             "steps": [
-                {"step_no": 1, "description": "Correct use of binomial series formula for negative index.", "marks": 2},
-                {"step_no": 2, "description": "Correct coefficients: 1, -6, 27, -108.", "marks": 3},
-                {"step_no": 3, "description": "State validity |x| < 1/3.", "marks": 1},
-                {"step_no": 4, "description": "Identify x = 0.01 correctly for approximation.", "marks": 1},
-                {"step_no": 5, "description": "Substitute and compute each term correctly.", "marks": 2},
-                {"step_no": 6, "description": "State final 4 d.p. answer 0.9426.", "marks": 1},
+                {"step_no": 1, "description": "Correct use of binomial series formula for negative index.", "expected_expression": "(1 + u)^n = 1 + nu + n(n-1)/2! u² + n(n-1)(n-2)/3! u³ + ...", "marks": 2},
+                {"step_no": 2, "description": "Correct coefficients: 1, -6, 27, -108.", "expected_expression": "1 - 6x + 27x² - 108x³", "marks": 3},
+                {"step_no": 3, "description": "State validity |x| < 1/3.", "expected_expression": "|x| < 1/3", "marks": 1},
+                {"step_no": 4, "description": "Identify x = 0.01 correctly for approximation.", "expected_expression": "x = 0.01", "marks": 1},
+                {"step_no": 5, "description": "Substitute and compute each term correctly.", "expected_expression": "1 - 0.06 + 0.0027 - 0.000108", "marks": 2},
+                {"step_no": 6, "description": "State final 4 d.p. answer 0.9426.", "expected_expression": "0.9426", "marks": 1},
             ]
         }
     }
@@ -298,11 +298,11 @@ def q08_binomial_missing_validity():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Factor out 2^(-3) = 1/8 correctly.", "marks": 1},
-                {"step_no": 2, "description": "Apply binomial expansion correctly.", "marks": 2},
-                {"step_no": 3, "description": "Simplify coefficients correctly.", "marks": 2},
-                {"step_no": 4, "description": "Multiply by 1/8 to get final terms.", "marks": 2},
-                {"step_no": 5, "description": "State validity |x| < 2 — NOT done. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Factor out 2^(-3) = 1/8 correctly.", "expected_expression": "(2 - x)^(-3) = (1/8)(1 - x/2)^(-3)", "marks": 1},
+                {"step_no": 2, "description": "Apply binomial expansion correctly.", "expected_expression": "(1 - x/2)^(-3) = 1 + 3x/2 + 6(x²/4) + ...", "marks": 2},
+                {"step_no": 3, "description": "Simplify coefficients correctly.", "expected_expression": "1 + 3x/2 + 3x²/2", "marks": 2},
+                {"step_no": 4, "description": "Multiply by 1/8 to get final terms.", "expected_expression": "1/8 + 3x/16 + 3x²/16", "marks": 2},
+                {"step_no": 5, "description": "State validity |x| < 2 — NOT done. 0 marks.", "expected_expression": "|x| < 2", "marks": 0},
             ]
         }
     }
@@ -330,11 +330,11 @@ def q09_binomial_approximation_wrong():
         "marking_scheme": {
             "total_marks": 10,
             "steps": [
-                {"step_no": 1, "description": "Correct expansion terms up to x²: 1+x-x²/2.", "marks": 3},
-                {"step_no": 2, "description": "Correct third term -x²/2 (note: correct sign).", "marks": 2},
-                {"step_no": 3, "description": "Identify x = 0.1 (1+2(0.1) = 1.2). Student used x=0.2 — 0 marks.", "marks": 0},
-                {"step_no": 4, "description": "Correct substitution and arithmetic — not done.", "marks": 0},
-                {"step_no": 5, "description": "Final 4 d.p. answer 1.0954 — not reached.", "marks": 0},
+                {"step_no": 1, "description": "Correct expansion terms up to x²: 1+x-x²/2.", "expected_expression": "1 + x - x²/2", "marks": 3},
+                {"step_no": 2, "description": "Correct third term -x²/2 (note: correct sign).", "expected_expression": "x³/2", "marks": 2},
+                {"step_no": 3, "description": "Identify x = 0.1 (1+2(0.1) = 1.2). Student used x=0.2 — 0 marks.", "expected_expression": "x = 0.1", "marks": 0},
+                {"step_no": 4, "description": "Correct substitution and arithmetic — not done.", "expected_expression": "1 + 0.1 - (0.1)²/2 + (0.1)³/2", "marks": 0},
+                {"step_no": 5, "description": "Final 4 d.p. answer 1.0954 — not reached.", "expected_expression": "1.0954", "marks": 0},
             ]
         }
     }
@@ -365,11 +365,11 @@ def q10_log_perfect():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Use product rule to combine logs.", "marks": 1},
-                {"step_no": 2, "description": "Convert to exponential form: x(x-6) = 16.", "marks": 1},
-                {"step_no": 3, "description": "Form and solve quadratic x²-6x-16=0.", "marks": 3},
-                {"step_no": 4, "description": "Apply domain restriction and reject x=-2.", "marks": 2},
-                {"step_no": 5, "description": "State x=8 with verification.", "marks": 1},
+                {"step_no": 1, "description": "Use product rule to combine logs.", "expected_expression": "log₂[x(x - 6)] = 4", "marks": 1},
+                {"step_no": 2, "description": "Convert to exponential form: x(x-6) = 16.", "expected_expression": "x(x - 6) = 16", "marks": 1},
+                {"step_no": 3, "description": "Form and solve quadratic x²-6x-16=0.", "expected_expression": "x² - 6x - 16 = 0, so (x - 8)(x + 2) = 0", "marks": 3},
+                {"step_no": 4, "description": "Apply domain restriction and reject x=-2.", "expected_expression": "x = -2 rejected because x > 6 is required", "marks": 2},
+                {"step_no": 5, "description": "State x=8 with verification.", "expected_expression": "x = 8", "marks": 1},
             ]
         }
     }
@@ -394,11 +394,11 @@ def q11_log_domain_error():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Use quotient rule correctly.", "marks": 1},
-                {"step_no": 2, "description": "Convert to 5^1 = 5.", "marks": 1},
-                {"step_no": 3, "description": "Solve linear equation → x = 2.", "marks": 3},
-                {"step_no": 4, "description": "Verify x=2 satisfies domain (x>1, 2x+1>0) — not done. 0 marks.", "marks": 0},
-                {"step_no": 5, "description": "State final answer.", "marks": 1},
+                {"step_no": 1, "description": "Use quotient rule correctly.", "expected_expression": "log₅[(2x + 1)/(x - 1)] = 1", "marks": 1},
+                {"step_no": 2, "description": "Convert to 5^1 = 5.", "expected_expression": "(2x + 1)/(x - 1) = 5", "marks": 1},
+                {"step_no": 3, "description": "Solve linear equation → x = 2.", "expected_expression": "2x + 1 = 5x - 5, so x = 2", "marks": 3},
+                {"step_no": 4, "description": "Verify x=2 satisfies domain (x>1, 2x+1>0) — not done. 0 marks.", "expected_expression": "x = 2 satisfies x > 1 and 2x + 1 > 0", "marks": 0},
+                {"step_no": 5, "description": "State final answer.", "expected_expression": "x = 2", "marks": 1},
             ]
         }
     }
@@ -423,11 +423,11 @@ def q12_log_change_base_partial():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Change base: log₄(x) = log₂(x)/2 correctly.", "marks": 2},
-                {"step_no": 2, "description": "Substitute y = log₂(x) and form equation.", "marks": 2},
-                {"step_no": 3, "description": "Solve y = 6 correctly.", "marks": 2},
-                {"step_no": 4, "description": "Convert to x = 64.", "marks": 1},
-                {"step_no": 5, "description": "Verify: log₄(64)=3, log₂(64)=6, 6-3=3 ✓ — not done. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Change base: log₄(x) = log₂(x)/2 correctly.", "expected_expression": "log₄(x) = log₂(x)/2", "marks": 2},
+                {"step_no": 2, "description": "Substitute y = log₂(x) and form equation.", "expected_expression": "y/2 = y - 3 where y = log₂(x)", "marks": 2},
+                {"step_no": 3, "description": "Solve y = 6 correctly.", "expected_expression": "y = 6", "marks": 2},
+                {"step_no": 4, "description": "Convert to x = 64.", "expected_expression": "x = 2⁶ = 64", "marks": 1},
+                {"step_no": 5, "description": "Verify: log₄(64)=3, log₂(64)=6, 6-3=3 ✓ — not done. 0 marks.", "expected_expression": "log₄(64) = 3 and log₂(64) = 6, so 6 - 3 = 3", "marks": 0},
             ]
         }
     }
@@ -457,10 +457,10 @@ def q13_quadratic_completing_square_perfect():
         "marking_scheme": {
             "total_marks": 7,
             "steps": [
-                {"step_no": 1, "description": "Factor out 2 from x² term.", "marks": 1},
-                {"step_no": 2, "description": "Complete the square inside brackets: (x-2)²-4.", "marks": 2},
-                {"step_no": 3, "description": "Expand and simplify to 2(x-2)²+3.", "marks": 2},
-                {"step_no": 4, "description": "State minimum value 3 and x=2.", "marks": 2},
+                {"step_no": 1, "description": "Factor out 2 from x² term.", "expected_expression": "f(x) = 2(x² - 4x) + 11", "marks": 1},
+                {"step_no": 2, "description": "Complete the square inside brackets: (x-2)²-4.", "expected_expression": "2[(x - 2)² - 4] + 11", "marks": 2},
+                {"step_no": 3, "description": "Expand and simplify to 2(x-2)²+3.", "expected_expression": "2(x - 2)² + 3", "marks": 2},
+                {"step_no": 4, "description": "State minimum value 3 and x=2.", "expected_expression": "minimum value 3 at x = 2", "marks": 2},
             ]
         }
     }
@@ -485,10 +485,10 @@ def q14_quadratic_discriminant_sign_error():
         "marking_scheme": {
             "total_marks": 7,
             "steps": [
-                {"step_no": 1, "description": "State discriminant condition b²-4ac > 0.", "marks": 1},
-                {"step_no": 2, "description": "Substitute correctly: k²-4k-12 > 0.", "marks": 2},
-                {"step_no": 3, "description": "Factorise correctly: (k-6)(k+2) > 0.", "marks": 2},
-                {"step_no": 4, "description": "Correct inequality direction: k<-2 or k>6 — student reversed it. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "State discriminant condition b²-4ac > 0.", "expected_expression": "b² - 4ac > 0", "marks": 1},
+                {"step_no": 2, "description": "Substitute correctly: k²-4k-12 > 0.", "expected_expression": "k² - 4k - 12 > 0", "marks": 2},
+                {"step_no": 3, "description": "Factorise correctly: (k-6)(k+2) > 0.", "expected_expression": "(k - 6)(k + 2) > 0", "marks": 2},
+                {"step_no": 4, "description": "Correct inequality direction: k<-2 or k>6 — student reversed it. 0 marks.", "expected_expression": "k < -2 or k > 6", "marks": 0},
             ]
         }
     }
@@ -514,11 +514,11 @@ def q15_quadratic_formula_partial():
         "marking_scheme": {
             "total_marks": 6,
             "steps": [
-                {"step_no": 1, "description": "Identify a, b, c correctly.", "marks": 1},
-                {"step_no": 2, "description": "Apply formula correctly.", "marks": 2},
-                {"step_no": 3, "description": "Evaluate discriminant √49 = 7.", "marks": 1},
-                {"step_no": 4, "description": "Find x = 2 correctly.", "marks": 1},
-                {"step_no": 5, "description": "Simplify -2/6 to -1/3 — not done. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Identify a, b, c correctly.", "expected_expression": "a = 3, b = -5, c = -2", "marks": 1},
+                {"step_no": 2, "description": "Apply formula correctly.", "expected_expression": "x = [5 ± √(25 + 24)]/6", "marks": 2},
+                {"step_no": 3, "description": "Evaluate discriminant √49 = 7.", "expected_expression": "√49 = 7", "marks": 1},
+                {"step_no": 4, "description": "Find x = 2 correctly.", "expected_expression": "x = 12/6 = 2", "marks": 1},
+                {"step_no": 5, "description": "Simplify -2/6 to -1/3 — not done. 0 marks.", "expected_expression": "x = -2/6 = -1/3", "marks": 0},
             ]
         }
     }
@@ -551,11 +551,11 @@ def q16_polynomial_remainder_perfect():
         "marking_scheme": {
             "total_marks": 9,
             "steps": [
-                {"step_no": 1, "description": "State and apply Remainder Theorem for both divisors.", "marks": 2},
-                {"step_no": 2, "description": "Form equation (1): 2a-b=-2.", "marks": 2},
-                {"step_no": 3, "description": "Form equation (2): a+b=-7.", "marks": 2},
-                {"step_no": 4, "description": "Solve simultaneous equations: a=-3, b=-4.", "marks": 2},
-                {"step_no": 5, "description": "Verify both remainders.", "marks": 1},
+                {"step_no": 1, "description": "State and apply Remainder Theorem for both divisors.", "expected_expression": "p(2) = 15 and p(-1) = -6", "marks": 2},
+                {"step_no": 2, "description": "Form equation (1): 2a-b=-2.", "expected_expression": "2a - b = -2", "marks": 2},
+                {"step_no": 3, "description": "Form equation (2): a+b=-7.", "expected_expression": "a + b = -7", "marks": 2},
+                {"step_no": 4, "description": "Solve simultaneous equations: a=-3, b=-4.", "expected_expression": "a = -3 and b = -4", "marks": 2},
+                {"step_no": 5, "description": "Verify both remainders.", "expected_expression": "p(2) = 16 - 12 + 8 + 3 = 15 and p(-1) = -2 - 3 - 4 + 3 = -6", "marks": 1},
             ]
         }
     }
@@ -584,10 +584,10 @@ def q17_polynomial_factor_partial():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Show p(2)=0 to verify factor.", "marks": 1},
-                {"step_no": 2, "description": "Polynomial division giving x²-4x+3.", "marks": 3},
-                {"step_no": 3, "description": "Factorise quadratic to (x-1)(x-3).", "marks": 2},
-                {"step_no": 4, "description": "State complete factorisation (x-2)(x-1)(x-3) — not done. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Show p(2)=0 to verify factor.", "expected_expression": "p(2) = 8 - 24 + 22 - 6 = 0", "marks": 1},
+                {"step_no": 2, "description": "Polynomial division giving x²-4x+3.", "expected_expression": "x³ - 6x² + 11x - 6 = (x - 2)(x² - 4x + 3)", "marks": 3},
+                {"step_no": 3, "description": "Factorise quadratic to (x-1)(x-3).", "expected_expression": "x² - 4x + 3 = (x - 1)(x - 3)", "marks": 2},
+                {"step_no": 4, "description": "State complete factorisation (x-2)(x-1)(x-3) — not done. 0 marks.", "expected_expression": "p(x) = (x - 2)(x - 1)(x - 3)", "marks": 0},
             ]
         }
     }
@@ -615,11 +615,11 @@ def q18_polynomial_division_wrong():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "First division step: 2x⁴÷x²=2x².", "marks": 1},
-                {"step_no": 2, "description": "Subtract 2x²(x²-2) and get correct remainder -x³+4x²+3x-5.", "marks": 2},
-                {"step_no": 3, "description": "Continue division: -x, subtract, remainder 4x²+x-5.", "marks": 2},
-                {"step_no": 4, "description": "Final step: 4, remainder x+3.", "marks": 2},
-                {"step_no": 5, "description": "State quotient and remainder clearly.", "marks": 1},
+                {"step_no": 1, "description": "First division step: 2x⁴÷x²=2x².", "expected_expression": "2x⁴ ÷ x² = 2x²", "marks": 1},
+                {"step_no": 2, "description": "Subtract 2x²(x²-2) and get correct remainder -x³+4x²+3x-5.", "expected_expression": "-x³ + 4x² + 3x - 5", "marks": 2},
+                {"step_no": 3, "description": "Continue division: -x, subtract, remainder 4x²+x-5.", "expected_expression": "4x² + x - 5", "marks": 2},
+                {"step_no": 4, "description": "Final step: 4, remainder x+3.", "expected_expression": "x + 3", "marks": 2},
+                {"step_no": 5, "description": "State quotient and remainder clearly.", "expected_expression": "quotient = 2x² - x + 4, remainder = x + 3", "marks": 1},
             ]
         }
     }
@@ -650,12 +650,12 @@ def q19_matrix_inverse_perfect():
         "marking_scheme": {
             "total_marks": 9,
             "steps": [
-                {"step_no": 1, "description": "Calculate det(A) = 1.", "marks": 1},
-                {"step_no": 2, "description": "Form A⁻¹ correctly.", "marks": 2},
-                {"step_no": 3, "description": "Set up matrix equation AX=B.", "marks": 1},
-                {"step_no": 4, "description": "Multiply A⁻¹B to get x=3.", "marks": 2},
-                {"step_no": 5, "description": "Get y=-2.", "marks": 2},
-                {"step_no": 6, "description": "Verify both equations.", "marks": 1},
+                {"step_no": 1, "description": "Calculate det(A) = 1.", "expected_expression": "det(A) = 3(2) - 1(5) = 1", "marks": 1},
+                {"step_no": 2, "description": "Form A⁻¹ correctly.", "expected_expression": "A⁻¹ = [[2, -1], [-5, 3]]", "marks": 2},
+                {"step_no": 3, "description": "Set up matrix equation AX=B.", "expected_expression": "AX = B with B = [7, 11]ᵀ", "marks": 1},
+                {"step_no": 4, "description": "Multiply A⁻¹B to get x=3.", "expected_expression": "x = 2(7) + (-1)(11) = 3", "marks": 2},
+                {"step_no": 5, "description": "Get y=-2.", "expected_expression": "y = -5(7) + 3(11) = -2", "marks": 2},
+                {"step_no": 6, "description": "Verify both equations.", "expected_expression": "3(3) + (-2) = 7 and 5(3) + 2(-2) = 11", "marks": 1},
             ]
         }
     }
@@ -679,10 +679,10 @@ def q20_matrix_determinant_error():
         "marking_scheme": {
             "total_marks": 6,
             "steps": [
-                {"step_no": 1, "description": "Calculate det = -2 correctly.", "marks": 2},
-                {"step_no": 2, "description": "Form adjugate: swap a,d and negate b,c — student got sign wrong for b. 0 marks.", "marks": 0},
-                {"step_no": 3, "description": "Multiply by 1/det = -1/2 — applied but to wrong matrix.", "marks": 1},
-                {"step_no": 4, "description": "Final correct B⁻¹ not reached.", "marks": 0},
+                {"step_no": 1, "description": "Calculate det = -2 correctly.", "expected_expression": "det(B) = 4(1) - 3(2) = -2", "marks": 2},
+                {"step_no": 2, "description": "Form adjugate: swap a,d and negate b,c — student got sign wrong for b. 0 marks.", "expected_expression": "adj(B) = [[1, -3], [-2, 4]]", "marks": 0},
+                {"step_no": 3, "description": "Multiply by 1/det = -1/2 — applied but to wrong matrix.", "expected_expression": "B⁻¹ = (-1/2)·adj(B)", "marks": 1},
+                {"step_no": 4, "description": "Final correct B⁻¹ not reached.", "expected_expression": "B⁻¹ = [[-1/2, 3/2], [1, -2]]", "marks": 0},
             ]
         }
     }
@@ -708,12 +708,12 @@ def q21_matrix_system_partial():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Set up matrix equation correctly.", "marks": 1},
-                {"step_no": 2, "description": "Calculate det = 7.", "marks": 1},
-                {"step_no": 3, "description": "Write inverse correctly.", "marks": 2},
-                {"step_no": 4, "description": "Multiply to find x = 19/7.", "marks": 2},
-                {"step_no": 5, "description": "Find y = 17/7.", "marks": 1},
-                {"step_no": 6, "description": "Verify — not done. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Set up matrix equation correctly.", "expected_expression": "[[2, -1], [1, 3]]·[x, y]ᵀ = [3, 10]ᵀ", "marks": 1},
+                {"step_no": 2, "description": "Calculate det = 7.", "expected_expression": "det = 2(3) - (-1)(1) = 7", "marks": 1},
+                {"step_no": 3, "description": "Write inverse correctly.", "expected_expression": "inverse = (1/7)[[3, 1], [-1, 2]]", "marks": 2},
+                {"step_no": 4, "description": "Multiply to find x = 19/7.", "expected_expression": "x = (1/7)(3(3) + 1(10)) = 19/7", "marks": 2},
+                {"step_no": 5, "description": "Find y = 17/7.", "expected_expression": "y = (1/7)(-1(3) + 2(10)) = 17/7", "marks": 1},
+                {"step_no": 6, "description": "Verify — not done. 0 marks.", "expected_expression": "2(19/7) - 17/7 = 3 and 19/7 + 3(17/7) = 10", "marks": 0},
             ]
         }
     }
@@ -743,11 +743,11 @@ def q22_arithmetic_series_perfect():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Form two equations using AP formula.", "marks": 2},
-                {"step_no": 2, "description": "Solve for d = 3.", "marks": 2},
-                {"step_no": 3, "description": "Find a = 8.", "marks": 1},
-                {"step_no": 4, "description": "Apply sum formula Sₙ = n/2[2a+(n-1)d].", "marks": 2},
-                {"step_no": 5, "description": "Compute S₂₀ = 730.", "marks": 1},
+                {"step_no": 1, "description": "Form two equations using AP formula.", "expected_expression": "a + 3d = 17 and a + 9d = 35", "marks": 2},
+                {"step_no": 2, "description": "Solve for d = 3.", "expected_expression": "6d = 18, so d = 3", "marks": 2},
+                {"step_no": 3, "description": "Find a = 8.", "expected_expression": "a = 8", "marks": 1},
+                {"step_no": 4, "description": "Apply sum formula Sₙ = n/2[2a+(n-1)d].", "expected_expression": "S₂₀ = (20/2)[2(8) + 19(3)]", "marks": 2},
+                {"step_no": 5, "description": "Compute S₂₀ = 730.", "expected_expression": "S₂₀ = 730", "marks": 1},
             ]
         }
     }
@@ -773,10 +773,10 @@ def q23_geometric_series_partial():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Apply GP sum formula correctly.", "marks": 2},
-                {"step_no": 2, "description": "Form inequality 3ⁿ > 4001.", "marks": 2},
-                {"step_no": 3, "description": "Take logarithms and solve n > 7.55.", "marks": 2},
-                {"step_no": 4, "description": "Round up to n=8 since n must be integer — student rounded down. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Apply GP sum formula correctly.", "expected_expression": "Sₙ = 5(3ⁿ - 1)/2", "marks": 2},
+                {"step_no": 2, "description": "Form inequality 3ⁿ > 4001.", "expected_expression": "3ⁿ > 4001", "marks": 2},
+                {"step_no": 3, "description": "Take logarithms and solve n > 7.55.", "expected_expression": "n > log(4001)/log(3) ≈ 7.55", "marks": 2},
+                {"step_no": 4, "description": "Round up to n=8 since n must be integer — student rounded down. 0 marks.", "expected_expression": "n = 8", "marks": 0},
             ]
         }
     }
@@ -800,9 +800,9 @@ def q24_sum_infinity_wrong_condition():
         "marking_scheme": {
             "total_marks": 6,
             "steps": [
-                {"step_no": 1, "description": "Use S∞ = a/(1-r) = 20.", "marks": 1},
-                {"step_no": 2, "description": "Solve for r = 0.4.", "marks": 3},
-                {"step_no": 3, "description": "State correct convergence condition |r| < 1 — student wrote r>0. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Use S∞ = a/(1-r) = 20.", "expected_expression": "12/(1 - r) = 20", "marks": 1},
+                {"step_no": 2, "description": "Solve for r = 0.4.", "expected_expression": "r = 0.4", "marks": 3},
+                {"step_no": 3, "description": "State correct convergence condition |r| < 1 — student wrote r>0. 0 marks.", "expected_expression": "|r| < 1", "marks": 0},
             ]
         }
     }
@@ -833,11 +833,11 @@ def q25_complex_argand_perfect():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Find modulus |z| = 5.", "marks": 2},
-                {"step_no": 2, "description": "Find arg(z) in correct quadrant.", "marks": 2},
-                {"step_no": 3, "description": "State conjugate z̄ = 3+4i.", "marks": 1},
-                {"step_no": 4, "description": "Compute z×z̄ = 25.", "marks": 2},
-                {"step_no": 5, "description": "Verify using |z|².", "marks": 1},
+                {"step_no": 1, "description": "Find modulus |z| = 5.", "expected_expression": "|z| = √(3² + (-4)²) = 5", "marks": 2},
+                {"step_no": 2, "description": "Find arg(z) in correct quadrant.", "expected_expression": "arg(z) = -arctan(4/3) ≈ -0.927 rad", "marks": 2},
+                {"step_no": 3, "description": "State conjugate z̄ = 3+4i.", "expected_expression": "z̄ = 3 + 4i", "marks": 1},
+                {"step_no": 4, "description": "Compute z×z̄ = 25.", "expected_expression": "z × z̄ = (3 - 4i)(3 + 4i) = 25", "marks": 2},
+                {"step_no": 5, "description": "Verify using |z|².", "expected_expression": "z × z̄ = |z|² = 5² = 25", "marks": 1},
             ]
         }
     }
@@ -865,12 +865,12 @@ def q26_complex_de_moivre_perfect():
         "marking_scheme": {
             "total_marks": 10,
             "steps": [
-                {"step_no": 1, "description": "Find modulus √2 and argument π/4.", "marks": 2},
-                {"step_no": 2, "description": "Write in polar form correctly.", "marks": 1},
-                {"step_no": 3, "description": "Apply De Moivre's theorem.", "marks": 2},
-                {"step_no": 4, "description": "Compute (√2)⁸ = 16.", "marks": 2},
-                {"step_no": 5, "description": "Evaluate cos(2π)+i sin(2π) = 1.", "marks": 2},
-                {"step_no": 6, "description": "State answer 16 with verification.", "marks": 1},
+                {"step_no": 1, "description": "Find modulus √2 and argument π/4.", "expected_expression": "|1 + i| = √2 and arg(1 + i) = π/4", "marks": 2},
+                {"step_no": 2, "description": "Write in polar form correctly.", "expected_expression": "1 + i = √2(cos(π/4) + i sin(π/4))", "marks": 1},
+                {"step_no": 3, "description": "Apply De Moivre's theorem.", "expected_expression": "(1 + i)⁸ = (√2)⁸(cos(8π/4) + i sin(8π/4))", "marks": 2},
+                {"step_no": 4, "description": "Compute (√2)⁸ = 16.", "expected_expression": "(√2)⁸ = 2⁴ = 16", "marks": 2},
+                {"step_no": 5, "description": "Evaluate cos(2π)+i sin(2π) = 1.", "expected_expression": "cos(2π) + i sin(2π) = 1", "marks": 2},
+                {"step_no": 6, "description": "State answer 16 with verification.", "expected_expression": "(1 + i)⁸ = 16", "marks": 1},
             ]
         }
     }
@@ -895,11 +895,11 @@ def q27_complex_modulus_argument_partial():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Multiply by conjugate (1+i)/(1+i).", "marks": 1},
-                {"step_no": 2, "description": "Expand numerator correctly.", "marks": 2},
-                {"step_no": 3, "description": "Simplify to z = 2i.", "marks": 2},
-                {"step_no": 4, "description": "Find |z| = 2.", "marks": 2},
-                {"step_no": 5, "description": "Find arg(z) = π/2 — student wrote 0. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Multiply by conjugate (1+i)/(1+i).", "expected_expression": "z = (2 + 2i)(1 + i) / ((1 - i)(1 + i))", "marks": 1},
+                {"step_no": 2, "description": "Expand numerator correctly.", "expected_expression": "(2 + 2i)(1 + i) = 4i", "marks": 2},
+                {"step_no": 3, "description": "Simplify to z = 2i.", "expected_expression": "z = 4i/2 = 2i", "marks": 2},
+                {"step_no": 4, "description": "Find |z| = 2.", "expected_expression": "|z| = 2", "marks": 2},
+                {"step_no": 5, "description": "Find arg(z) = π/2 — student wrote 0. 0 marks.", "expected_expression": "arg(z) = π/2", "marks": 0},
             ]
         }
     }
@@ -932,10 +932,10 @@ def q28_algebraic_fractions_perfect():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Factorise all four expressions correctly.", "marks": 3},
-                {"step_no": 2, "description": "Invert and multiply (flip second fraction for division).", "marks": 1},
-                {"step_no": 3, "description": "Cancel common factors systematically.", "marks": 3},
-                {"step_no": 4, "description": "State final simplified form.", "marks": 1},
+                {"step_no": 1, "description": "Factorise all four expressions correctly.", "expected_expression": "x² - 4 = (x-2)(x+2), x² - x - 6 = (x-3)(x+2), x² - 9 = (x-3)(x+3)", "marks": 3},
+                {"step_no": 2, "description": "Invert and multiply (flip second fraction for division).", "expected_expression": "[(x-2)(x+2)]/[(x-3)(x+2)] × [(x-3)(x+3)]/(x+2)", "marks": 1},
+                {"step_no": 3, "description": "Cancel common factors systematically.", "expected_expression": "(x-2)(x-3)(x+3)/[(x-3)(x+2)]", "marks": 3},
+                {"step_no": 4, "description": "State final simplified form.", "expected_expression": "(x-2)(x+3)/(x+2)", "marks": 1},
             ]
         }
     }
@@ -960,11 +960,11 @@ def q29_simultaneous_nonlinear_partial():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Equate y expressions and rearrange.", "marks": 1},
-                {"step_no": 2, "description": "Form x²-5x+6=0.", "marks": 1},
-                {"step_no": 3, "description": "Factorise and solve x=2, x=3.", "marks": 3},
-                {"step_no": 4, "description": "Find y: when x=2, y=0; when x=3, y=2 — not done. 0 marks.", "marks": 0},
-                {"step_no": 5, "description": "State both solution pairs (2,0) and (3,2) — not done. 0 marks.", "marks": 0},
+                {"step_no": 1, "description": "Equate y expressions and rearrange.", "expected_expression": "x² - 3x + 2 = 2x - 4", "marks": 1},
+                {"step_no": 2, "description": "Form x²-5x+6=0.", "expected_expression": "x² - 5x + 6 = 0", "marks": 1},
+                {"step_no": 3, "description": "Factorise and solve x=2, x=3.", "expected_expression": "(x - 2)(x - 3) = 0, so x = 2 or x = 3", "marks": 3},
+                {"step_no": 4, "description": "Find y: when x=2, y=0; when x=3, y=2 — not done. 0 marks.", "expected_expression": "x = 2 gives y = 0; x = 3 gives y = 2", "marks": 0},
+                {"step_no": 5, "description": "State both solution pairs (2,0) and (3,2) — not done. 0 marks.", "expected_expression": "(2, 0) and (3, 2)", "marks": 0},
             ]
         }
     }
@@ -990,11 +990,11 @@ def q30_exponential_equations_wrong():
         "marking_scheme": {
             "total_marks": 8,
             "steps": [
-                {"step_no": 1, "description": "Recognise substitution u=2^x to convert to quadratic — not done. 0 marks.", "marks": 0},
-                {"step_no": 2, "description": "Form u²-6u+8=0 — not reached.", "marks": 0},
-                {"step_no": 3, "description": "Factorise (u-2)(u-4)=0 — not reached.", "marks": 0},
-                {"step_no": 4, "description": "Find u=2 and u=4 — not reached.", "marks": 0},
-                {"step_no": 5, "description": "Convert back: x=1 and x=2 — not reached.", "marks": 0},
+                {"step_no": 1, "description": "Recognise substitution u=2^x to convert to quadratic — not done. 0 marks.", "expected_expression": "u = 2ˣ so that 4ˣ = u²", "marks": 0},
+                {"step_no": 2, "description": "Form u²-6u+8=0 — not reached.", "expected_expression": "u² - 6u + 8 = 0", "marks": 0},
+                {"step_no": 3, "description": "Factorise (u-2)(u-4)=0 — not reached.", "expected_expression": "(u - 2)(u - 4) = 0", "marks": 0},
+                {"step_no": 4, "description": "Find u=2 and u=4 — not reached.", "expected_expression": "u = 2 or u = 4", "marks": 0},
+                {"step_no": 5, "description": "Convert back: x=1 and x=2 — not reached.", "expected_expression": "x = 1 or x = 2", "marks": 0},
             ]
         }
     }

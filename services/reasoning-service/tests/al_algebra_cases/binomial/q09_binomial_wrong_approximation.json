@@ -39,26 +39,31 @@
       {
         "step_no": 1,
         "description": "Correct expansion terms up to x²: 1+x-x²/2.",
+        "expected_expression": "1 + x - x²/2",
         "marks": 3
       },
       {
         "step_no": 2,
         "description": "Correct third term -x²/2 (note: correct sign).",
+        "expected_expression": "x³/2",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Identify x = 0.1 (1+2(0.1) = 1.2). Student used x=0.2 — 0 marks.",
+        "expected_expression": "x = 0.1",
         "marks": 0
       },
       {
         "step_no": 4,
         "description": "Correct substitution and arithmetic — not done.",
+        "expected_expression": "1 + 0.1 - (0.1)²/2 + (0.1)³/2",
         "marks": 0
       },
       {
         "step_no": 5,
         "description": "Final 4 d.p. answer 1.0954 — not reached.",
+        "expected_expression": "1.0954",
         "marks": 0
       }
     ]

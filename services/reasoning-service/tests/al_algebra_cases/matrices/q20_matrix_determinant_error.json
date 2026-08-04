@@ -27,21 +27,25 @@
       {
         "step_no": 1,
         "description": "Calculate det = -2 correctly.",
+        "expected_expression": "det(B) = 4(1) - 3(2) = -2",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Form adjugate: swap a,d and negate b,c — student got sign wrong for b. 0 marks.",
+        "expected_expression": "adj(B) = [[1, -3], [-2, 4]]",
         "marks": 0
       },
       {
         "step_no": 3,
         "description": "Multiply by 1/det = -1/2 — applied but to wrong matrix.",
+        "expected_expression": "B⁻¹ = (-1/2)·adj(B)",
         "marks": 1
       },
       {
         "step_no": 4,
         "description": "Final correct B⁻¹ not reached.",
+        "expected_expression": "B⁻¹ = [[-1/2, 3/2], [1, -2]]",
         "marks": 0
       }
     ]

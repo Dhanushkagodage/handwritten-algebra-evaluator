@@ -1,32 +1,96 @@
 {
-  "question_text": "Factorise 25x^2 - 49",
-  "detected_method": "difference of squares",
-  "assigned_marks": 1.5,
-  "total_marks": 2.0,
+  "question_text": "Solve log_2(x - 1) + log_2(x - 3) = 3 where x > 3",
+  "detected_method": "logarithmic properties and factorization",
+  "assigned_marks": 6.0,
   "student_steps": [
     {
       "step_number": 1,
-      "expression": "25x^2 - 49 = (5x)^2 - 7^2",
+      "expression": "log_2(x - 1) + log_2(x - 3) = 3",
+      "validity": "partial",
+      "marks_awarded": 0.0
+    },
+    {
+      "step_number": 2,
+      "expression": "log_2[(x - 1)(x - 3)] = 3",
       "validity": "correct",
       "marks_awarded": 1.0
     },
     {
-      "step_number": 2,
-      "expression": "= (5x - 7)(5x - 7)",
-      "validity": "partial",
-      "marks_awarded": 0.5
-    }
-  ],
-  "marking_scheme": [
-    {
-      "step_number": 1,
-      "expected_expression": "(5x)^2 - 7^2",
-      "marks": 1.0
+      "step_number": 3,
+      "expression": "(x - 1)(x - 3) = 2^3",
+      "validity": "correct",
+      "marks_awarded": 1.0
     },
     {
-      "step_number": 2,
-      "expected_expression": "(5x - 7)(5x + 7)",
-      "marks": 1.0
+      "step_number": 4,
+      "expression": "x^2 - 4x + 3 = 8",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 5,
+      "expression": "x^2 - 4x - 5 = 0",
+      "validity": "partial",
+      "marks_awarded": 0.5
+    },
+    {
+      "step_number": 6,
+      "expression": "(x - 5)(x + 1) = 0",
+      "validity": "correct",
+      "marks_awarded": 0.5
+    },
+    {
+      "step_number": 7,
+      "expression": "x = 5 or x = -1",
+      "validity": "correct",
+      "marks_awarded": 1.0
+    },
+    {
+      "step_number": 8,
+      "expression": "Since x > 3, x = 5",
+      "validity": "correct",
+      "marks_awarded": 1.0
     }
-  ]
+  ],
+  "marking_scheme": {
+    "total_marks": 6.0,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Combine the two logarithms with the product law: log_a M + log_a N = log_a(MN).",
+        "expected_expression": "log_2[(x - 1)(x - 3)] = 3",
+        "marks": 1.0
+      },
+      {
+        "step_no": 2,
+        "description": "Rewrite the logarithmic equation in exponential form.",
+        "expected_expression": "(x - 1)(x - 3) = 2^3",
+        "marks": 1.0
+      },
+      {
+        "step_no": 3,
+        "description": "Expand the left-hand side and evaluate 2^3.",
+        "expected_expression": "x^2 - 4x + 3 = 8",
+        "marks": 1.0
+      },
+      {
+        "step_no": 4,
+        "description": "Rearrange into standard quadratic form.",
+        "expected_expression": "x^2 - 4x - 5 = 0",
+        "marks": 1.0
+      },
+      {
+        "step_no": 5,
+        "description": "Factorise the quadratic and solve for both roots.",
+        "expected_expression": "(x - 5)(x + 1) = 0, so x = 5 or x = -1",
+        "marks": 1.0
+      },
+      {
+        "step_no": 6,
+        "description": "Reject the root outside the domain x > 3 and state the final answer.",
+        "expected_expression": "x = 5",
+        "marks": 1.0
+      }
+    ]
+  }
 }

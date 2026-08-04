@@ -43,26 +43,31 @@
       {
         "step_no": 1,
         "description": "State and apply Remainder Theorem for both divisors.",
+        "expected_expression": "p(2) = 15 and p(-1) = -6",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Form equation (1): 2a-b=-2.",
+        "expected_expression": "2a - b = -2",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Form equation (2): a+b=-7.",
+        "expected_expression": "a + b = -7",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Solve simultaneous equations: a=-3, b=-4.",
+        "expected_expression": "a = -3 and b = -4",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Verify both remainders.",
+        "expected_expression": "p(2) = 16 - 12 + 8 + 3 = 15 and p(-1) = -2 - 3 - 4 + 3 = -6",
         "marks": 1
       }
     ]

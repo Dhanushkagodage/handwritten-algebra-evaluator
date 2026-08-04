@@ -13,11 +13,11 @@
   "marking_scheme": {
     "total_marks": 10,
     "steps": [
-      {"step_no": 1, "description": "Calculate determinant det(A) = 5 correctly", "marks": 2},
-      {"step_no": 2, "description": "Compute matrix of minors/cofactors accurately", "marks": 3},
-      {"step_no": 3, "description": "Transpose cofactor matrix to obtain adjugate matrix adj(A)", "marks": 2},
-      {"step_no": 4, "description": "Apply formula A⁻¹ = (1/det A) adj(A)", "marks": 2},
-      {"step_no": 5, "description": "State final inverse matrix", "marks": 1}
+      {"step_no": 1, "description": "Calculate determinant det(A) = 5 correctly", "expected_expression": "det(A) = 1(1) - 2(-2) + 0 = 5", "marks": 2},
+      {"step_no": 2, "description": "Compute matrix of minors/cofactors accurately", "expected_expression": "C = [[1, 2, -2], [-2, 1, 4], [2, -1, 1]]", "marks": 3},
+      {"step_no": 3, "description": "Transpose cofactor matrix to obtain adjugate matrix adj(A)", "expected_expression": "adj(A) = Cᵀ = [[1, -2, 2], [2, 1, -1], [-2, 4, 1]]", "marks": 2},
+      {"step_no": 4, "description": "Apply formula A⁻¹ = (1/det A) adj(A)", "expected_expression": "A⁻¹ = (1/5)·adj(A)", "marks": 2},
+      {"step_no": 5, "description": "State final inverse matrix", "expected_expression": "A⁻¹ = (1/5)[[1, -2, 2], [2, 1, -1], [-2, 4, 1]]", "marks": 1}
     ]
   }
 }

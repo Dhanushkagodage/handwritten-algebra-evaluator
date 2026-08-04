@@ -16,12 +16,12 @@
   "marking_scheme": {
     "total_marks": 6,
     "steps": [
-      {"step_no": 1, "description": "Verify base case n=1 correctly", "marks": 1},
-      {"step_no": 2, "description": "State inductive hypothesis for n=k (5ᵏ - 1 = 4m)", "marks": 1},
-      {"step_no": 3, "description": "State target expression for n=k+1", "marks": 1},
-      {"step_no": 4, "description": "Express 5ᵏ⁺¹ in terms of 5ᵏ and substitute hypothesis", "marks": 1},
-      {"step_no": 5, "description": "Simplify algebra to show 4(5m+1) or 4 × integer", "marks": 1},
-      {"step_no": 6, "description": "State complete inductive conclusion invoking principle of induction", "marks": 1}
+      {"step_no": 1, "description": "Verify base case n=1 correctly", "expected_expression": "5¹ - 1 = 4 = 4 × 1", "marks": 1},
+      {"step_no": 2, "description": "State inductive hypothesis for n=k (5ᵏ - 1 = 4m)", "expected_expression": "5ᵏ - 1 = 4m for some integer m", "marks": 1},
+      {"step_no": 3, "description": "State target expression for n=k+1", "expected_expression": "5ᵏ⁺¹ - 1 is divisible by 4", "marks": 1},
+      {"step_no": 4, "description": "Express 5ᵏ⁺¹ in terms of 5ᵏ and substitute hypothesis", "expected_expression": "5ᵏ⁺¹ - 1 = 5(4m + 1) - 1", "marks": 1},
+      {"step_no": 5, "description": "Simplify algebra to show 4(5m+1) or 4 × integer", "expected_expression": "20m + 4 = 4(5m + 1)", "marks": 1},
+      {"step_no": 6, "description": "State complete inductive conclusion invoking principle of induction", "expected_expression": "5ⁿ - 1 is divisible by 4 for all n ∈ ℤ⁺", "marks": 1}
     ]
   }
 }

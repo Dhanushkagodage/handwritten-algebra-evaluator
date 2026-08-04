@@ -25,34 +25,38 @@ This system automates the evaluation of handwritten Advanced Level (A/L) algebra
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────┐
-│  Handwritten Answer Image + Question│
-└────────────┬────────────────────────┘
-             │
-      ┌──────▼──────┐
-      │ OCR Service │  (Module 01)
-      │   :8001     │  Extract steps
-      └──────┬──────┘
-             │
+┌───────────────────────────────────────────┐
+│ React Frontend (Vite) :5173               │
+│ answer image + marking scheme image       │
+└────────────────────┬──────────────────────┘
+                     │  ONE call
+      ┌──────────────▼──────────────┐
+      │ Gateway  :8080              │  Integration layer
+      │ chains the three modules    │  + schema adaptation
+      └──────────────┬──────────────┘
+                     │
+      ┌──────▼───────┴──────┐
+      │ OCR Service   :8000 │  (Module 01)  Extract steps + marking scheme
+      └──────┬──────────────┘
+             │  schema adaptation
       ┌──────▼────────────┐
-      │ Reasoning Service │  (Module 02)
-      │    :8002          │  Validate + Mark
+      │ Reasoning Service │  (Module 02)  :8002  Validate + Mark
       └──────┬────────────┘
-             │
+             │  schema adaptation
       ┌──────▼──────────────┐
-      │ Feedback Service    │  (Module 03)
-      │   :8003             │  Generate feedback
+      │ Feedback Service    │  (Module 03)  :8003  Generate feedback
       └──────┬──────────────┘
              │
 ┌────────────▼──────────────────────────┐
 │ Final Score + Step-by-Step Feedback   │
 │ + Improvement Suggestions              │
 └───────────────────────────────────────┘
-
-React Frontend (Vite) :5173
-        ↕
-   [All Services]
 ```
+
+The gateway is **additive**: it calls the three services over HTTP and imports
+nothing from them, so each module keeps its own virtualenv, its own credentials,
+and its own standalone terminal workflow. Everything each team member already
+runs by hand still works exactly as before.
 
 ---
 
@@ -68,8 +72,8 @@ React Frontend (Vite) :5173
 | Math Expression Recognition | pix2tex / LaTeX-OCR (mathematical notation) |
 | Output Format | Structured JSON with question, answer, and steps |
 
-**Entry Point:** `services/ocr-service/app/main.py`  
-**Port:** `8001`
+**Entry Point:** `services/ocr-service/app.py` (a flat app — run it as `uvicorn app:app`)  
+**Port:** `8000`
 
 ---
 
@@ -82,7 +86,6 @@ React Frontend (Vite) :5173
 | LLM Backend | OpenAI GPT-4o (via LangChain) |
 | Worker Agents | 3 parallel agents: Step Correctness, Method Detection, Scheme Matching |
 | Supervisor Agent | Aggregates agent outputs and allocates final marks |
-| Math Validation | SymPy (algebraic correctness checking) |
 
 **Architecture:**
 ```
@@ -160,6 +163,21 @@ git clone <repo-url>
 cd handwritten-algebra-evaluator
 ```
 
+### Fastest path — start everything at once (Windows)
+
+Once each service has a `.venv` and a `.env`, this launches all four services
+plus the frontend, waits for them to come up, and prints the gateway's view of
+the stack:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\dev.ps1 -WithFrontend
+# first-time setup of any missing virtualenvs: add -Bootstrap
+# stop everything:  .\scripts\stop-dev.ps1
+```
+
+The sections below cover setting each service up by hand, which is still the
+normal way to work on a single module.
+
 ### 2️⃣ Setup Each Service
 
 #### **OCR Service (Module 01)**
@@ -169,8 +187,8 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
-# Edit .env if needed
-uvicorn app.main:app --reload --port 8001
+# Edit .env and add your OPENAI_API_KEY
+uvicorn app:app --reload   # flat app.py -> http://127.0.0.1:8000/docs
 ```
 
 #### **Reasoning Service (Module 02)**
@@ -196,6 +214,19 @@ cp .env.example .env
 uvicorn app.main:app --reload --port 8003
 ```
 
+#### **Gateway (Integration Layer)**
+```bash
+cd services/gateway
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env
+uvicorn app.main:app --port 8080 --workers 1   # single worker: the job store is in-process
+```
+
+Then `GET http://127.0.0.1:8080/health/services` to confirm the gateway can
+reach all three modules. Full documentation: `services/gateway/README.md`.
+
 ### 3️⃣ Setup Frontend
 
 ```bash
@@ -203,6 +234,10 @@ cd frontend
 npm install
 npm run dev  # Runs on http://localhost:5173
 ```
+
+The frontend calls only the gateway. By default it uses the Vite dev proxy
+(`/api` → `:8080`), so no configuration is needed; set `VITE_GATEWAY_URL` in
+`frontend/.env` only if the gateway runs somewhere else.
 
 ### 4️⃣ Fine-tune Feedback Service (Optional)
 
@@ -214,65 +249,114 @@ LoRA training runs on free Google Colab/Kaggle (a T4 GPU), not locally — see
 
 ## 📡 API Endpoints
 
-### **OCR Service** (:8001)
+### **Gateway** (:8080) — the integrated pipeline
 
-**POST** `/api/v1/ocr`
-- **Input:** Multipart form-data with image file
-- **Output:** `{ question_text, answer_text, student_steps[], linked_question }`
+**POST** `/api/v1/jobs` — start an evaluation, return `202 {job_id}` immediately
+**GET** `/api/v1/jobs/{id}` — poll `{status, stage, stages[], warnings[], result, error}`
+**POST** `/api/v1/evaluate` — the same pipeline synchronously (holds the connection for 1–4 minutes)
+**GET** `/health/services` — check all three modules at once
 
 ```bash
-curl -X POST http://localhost:8001/api/v1/ocr \
-  -F "file=@answer.png"
+curl -X POST http://127.0.0.1:8080/api/v1/jobs \
+  -F "answer_images=@answer.jpg" \
+  -F "marking_scheme_image=@scheme.jpg" \
+  -F "question_text=Solve x^2 - 5x + 6 = 0"
 ```
 
-**GET** `/health` — Service status
+`stage` advances through `ocr → reasoning → feedback → done`, so a client can
+show which module is working. See `services/gateway/README.md` for the full
+reference and the schema-adaptation table.
+
+---
+
+### **OCR Service** (:8000)
+
+**POST** `/extract` — one answer image → `{ reasoning_input: { question_text, student_steps[{step_id, content}], final_answer } }`
+**POST** `/extract-pages` — up to five ordered images (`image_1`…`image_5`); may return `reasoning_inputs[]` when several questions are detected
+**POST** `/extract-marking-scheme` — a scheme image → `{ marking_scheme: { total_marks, steps[] } }`
+**GET** `/` — service status (this service has no `/health` route)
+
+```bash
+curl -X POST http://127.0.0.1:8000/extract \
+  -F "image=@answer.png" \
+  -F "question_text=Solve x^2 - 5x + 6 = 0"
+```
 
 ---
 
 ### **Reasoning Service** (:8002)
 
-**POST** `/api/v1/analyze`
-- **Input:** `{ question_text, student_steps[], marking_scheme[], total_marks }`
-- **Output:** `{ step_analysis[], detected_method, assigned_marks, total_marks }`
+**POST** `/api/v1/evaluate` — full output, including per-step validation errors and the detected method
+**POST** `/api/v1/evaluate/summary` — a compact human-readable summary
+**GET** `/health` — service status
+
+Input — note `reasoning_input` is **nested**, and steps use `step_id`/`content`:
 
 ```json
 {
-  "question_text": "Solve x^2 - 5x + 6 = 0",
-  "student_steps": [
-    {"step_number": 1, "expression": "x^2 - 5x + 6 = 0"},
-    {"step_number": 2, "expression": "(x-2)(x-3) = 0"}
-  ],
-  "marking_scheme": [
-    {"step_number": 1, "expected_expression": "x^2 - 5x + 6 = 0", "marks": 1},
-    {"step_number": 2, "expected_expression": "(x-2)(x-3) = 0", "marks": 2}
-  ],
-  "total_marks": 5
+  "reasoning_input": {
+    "question_text": "Solve x^2 - 5x + 6 = 0",
+    "student_steps": [
+      {"step_id": 1, "content": "x^2 - 5x + 6 = 0"},
+      {"step_id": 2, "content": "(x-2)(x-3) = 0"}
+    ],
+    "final_answer": "x = 2, x = 3"
+  },
+  "marking_scheme": {
+    "total_marks": 3,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "State the equation in standard form",
+        "expected_expression": "x^2 - 5x + 6 = 0",
+        "marks": 1
+      },
+      {
+        "step_no": 2,
+        "description": "Factorise the quadratic into two linear factors",
+        "expected_expression": "(x-2)(x-3) = 0",
+        "marks": 2
+      }
+    ]
+  }
 }
 ```
 
-**GET** `/health` — Service status
+Output: `{ steps_analysis[{step_id, status, marks_awarded, ...}], total_marks, max_marks, percentage, summary, method_feedback, step_validation, method_detection, scheme_matching }`.
 
 ---
 
 ### **Feedback Service** (:8003)
 
 **POST** `/api/v1/feedback`
-- **Input:** Reasoning service output + marking scheme
+- **Input:** reasoning output adapted to this service's shape + the marking scheme
 - **Output:** `{ final_score, total_marks, step_feedback[], overall_feedback, improvement_suggestions[] }`
 
 ```json
 {
   "question_text": "Solve x^2 - 5x + 6 = 0",
   "student_steps": [
-    {"step_number": 1, "expression": "...", "is_correct": true, "marks_awarded": 1},
-    {"step_number": 2, "expression": "...", "is_correct": true, "marks_awarded": 2}
+    {"step_number": 1, "expression": "x^2 - 5x + 6 = 0", "validity": "correct", "marks_awarded": 1},
+    {"step_number": 2, "expression": "(x-2)(x-3) = 0", "validity": "partial", "marks_awarded": 1}
   ],
-  "detected_method": "factorization",
-  "assigned_marks": 3,
-  "total_marks": 5,
-  "marking_scheme": [...]
+  "detected_method": "factorisation",
+  "assigned_marks": 2,
+  "marking_scheme": {"total_marks": 3, "steps": []}
 }
 ```
+
+**GET** `/health` — service status
+
+> **The reasoning and feedback contracts do not line up directly.** Reasoning
+> emits `step_id`, a four-value `status` (`correct` / `incorrect` /
+> `partially_correct` / `unclear`), and no `expression`; feedback needs
+> `step_number`, a three-value `validity` (`correct` / `partial` /
+> `incorrect`), and an expression. The gateway owns that translation — see the
+> mapping table in `services/gateway/README.md`.
+
+> All three services exchange the **same** marking scheme object:
+> `{ total_marks, steps: [{ step_no, description, expected_expression, marks }] }`.
+> `total_marks` lives inside it and is never repeated as a sibling field.
 
 **GET** `/health` — Service status
 
@@ -286,38 +370,59 @@ handwritten-algebra-evaluator/
 ├── .env.example                       # Root environment template
 ├── .gitignore                         # Git ignore rules
 │
+├── scripts/                           # dev.ps1 / stop-dev.ps1 / smoke.ps1
+│
 ├── frontend/                          # React + Vite (npm run dev)
 │   ├── src/
 │   │   ├── App.tsx                    # Main app component
 │   │   ├── main.tsx                   # Entry point
-│   │   ├── components/                # React components (Navbar, etc.)
-│   │   ├── pages/                     # Pages (Home, Evaluate, Results)
-│   │   ├── lib/api.ts                 # Axios API clients
-│   │   └── store/                     # Zustand state management
+│   │   ├── types/api.ts               # TS mirrors of the backend contracts
+│   │   ├── lib/api.ts                 # Gateway client (the only network file)
+│   │   ├── hooks/useEvaluation.ts     # Start a job + poll it to completion
+│   │   ├── components/                # Navbar, PipelineProgress, ErrorPanel, results/
+│   │   ├── pages/                     # Home, Evaluate, Results
+│   │   └── store/                     # Zustand state (sessionStorage-persisted)
 │   ├── package.json
 │   ├── tailwind.config.js
 │   └── vite.config.ts
 │
 ├── services/
-│   ├── ocr-service/                   # Module 01 (Empty code, ready for team member)
+│   ├── gateway/                       # Integration layer (:8080)
 │   │   ├── app/
-│   │   │   ├── main.py
-│   │   │   ├── routers/ocr.py
-│   │   │   ├── models/schemas.py
+│   │   │   ├── main.py                # FastAPI entry point
+│   │   │   ├── api/                   # health, evaluate (sync), jobs (async)
+│   │   │   ├── clients/               # httpx clients for the three services
+│   │   │   ├── schemas/               # mirrors of each service's contract
 │   │   │   └── services/
+│   │   │       ├── adapters.py        # the schema bridge (pure functions)
+│   │   │       ├── pipeline.py        # ocr -> reasoning -> feedback
+│   │   │       └── jobs.py            # in-process job store
+│   │   ├── tests/                     # 71 tests, no services needed
+│   │   ├── requirements.txt
+│   │   ├── .env.example
+│   │   └── README.md
+│   │
+│   ├── ocr-service/                   # Module 01 (:8000, `uvicorn app:app`)
+│   │   ├── app.py                     # flat FastAPI app — /extract, /extract-pages,
+│   │   │                              #   /extract-marking-scheme
+│   │   ├── src/                       # preprocess, segment, ocr_engine, openai_vision_ocr
+│   │   ├── training/                  # pix2tex dataset prep + fine-tuning
 │   │   ├── requirements.txt
 │   │   └── .env.example
 │   │
-│   ├── reasoning-service/             # Module 02 (Empty code, ready for team member)
+│   ├── reasoning-service/             # Module 02 (:8002)
 │   │   ├── app/
 │   │   │   ├── main.py
-│   │   │   ├── routers/reasoning.py
-│   │   │   ├── models/schemas.py
-│   │   │   └── agents/
+│   │   │   ├── api/routes.py          # POST /api/v1/evaluate[/summary]
+│   │   │   ├── schemas/               # input_schema.py, output_schema.py
+│   │   │   ├── agents/                # step validation, method detection,
+│   │   │   │                          #   scheme matching, supervisor
+│   │   │   └── services/langgraph_flow.py
+│   │   ├── tests/evaluation_suite/    # test cases + metrics/CSV recording
 │   │   ├── requirements.txt
 │   │   └── .env.example
 │   │
-│   └── feedback-service/              # Module 03 (Fully implemented)
+│   └── feedback-service/              # Module 03 (:8003)
 │       ├── app/
 │       │   ├── main.py                # FastAPI entry point
 │       │   ├── routers/feedback.py    # POST /api/v1/feedback
@@ -328,8 +433,8 @@ handwritten-algebra-evaluator/
 │       │   │   ├── train.py           # LoRA fine-tuning script
 │       │   │   ├── dataset.py         # Dataset preparation
 │       │   │   └── data/              # Training data folder
-│       │   └── serving/hf_space/      # Hugging Face Space (Docker) — serves base model + adapter
-│       │       ├── app.py, Dockerfile, requirements.txt
+│       │   └── serving/hf_space/      # Hugging Face Space (Gradio) — serves base model + adapter
+│       │       ├── app.py, requirements.txt
 │       │       └── DEPLOY.md          # One-time Space setup instructions
 │       ├── requirements.txt
 │       └── .env.example
@@ -345,33 +450,16 @@ handwritten-algebra-evaluator/
 
 ## 🔐 Environment Variables
 
-### Root `.env.example`
-```env
-# --- OCR Service (Module 01) ---
-OCR_SERVICE_URL=http://localhost:8001
-OCR_PORT=8001
+Each service reads its **own** `services/<name>/.env`. The root
+`.env.example` is a reference copy of the whole set — see it for the full list.
 
-# --- Reasoning Service (Module 02) ---
-REASONING_SERVICE_URL=http://localhost:8002
-REASONING_PORT=8002
-OPENAI_API_KEY=your_openai_key_here
-LLM_MODEL=gpt-4o
-
-# --- Feedback Service (Module 03) ---
-FEEDBACK_SERVICE_URL=http://localhost:8003
-FEEDBACK_PORT=8003
-# URL of the persistent Hugging Face Space serving the fine-tuned model,
-# and the shared secret it expects as X-API-Key — see
-# services/feedback-service/app/serving/hf_space/DEPLOY.md.
-SPACE_API_URL=https://dhanushkagodage-feedback-service-inference.hf.space/generate
-API_KEY=your_shared_space_api_key_here
-
-# Training-only (used by app/training/train.py inside Colab/Kaggle, not by
-# the deployed service)
-LORA_ADAPTER_DIR=./lora-adapter
-WANDB_PROJECT=handwritten-algebra-evaluator
-WANDB_RUN_NAME=qwen25-3b-feedback-lora
-```
+| Service | Port | Needs |
+|---|---|---|
+| Gateway | 8080 | service URLs and timeouts only — **no secrets** |
+| OCR (Module 01) | 8000 | `OPENAI_API_KEY`, `OPENAI_VISION_MODEL` |
+| Reasoning (Module 02) | 8002 | `OPENAI_API_KEY` — **it fails at import without one** |
+| Feedback (Module 03) | 8003 | `SPACE_ID`, `API_KEY`, `HF_TOKEN` |
+| Frontend | 5173 | `VITE_GATEWAY_URL` (optional — blank uses the Vite proxy) |
 
 ---
 

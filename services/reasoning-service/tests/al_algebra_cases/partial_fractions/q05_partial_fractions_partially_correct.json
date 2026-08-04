@@ -35,26 +35,31 @@
       {
         "step_no": 1,
         "description": "Correct form: A/(x+1) + (Bx+C)/(x²+4) — student failed here (0 marks).",
+        "expected_expression": "A/(x+1) + (Bx + C)/(x² + 4)",
         "marks": 0
       },
       {
         "step_no": 2,
         "description": "Multiply and form identity.",
+        "expected_expression": "3x² + 2x - 1 = A(x² + 4) + (Bx + C)(x + 1)",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Use x=-1 to find A = 0/5 — correct substitution attempted.",
+        "expected_expression": "0 = 5A, so A = 0",
         "marks": 1
       },
       {
         "step_no": 4,
         "description": "Compare coefficients to find B and C — not done.",
+        "expected_expression": "B = 3 and C = -1",
         "marks": 0
       },
       {
         "step_no": 5,
         "description": "State final answer.",
+        "expected_expression": "(3x - 1)/(x² + 4)",
         "marks": 0
       }
     ]

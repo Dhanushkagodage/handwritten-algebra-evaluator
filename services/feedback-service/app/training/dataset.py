@@ -10,27 +10,31 @@ Raw annotation schema (raw_annotations.json):
     "question": "Solve x^2 - 5x + 6 = 0",
     "method": "factorisation",
     "assigned_marks": 4.0,
-    "total_marks": 4.0,
     "steps": [
       {
-        "step_number": 1,
+        "step_no": 1,
         "expression": "x^2 - 5x + 6 = 0",
         "validity": "correct",          // "correct" | "partial" | "incorrect"
         "marks_awarded": 1.0,
         "error_description": null
       }
     ],
-    "marking_scheme": [
-      {
-        "step_number": 1,
-        "expected_expression": "x^2 - 5x + 6 = 0",
-        "marks": 1.0,
-        "description": "State the equation"
-      }
-    ],
+    // Canonical marking scheme: an object holding total_marks + steps.
+    // total_marks lives here and nowhere else.
+    "marking_scheme": {
+      "total_marks": 4.0,
+      "steps": [
+        {
+          "step_no": 1,
+          "description": "State the equation",
+          "expected_expression": "x^2 - 5x + 6 = 0",
+          "marks": 1.0
+        }
+      ]
+    },
     "step_feedback": [
       {
-        "step_number": 1,
+        "step_no": 1,
         "correct": "You correctly identified the quadratic equation.",
         "missing": null,      // only for partial / incorrect
         "deduction": null,    // only for partial / incorrect
@@ -105,10 +109,10 @@ DIFFICULTIES = ("easy", "medium", "difficult")
 
 def _build_target(item: Dict) -> str:
     """Build the structured === STEP N === completion from step_feedback annotations."""
-    feedback_map = {fb["step_number"]: fb for fb in item["step_feedback"]}
+    feedback_map = {fb["step_no"]: fb for fb in item["step_feedback"]}
     blocks = []
     for step in item["steps"]:
-        n = step["step_number"]
+        n = step["step_no"]
         validity = step["validity"].upper()
         fb = feedback_map.get(n, {})
 
@@ -129,28 +133,29 @@ def _build_target(item: Dict) -> str:
 
 def format_example(item: Dict) -> Dict:
     """Format a raw annotation into the prompt-completion pair for SFT training."""
-    scheme_marks = {m["step_number"]: m["marks"] for m in item["marking_scheme"]}
+    scheme = item["marking_scheme"]
+    scheme_marks = {m["step_no"]: m["marks"] for m in scheme["steps"]}
 
     steps_text = "\n".join(
         "Step {n}: {expr} [{v}, {awarded}/{possible} marks]{err}".format(
-            n=s["step_number"],
+            n=s["step_no"],
             expr=s["expression"],
             v=s["validity"].upper(),
             awarded=s["marks_awarded"],
-            possible=scheme_marks.get(s["step_number"], "?"),
+            possible=scheme_marks.get(s["step_no"], "?"),
             err=f" — Error: {s['error_description']}" if s.get("error_description") else "",
         )
         for s in item["steps"]
     )
 
     scheme_text = "\n".join(
-        "Step {n}: {expr} [{m} marks]{desc}".format(
-            n=m["step_number"],
+        "Step {n}: {expr} [{m} marks] — {desc}".format(
+            n=m["step_no"],
             expr=m["expected_expression"],
             m=m["marks"],
-            desc=f" — {m['description']}" if m.get("description") else "",
+            desc=m["description"],
         )
-        for m in item["marking_scheme"]
+        for m in scheme["steps"]
     )
 
     prompt = (
@@ -159,7 +164,7 @@ def format_example(item: Dict) -> Dict:
         f"{_IM_START}user\n"
         f"Question: {item['question']}\n"
         f"Solution Method: {item['method']}\n"
-        f"Score: {item['assigned_marks']} / {item['total_marks']}\n\n"
+        f"Score: {item['assigned_marks']} / {scheme['total_marks']}\n\n"
         f"Student's Steps:\n{steps_text}\n\n"
         f"Marking Scheme:\n{scheme_text}\n"
         f"{_FORMAT_INSTRUCTION}"
@@ -459,7 +464,7 @@ def _step(
     n: int, expr: str, validity: str, marks: float, error: Optional[str] = None
 ) -> Dict:
     return {
-        "step_number": n,
+        "step_no": n,
         "expression": expr,
         "validity": validity,
         "marks_awarded": marks,
@@ -467,12 +472,16 @@ def _step(
     }
 
 
-def _scheme(n: int, expr: str, marks: float, desc: Optional[str] = None) -> Dict:
+def _scheme(n: int, expr: str, marks: float, desc: str) -> Dict:
+    """One marking scheme step. `desc` is required — the canonical scheme format
+    has no optional fields."""
+    if not desc:
+        raise ValueError(f"marking scheme step {n} ({expr!r}) needs a description")
     return {
-        "step_number": n,
+        "step_no": n,
+        "description": desc,
         "expected_expression": expr,
         "marks": marks,
-        "description": desc,
     }
 
 
@@ -484,7 +493,7 @@ def _fb(
     improve: str = "Well done, continue to the next step.",
 ) -> Dict:
     return {
-        "step_number": n,
+        "step_no": n,
         "correct": correct,
         "missing": missing,
         "deduction": deduction,
@@ -518,9 +527,9 @@ def _example(
         "question": question,
         "method": method,
         "assigned_marks": assigned,
-        "total_marks": total,
         "steps": steps,
-        "marking_scheme": scheme,
+        # total_marks lives inside marking_scheme — single source of truth
+        "marking_scheme": {"total_marks": total, "steps": scheme},
         "step_feedback": feedback,
     }
 

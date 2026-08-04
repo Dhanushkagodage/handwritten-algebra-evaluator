@@ -43,26 +43,31 @@
       {
         "step_no": 1,
         "description": "First division step: 2x⁴÷x²=2x².",
+        "expected_expression": "2x⁴ ÷ x² = 2x²",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Subtract 2x²(x²-2) and get correct remainder -x³+4x²+3x-5.",
+        "expected_expression": "-x³ + 4x² + 3x - 5",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Continue division: -x, subtract, remainder 4x²+x-5.",
+        "expected_expression": "4x² + x - 5",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Final step: 4, remainder x+3.",
+        "expected_expression": "x + 3",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "State quotient and remainder clearly.",
+        "expected_expression": "quotient = 2x² - x + 4, remainder = x + 3",
         "marks": 1
       }
     ]

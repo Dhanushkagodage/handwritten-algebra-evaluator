@@ -39,26 +39,31 @@
       {
         "step_no": 1,
         "description": "Factor out 2^(-3) = 1/8 correctly.",
+        "expected_expression": "(2 - x)^(-3) = (1/8)(1 - x/2)^(-3)",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Apply binomial expansion correctly.",
+        "expected_expression": "(1 - x/2)^(-3) = 1 + 3x/2 + 6(x²/4) + ...",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Simplify coefficients correctly.",
+        "expected_expression": "1 + 3x/2 + 3x²/2",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Multiply by 1/8 to get final terms.",
+        "expected_expression": "1/8 + 3x/16 + 3x²/16",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "State validity |x| < 2 — NOT done. 0 marks.",
+        "expected_expression": "|x| < 2",
         "marks": 0
       }
     ]

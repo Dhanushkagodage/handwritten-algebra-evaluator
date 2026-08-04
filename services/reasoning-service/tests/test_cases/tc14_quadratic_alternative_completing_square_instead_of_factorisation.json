@@ -15,10 +15,10 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Write the equation in standard form", "marks": 1},
-      {"step_no": 2, "description": "Factorise: (3x - 2)(x + 3) = 0", "marks": 3},
-      {"step_no": 3, "description": "Apply zero-product property to each factor", "marks": 1},
-      {"step_no": 4, "description": "State both solutions: x = 2/3 or x = -3", "marks": 2}
+      {"step_no": 1, "description": "Write the equation in standard form", "expected_expression": "3x² + 7x - 6 = 0", "marks": 1},
+      {"step_no": 2, "description": "Factorise: (3x - 2)(x + 3) = 0", "expected_expression": "(3x - 2)(x + 3) = 0", "marks": 3},
+      {"step_no": 3, "description": "Apply zero-product property to each factor", "expected_expression": "3x - 2 = 0 or x + 3 = 0", "marks": 1},
+      {"step_no": 4, "description": "State both solutions: x = 2/3 or x = -3", "expected_expression": "x = 2/3 or x = -3", "marks": 2}
     ]
   }
 }

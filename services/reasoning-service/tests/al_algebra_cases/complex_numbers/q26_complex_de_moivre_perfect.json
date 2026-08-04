@@ -39,31 +39,37 @@
       {
         "step_no": 1,
         "description": "Find modulus √2 and argument π/4.",
+        "expected_expression": "|1 + i| = √2 and arg(1 + i) = π/4",
         "marks": 2
       },
       {
         "step_no": 2,
         "description": "Write in polar form correctly.",
+        "expected_expression": "1 + i = √2(cos(π/4) + i sin(π/4))",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Apply De Moivre's theorem.",
+        "expected_expression": "(1 + i)⁸ = (√2)⁸(cos(8π/4) + i sin(8π/4))",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Compute (√2)⁸ = 16.",
+        "expected_expression": "(√2)⁸ = 2⁴ = 16",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Evaluate cos(2π)+i sin(2π) = 1.",
+        "expected_expression": "cos(2π) + i sin(2π) = 1",
         "marks": 2
       },
       {
         "step_no": 6,
         "description": "State answer 16 with verification.",
+        "expected_expression": "(1 + i)⁸ = 16",
         "marks": 1
       }
     ]

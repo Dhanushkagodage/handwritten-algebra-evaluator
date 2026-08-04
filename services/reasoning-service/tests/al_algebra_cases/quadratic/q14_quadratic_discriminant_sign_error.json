@@ -31,21 +31,25 @@
       {
         "step_no": 1,
         "description": "State discriminant condition b²-4ac > 0.",
+        "expected_expression": "b² - 4ac > 0",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Substitute correctly: k²-4k-12 > 0.",
+        "expected_expression": "k² - 4k - 12 > 0",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Factorise correctly: (k-6)(k+2) > 0.",
+        "expected_expression": "(k - 6)(k + 2) > 0",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Correct inequality direction: k<-2 or k>6 — student reversed it. 0 marks.",
+        "expected_expression": "k < -2 or k > 6",
         "marks": 0
       }
     ]

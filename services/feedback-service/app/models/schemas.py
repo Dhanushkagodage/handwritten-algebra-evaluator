@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, Field, model_validator
 
 
 class StepValidity(str, Enum):
@@ -31,11 +31,16 @@ class StepResult(BaseModel):
         return self
 
 
-class MarkingSchemeStep(BaseModel):
-    step_number: int
+class SchemeStep(BaseModel):
+    step_no: int
+    description: str
     expected_expression: str
-    marks: float
-    description: Optional[str] = None
+    marks: float = Field(..., ge=0)
+
+
+class MarkingScheme(BaseModel):
+    total_marks: float = Field(..., ge=0)
+    steps: List[SchemeStep]
 
 
 class FeedbackRequest(BaseModel):
@@ -43,8 +48,8 @@ class FeedbackRequest(BaseModel):
     student_steps: List[StepResult]
     detected_method: str
     assigned_marks: float   # total score from Module 02
-    total_marks: float
-    marking_scheme: List[MarkingSchemeStep]
+    # total_marks lives inside marking_scheme — it is the single source of truth
+    marking_scheme: MarkingScheme
 
 
 class StepFeedback(BaseModel):

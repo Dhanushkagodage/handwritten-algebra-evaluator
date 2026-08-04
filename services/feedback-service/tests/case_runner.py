@@ -107,9 +107,10 @@ def check_invariants(request: FeedbackRequest, response) -> list:
         failures.append(
             f"final_score {response.final_score} != assigned_marks {request.assigned_marks}"
         )
-    if response.total_marks != request.total_marks:
+    if response.total_marks != request.marking_scheme.total_marks:
         failures.append(
-            f"total_marks {response.total_marks} != request total_marks {request.total_marks}"
+            f"total_marks {response.total_marks} != "
+            f"marking_scheme.total_marks {request.marking_scheme.total_marks}"
         )
     if not response.improvement_suggestions:
         failures.append("expected at least one improvement suggestion")
@@ -127,7 +128,7 @@ async def run_case(case_number: int, generator, *, verbose: bool = True) -> list
         print("=" * 70)
         print(f"Question: {request.question_text}")
         print(f"Method  : {request.detected_method}")
-        print(f"Score   : {request.assigned_marks} / {request.total_marks}")
+        print(f"Score   : {request.assigned_marks} / {request.marking_scheme.total_marks}")
         print(f"Steps   : {len(request.student_steps)}\n")
 
     response = await generator.generate(request)

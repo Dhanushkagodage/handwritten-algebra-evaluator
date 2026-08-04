@@ -43,31 +43,37 @@
       {
         "step_no": 1,
         "description": "Correct base case: 1³-1=0, and 6|0 (student error here — loses 1 mark).",
+        "expected_expression": "1³ - 1 = 0 and 6 divides 0",
         "marks": 0
       },
       {
         "step_no": 2,
         "description": "State inductive hypothesis for n=k clearly.",
+        "expected_expression": "6 divides (k³ - k)",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Expand (k+1)³-(k+1) correctly.",
+        "expected_expression": "(k+1)³ - (k+1) = k³ + 3k² + 3k + 1 - k - 1",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Regroup as (k³-k)+3k(k+1).",
+        "expected_expression": "(k³ - k) + 3k(k + 1)",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Argue divisibility by 6 of both parts.",
+        "expected_expression": "6 divides (k³ - k) and 6 divides 3k(k + 1)",
         "marks": 2
       },
       {
         "step_no": 6,
         "description": "State final conclusion.",
+        "expected_expression": "n³ - n is divisible by 6 for all positive integers n",
         "marks": 2
       }
     ]

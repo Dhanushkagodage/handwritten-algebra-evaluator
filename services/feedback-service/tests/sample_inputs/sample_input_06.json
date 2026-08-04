@@ -2,7 +2,6 @@
   "question_text": "Simplify (x^2 - 9) / (x^2 + 5x + 6)",
   "detected_method": "simplifying algebraic fractions",
   "assigned_marks": 0.0,
-  "total_marks": 3.0,
   "student_steps": [
     {
       "step_number": 1,
@@ -23,21 +22,27 @@
       "marks_awarded": 0.0
     }
   ],
-  "marking_scheme": [
-    {
-      "step_number": 1,
-      "expected_expression": "(x - 3)(x + 3) / (x^2 + 5x + 6)",
-      "marks": 1.0
-    },
-    {
-      "step_number": 2,
-      "expected_expression": "(x - 3)(x + 3) / ((x + 2)(x + 3))",
-      "marks": 1.0
-    },
-    {
-      "step_number": 3,
-      "expected_expression": "(x - 3) / (x + 2)",
-      "marks": 1.0
-    }
-  ]
+  "marking_scheme": {
+    "total_marks": 3.0,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Factorise the numerator as a difference of two squares",
+        "expected_expression": "(x - 3)(x + 3) / (x^2 + 5x + 6)",
+        "marks": 1.0
+      },
+      {
+        "step_no": 2,
+        "description": "Factorise the denominator",
+        "expected_expression": "(x - 3)(x + 3) / ((x + 2)(x + 3))",
+        "marks": 1.0
+      },
+      {
+        "step_no": 3,
+        "description": "Cancel the common factor and state the simplified form",
+        "expected_expression": "(x - 3) / (x + 2)",
+        "marks": 1.0
+      }
+    ]
+  }
 }

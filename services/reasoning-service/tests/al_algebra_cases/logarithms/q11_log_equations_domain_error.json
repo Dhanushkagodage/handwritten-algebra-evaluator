@@ -31,26 +31,31 @@
       {
         "step_no": 1,
         "description": "Use quotient rule correctly.",
+        "expected_expression": "log₅[(2x + 1)/(x - 1)] = 1",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Convert to 5^1 = 5.",
+        "expected_expression": "(2x + 1)/(x - 1) = 5",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Solve linear equation → x = 2.",
+        "expected_expression": "2x + 1 = 5x - 5, so x = 2",
         "marks": 3
       },
       {
         "step_no": 4,
         "description": "Verify x=2 satisfies domain (x>1, 2x+1>0) — not done. 0 marks.",
+        "expected_expression": "x = 2 satisfies x > 1 and 2x + 1 > 0",
         "marks": 0
       },
       {
         "step_no": 5,
         "description": "State final answer.",
+        "expected_expression": "x = 2",
         "marks": 1
       }
     ]

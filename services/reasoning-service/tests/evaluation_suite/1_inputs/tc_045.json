@@ -15,11 +15,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Write series expression S", "marks": 1},
-      {"step_no": 2, "description": "Multiply S by ratio 1/2 and align indices", "marks": 2},
-      {"step_no": 3, "description": "Subtract (1/2)S from S to form standard geometric series on RHS", "marks": 2},
-      {"step_no": 4, "description": "Apply infinite GP sum formula S_∞ = a / (1 - r) to get (1/2)S = 1", "marks": 2},
-      {"step_no": 5, "description": "Solve for S = 2", "marks": 1}
+      {"step_no": 1, "description": "Write series expression S", "expected_expression": "S = 1/2 + 2/4 + 3/8 + 4/16 + ...", "marks": 1},
+      {"step_no": 2, "description": "Multiply S by ratio 1/2 and align indices", "expected_expression": "(1/2)S = 1/4 + 2/8 + 3/16 + 4/32 + ...", "marks": 2},
+      {"step_no": 3, "description": "Subtract (1/2)S from S to form standard geometric series on RHS", "expected_expression": "(1/2)S = 1/2 + 1/4 + 1/8 + 1/16 + ...", "marks": 2},
+      {"step_no": 4, "description": "Apply infinite GP sum formula S_∞ = a / (1 - r) to get (1/2)S = 1", "expected_expression": "(1/2)S = (1/2)/(1 - 1/2) = 1", "marks": 2},
+      {"step_no": 5, "description": "Solve for S = 2", "expected_expression": "S = 2", "marks": 1}
     ]
   }
 }

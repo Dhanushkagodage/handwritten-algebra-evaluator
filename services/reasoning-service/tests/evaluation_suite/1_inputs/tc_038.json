@@ -13,11 +13,11 @@
   "marking_scheme": {
     "total_marks": 8,
     "steps": [
-      {"step_no": 1, "description": "Express 8i in general exponential form 8 e^(i(π/2 + 2kπ))", "marks": 2},
-      {"step_no": 2, "description": "Apply fractional power rule z_k = 2 e^(i(π/6 + 2kπ/3))", "marks": 2},
-      {"step_no": 3, "description": "Find first root z₀ = 2 e^(i π/6)", "marks": 1},
-      {"step_no": 4, "description": "Find second root z₁ = 2 e^(i 5π/6)", "marks": 1},
-      {"step_no": 5, "description": "Find third root in valid principal range z₂ = 2 e^(-i π/2)", "marks": 2}
+      {"step_no": 1, "description": "Express 8i in general exponential form 8 e^(i(π/2 + 2kπ))", "expected_expression": "8i = 8 e^(i(π/2 + 2kπ))", "marks": 2},
+      {"step_no": 2, "description": "Apply fractional power rule z_k = 2 e^(i(π/6 + 2kπ/3))", "expected_expression": "z_k = 2 e^(i(π/6 + 2kπ/3))", "marks": 2},
+      {"step_no": 3, "description": "Find first root z₀ = 2 e^(i π/6)", "expected_expression": "z₀ = 2 e^(i π/6)", "marks": 1},
+      {"step_no": 4, "description": "Find second root z₁ = 2 e^(i 5π/6)", "expected_expression": "z₁ = 2 e^(i 5π/6)", "marks": 1},
+      {"step_no": 5, "description": "Find third root in valid principal range z₂ = 2 e^(-i π/2)", "expected_expression": "z₂ = 2 e^(-i π/2)", "marks": 2}
     ]
   }
 }

@@ -31,26 +31,31 @@
       {
         "step_no": 1,
         "description": "Multiply by conjugate (1+i)/(1+i).",
+        "expected_expression": "z = (2 + 2i)(1 + i) / ((1 - i)(1 + i))",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Expand numerator correctly.",
+        "expected_expression": "(2 + 2i)(1 + i) = 4i",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Simplify to z = 2i.",
+        "expected_expression": "z = 4i/2 = 2i",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Find |z| = 2.",
+        "expected_expression": "|z| = 2",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Find arg(z) = π/2 — student wrote 0. 0 marks.",
+        "expected_expression": "arg(z) = π/2",
         "marks": 0
       }
     ]

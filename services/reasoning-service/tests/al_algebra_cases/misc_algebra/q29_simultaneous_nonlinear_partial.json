@@ -31,26 +31,31 @@
       {
         "step_no": 1,
         "description": "Equate y expressions and rearrange.",
+        "expected_expression": "x² - 3x + 2 = 2x - 4",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "Form x²-5x+6=0.",
+        "expected_expression": "x² - 5x + 6 = 0",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Factorise and solve x=2, x=3.",
+        "expected_expression": "(x - 2)(x - 3) = 0, so x = 2 or x = 3",
         "marks": 3
       },
       {
         "step_no": 4,
         "description": "Find y: when x=2, y=0; when x=3, y=2 — not done. 0 marks.",
+        "expected_expression": "x = 2 gives y = 0; x = 3 gives y = 2",
         "marks": 0
       },
       {
         "step_no": 5,
         "description": "State both solution pairs (2,0) and (3,2) — not done. 0 marks.",
+        "expected_expression": "(2, 0) and (3, 2)",
         "marks": 0
       }
     ]

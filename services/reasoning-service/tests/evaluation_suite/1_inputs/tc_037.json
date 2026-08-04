@@ -15,10 +15,10 @@
   "marking_scheme": {
     "total_marks": 7,
     "steps": [
-      {"step_no": 1, "description": "Multiply matrix identity A² - 7A + 10I = 0 by A⁻¹", "marks": 2},
-      {"step_no": 2, "description": "Simplify to form A - 7I + 10A⁻¹ = 0", "marks": 1},
-      {"step_no": 3, "description": "Express A⁻¹ in terms of I and A: A⁻¹ = (1/10)(7I - A)", "marks": 2},
-      {"step_no": 4, "description": "Calculate 7I - A = [[4, -1], [-2, 3]] and state A⁻¹", "marks": 2}
+      {"step_no": 1, "description": "Multiply matrix identity A² - 7A + 10I = 0 by A⁻¹", "expected_expression": "A⁻¹(A² - 7A + 10I) = 0", "marks": 2},
+      {"step_no": 2, "description": "Simplify to form A - 7I + 10A⁻¹ = 0", "expected_expression": "A - 7I + 10A⁻¹ = 0", "marks": 1},
+      {"step_no": 3, "description": "Express A⁻¹ in terms of I and A: A⁻¹ = (1/10)(7I - A)", "expected_expression": "A⁻¹ = (1/10)(7I - A)", "marks": 2},
+      {"step_no": 4, "description": "Calculate 7I - A = [[4, -1], [-2, 3]] and state A⁻¹", "expected_expression": "A⁻¹ = (1/10)[[4, -1], [-2, 3]]", "marks": 2}
     ]
   }
 }

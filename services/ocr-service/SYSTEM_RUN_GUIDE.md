@@ -115,13 +115,17 @@ Response:
       {
         "step_no": 1,
         "description": "Use the remainder theorem to find the remainders for x - 1 and x + 2",
+        "expected_expression": "R1 = P(1), R2 = P(-2)",
         "marks": 4
       }
-    ],
-    "final_answer": ""
+    ]
   }
 }
 ```
+
+Every step carries four fields: `step_no`, `description`, `expected_expression`
+and `marks`. There is no `final_answer` key — the expected final answer is the
+`expected_expression` of the last step.
 
 Example marking scheme input:
 
@@ -133,31 +137,37 @@ Example marking scheme input:
       {
         "step_no": 1,
         "description": "Use the remainder theorem to find the remainders for x - 1 and x + 2",
+        "expected_expression": "R1 = P(1), R2 = P(-2)",
         "marks": 4
       },
       {
         "step_no": 2,
         "description": "Correctly calculate P(1) and P(-2) expressions",
+        "expected_expression": "P(1) = 1 + a + 3, P(-2) = -8 + 4a + 3",
         "marks": 3
       },
       {
         "step_no": 3,
         "description": "Use the condition of equal remainders to form an equation",
+        "expected_expression": "1 + a + 3 = -8 + 4a + 3",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Solve the equation to find the value of a",
+        "expected_expression": "a = 3",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Substitute a value and calculate the common remainder",
+        "expected_expression": "R = 1 + 3 + 3 = 7",
         "marks": 2
       },
       {
         "step_no": 6,
         "description": "State the final answer with a and common remainder",
+        "expected_expression": "a = 3, R = 7",
         "marks": 1
       }
     ]

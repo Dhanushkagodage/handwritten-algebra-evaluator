@@ -47,36 +47,43 @@
       {
         "step_no": 1,
         "description": "Verify base case n=1.",
+        "expected_expression": "LHS = 1, RHS = 1(2)(3)/6 = 1",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "State hypothesis explicitly for n=k (student vague — loses 1 mark).",
+        "expected_expression": "1² + 2² + ... + k² = k(k+1)(2k+1)/6",
         "marks": 1
       },
       {
         "step_no": 3,
         "description": "Set up LHS for n=k+1.",
+        "expected_expression": "1² + 2² + ... + k² + (k+1)²",
         "marks": 1
       },
       {
         "step_no": 4,
         "description": "Substitute k(k+1)(2k+1)/6 correctly.",
+        "expected_expression": "k(k+1)(2k+1)/6 + (k+1)²",
         "marks": 2
       },
       {
         "step_no": 5,
         "description": "Factor and simplify to (k+1)(k+2)(2k+3)/6.",
+        "expected_expression": "(k+1)(2k² + 7k + 6)/6 = (k+1)(k+2)(2k+3)/6",
         "marks": 3
       },
       {
         "step_no": 6,
         "description": "Recognise form matches formula for n=k+1.",
+        "expected_expression": "(k+1)((k+1)+1)(2(k+1)+1)/6",
         "marks": 1
       },
       {
         "step_no": 7,
         "description": "State induction conclusion (student did state it).",
+        "expected_expression": "True for all positive integers n by the principle of mathematical induction",
         "marks": 1
       }
     ]

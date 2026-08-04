@@ -2,7 +2,6 @@
   "question_text": "Find the remainder when f(x) = x^3 - 4x^2 + 5x - 2 is divided by (x - 3)",
   "detected_method": "remainder theorem",
   "assigned_marks": 3.0,
-  "total_marks": 4.0,
   "student_steps": [
     {
       "step_number": 1,
@@ -29,26 +28,33 @@
       "marks_awarded": 0.0
     }
   ],
-  "marking_scheme": [
-    {
-      "step_number": 1,
-      "expected_expression": "remainder = f(3)",
-      "marks": 1.0
-    },
-    {
-      "step_number": 2,
-      "expected_expression": "f(3) = 3^3 - 4(3)^2 + 5(3) - 2",
-      "marks": 1.0
-    },
-    {
-      "step_number": 3,
-      "expected_expression": "= 27 - 36 + 15 - 2",
-      "marks": 1.0
-    },
-    {
-      "step_number": 4,
-      "expected_expression": "= 4",
-      "marks": 1.0
-    }
-  ]
+  "marking_scheme": {
+    "total_marks": 4.0,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "State the remainder theorem: the remainder is f(3)",
+        "expected_expression": "remainder = f(3)",
+        "marks": 1.0
+      },
+      {
+        "step_no": 2,
+        "description": "Substitute x = 3 into f(x)",
+        "expected_expression": "f(3) = 3^3 - 4(3)^2 + 5(3) - 2",
+        "marks": 1.0
+      },
+      {
+        "step_no": 3,
+        "description": "Evaluate each power term",
+        "expected_expression": "= 27 - 36 + 15 - 2",
+        "marks": 1.0
+      },
+      {
+        "step_no": 4,
+        "description": "Simplify to state the remainder",
+        "expected_expression": "= 4",
+        "marks": 1.0
+      }
+    ]
+  }
 }

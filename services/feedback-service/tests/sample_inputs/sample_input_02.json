@@ -2,7 +2,6 @@
   "question_text": "Solve 2x^2 - 5x - 3 = 0 using the quadratic formula",
   "detected_method": "quadratic formula",
   "assigned_marks": 2.5,
-  "total_marks": 4.0,
   "student_steps": [
     {
       "step_number": 1,
@@ -29,26 +28,33 @@
       "marks_awarded": 0.0
     }
   ],
-  "marking_scheme": [
-    {
-      "step_number": 1,
-      "expected_expression": "a = 2, b = -5, c = -3",
-      "marks": 1.0
-    },
-    {
-      "step_number": 2,
-      "expected_expression": "x = (5 +- sqrt(25 + 24)) / 4",
-      "marks": 1.0
-    },
-    {
-      "step_number": 3,
-      "expected_expression": "x = (5 +- 7) / 4",
-      "marks": 1.0
-    },
-    {
-      "step_number": 4,
-      "expected_expression": "x = 3 or x = -0.5",
-      "marks": 1.0
-    }
-  ]
+  "marking_scheme": {
+    "total_marks": 4.0,
+    "steps": [
+      {
+        "step_no": 1,
+        "description": "Identify the coefficients a, b and c",
+        "expected_expression": "a = 2, b = -5, c = -3",
+        "marks": 1.0
+      },
+      {
+        "step_no": 2,
+        "description": "Substitute the coefficients into the quadratic formula",
+        "expected_expression": "x = (5 +- sqrt(25 + 24)) / 4",
+        "marks": 1.0
+      },
+      {
+        "step_no": 3,
+        "description": "Evaluate the discriminant and simplify the surd",
+        "expected_expression": "x = (5 +- 7) / 4",
+        "marks": 1.0
+      },
+      {
+        "step_no": 4,
+        "description": "State both solutions",
+        "expected_expression": "x = 3 or x = -0.5",
+        "marks": 1.0
+      }
+    ]
+  }
 }

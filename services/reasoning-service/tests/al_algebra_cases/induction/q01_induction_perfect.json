@@ -47,31 +47,37 @@
       {
         "step_no": 1,
         "description": "Verify base case n=1 correctly.",
+        "expected_expression": "LHS = 1, RHS = 1(1+1)/2 = 1",
         "marks": 1
       },
       {
         "step_no": 2,
         "description": "State inductive hypothesis for n=k clearly.",
+        "expected_expression": "1 + 2 + ... + k = k(k+1)/2",
         "marks": 2
       },
       {
         "step_no": 3,
         "description": "Set up the sum for n=k+1 using the hypothesis.",
+        "expected_expression": "1 + 2 + ... + k + (k + 1) = k(k+1)/2 + (k + 1)",
         "marks": 2
       },
       {
         "step_no": 4,
         "description": "Algebraic manipulation to reach (k+1)(k+2)/2.",
+        "expected_expression": "(k + 1)(k/2 + 1) = (k+1)(k+2)/2",
         "marks": 3
       },
       {
         "step_no": 5,
         "description": "Recognise result matches formula for n=k+1.",
+        "expected_expression": "(k+1)((k+1)+1)/2",
         "marks": 1
       },
       {
         "step_no": 6,
         "description": "State conclusion invoking the induction principle.",
+        "expected_expression": "True for all positive integers n by the principle of mathematical induction",
         "marks": 1
       }
     ]
