@@ -1,9 +1,11 @@
 """
-Sample case 08 — index laws.
+Sample case 08 — matrix addition.
 
-Question : Simplify (2x^3 * y^2)^2 / (4x^4 * y)
-Steps    : 5 steps, mixed (3.0 / 5.0)
-Exercises: the longest chain — pressure-tests the 300 max_new_tokens budget
+Question : Find A + B, where A = [[1, 2], [3, 4]] and B = [[5, 6], [7, 8]]
+Steps    : 3 steps, mixed (1.5 / 2.0)
+Exercises: matrix-valued expressions — the method is right all the way
+           through, only the final entry 4 + 8 is written as 13 instead of 12,
+           so the feedback has to name that one element rather than the method
 
 Run from the feedback-service directory:
     python tests/test_case_08.py                  # ZeroGPU Space (default)

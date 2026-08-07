@@ -147,7 +147,7 @@ with its own runner script, so you can step through them one at a time:
 | `test_case_05.py` | linear inequality | 3 | 2.0/3.0 | not reversing `<` on ÷ by a negative |
 | `test_case_06.py` | simplifying algebraic fractions | 3 | 0.0/3.0 | zero-marks edge case |
 | `test_case_07.py` | difference of squares | 2 | 1.5/2.0 | shortest answer |
-| `test_case_08.py` | index laws | 5 | 3.0/5.0 | longest chain |
+| `test_case_08.py` | matrix addition | 3 | 1.5/2.0 | matrix-valued expressions, single wrong element |
 | `test_case_09.py` | substitution | 4 | 2.0/4.0 | optional `error_description` / scheme `description` |
 | `test_case_10.py` | remainder theorem | 4 | 3.0/4.0 | Module 02's legacy `is_correct` bool |
 

@@ -1,71 +1,48 @@
 {
-  "question_text": "Simplify (2x^3 * y^2)^2 / (4x^4 * y)",
-  "detected_method": "index laws",
-  "assigned_marks": 3.0,
+  "question_text": "Find A + B, where A = [[1, 2], [3, 4]] and B = [[5, 6], [7, 8]]",
+  "detected_method": "matrix addition",
+  "assigned_marks": 1.5,
   "student_steps": [
     {
       "step_number": 1,
-      "expression": "(2x^3 * y^2)^2 = 4x^6 * y^4",
+      "expression": "A + B = [[1, 2], [3, 4]] + [[5, 6], [7, 8]]",
       "validity": "correct",
-      "marks_awarded": 1.0
+      "marks_awarded": 0.5
     },
     {
       "step_number": 2,
-      "expression": "= 4x^6 * y^4 / (4x^4 * y)",
+      "expression": "= [[1 + 5, 2 + 6], [3 + 7, 4 + 8]]",
       "validity": "correct",
       "marks_awarded": 1.0
     },
     {
       "step_number": 3,
-      "expression": "= x^6 * y^4 / (x^4 * y)",
-      "validity": "correct",
-      "marks_awarded": 1.0
-    },
-    {
-      "step_number": 4,
-      "expression": "= x^(6/4) * y^(4/1)",
+      "expression": "= [[6, 8], [10, 13]]",
       "validity": "incorrect",
-      "marks_awarded": 0.0
-    },
-    {
-      "step_number": 5,
-      "expression": "= x^1.5 * y^4",
-      "validity": "incorrect",
+      "error_description": "Arithmetic slip in the bottom-right entry: 4 + 8 = 12, not 13.",
       "marks_awarded": 0.0
     }
   ],
   "marking_scheme": {
-    "total_marks": 5.0,
+    "total_marks": 2.0,
     "steps": [
       {
         "step_no": 1,
-        "description": "Apply the power to each factor in the numerator",
-        "expected_expression": "4x^6 * y^4",
-        "marks": 1.0
+        "description": "Write A + B.",
+        "expected_expression": "[[1, 2], [3, 4]] + [[5, 6], [7, 8]]",
+        "marks": 0.5
       },
       {
         "step_no": 2,
-        "description": "Write the full quotient",
-        "expected_expression": "4x^6 * y^4 / (4x^4 * y)",
+        "description": "Add corresponding elements.",
+        "expected_expression": "[[1 + 5, 2 + 6], [3 + 7, 4 + 8]]",
         "marks": 1.0
       },
       {
         "step_no": 3,
-        "description": "Cancel the numerical coefficient",
-        "expected_expression": "x^6 * y^4 / (x^4 * y)",
-        "marks": 1.0
-      },
-      {
-        "step_no": 4,
-        "description": "Subtract the indices for each variable",
-        "expected_expression": "x^(6-4) * y^(4-1)",
-        "marks": 1.0
-      },
-      {
-        "step_no": 5,
-        "description": "State the simplified expression",
-        "expected_expression": "x^2 * y^3",
-        "marks": 1.0
+        "description": "Write the resulting matrix.",
+        "expected_expression": "[[6, 8], [10, 12]]",
+        "marks": 0.5
       }
     ]
   }
